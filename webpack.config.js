@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
     context: __dirname,
-    entry: './frontend/reactA06.jsx',
+    entry: './frontend/Hu-sflix.jsx',
     output: {
         path: path.join(__dirname, 'app', 'assets', 'javascripts'),
         filename: 'bundle.js'
@@ -13,18 +13,16 @@ module.exports = {
     },
     devtool: 'eval-source-map',
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['env', 'react']
+                exclude: /(node_modules)/,
+                use: {
+                    loader: "babel-loader",
+                    query: {
+                        presets: ["@babel/env", "@babel/react"]
+                    }
                 }
-            },
-            {
-                test: /\.node$/,
-                loader: 'node-loader'
             }
         ]
     }
