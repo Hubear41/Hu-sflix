@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
  
 class Navbar extends React.Component {
     constructor(props) {
@@ -13,20 +13,31 @@ class Navbar extends React.Component {
     }
 
     render() {
+        const { currentUser } = this.props;
+        const { location } = this.props.history;
+
+        // debugger
         if ( currentUser ) {
             return (
-                <div className="logout-btn">
-                    <button onClick={this.handleClick}>Log Out</button>
-                </div>
+                <>
+                    <Link to="/" className='logo-btn'>Hu'sflix</Link>
+                    
+
+                    <button onClick={this.handleClick} className="logout-btn">Log Out</button>
+
+                </>
             );  
         } else {
             return (
-                <div className="signin-btn">
-                    <Link to="/login">Sign In</Link>
-                </div>
+                <>
+                    <Link to="/" className='logo-btn'>Hu'sflix</Link>
+
+
+                    { location.pathname === "/login" ? null : <Link to="/login" className="login-btn">Sign In</Link>}
+                </>
             );
         }
     }
 };
 
-export default Navbar;
+export default withRouter(Navbar);
