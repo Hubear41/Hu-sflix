@@ -16,7 +16,6 @@ class Navbar extends React.Component {
         const { currentUser } = this.props;
         const { location } = this.props.history;
 
-        // debugger
         if ( currentUser ) {
             return (
                 <>
