@@ -1,0 +1,39 @@
+.splash-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 157px 0;
+    font-family: sans-serif;
+    height: 286px;
+}
+
+.splash-content h2 {
+    font-weight: 700;
+    font-size: 78px;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 10px black;
+}
+
+.splash-content span {
+    font-weight: lighter;
+    font-size: 30px;
+    text-transform: uppercase;
+    word-spacing: 3px;
+}
+
+.splash-signup-btn {
+    text-decoration: none;
+    background-color:  #e32112;
+    color: white;
+    font-family: sans-serif;
+    font-weight: lighter;
+    font-size: 30px;
+    border-radius: 2px;
+    letter-spacing: 2px;
+    padding: 29px 0;
+    width: 450px;
+    display: flex;
+    margin: 4px 0;
+    justify-content: center;
+}

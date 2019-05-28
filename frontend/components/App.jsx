@@ -8,15 +8,16 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 const App = () => {
     return (
-        <>
-            <header className="header-nav">
+        <main className="main-content">
+            <header className="header-nav-container">
                 <Navbar />
             </header>
+            
 
             <Route exact path="/" component={Splash} />
             <AuthRoute path="/signup" component={SignUp} />
             <AuthRoute path="/login" component={Login} />
-        </>
+        </main>
     );
 };
 

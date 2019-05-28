@@ -13,3 +13,14 @@
  *= require_tree .
  *= require_self
  */
+
+ #root {
+    height: 5000px;
+    width: 100%;
+}
+
+.main-content {
+    background-color: rgb(33, 32, 32);
+    color: white;
+    height: 100%;
+}

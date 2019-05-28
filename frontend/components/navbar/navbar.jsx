@@ -18,22 +18,22 @@ class Navbar extends React.Component {
 
         if ( currentUser ) {
             return (
-                <>
+                <section className="header-nav">
                     <Link to="/" className='logo-btn'>Hu'sflix</Link>
                     
 
                     <button onClick={this.handleClick} className="logout-btn">Log Out</button>
 
-                </>
+                </section>
             );  
         } else {
             return (
-                <>
+                <section className="header-nav">
                     <Link to="/" className='logo-btn'>Hu'sflix</Link>
 
 
                     { location.pathname === "/login" ? null : <Link to="/login" className="login-btn">Sign In</Link>}
-                </>
+                </section>
             );
         }
     }
