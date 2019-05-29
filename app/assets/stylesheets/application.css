@@ -17,10 +17,10 @@
  #root {
     height: 5000px;
     width: 100%;
+    background-color: rgb(33, 32, 32);
 }
 
 .main-content {
-    background-color: rgb(33, 32, 32);
     color: white;
     height: 100%;
 }

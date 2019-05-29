@@ -9,7 +9,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin: 157px 0;
+    margin: 230px 0;
     font-family: sans-serif;
     height: 286px;
 }
@@ -18,7 +18,7 @@
     font-weight: 700;
     font-size: 78px;
     letter-spacing: 1px;
-    text-shadow: 2px 2px 10px black;
+    text-shadow: 2px 2px 5px black;
 }
 
 .splash-content span {
@@ -39,7 +39,17 @@
     letter-spacing: 2px;
     padding: 29px 0;
     width: 450px;
-    display: flex;
     margin: 4px 0;
-    justify-content: center;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.splash-signup-btn h3 {
+    margin-right: 40px;
+}
+
+.splash-signup-btn span {
+    margin-right: 50px;
+    font-size: 35px;
 }

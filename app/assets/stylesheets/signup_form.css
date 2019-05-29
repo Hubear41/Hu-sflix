@@ -1,0 +1,107 @@
+.signup-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 520px;
+    width: 440px;
+    margin: 0px auto;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.signup-form-body {
+    position: absolute;
+    z-index: 2;
+    left: 40px;
+    top: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.signup-form-body h3 {
+    font-size: 30px;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 440px;
+    height: 260px;
+    margin-top: 20px;
+}
+
+.signup-form label {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    height: 75px;
+}
+
+.email-signup, .password-signup {
+    height: 30px;
+    padding: 16px 20px 5px 20px;
+    color: #fff;
+    background-color :#fff;
+    border: 1px solid grey;
+    font-size: 16px;
+}
+
+
+.floating-signup-description-big {
+    position: absolute;
+    z-index: 10;
+    color: #767676;
+    left: 20px;
+    top: 20px;
+    font-size: 16px;
+}
+
+.floating-signup-description-small {
+    position: absolute;
+    z-index: 10;
+    color: #767676;
+    left: 20px;
+    top: 10px;
+    font-size: 10px;
+}
+
+.signup-form input:focus + .floating-signup-description-big  {
+    transition-timing-function: ease-out;
+    transition: font 0.1s;
+    transition: top 0.2s;
+    font-size: 10px;
+    top: 10px;
+}
+
+.signup-form input:focus {
+    background-color: #454545;
+    outline: none;
+}
+
+.signup-form input[type="submit"] {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 17px 130px;
+    color: white;
+    background-color: #e32112;
+    border: none;
+}
+
+.signup-guest-login-btn {
+    background-color: #0071eb;
+    border: none;
+    padding: 20px 185px;
+    max-width: 440px;
+
+    font-size: 15px;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.signup-guest-login-btn:hover {
+    outline: none;
+}

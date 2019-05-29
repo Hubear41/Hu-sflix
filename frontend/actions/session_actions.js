@@ -11,8 +11,8 @@ export const loginUser = user => dispatch => (
     )
 );
 
-export const logoutUser = () => dispatch => (
-    SessionUTIL.logoutUser().then( 
+export const logoutUser = id => dispatch => (
+    SessionUTIL.logoutUser(id).then( 
         () => dispatch(removeUser()),
         errors => dispatch(receiveErrors(errors)) 
     )
@@ -35,6 +35,6 @@ const removeUser = () => ({
 });
 
 const receiveErrors = errors => ({
-    type: RECIEVE_SESSION_ERRORS,
-    errors,
+    type: RECEIVE_SESSION_ERRORS,
+    errors: errors,
 });

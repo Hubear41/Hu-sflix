@@ -1,0 +1,123 @@
+.login-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 520px;
+    width: 440px;
+    margin: 0px auto;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.login-form-body {
+    position: absolute;
+    z-index: 2;
+    left: 40px;
+    top: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.login-form-body h3 {
+    font-size: 30px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 320px;
+    height: 260px;
+    margin-top: 20px;
+}
+
+.black-bg {
+    background-color: black;
+    position: absolute;
+    height: 520px;
+    width: 440px;
+    border-radius: 8px;
+    left: -13px;
+    top: 97px;
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.login-form label {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    height: 75px;
+}
+
+.email-login, .password-login {
+    height: 30px;
+    padding: 16px 20px 5px 20px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #333333;
+    border: none;
+    font-size: 16px;
+}
+
+.floating-login-description-big {
+    position: absolute;
+    z-index: 10;
+    color: #767676;
+    left: 20px;
+    top: 20px;
+    font-size: 16px;
+}
+
+.floating-login-description-small {
+    position: absolute;
+    z-index: 10;
+    color: #767676;
+    left: 20px;
+    top: 10px;
+    font-size: 10px;
+}
+
+.login-form input:focus + .floating-login-description-big  {
+    transition-timing-function: ease-out;
+    transition: font 0.1s;
+    transition: top 0.2s;
+    font-size: 10px;
+    top: 10px;
+}
+
+.login-form input:focus {
+    background-color: #454545;
+    outline: none;
+}
+
+.login-form input[type="submit"] {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 17px 130px;
+    color: white;
+    background-color: #e32112;
+    border: none;
+}
+
+.error-orange {
+    border-bottom: 2px solid #c86b04;
+}
+
+.password-error, .email-error {
+    color: #c86b04;
+    font-size: 14px;
+}
+
+.new-to-netflix-signup {
+    margin-top: 105px;
+    color: #767676;
+}
+
+.signup-link {
+    text-decoration: none;
+    color: white;
+}

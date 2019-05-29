@@ -1,12 +1,16 @@
-import { RECEIVE_SESSION_ERRORS } from '../actions/session_actions';
-import { type } from 'os';
+import { RECEIVE_SESSION_ERRORS, LOGIN_USER } from '../actions/session_actions';
+import { CLEAR_ERRORS } from '../actions/errors_actions';
 
-const sessionErrorsReducer = (state = {}, action) => {
+const sessionErrorsReducer = (state = [], action) => {
     Object.freeze(state);
 
     switch(action.type) {
         case RECEIVE_SESSION_ERRORS:
-            return action.errors;
+            return action.errors.responseJSON;
+        case LOGIN_USER:
+            return [];
+        case CLEAR_ERRORS:
+            return [];
         default:
             return state;
     }

@@ -9,9 +9,7 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 const App = () => {
     return (
         <main className="main-content">
-            <header className="header-nav-container">
-                <Navbar />
-            </header>
+            <Navbar />
             
 
             <Route exact path="/" component={Splash} />

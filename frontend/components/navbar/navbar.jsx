@@ -8,32 +8,39 @@ class Navbar extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick() {
-        this.props.logout();
+    handleClick(e) {
+        const { currentUser } = this.props;
+        this.props.logout(currentUser.id);
     }
 
     render() {
         const { currentUser } = this.props;
         const { location } = this.props.history;
-
+        const navClass = location.pathname === '/' ? "right-header-wrapper" : 'left-header-wrapper'
+        const headerClass = location.pathname === '/signup' ? 'header-nav centered' : 'header-nav';
+        
         if ( currentUser ) {
             return (
-                <section className="header-nav">
-                    <Link to="/" className='logo-btn'>Hu'sflix</Link>
-                    
+                <header className={navClass}>
+                    <section className={headerClass}>
+                        <Link to="/" className='logo-btn'>Hu'sflix</Link>
+                        
 
-                    <button onClick={this.handleClick} className="logout-btn">Log Out</button>
+                        <button onClick={this.handleClick} className="logout-btn">Log Out</button>
 
-                </section>
+                    </section>
+                </header>
             );  
         } else {
             return (
-                <section className="header-nav">
-                    <Link to="/" className='logo-btn'>Hu'sflix</Link>
+                <header className={navClass}>
+                    <section className={headerClass}>
+                        <Link to="/" className='logo-btn'>Hu'sflix</Link>
 
 
-                    { location.pathname === "/login" ? null : <Link to="/login" className="login-btn">Sign In</Link>}
-                </section>
+                        { location.pathname === "/login" ? null : <Link to="/login" className="login-btn">Sign In</Link>}
+                    </section>
+                </header>
             );
         }
     }

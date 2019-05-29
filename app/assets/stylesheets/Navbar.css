@@ -1,7 +1,19 @@
+.main-content {
+    position: relative;
+}
 
-.header-nav-container {
+.right-header-wrapper {
     display: flex;
     justify-content: flex-end;
+    position: absolute;
+    width: 100%;
+}
+
+.left-header-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    position: absolute;
+    width: 100%;
 }
 
 .header-nav {
@@ -9,7 +21,11 @@
     width: 53%;
     justify-content: space-between;
     align-items: center;
-    margin: 16px 58px;    
+    margin: 0 40px;    
+}
+
+.centered {
+    width: 100%;
 }
 
 .logo-btn {
@@ -18,16 +34,15 @@
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-size: 45px;
+    margin-top: 10px;
     text-transform: uppercase;
-
 }
 
 .login-btn {
-    padding: 7px 17px;
+    padding: 8px 17px;
     border-radius: 3px;
     font-family: Arial, Helvetica, sans-serif;
     text-decoration: none;
-    font-weight: lighter;
     color: white;
     background-color: #e32112;
 }
