@@ -3,6 +3,7 @@ import SignUp from './session/signup_form_container';
 import Login from './session/login_form_container';
 import Navbar from './navbar/navbar_container';
 import Splash from './splash/splash';
+import Background from './background/background';
 import { Route } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 

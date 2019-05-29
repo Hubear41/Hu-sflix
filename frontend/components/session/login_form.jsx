@@ -72,7 +72,6 @@ class LoginForm extends React.Component {
                     </section>
                     <figure className="black-bg"></figure>
             </section>
-            
         )
     }
 }
