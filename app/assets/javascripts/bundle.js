@@ -665,12 +665,18 @@ function (_React$Component) {
       var formName = formType === 'Sign Up' ? 'Sign Up' : 'Sign In';
       var emailDescClass = this.state.email !== '' ? 'floating-login-description-small' : 'floating-login-description-big';
       var passwordDescClass = this.state.password !== '' ? 'floating-login-description-small' : 'floating-login-description-big';
-      var emailError = errors.includes('email') || errors.includes('login') ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      var emailError = errors.includes('email') ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "email-error"
       }, "Please enter a valid email.") : null;
-      var passwordError = errors.includes('password') || errors.includes('login') ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      var passwordError = errors.includes('password') ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "password-error"
       }, "Your password must contain at least 6 characters.") : null;
+      var logininError = errors.includes('login') ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "login-error"
+      }, "Sorry, we can't find an account with this email address. Please try again or ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/signup",
+        className: "create-new-account-link"
+      }, "create a new account"), ".") : null;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "login-form-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
@@ -678,6 +684,8 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, formName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "login-form",
         onSubmit: this.handleSubmit
+      }, logininError, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "login-inputs"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "email"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -698,7 +706,7 @@ function (_React$Component) {
         className: passwordError ? "password-login error-orange" : 'password-login'
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: passwordDescClass
-      }, "Password"), passwordError), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "Password"), passwordError)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: formName
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {

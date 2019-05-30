@@ -32,12 +32,18 @@ class LoginForm extends React.Component {
         const formName = formType === 'Sign Up' ? 'Sign Up' : 'Sign In';
         const emailDescClass = this.state.email !== '' ? 'floating-login-description-small' : 'floating-login-description-big'
         const passwordDescClass = this.state.password !== '' ? 'floating-login-description-small' : 'floating-login-description-big'
-        const emailError = errors.includes('email') || errors.includes('login') 
+        const emailError = errors.includes('email')
                             ? <p className="email-error">Please enter a valid email.</p> 
                             : null;
-        const passwordError = errors.includes('password') || errors.includes('login') 
+        const passwordError = errors.includes('password')
                             ? <p className="password-error">Your password must contain at least 6 characters.</p> 
                             : null;
+        const logininError = errors.includes('login') 
+                            ? <p className="login-error">
+                                Sorry, we can't find an account with this email address. Please try again or <Link to="/signup" className="create-new-account-link">create a new account</Link>.
+                             </p>
+                            : null;
+        
 
         return (
             <section className={`login-form-wrapper`}>
@@ -45,26 +51,30 @@ class LoginForm extends React.Component {
                         <h3>{formName}</h3>
                             
                         <form className="login-form" onSubmit={this.handleSubmit}>
-                            <label htmlFor="email">
-                                <input type="text"
-                                    id="email"
-                                    onChange={this.handleChange('email')}
-                                    value={this.state.email}
-                                    className={emailError ? 'email-login error-orange' : "email-login"}
-                                />
-                                <span className={emailDescClass}>Email</span>
-                                {emailError}
-                            </label>
-                            <label htmlFor="password">
-                                <input type="password"
-                                    id="password"
-                                    onChange={this.handleChange('password')}
-                                    value={this.state.password}
-                                    className={passwordError ? "password-login error-orange" : 'password-login'}
-                                />
-                                <span className={passwordDescClass}>Password</span>
-                                {passwordError}
-                            </label>
+                            {logininError}
+                            
+                            <div className="login-inputs">
+                                <label htmlFor="email">
+                                    <input type="text"
+                                        id="email"
+                                        onChange={this.handleChange('email')}
+                                        value={this.state.email}
+                                        className={emailError ? 'email-login error-orange' : "email-login"}
+                                    />
+                                    <span className={emailDescClass}>Email</span>
+                                    {emailError}
+                                </label>
+                                <label htmlFor="password">
+                                    <input type="password"
+                                        id="password"
+                                        onChange={this.handleChange('password')}
+                                        value={this.state.password}
+                                        className={passwordError ? "password-login error-orange" : 'password-login'}
+                                    />
+                                    <span className={passwordDescClass}>Password</span>
+                                    {passwordError}
+                                </label>
+                            </div>
 
                             <input type="submit" value={formName}/>
                         </form>
