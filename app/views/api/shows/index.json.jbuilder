@@ -1,5 +1,5 @@
 @shows.each do |show|
     json.set! show.id do 
-        json.partial! 'api/shows/show_partial', show: show
+        json.extract! show, :id, :title, :poster_url
     end
 end
