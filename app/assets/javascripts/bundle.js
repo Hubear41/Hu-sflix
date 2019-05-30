@@ -325,7 +325,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_background_background__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
     className: "main-content"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navbar_navbar_container__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Route"], {
     exact: true,
@@ -378,9 +378,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var Background = function Background(props) {
   var location = props.history.location;
-  var backgroundColor = location.pathname === '/signup' ? "white-bg" : "black-bg";
+  var backgroundColor = location.pathname === '/signup' ? "white-bg" : "hidden-bg";
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-    className: "husflix-bg ".concat(backgroundColor)
+    className: "".concat(backgroundColor)
   });
 };
 
@@ -626,9 +626,12 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(LoginForm).call(this, props));
     _this.state = {
       email: '',
-      password: ''
+      password: '',
+      showing: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.togglePassword = _this.togglePassword.bind(_assertThisInitialized(_this));
+    _this.handleGuestSubmit = _this.handleGuestSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -652,8 +655,37 @@ function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
-      this.props.processForm(this.state).then(function () {
+      var _this$state = this.state,
+          email = _this$state.email,
+          password = _this$state.password;
+      var user = {
+        email: email,
+        password: password
+      };
+      this.props.processForm(user).then(function () {
         return _this3.props.history.push('/browse');
+      });
+    }
+  }, {
+    key: "handleGuestSubmit",
+    value: function handleGuestSubmit(e) {
+      var _this4 = this;
+
+      e.preventDefault();
+      var guest = {
+        email: 'guest@guest.com',
+        password: 'go_password_go'
+      };
+      this.props.loginUser(guest).then(function () {
+        return _this4.props.history.push('/browse');
+      });
+    }
+  }, {
+    key: "togglePassword",
+    value: function togglePassword(e) {
+      e.preventDefault();
+      this.setState({
+        showing: !this.state.showing
       });
     }
   }, {
@@ -664,7 +696,16 @@ function (_React$Component) {
           errors = _this$props.errors;
       var formName = formType === 'Sign Up' ? 'Sign Up' : 'Sign In';
       var emailDescClass = this.state.email !== '' ? 'floating-login-description-small' : 'floating-login-description-big';
-      var passwordDescClass = this.state.password !== '' ? 'floating-login-description-small' : 'floating-login-description-big';
+      var passwordDescClass, hiddenClass;
+
+      if (this.state.password !== '') {
+        passwordDescClass = 'floating-login-description-small';
+        hiddenClass = '';
+      } else {
+        passwordDescClass = 'floating-login-description-big';
+        hiddenClass = 'hidden-show-hide';
+      }
+
       var emailError = errors.includes('email') ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "email-error"
       }, "Please enter a valid email.") : null;
@@ -677,6 +718,16 @@ function (_React$Component) {
         to: "/signup",
         className: "create-new-account-link"
       }, "create a new account"), ".") : null;
+      var togglePasswordBtn, passwordIptType;
+
+      if (this.state.showing) {
+        togglePasswordBtn = 'HIDE';
+        passwordIptType = 'text';
+      } else {
+        togglePasswordBtn = 'SHOW';
+        passwordIptType = 'password';
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "login-form-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
@@ -696,19 +747,30 @@ function (_React$Component) {
         className: emailError ? 'email-login error-orange' : "email-login"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: emailDescClass
-      }, "Email"), emailError), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "password"
+      }, "Email"), emailError), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "password-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "password",
+        className: passwordError ? "password-login error-orange" : 'password-login'
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "password",
+        type: passwordIptType,
         id: "password",
         onChange: this.handleChange('password'),
-        value: this.state.password,
-        className: passwordError ? "password-login error-orange" : 'password-login'
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: passwordDescClass
-      }, "Password"), passwordError)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        value: this.state.password
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "".concat(passwordDescClass, " password-move")
+      }, "Password"), passwordError, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "".concat(hiddenClass, " toggle-show-hide"),
+        onClick: this.togglePassword
+      }, togglePasswordBtn))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: formName
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleGuestSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: "Guest Login",
+        className: "login-guest-btn"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "new-to-netflix-signup"
       }, "New to Hu'sflix? ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -723,7 +785,7 @@ function (_React$Component) {
   return LoginForm;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (LoginForm);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(LoginForm));
 
 /***/ }),
 
@@ -754,7 +816,7 @@ var msp = function msp(state) {
 
 var mdp = function mdp(dispatch) {
   return {
-    processForm: function processForm(user) {
+    loginUser: function loginUser(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["loginUser"])(user));
     },
     clearErrors: function clearErrors() {
@@ -886,12 +948,9 @@ function (_React$Component) {
       var passwordError = errors.includes('password') ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "signup-password-error"
       }, "Your password must contain at least 6 characters.") : null;
-      var backgroundColor = location.hash === '#/signup' ? 'white-bg' : 'black-bg';
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "signup-form-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "".concat(backgroundColor)
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "signup-form-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleGuestSubmit

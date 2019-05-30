@@ -54,14 +54,10 @@ class SignupForm extends React.Component {
 
         const passwordError = errors.includes('password')
             ? <p className="signup-password-error">Your password must contain at least 6 characters.</p>
-            : null;
-
-        const backgroundColor = location.hash === '#/signup' ? 'white-bg' : 'black-bg'
-       
+            : null;       
         
         return (
             <section className="signup-form-wrapper">
-                <figure className={`${backgroundColor}`}></figure>
                 <section className="signup-form-body">
 
                     <form onSubmit={this.handleGuestSubmit}>

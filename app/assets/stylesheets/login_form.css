@@ -21,7 +21,7 @@
 .black-bg {
     background-color: black;
     position: absolute;
-    height: 520px;
+    height: 60vh;
     width: 440px;
     border-radius: 8px;
     left: -13px;
@@ -52,7 +52,7 @@
     width: 100%;
 }
 
-.email-login, .password-login {
+.email-login {
     height: 30px;
     padding: 16px 20px 5px 20px;
     border-radius: 5px;
@@ -62,14 +62,76 @@
     font-size: 16px;
 }
 
+.password-wrapper {
+    position: relative;
+}
+
+.password-login {
+    max-height: 30px;
+    padding: 16px 0 5px 0;
+    color: #fff;
+    background-color: #333333;
+    border-radius: 5px;
+    margin-bottom: 35px;
+}
+
+.password-login input {
+    background-color: #333333;
+    border: none;
+    font-size: 16px;
+    margin: 0 20px 5px 20px;
+    color: white;
+    width: 70%;
+}
+
+.password-login:focus-within {
+    background-color: #454545;
+    outline: none;
+}
+
+.password-login:focus-within + .floating-login-description-big {
+    transition-timing-function: ease-out;
+    transition: font 0.1s;
+    transition: top 0.2s;
+    font-size: 10px;
+    top: 8px;
+}
+
+.password-login:focus-within + .floating-login-description-big + .toggle-show-hide {
+    background-color: #454545;
+}
+
+.password-login:focus-within + .floating-login-description-small + .toggle-show-hide {
+    background-color: #454545;
+}
 
 .floating-login-description-big {
     position: absolute;
     z-index: 10;
     color: #767676;
     left: 20px;
-    top: 20px;
+    top: 19px;
     font-size: 16px;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.toggle-show-hide {
+    position: absolute;
+    right: 12px;
+    top: 11px;
+    padding: 5px;
+    background-color: #333333;
+    color: #767676;
+    border: none;
+    font-size: 13px;
+    outline: none;
+}
+
+.hidden-show-hide {
+    display: none;
 }
 
 .floating-login-description-small {
@@ -77,11 +139,11 @@
     z-index: 10;
     color: #767676;
     left: 20px;
-    top: 10px;
+    top: 8px;
     font-size: 10px;
 }
 
-.login-form input:focus + .floating-login-description-big  {
+.email-login:focus + .floating-login-description-big {
     transition-timing-function: ease-out;
     transition: font 0.1s;
     transition: top 0.2s;
@@ -145,4 +207,16 @@
 .create-new-account-link {
     text-decoration: underline;
     color: white;
+}
+
+.login-guest-btn {
+    width: 100%;
+    background-color: #0071eb;
+    border: none;
+    border-radius: 5px;
+    padding: 18px 14px;
+    font-size: 18px;
+    color: #fff;
+    font-family: Arial, Arial, Helvetica, sans-serif;
+    outline: none;
 }

@@ -10,6 +10,7 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 const App = () => {
     return (
         <>
+            <Background />
             <main className="main-content">
                 <Navbar />
 

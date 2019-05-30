@@ -5,9 +5,10 @@ import { withRouter } from 'react-router-dom';
 const Background = props => {
     const { location } = props.history;
 
-    const backgroundColor = location.pathname === '/signup' ? "white-bg" : "black-bg"; 
+    const backgroundColor = location.pathname === '/signup' ? "white-bg" : "hidden-bg"; 
 
-    return <figure className={`husflix-bg ${backgroundColor}`}></figure>;
+    return <figure className={`${backgroundColor}`}></figure>
+
 };
 
 
