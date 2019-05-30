@@ -29,7 +29,7 @@
 
 .header-nav {
     display: flex;
-    width: 53%;
+    width: 54%;
     justify-content: space-between;
     align-items: center;
     margin: 0 40px;    
@@ -47,15 +47,20 @@
     font-size: 45px;
     margin-top: 10px;
     text-transform: uppercase;
+    position: relative;
 }
 
 .login-btn {
     padding: 8px 17px;
     border-radius: 3px;
+    margin-top: 20px;
     font-family: Arial, Helvetica, sans-serif;
     text-decoration: none;
     color: white;
     background-color: #e32112;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .login-btn-white {
@@ -65,5 +70,22 @@
     color: black;
     text-decoration: none;
     padding-top: 33px;
+    position: relative;
+}
 
+.husflix-logo {
+    max-height: 45px;
+    position: absolute;
+    /* top: 5px; */
+    left: 30px;
+}
+
+.logout-btn {
+    background-color: #e32112;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    border:none;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
 }

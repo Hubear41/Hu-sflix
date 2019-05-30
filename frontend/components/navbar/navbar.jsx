@@ -32,8 +32,10 @@ class Navbar extends React.Component {
         if ( currentUser ) {
             return (
                 <header className={navClass}>
-                    <section className={headerClass}>
-                        <Link to="/" className='logo-btn'>Hu'sflix</Link>
+                    <section className='header-nav centered'>
+                        <Link to="/" className='logo-btn'>
+                            <img src={window.logoURL} alt="Hu'sflix Logo" className="husflix-logo" />
+                            </Link>
                         
 
                         <button onClick={this.handleClick} className="logout-btn">Log Out</button>
@@ -45,7 +47,9 @@ class Navbar extends React.Component {
             return (
                 <header className={`${navClass} ${hasBorder}`}>
                     <section className={headerClass}>
-                        <Link to="/" className='logo-btn'>Hu'sflix</Link>
+                        <Link to="/" className='logo-btn'>
+                            <img src={window.logoURL} alt="Hu'sflix Logo" className="husflix-logo" />
+                        </Link>
 
 
                         { location.pathname === "/login" ? null : <Link to="/login" className={SigninBtnClass}>Sign In</Link>}
