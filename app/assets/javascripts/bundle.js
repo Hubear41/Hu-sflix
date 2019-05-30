@@ -186,9 +186,9 @@ var loginUser = function loginUser(user) {
     });
   };
 };
-var logoutUser = function logoutUser(id) {
+var logoutUser = function logoutUser() {
   return function (dispatch) {
-    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["logoutUser"](id).then(function () {
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["logoutUser"]().then(function () {
       return dispatch(removeUser());
     }, function (errors) {
       return dispatch(receiveErrors(errors));
@@ -354,8 +354,7 @@ function (_React$Component) {
     value: function handleClick(e) {
       var _this2 = this;
 
-      var currentUser = this.props.currentUser;
-      this.props.logout(currentUser.id).then(function () {
+      this.props.logout().then(function () {
         return _this2.props.history.push('/');
       });
     }
@@ -377,8 +376,6 @@ function (_React$Component) {
         headerClass = 'header-nav';
         hasBorder = '';
       }
-
-      debugger;
 
       if (currentUser) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
@@ -442,8 +439,8 @@ var msp = function msp(_ref) {
 
 var mdp = function mdp(dispatch) {
   return {
-    logout: function logout(id) {
-      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["logoutUser"])(id));
+    logout: function logout() {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_2__["logoutUser"])());
     }
   };
 };
@@ -1036,7 +1033,6 @@ var sessionReducer = function sessionReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGIN_USER"]:
-      debugger;
       return Object.assign({}, state, {
         id: action.currentUser.id
       });
@@ -1078,7 +1074,6 @@ var usersReducer = function usersReducer() {
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGIN_USER"]:
       var currentUser = action.currentUser;
-      debugger;
       return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, state, _defineProperty({}, currentUser.id, currentUser));
 
     default:
@@ -1208,13 +1203,10 @@ var loginUser = function loginUser(user) {
     }
   });
 };
-var logoutUser = function logoutUser(id) {
+var logoutUser = function logoutUser() {
   return $.ajax({
     method: 'DELETE',
-    url: 'api/session',
-    data: {
-      id: id
-    }
+    url: 'api/session'
   });
 };
 
@@ -44083,7 +44075,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
