@@ -208,7 +208,7 @@ var createUser = function createUser(user) {
 var receiveUser = function receiveUser(user) {
   return {
     type: LOGIN_USER,
-    currentuUser: user
+    currentUser: user
   };
 };
 
@@ -352,18 +352,33 @@ function (_React$Component) {
   _createClass(Navbar, [{
     key: "handleClick",
     value: function handleClick(e) {
+      var _this2 = this;
+
       var currentUser = this.props.currentUser;
-      this.props.logout(currentUser.id);
+      this.props.logout(currentUser.id).then(function () {
+        return _this2.props.history.push('/');
+      });
     }
   }, {
     key: "render",
     value: function render() {
       var currentUser = this.props.currentUser;
       var location = this.props.history.location;
-      var navClass = location.pathname === '/' ? "right-header-wrapper" : 'left-header-wrapper';
-      var headerClass = location.pathname === '/signup' ? 'header-nav centered' : 'header-nav'; // changes button style based on whether or not you're on the /signup page
+      var navClass = location.pathname === '/' ? "right-header-wrapper" : 'left-header-wrapper'; // changes button style based on whether or not you're on the /signup page
 
-      var SigninBtnClass = location.pathname === '/signup' ? 'login-btn-white' : 'login-btn';
+      var SigninBtnClass, headerClass, hasBorder;
+
+      if (location.pathname === '/signup') {
+        SigninBtnClass = 'login-btn-white';
+        headerClass = 'header-nav centered';
+        hasBorder = 'signup-border';
+      } else {
+        SigninBtnClass = 'login-btn';
+        headerClass = 'header-nav';
+        hasBorder = '';
+      }
+
+      debugger;
 
       if (currentUser) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
@@ -379,7 +394,7 @@ function (_React$Component) {
         }, "Log Out")));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
-          className: navClass
+          className: "".concat(navClass, " ").concat(hasBorder)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: headerClass
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -662,8 +677,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -722,19 +735,27 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      var _this3 = this;
+
       e.preventDefault();
-      this.props.processForm(this.state);
+      this.props.createUser(this.state).then(function () {
+        return _this3.props.history.push('/browse');
+      });
     } // logs into the guest user's account
 
   }, {
     key: "handleGuestSubmit",
     value: function handleGuestSubmit(e) {
+      var _this4 = this;
+
       e.preventDefault();
       var guest = {
         email: 'guest@guest.com',
         password: 'go_password_go'
       };
-      this.props.loginUser(guest);
+      this.props.loginUser(guest).then(function () {
+        return _this4.props.history.push('/browse');
+      });
     }
   }, {
     key: "render",
@@ -749,11 +770,11 @@ function (_React$Component) {
       var emailError = null;
 
       if (errors.includes('email')) {
-        emailError = (_readOnlyError("emailError"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        emailError = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "signup-email-error"
-        }, "Please enter a valid email."));
+        }, "Please enter a valid email.");
       } else if (errors.includes('signup')) {
-        emailErros = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        emailError = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "signup-email-error"
         }, "Email is taken.");
       }
@@ -761,9 +782,12 @@ function (_React$Component) {
       var passwordError = errors.includes('password') ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "signup-password-error"
       }, "Your password must contain at least 6 characters.") : null;
+      var backgroundColor = location.hash === '#/signup' ? 'white-bg' : 'black-bg';
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "signup-form-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "".concat(backgroundColor)
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "signup-form-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleGuestSubmit
@@ -771,9 +795,13 @@ function (_React$Component) {
         type: "submit",
         value: "Guest Login",
         className: "signup-guest-login-btn"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Sign up to start your free account"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Create Account"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "signup-texts"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Sign up to start your free account"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, 'Just two more steps and you\'re done!\n'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "We hate paperwork, too.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Create Your Account.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "signup-form",
         onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "signup-inputs"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "email"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -781,7 +809,7 @@ function (_React$Component) {
         id: "email",
         onChange: this.handleChange('email'),
         value: this.state.email,
-        className: emailError ? 'email-signup error-orange' : "email-signup"
+        className: emailError ? 'email-signup error-red' : "email-signup"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: emailDescClass
       }, "Email"), emailError), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -791,10 +819,10 @@ function (_React$Component) {
         id: "password",
         onChange: this.handleChange('password'),
         value: this.state.password,
-        className: passwordError ? "password-signup error-orange" : 'password-signup'
+        className: passwordError ? "password-signup error-red" : 'password-signup'
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: passwordDescClass
-      }, "Password"), passwordError), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "Password"), passwordError)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: "Continue"
       }))));
@@ -804,7 +832,7 @@ function (_React$Component) {
   return SignupForm;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (SignupForm);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(SignupForm));
 
 /***/ }),
 
@@ -995,12 +1023,10 @@ var sessionErrorsReducer = function sessionErrorsReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
-
+ // import merge from 'lodash';
 
 var _nullSession = {
-  currentUser: null
+  id: null
 };
 
 var sessionReducer = function sessionReducer() {
@@ -1010,8 +1036,9 @@ var sessionReducer = function sessionReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGIN_USER"]:
-      return lodash__WEBPACK_IMPORTED_MODULE_1___default()({}, {
-        currentUserId: action.currentUser.id
+      debugger;
+      return Object.assign({}, state, {
+        id: action.currentUser.id
       });
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_USER"]:
@@ -1051,6 +1078,7 @@ var usersReducer = function usersReducer() {
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGIN_USER"]:
       var currentUser = action.currentUser;
+      debugger;
       return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, state, _defineProperty({}, currentUser.id, currentUser));
 
     default:
@@ -1083,7 +1111,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"]));
+  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"], redux_logger__WEBPACK_IMPORTED_MODULE_2___default.a));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);

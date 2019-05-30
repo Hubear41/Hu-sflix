@@ -27,7 +27,7 @@ export const createUser = user => dispatch => (
 
 const receiveUser = user => ({
     type: LOGIN_USER,
-    currentuUser: user,
+    currentUser: user,
 });
 
 const removeUser = () => ({

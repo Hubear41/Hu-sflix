@@ -24,10 +24,9 @@ class Api::SessionsController < ApplicationController
 
     def destroy
         user = User.find(params[:id])
-        debugger
+        
         if user
-            user.destroy
-            logout(user)
+            logout!
 
             render json: {}
         else

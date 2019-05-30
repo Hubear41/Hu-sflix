@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -25,14 +25,14 @@ class SignupForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.processForm(this.state);
+        this.props.createUser(this.state).then( () => this.props.history.push('/browse'));
     }
 
     // logs into the guest user's account
     handleGuestSubmit(e) {
         e.preventDefault();
         const guest = { email: 'guest@guest.com', password: 'go_password_go'};
-        this.props.loginUser(guest);
+        this.props.loginUser(guest).then(() => this.props.history.push('/browse'));
     }
 
     render() {
@@ -44,50 +44,63 @@ class SignupForm extends React.Component {
         
         // users controller will send back either 'email', 'password', or 'signup' error types
         // will respond with a message based on the error.
-        const emailError = null;
+        let emailError = null;
 
         if (errors.includes('email')) {
             emailError = <p className="signup-email-error">Please enter a valid email.</p>;
         } else if (errors.includes('signup')) {
-            emailErros = <p className='signup-email-error'>Email is taken.</p>;
+            emailError = <p className='signup-email-error'>Email is taken.</p>;
         } 
 
         const passwordError = errors.includes('password')
             ? <p className="signup-password-error">Your password must contain at least 6 characters.</p>
             : null;
+
+        const backgroundColor = location.hash === '#/signup' ? 'white-bg' : 'black-bg'
+       
         
         return (
-            <section className={`signup-form-wrapper`}>
+            <section className="signup-form-wrapper">
+                <figure className={`${backgroundColor}`}></figure>
                 <section className="signup-form-body">
 
                     <form onSubmit={this.handleGuestSubmit}>
                         <input type="submit" value="Guest Login" className="signup-guest-login-btn"/>
                     </form>
 
-                    <h4>Sign up to start your free account</h4>
-                    <h5>Create Account</h5>
-
+                    <section className="signup-texts">
+                        <h4>Sign up to start your free account</h4>
+                        <span>
+                            <p>{'Just two more steps and you\'re done!\n'}</p>
+                            <p>We hate paperwork, too.</p>
+                        </span>
+                        <h5>Create Your Account.</h5>
+                    </section>
+                    
                     <form className="signup-form" onSubmit={this.handleSubmit}>
-                        <label htmlFor="email">
-                            <input type="text"
-                                id="email"
-                                onChange={this.handleChange('email')}
-                                value={this.state.email}
-                                className={emailError ? 'email-signup error-orange' : "email-signup"}
-                            />
-                            <span className={emailDescClass}>Email</span>
-                            {emailError}
-                        </label>
-                        <label htmlFor="password">
-                            <input type="password"
-                                id="password"
-                                onChange={this.handleChange('password')}
-                                value={this.state.password}
-                                className={passwordError ? "password-signup error-orange" : 'password-signup'}
-                            />
-                            <span className={passwordDescClass}>Password</span>
-                            {passwordError}
-                        </label>
+                        <section className='signup-inputs'>
+                            <label htmlFor="email">
+                                <input type="text"
+                                    id="email"
+                                    onChange={this.handleChange('email')}
+                                    value={this.state.email}
+                                    className={emailError ? 'email-signup error-red' : "email-signup"}
+                                />
+                                <span className={emailDescClass}>Email</span>
+                                {emailError}
+                            </label>
+                            <label htmlFor="password">
+                                <input type="password"
+                                    id="password"
+                                    onChange={this.handleChange('password')}
+                                    value={this.state.password}
+                                    className={passwordError ? "password-signup error-red" : 'password-signup'}
+                                />
+                                <span className={passwordDescClass}>Password</span>
+                                {passwordError}
+                            </label>
+                        </section>
+                        
 
                         <input type="submit" value="Continue" />
                     </form>
@@ -98,4 +111,4 @@ class SignupForm extends React.Component {
     }
 }
 
-export default SignupForm;
+export default withRouter(SignupForm);

@@ -10,17 +10,26 @@ class Navbar extends React.Component {
 
     handleClick(e) {
         const { currentUser } = this.props;
-        this.props.logout(currentUser.id);
+        this.props.logout(currentUser.id).then( () => this.props.history.push('/'));
     }
 
     render() {
         const { currentUser } = this.props;
         const { location } = this.props.history;
         const navClass = location.pathname === '/' ? "right-header-wrapper" : 'left-header-wrapper'
-        const headerClass = location.pathname === '/signup' ? 'header-nav centered' : 'header-nav';
-       
+    
         // changes button style based on whether or not you're on the /signup page
-        const SigninBtnClass = location.pathname === '/signup' ? 'login-btn-white' : 'login-btn';
+        let SigninBtnClass, headerClass, hasBorder;
+        if (location.pathname === '/signup') {
+            SigninBtnClass = 'login-btn-white';
+            headerClass = 'header-nav centered';
+            hasBorder = 'signup-border';
+        } else {
+            SigninBtnClass = 'login-btn';
+            headerClass = 'header-nav';
+            hasBorder = '';
+        }
+        debugger
         
         if ( currentUser ) {
             return (
@@ -36,7 +45,7 @@ class Navbar extends React.Component {
             );  
         } else {
             return (
-                <header className={navClass}>
+                <header className={`${navClass} ${hasBorder}`}>
                     <section className={headerClass}>
                         <Link to="/" className='logo-btn'>Hu'sflix</Link>
 

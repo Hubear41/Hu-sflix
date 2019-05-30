@@ -1,13 +1,21 @@
 class Api::UsersController < ApplicationController 
     def create
-        @user = User.new(user_params)
+        errors = [];
+        errors.push('email') if params[:user][:email] == ""
+        errors.push('password') if params[:user][:password] == "" 
 
-        if @user.save
-            login!(@user)
-            
-            render :create
+        if errors.empty?
+            @user = User.new(user_params)
+
+            if @user.save
+                login!(@user)
+                
+                render :create
+            else
+                render json: ['signup'], status: 401
+            end
         else
-            render json: @user.errors.fullmessages
+            render json: errors, status: 401
         end
     end
 

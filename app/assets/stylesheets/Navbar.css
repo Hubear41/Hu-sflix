@@ -5,7 +5,8 @@
 .right-header-wrapper {
     display: flex;
     justify-content: flex-end;
-    position: absolute;
+    align-items: center;
+    /* position: absolute; */
     top: 0;
     left: 0;
     width: 100%;
@@ -14,9 +15,17 @@
 .left-header-wrapper {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     position: absolute;
     width: 100%;
+    z-index: 10;
 }
+
+.signup-border {
+    padding-bottom: 32px;
+    border-bottom: 1px solid lightgray;
+}
+
 
 .header-nav {
     display: flex;
@@ -52,6 +61,9 @@
 .login-btn-white {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
-    font-size: 23px;
+    font-size: 19px;
     color: black;
+    text-decoration: none;
+    padding-top: 33px;
+
 }

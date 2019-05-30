@@ -1,8 +1,16 @@
-/* .husflix-bg {
-    position: absolute;
-    z-index: 1;
-}
-
 .white-bg {
     background-color: white;
-} */
+    position: absolute;
+    left: -1000px;
+    z-index: 2;
+    width: 5000px;
+    height: 5000px; 
+}
+
+.black-bg {
+    background-color: rgb(33, 32, 32);
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 5000px; 
+}
