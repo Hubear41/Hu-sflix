@@ -17,6 +17,11 @@ const App = () => {
             <AuthRoute path="/signup" component={SignUp} />
             <AuthRoute path="/login" component={Login} />
         </main>
+        <footer>
+            <a href="">Personal Site</a>
+            <a href="https://github.com/Hubear41">Github</a>
+            <a href="">LinkedIn</a>
+        </footer>
     );
 };
 

@@ -18,15 +18,17 @@ class Navbar extends React.Component {
         const navClass = location.pathname === '/' ? "right-header-wrapper" : 'left-header-wrapper'
     
         // changes button style based on whether or not you're on the /signup page
-        let SigninBtnClass, headerClass, hasBorder;
+        let SigninBtnClass, headerClass, hasBorder, alreadyHaveAccountMsg;
         if (location.pathname === '/signup') {
             SigninBtnClass = 'login-btn-white';
             headerClass = 'header-nav centered';
             hasBorder = 'signup-border';
+            alreadyHaveAccountMsg = null;
         } else {
             SigninBtnClass = 'login-btn';
             headerClass = 'header-nav';
             hasBorder = '';
+            alreadyHaveAccountMsg = <span>Already have an account?</span>
         }
         
         if ( currentUser ) {
@@ -52,7 +54,13 @@ class Navbar extends React.Component {
                         </Link>
 
 
-                        { location.pathname === "/login" ? null : <Link to="/login" className={SigninBtnClass}>Sign In</Link>}
+                        { location.pathname === "/login" 
+                                ? null 
+                                : <nav className="signin-btn">
+                                    {alreadyHaveAccountMsg}
+                                    <Link to="/login" className={SigninBtnClass}>Log In</Link>
+                                </nav>
+                        }
                     </section>
                 </header>
             );
