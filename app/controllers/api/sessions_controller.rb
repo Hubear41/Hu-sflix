@@ -23,11 +23,8 @@ class Api::SessionsController < ApplicationController
     end
 
     def destroy
-        user = User.find(params[:id])
-        
-        if user
+        if current_user
             logout!
-
             render json: {}
         else
             render json: 'Can not logout if not logged', status: 404

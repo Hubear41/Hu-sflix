@@ -14,10 +14,9 @@ export const loginUser = user => {
     });
 };
 
-export const logoutUser = id => {
+export const logoutUser = () => {
     return $.ajax({
         method: 'DELETE',
         url: 'api/session',
-        data: { id },
     });
 };

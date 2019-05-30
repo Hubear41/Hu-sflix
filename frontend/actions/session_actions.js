@@ -11,8 +11,8 @@ export const loginUser = user => dispatch => (
     )
 );
 
-export const logoutUser = id => dispatch => (
-    SessionUTIL.logoutUser(id).then( 
+export const logoutUser = () => dispatch => (
+    SessionUTIL.logoutUser().then( 
         () => dispatch(removeUser()),
         errors => dispatch(receiveErrors(errors)) 
     )

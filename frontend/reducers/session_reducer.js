@@ -12,7 +12,6 @@ const sessionReducer = (state = _nullSession, action) => {
     Object.freeze(state);
     switch(action.type) {
         case LOGIN_USER:
-            debugger
             return Object.assign({}, state, { id: action.currentUser.id});
         case LOGOUT_USER:
             return _nullSession;

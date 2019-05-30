@@ -9,8 +9,7 @@ class Navbar extends React.Component {
     }
 
     handleClick(e) {
-        const { currentUser } = this.props;
-        this.props.logout(currentUser.id).then( () => this.props.history.push('/'));
+        this.props.logout().then( () => this.props.history.push('/'));
     }
 
     render() {
@@ -29,7 +28,6 @@ class Navbar extends React.Component {
             headerClass = 'header-nav';
             hasBorder = '';
         }
-        debugger
         
         if ( currentUser ) {
             return (

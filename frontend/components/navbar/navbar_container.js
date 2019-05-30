@@ -7,7 +7,7 @@ const msp = ({ entities, session }) => ({
 });
 
 const mdp = dispatch =>({
-    logout: id => dispatch(logoutUser(id)),
+    logout: () => dispatch(logoutUser()),
 });
 
 export default connect(msp, mdp)(Navbar);
