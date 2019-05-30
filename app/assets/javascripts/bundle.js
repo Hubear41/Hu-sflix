@@ -101,7 +101,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
+/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/show_actions */ "./frontend/actions/show_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -128,7 +130,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   window.dispatch = store.dispatch;
-  window.getState = store.getState; // end of testing
+  window.getState = store.getState;
+  window.fetchVideo = _actions_show_actions__WEBPACK_IMPORTED_MODULE_4__["fetchVideo"];
+  window.fetchShow = _actions_show_actions__WEBPACK_IMPORTED_MODULE_4__["fetchShow"];
+  window.fetchShows = _actions_show_actions__WEBPACK_IMPORTED_MODULE_4__["fetchShows"]; // end of testing
 
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
@@ -222,6 +227,71 @@ var receiveErrors = function receiveErrors(errors) {
   return {
     type: RECEIVE_SESSION_ERRORS,
     errors: errors
+  };
+};
+
+/***/ }),
+
+/***/ "./frontend/actions/show_actions.js":
+/*!******************************************!*\
+  !*** ./frontend/actions/show_actions.js ***!
+  \******************************************/
+/*! exports provided: RECEIVE_VIDEO, RECEIVE_SHOW, RECEIVE_SHOWS, fetchVideo, fetchShows, fetchShow */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_VIDEO", function() { return RECEIVE_VIDEO; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SHOW", function() { return RECEIVE_SHOW; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SHOWS", function() { return RECEIVE_SHOWS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVideo", function() { return fetchVideo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShows", function() { return fetchShows; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShow", function() { return fetchShow; });
+/* harmony import */ var _util_show_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/show_util */ "./frontend/util/show_util.js");
+
+var RECEIVE_VIDEO = 'RECEIVE_VIDEO';
+var RECEIVE_SHOW = 'RECEIVE_SHOW';
+var RECEIVE_SHOWS = 'RECEIVE_SHOWS';
+var fetchVideo = function fetchVideo(id) {
+  return function (dispatch) {
+    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchVideo"](id).then(function (video) {
+      return dispatch(receiveVideo(video));
+    });
+  };
+};
+var fetchShows = function fetchShows() {
+  return function (dispatch) {
+    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchShows"]().then(function (shows) {
+      return dispatch(receiveShows(shows));
+    });
+  };
+};
+var fetchShow = function fetchShow(id) {
+  return function (dispatch) {
+    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchShow"](id).then(function (show) {
+      return dispatch(receiveShow(show));
+    });
+  };
+};
+
+var receiveVideo = function receiveVideo(video) {
+  return {
+    type: RECEIVE_VIDEO,
+    video: video
+  };
+};
+
+var receiveShows = function receiveShows(shows) {
+  return {
+    type: RECEIVE_SHOWS,
+    shows: shows
+  };
+};
+
+var receiveShow = function receiveShow(show) {
+  return {
+    type: RECEIVE_SHOW,
+    show: show
   };
 };
 
@@ -925,10 +995,16 @@ var Splash = function Splash(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
+/* harmony import */ var _videos_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./videos_reducer */ "./frontend/reducers/videos_reducer.js");
+/* harmony import */ var _shows_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shows_reducer */ "./frontend/reducers/shows_reducer.js");
+
+
 
 
 var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  videos: _videos_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
+  shows: _shows_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
 
@@ -1057,6 +1133,45 @@ var sessionReducer = function sessionReducer() {
 
 /***/ }),
 
+/***/ "./frontend/reducers/shows_reducer.js":
+/*!********************************************!*\
+  !*** ./frontend/reducers/shows_reducer.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/show_actions */ "./frontend/actions/show_actions.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var showsReducer = function showsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SHOWS"]:
+      return action.shows;
+
+    case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SHOW"]:
+      var show = action.show;
+      return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, state, _defineProperty({}, show.id, show));
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (showsReducer);
+
+/***/ }),
+
 /***/ "./frontend/reducers/users_reducer.js":
 /*!********************************************!*\
   !*** ./frontend/reducers/users_reducer.js ***!
@@ -1090,6 +1205,42 @@ var usersReducer = function usersReducer() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (usersReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/videos_reducer.js":
+/*!*********************************************!*\
+  !*** ./frontend/reducers/videos_reducer.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/show_actions */ "./frontend/actions/show_actions.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var videosReducer = function videosReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_VIDEO"]:
+      var video = action.video;
+      return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, state, _defineProperty({}, video.id, video));
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (videosReducer);
 
 /***/ }),
 
@@ -1215,6 +1366,39 @@ var logoutUser = function logoutUser() {
   return $.ajax({
     method: 'DELETE',
     url: 'api/session'
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/show_util.js":
+/*!************************************!*\
+  !*** ./frontend/util/show_util.js ***!
+  \************************************/
+/*! exports provided: fetchShows, fetchShow, fetchVideo */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShows", function() { return fetchShows; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShow", function() { return fetchShow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVideo", function() { return fetchVideo; });
+var fetchShows = function fetchShows() {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/shows'
+  });
+};
+var fetchShow = function fetchShow(id) {
+  return $.ajax({
+    method: 'GET',
+    url: "api/shows/".concat(id)
+  });
+};
+var fetchVideo = function fetchVideo(id) {
+  return $.ajax({
+    method: "GET",
+    url: "api/videos/".concat(id)
   });
 };
 

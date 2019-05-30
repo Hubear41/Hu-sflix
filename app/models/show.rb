@@ -20,12 +20,18 @@ class Show < ApplicationRecord
     
     validates :poster_url, :title, :director, :tagline, presence: true
     validates :maturity_rating, inclusion: { in: MATURITY_RATINGS }
+    validates :view_count, presence: true
     
     has_many :videos
+    after_initialize :default_values
 
     def episodes 
-        episodes = vidoes.map { |video| video.type == "EPISODE" }
+        episodes = vidoes.map { |video| video.video_type == "EPISODE" }
 
         episodes.sort
+    end
+
+    def default_values 
+        self.view_count ||= 0
     end
 end

@@ -1,4 +1,4 @@
-class ShowsController < ApplicationController 
+class Api::ShowsController < ApplicationController 
     def index
         @shows = Show.all
 

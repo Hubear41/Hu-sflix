@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import configureStore from './store/store';
 import Root from './components/root';
+import { fetchVideo, fetchShow, fetchShows } from './actions/show_actions';
 
 document.addEventListener('DOMContentLoaded', () => {
     const root = document.getElementById('root');
@@ -23,6 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // testing stuff
     window.dispatch = store.dispatch;
     window.getState = store.getState;
+    window.fetchVideo = fetchVideo;
+    window.fetchShow = fetchShow;
+    window.fetchShows = fetchShows;
     // end of testing
 
     ReactDOM.render(<Root store={store} />, root);
