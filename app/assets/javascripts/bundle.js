@@ -350,7 +350,7 @@ var App = function App() {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fab fa-github"
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    href: "",
+    href: "https://www.linkedin.com/in/dennisdhu/",
     className: "linkedin-symbol"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fab fa-linkedin-in"
