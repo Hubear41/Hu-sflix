@@ -1,0 +1,1 @@
+json.extract! show, :id, :poster_url, :title, :director, :tagline, :year, :maturity_rating
