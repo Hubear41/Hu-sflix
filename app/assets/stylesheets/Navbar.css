@@ -26,10 +26,9 @@
     border-bottom: 1px solid lightgray;
 }
 
-
 .header-nav {
     display: flex;
-    width: 54%;
+    width: 55%;
     justify-content: space-between;
     align-items: center;
     margin: 0 40px;    
@@ -75,6 +74,7 @@
 
 .husflix-logo {
     max-height: 45px;
+    max-width: 170px;
     position: absolute;
     left: 30px;
 }

@@ -15,7 +15,7 @@
  */
 
  #root {
-    height: 100vh;
+    height: 90vh;
     width: 100%;
     background-color: rgb(33, 32, 32);
     position: relative;
@@ -24,4 +24,35 @@
 .main-content {
     color: white;
     height: 100%;
+}
+
+.husflix-footer {
+    background-color: #141414;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.husflix-footer * {
+    margin: 5px 10px;
+    color: white;
+}
+
+.website-symbol {
+    max-height: 35px;
+    max-width: 35px;
+    transform: scale(2);
+}
+
+.linkedin-symbol {
+    max-height: 35px;
+    max-width: 35px;
+    transform: scale(2);
+}
+
+.github-symbol{
+    max-height: 32px;
+    max-width: 32px;
+    transform: scale(2);
 }

@@ -9,19 +9,21 @@ import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
 const App = () => {
     return (
-        <main className="main-content">
-            <Navbar />
-            
+        <>
+            <main className="main-content">
+                <Navbar />
 
-            <Route exact path="/" component={Splash} />
-            <AuthRoute path="/signup" component={SignUp} />
-            <AuthRoute path="/login" component={Login} />
-        </main>
-        <footer>
-            <a href="">Personal Site</a>
-            <a href="https://github.com/Hubear41">Github</a>
-            <a href="">LinkedIn</a>
-        </footer>
+                <Route exact path="/" component={Splash} />
+                <AuthRoute path="/signup" component={SignUp} />
+                <AuthRoute path="/login" component={Login} />
+            </main>
+
+            <footer className="husflix-footer">
+                <a href="" className="website-symbol"><i className="fas fa-ghost"></i></a>
+                <a href="https://github.com/Hubear41" className="github-symbol"><i className="fab fa-github"></i></a>
+                <a href="" className='linkedin-symbol'><i className="fab fa-linkedin-in"></i></a>
+            </footer>
+        </>
     );
 };
 
