@@ -1310,7 +1310,8 @@ var mdp = function mdp(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _show_detail_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./show_detail_container */ "./frontend/components/shows/show_detail_container.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _show_detail_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./show_detail_container */ "./frontend/components/shows/show_detail_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1328,6 +1329,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1362,21 +1364,25 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "clickPlay",
-    value: function clickPlay(e) {}
+    key: "launchWatch",
+    value: function launchWatch(e) {
+      this.props.history.push('/watch');
+    }
   }, {
     key: "toggleMute",
     value: function toggleMute(e) {
+      // add code to find video element and mute/unmute
       this.setState({
         mute: !this.state.mute
       });
     }
   }, {
+    key: "openDropDown",
+    value: function openDropDown(e) {}
+  }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          show = _this$props.show,
-          rowNum = _this$props.rowNum;
+      var show = this.props.show;
       var muteBtn = this.state.mute ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-volume-mute mute-symbol"
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -1393,7 +1399,8 @@ function (_React$Component) {
         alt: "",
         className: "show-title-card"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "show-peek-preview-player"
+        className: "show-peek-preview-player",
+        onClick: this.launchWatch
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "preview-video-player"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
@@ -1437,7 +1444,7 @@ function (_React$Component) {
   return ShowPreviewPlayerSmall;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (ShowPreviewPlayerSmall);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(ShowPreviewPlayerSmall));
 
 /***/ }),
 
@@ -1499,7 +1506,6 @@ function (_React$Component) {
       shows.forEach(function (show) {
         showList.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_preview_player_small__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: show.id,
-          rowNum: rowNum,
           show: show
         }));
       });

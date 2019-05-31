@@ -12,7 +12,7 @@ class ShowRow extends React.Component {
         
         const showList = [];
         shows.forEach( show => {
-            showList.push(<ShowPreviewPlayer key={show.id} rowNum={rowNum} show={show} />); 
+            showList.push(<ShowPreviewPlayer key={show.id} show={show} />); 
         } );
         
         return (

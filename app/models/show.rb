@@ -25,11 +25,19 @@ class Show < ApplicationRecord
     has_many :videos
     after_initialize :default_values
 
-    def episodes 
-        episodes = vidoes.map { |video| video.video_type == "EPISODE" }
-
-        episodes.sort
+    def episodes_ids 
+       vidoes.map { |video| video.id if video.type == "EPISODE" }
     end
+
+    def preview_id
+        videos.each { |video| return video.id if video.type == "PREVIEW"}
+    end
+
+    def movie_ids 
+        videos.map { |video| video.id if video.type == "MOVIE" }
+    end
+
+    private
 
     def default_values 
         self.view_count ||= 0

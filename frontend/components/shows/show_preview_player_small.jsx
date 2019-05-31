@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import ShowDetail from './show_detail_container';
 
 class ShowPreviewPlayerSmall extends React.Component {
@@ -19,16 +20,21 @@ class ShowPreviewPlayerSmall extends React.Component {
         this.setState({ height });
     }
 
-    clickPlay(e) {
-
+    launchWatch(e) {
+        this.props.history.push('/watch')    
     }
 
     toggleMute(e) {
+        // add code to find video element and mute/unmute
         this.setState({ mute: !this.state.mute })
+    }
+
+    openDropDown(e) {
+
     }
     
     render() {
-        const { show, rowNum } = this.props;
+        const { show } = this.props;
         const muteBtn = this.state.mute ? <i className="fas fa-volume-mute mute-symbol"></i> : <i className="fas fa-volume-up mute-symbol"></i>
 
         return (
@@ -36,7 +42,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                 <section id="show-peek-preview-wrapper" className={`show-row-item-x item-${show.id}`} style={{height: this.state.height}}>
                     <img src={window.tempBgURL} alt="" className="show-title-card" />
 
-                    <figure className="show-peek-preview-player">
+                    <figure className="show-peek-preview-player" onClick={this.launchWatch}>
 
                         <figure className="preview-video-player">
                             <video src="" className={`show-${show.id} preview-video`} poster={window.tempBgURL}>
@@ -69,7 +75,9 @@ class ShowPreviewPlayerSmall extends React.Component {
 
 
 
-                        <button className="toggle-show-detail-btn"><i className="fas fa-chevron-down"></i></button>
+                        <button className="toggle-show-detail-btn">
+                            <i className="fas fa-chevron-down"></i>
+                        </button>
                     </figure>
 
                     {/* <aside className={`show-row-jaw gallery-jaw-${show.id} hidden`}>
@@ -81,4 +89,4 @@ class ShowPreviewPlayerSmall extends React.Component {
     }
 }
 
-export default ShowPreviewPlayerSmall;
+export default withRouter(ShowPreviewPlayerSmall);
