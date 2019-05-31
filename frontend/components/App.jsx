@@ -4,6 +4,7 @@ import Login from './session/login_form_container';
 import Navbar from './navbar/navbar_container';
 import Splash from './splash/splash';
 import Background from './background/background';
+import ShowIndexGallery from './shows/show_gallery_container';
 import { Route } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
 
@@ -17,6 +18,7 @@ const App = () => {
                 <Route exact path="/" component={Splash} />
                 <AuthRoute path="/signup" component={SignUp} />
                 <AuthRoute path="/login" component={Login} />
+                <ProtectedRoute path="/browse" component={ShowIndexGallery} />
             </main>
 
             <footer className="husflix-footer">

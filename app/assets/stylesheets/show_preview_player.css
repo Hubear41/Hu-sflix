@@ -1,0 +1,173 @@
+/* .show-row-items {
+    height: 130px;
+    width: 230px;
+    border: 1px solid black;
+    background-color: goldenrod;
+} */
+
+.show-rows-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+}
+
+.show-row {
+    display: flex;
+    width: 80vw;
+}   
+
+/* #show-peek-preview-wrapper {
+    width: 20%;
+    margin: 0px 1px;
+    transform-origin: left;
+} */
+/* 
+#show-peek-preview-wrapper:hover{
+    border: 1px solid black;
+    transform: scale(1.25);
+    margin: 0 2px;
+    box-sizing: border-box;
+} */
+
+#show-peek-preview-wrapper {
+    border: 1px solid white;
+    transform: scale(1.25);
+    margin: 0 2px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+#show-peek-preview-wrapper:hover + .show-row-item-x {
+    margin-left: 5%;
+}
+
+.show-peek-preview-wrapper {
+    width: 100%;
+    height: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 30;
+}
+
+.preview-video-player {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.preview-player-right-side-btns {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 6%;
+}
+
+.preview-player-btns {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    position: absolute;
+    z-index: 40;
+}
+
+.preview-play-btn {
+    position: absolute;
+    top: 60%;
+    left: 6%;
+    height: 13%;
+    width: 9%;
+    border: none;
+    background: none;
+}
+
+.preview-play-pause-icon {
+    position: relative;
+}
+
+.preview-video-info-desc {
+    position: absolute;
+    bottom: 25%;
+    left: 8%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.toggle-show-detail-btn {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 40;
+}
+
+.preview-mute-btn {
+    background: none;
+    outline: none;
+    border: none;
+    position: relative;
+    transform-origin: center;
+    transform: scale(0.8);
+    transition: transform 0.3s;
+}
+
+.preview-mute-btn:hover {
+    transform: scale(0.9);
+    transition: transform 0.3s;
+}
+
+.preview-mute-btn:hover .mute-symbol {
+    color: white;
+}
+
+.preview-mute-btn:hover .mute-btn-outline {
+    opacity: 1;
+}
+
+.hidden-player {
+    height: 0;
+}
+
+.show-title-card {
+    width: 100%;
+}
+
+.toggle-show-detail-btn {
+    color: #9b9b9b;
+    width: 20%;
+    background: none;
+    outline: none;
+    border: none;
+    padding: 10px 0;
+    opacity: 0;
+    animation: dropdown;
+    animation-duration: 0.5s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.fa-chevron-down {
+    width: 50%;
+    font-size: 30px;
+}
+
+.preview-video {
+    background-color: black;
+    max-height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+@keyframes dropdown {
+    0% {
+        padding: 20px 0;
+        opacity: 0;
+    }
+    100% {
+        padding: 10px 0;
+        opacity: 1;
+        animation-timing-function: ease-in;
+    }
+}

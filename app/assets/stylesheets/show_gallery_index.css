@@ -1,0 +1,10 @@
+
+.show-gallery-index {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.big-video-preview {
+    height: 40vh;
+}

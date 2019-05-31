@@ -9,7 +9,6 @@ const msp = ({entities}) => ({
 
 const mdp = dispatch => ({
     requestAllShows: () => dispatch(fetchShows()),
-    requestShow: id => dispatch(fetchShow(id)),
     requestVideo: id => dispatch(fetchVideo(id)),
 });
 

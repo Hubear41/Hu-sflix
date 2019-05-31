@@ -2,14 +2,17 @@ import React from 'react';
 
 class ShowDetail extends React.Component {
     componentDidMount() {
-        this.props.getShowInfo(this.show.id);
+        this.props.getShowInfo(this.props.match.params.showId);
     }
 
     render() {
-        <figure className="">
+        const { rowNum, show } = this.props;
 
-            
-        </figure>
+        return (
+            <figure className={`row-preview${rowNum} dropdown-preview-player`}>
+                <video src=""></video>
+            </figure>
+        );
     }
 }
 

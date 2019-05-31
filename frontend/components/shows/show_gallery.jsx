@@ -2,38 +2,59 @@ import React from 'react';
 import ShowRows from './show_rows';
 
 class ShowGallery extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    
     componentDidMount() {
-        this,props.requestShows();
+        this.props.requestAllShows();
     }
 
     toggleShowDetailContainer() {
 
     }
-    
-    render() {
-        const { shows, requestShow } = this.props;
-        const showRowsContent = [];
 
+    createRowsOf(shows) {
         let row = [];
-        for (let idx = 0; idx < shows.length; idx++) {
+        let showsPerRow = [];
+        let idx = 0;
+
+        while ( idx < shows.length ) {
             const currShow = shows[idx];
 
-            if (Math.floor(idx + 1 % 12) !== 0 ) {
+            if (Math.floor(idx + 1 % 12) !== 0) {
                 row.push(currShow);
             } else {
-                showRowsContent.push(row);
+                showsPerRow.push(row);
 
                 row = [currShow];
             }
+
+            idx++;
         }
 
-        const showRowsList = showRowsContent.map( (rowShows, idx) => {
-            return <ShowRows key={idx} shows={rowShows} getShowInfo={requestShow} />
+        if ( row.length > 0 ) {
+            showsPerRow.push(row);
+        }
+
+        return showsPerRow;
+    }
+    
+    render() {
+        const { shows, requestShow } = this.props;
+        
+        const showsPerRow = this.createRowsOf(shows);   
+
+        const showRowsList = showsPerRow.map( (row, idx) => {
+            return <ShowRows key={idx} rowNum={idx} shows={row} getShowInfo={requestShow} />
         }) 
 
-        render (
-            <main className="show-gallery-index">
-                <ul>
+        return (
+            <main className="show-gallery-index-wrapper">
+                <figure className="big-video-preview">
+                    
+                </figure>
+                <ul className="show-gallery-index">
                     {showRowsList}
                 </ul>
             </main>
