@@ -9,8 +9,9 @@ class ShowPreviewPlayerSmall extends React.Component {
             height: 0,
             mute: true,
         };
-        this.clickPlay = this.clickPlay.bind(this);
-        this.toggleMute = this.toggleMute.bind(this);
+        // this.launchPlay = this.launchPlay.bind(this);
+        // this.toggleMute = this.toggleMute.bind(this);
+        // this.openDropDown = this.openDropDown.bind(this);
     }
 
     componentDidMount() {
@@ -19,19 +20,27 @@ class ShowPreviewPlayerSmall extends React.Component {
         
         this.setState({ height });
     }
-
+    
     launchWatch(e) {
         this.props.history.push('/watch')    
     }
 
     toggleMute(e) {
-        // add code to find video element and mute/unmute
+        const { show } = this.props;
+        const smallPlayer = document.findByElementId(`show-${show.id}`);
+
+        if ( smallPlayer.muted ) {
+            smallPlayer.muted = false;
+        } else {
+            smallPlayer.muted = true;
+        }
+
         this.setState({ mute: !this.state.mute })
     }
 
-    openDropDown(e) {
+    // openDropDown(e) {
 
-    }
+    // }
     
     render() {
         const { show } = this.props;
@@ -45,7 +54,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                     <figure className="show-peek-preview-player" onClick={this.launchWatch}>
 
                         <figure className="preview-video-player">
-                            <video src="" className={`show-${show.id} preview-video`} poster={window.tempBgURL}>
+                            <video src="" id={`show-${show.id} preview-video`} poster={window.tempBgURL} defaultMuted>
 
                             </video>
                             {/* need on clicks for the entire video that isn't buttons or the jaw-toggle */}

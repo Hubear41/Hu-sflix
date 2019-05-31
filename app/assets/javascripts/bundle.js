@@ -314,8 +314,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _splash_splash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./splash/splash */ "./frontend/components/splash/splash.jsx");
 /* harmony import */ var _background_background__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./background/background */ "./frontend/components/background/background.jsx");
 /* harmony import */ var _shows_show_gallery_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shows/show_gallery_container */ "./frontend/components/shows/show_gallery_container.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.js");
+/* harmony import */ var _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./watch/show_watch_container */ "./frontend/components/watch/show_watch_container.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.js");
+
 
 
 
@@ -329,19 +331,22 @@ __webpack_require__.r(__webpack_exports__);
 var App = function App() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_background_background__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
     className: "main-content"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navbar_navbar_container__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__["Route"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_navbar_navbar_container__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__["Route"], {
     exact: true,
     path: "/",
     component: _splash_splash__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_8__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_9__["AuthRoute"], {
     path: "/signup",
     component: _session_signup_form_container__WEBPACK_IMPORTED_MODULE_1__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_8__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_9__["AuthRoute"], {
     path: "/login",
     component: _session_login_form_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_8__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_9__["ProtectedRoute"], {
     path: "/browse",
     component: _shows_show_gallery_container__WEBPACK_IMPORTED_MODULE_6__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_9__["ProtectedRoute"], {
+    path: "/watch/:showId/:videoId",
+    component: _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_7__["default"]
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
     className: "husflix-footer"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -1322,9 +1327,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1348,9 +1353,10 @@ function (_React$Component) {
     _this.state = {
       height: 0,
       mute: true
-    };
-    _this.clickPlay = _this.clickPlay.bind(_assertThisInitialized(_this));
-    _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
+    }; // this.launchPlay = this.launchPlay.bind(this);
+    // this.toggleMute = this.toggleMute.bind(this);
+    // this.openDropDown = this.openDropDown.bind(this);
+
     return _this;
   }
 
@@ -1371,14 +1377,21 @@ function (_React$Component) {
   }, {
     key: "toggleMute",
     value: function toggleMute(e) {
-      // add code to find video element and mute/unmute
+      var show = this.props.show;
+      var smallPlayer = document.findByElementId("show-".concat(show.id));
+
+      if (smallPlayer.muted) {
+        smallPlayer.muted = false;
+      } else {
+        smallPlayer.muted = true;
+      }
+
       this.setState({
         mute: !this.state.mute
       });
-    }
-  }, {
-    key: "openDropDown",
-    value: function openDropDown(e) {}
+    } // openDropDown(e) {
+    // }
+
   }, {
     key: "render",
     value: function render() {
@@ -1405,8 +1418,9 @@ function (_React$Component) {
         className: "preview-video-player"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         src: "",
-        className: "show-".concat(show.id, " preview-video"),
-        poster: window.tempBgURL
+        id: "show-".concat(show.id, " preview-video"),
+        poster: window.tempBgURL,
+        defaultMuted: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.clickPlay,
         className: "preview-play-btn"
@@ -1551,6 +1565,284 @@ var Splash = function Splash(props) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Splash);
+
+/***/ }),
+
+/***/ "./frontend/components/watch/show_watch.jsx":
+/*!**************************************************!*\
+  !*** ./frontend/components/watch/show_watch.jsx ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Watch =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Watch, _React$Component);
+
+  function Watch(props) {
+    var _this;
+
+    _classCallCheck(this, Watch);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Watch).call(this, props));
+    _this.state = {
+      player: null,
+      currentPlayerTime: 0
+    };
+    return _this;
+  }
+
+  _createClass(Watch, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var player = document.findElementById('main-video-tag');
+      this.setState({
+        player: player
+      });
+    }
+  }, {
+    key: "togglePlayPause",
+    value: function togglePlayPause() {
+      var player = this.state.player;
+
+      if (player.paused) {
+        player.play();
+      } else {
+        player.pause();
+      }
+
+      this.setState({
+        player: player
+      });
+    }
+  }, {
+    key: "findAudioLevel",
+    value: function findAudioLevel() {
+      var player = this.state.player;
+
+      if (player.volume > 0.5 && player.volume <= 1.0) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-up"
+        });
+      } else if (player.volumn <= 0.5 && player.volumn > 0.0) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-down"
+        });
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-mute"
+        });
+      }
+    }
+  }, {
+    key: "toggleMute",
+    value: function toggleMute() {
+      var player = this.state.player;
+
+      if (player.muted) {
+        player.muted = false;
+      } else {
+        player.muted = false;
+      }
+
+      this.setState({
+        player: player
+      });
+    }
+  }, {
+    key: "jumpBack",
+    value: function jumpBack() {
+      var player = this.state.player;
+      player.currentTime = player.currentTime - 10;
+      this.setState({
+        player: player
+      });
+    }
+  }, {
+    key: "jumpForward",
+    value: function jumpForward() {
+      var player = this.state.player;
+      player.currentTime = player.currentTime + 10;
+      this.setState({
+        player: player
+      });
+    }
+  }, {
+    key: "openFullscreen",
+    value: function openFullscreen() {
+      var player = this.state.player;
+
+      if (player.requestFullscreen) {
+        player.requestFullscreen();
+      } else if (player.mozRequestFullScreen) {
+        /* Firefox */
+        player.mozRequestFullScreen();
+      } else if (player.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        player.webkitRequestFullscreen();
+      } else if (player.msRequestFullscreen) {
+        /* IE/Edge */
+        player.msRequestFullscreen();
+      }
+    }
+  }, {
+    key: "closeFullscreen",
+    value: function closeFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        /* Firefox */
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        /* Chrome, Safari and Opera */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        /* IE/Edge */
+        document.msExitFullscreen();
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$state = this.state,
+          player = _this$state.player,
+          currentPlayerTime = _this$state.currentPlayerTime;
+      var video = this.props.video;
+      var playPauseBtn = player.paused ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-play"
+      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-pause"
+      });
+      var audioBtn = this.findAudioLevel();
+      var fullscreenBtn = window.fullScreen ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-compress"
+      })) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-expand"
+      }));
+      var remainingTime = video.runtime - currentPlayerTime;
+      var scrubberProgress = currentPlayerTime / video.runtime * 100;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "main-video-player"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "Video-Container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+        src: "video.video_url",
+        id: "main-video-tag",
+        autoplay: true
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "all-Player-Controls"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/browse"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        "class": "fas fa-arrow-left"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Back to browse")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "full-control-area",
+        onClick: togglePlayPause
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "main-video-bottom-controls"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "progress-scrubber"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "scrubber-bar"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "scrubber-progress"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "scrubber-bar-progress",
+        style: {
+          width: scrubberProgress
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-circle scrubber-head"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, remainingTime)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "Player-Controls"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, playPauseBtn), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.jumpForward
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-undo"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.jumpBack
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-redo"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "audio-btn-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: toggleMute
+      }, audioBtn), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "audio-levels"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, video.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-layer-group"
+      }), fullscreenBtn)))));
+    }
+  }]);
+
+  return Watch;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Watch);
+
+/***/ }),
+
+/***/ "./frontend/components/watch/show_watch_container.js":
+/*!***********************************************************!*\
+  !*** ./frontend/components/watch/show_watch_container.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/show_actions */ "./frontend/actions/show_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _show_watch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./show_watch */ "./frontend/components/watch/show_watch.jsx");
+
+
+
+
+
+var msp = function msp(state, ownProps) {
+  var video = state.entities.videos[ownProps.match.params.videoId];
+  return {
+    video: video
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    fetchVideo: function fetchVideo(id) {
+      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchVideo"])(id));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_show_watch__WEBPACK_IMPORTED_MODULE_3__["default"])));
 
 /***/ }),
 
