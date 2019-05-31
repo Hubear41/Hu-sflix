@@ -34,9 +34,9 @@ class ShowPreviewPlayerSmall extends React.Component {
         return (
             <>
                 <section id="show-peek-preview-wrapper" className={`show-row-item-x item-${show.id}`} style={{height: this.state.height}}>
-                    <img src={window.tempBgURL} alt="" className="show-title-card hidden-player" />
+                    <img src={window.tempBgURL} alt="" className="show-title-card" />
 
-                    <figure className="show-peek-preview-wrapper">
+                    <figure className="show-peek-preview-player">
 
                         <figure className="preview-video-player">
                             <video src="" className={`show-${show.id} preview-video`} poster={window.tempBgURL}>

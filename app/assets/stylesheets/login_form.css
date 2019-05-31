@@ -21,7 +21,8 @@
 .black-bg {
     background-color: black;
     position: absolute;
-    height: 60vh;
+    height: 60%;
+    min-height: 100px;
     width: 440px;
     border-radius: 8px;
     left: -13px;

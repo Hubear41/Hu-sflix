@@ -13,13 +13,10 @@
  *= require_tree .
  *= require_self
  */
-/* body {
-    height: 100vh
-} */
+
 
 
  #root {
-    /* width: 100%; */
     background-color: rgb(33, 32, 32);
     position: relative;
 }
@@ -27,7 +24,7 @@
 .main-content {
     color: white;
     height: 90vh;
-    /* width: 100vw; */
+    min-height: 887px;
 }
 
 .husflix-footer {
@@ -35,7 +32,7 @@
     display: flex;
     justify-content: center;
     padding: 20px;
-    height: 10vh;
+    height: 50px;
 }
 
 .husflix-footer * {
