@@ -1,0 +1,104 @@
+.main-video-player {
+    background-color: black;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.Video-Container{
+    width: 100%;
+}
+
+.Video-Container video {
+    width: 100%;
+    height: 100%;
+}
+
+.back-to-browse-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 80;
+}
+
+.all-player-controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 40;
+    height: 100%;
+    width: 100%;
+}
+
+.full-control-area {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.main-video-bottom-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 12%;
+}
+
+.progress-scrubber {
+    display: flex;
+    justify-content: space-around;
+}
+
+.Player-Controls {
+    display: flex; 
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 2%;
+}
+
+.Player-Controls button {
+    color: #ffffff;
+    background: none;
+    outline: none;
+    border: none;
+    transform-origin: center;
+    transform: scale(3.6);
+}
+
+.left-controls {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin-left: 3%;
+}
+
+.left-controls span {
+    width: 50%;
+}
+
+.right-controls {
+    display: flex;
+    justify-content: flex-end;
+    width: 25%;
+    margin-left: 20px;
+    margin-right: 3%;
+}
+
+
+
+
+
+
+
+
+
+
+

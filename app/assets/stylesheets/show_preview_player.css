@@ -83,6 +83,13 @@
     justify-content: flex-end;
 }
 
+.preview-video-player video {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .preview-player-right-side-btns {
     display: flex;
     flex-direction: column;

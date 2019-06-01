@@ -5,78 +5,90 @@ class Watch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            player: null,
             currentPlayerTime: 0,
-        }
+            paused: false,
+            volume: 0.8,
+            fullscreen: false,
+        };
+        this.videoPlayer = React.createRef();
+        this.mainWindow = React.createRef();
+        this.openFullscreen = this.openFullscreen.bind(this);
+        this.togglePlayPause = this.togglePlayPause.bind(this);
+        this.toggleMute = this.toggleMute.bind(this);
+        this.jumpBack = this.jumpBack.bind(this);
+        this.jumpForward = this.jumpForward.bind(this);
     }
 
     componentDidMount() {
-        const player = document.findElementById('main-video-tag')
-
-        this.setState({ player });
+        const { videoId } = this.props.match.params;
+        this.props.fetchVideo(videoId);
     }
 
-    togglePlayPause() {
-        const { player } = this.state;
+    togglePlayPause() {   
+        const videoEl = this.videoPlayer.current;
 
-        if (player.paused) {
-            player.play();
+        if (videoEl.paused) {
+            videoEl.play();
+            this.setState({ paused: false });
         } else {
-            player.pause();
+            videoEl.pause();
+            this.setState({ paused: true });
         }
-
-        this.setState({ player });
     }
 
-    findAudioLevel() {
-        const { player } = this.state;
-
-        if ( player.volume > 0.5 && player.volume <= 1.0 ) {
-            return <i className="fas fa-volume-up"></i>
-        } else if ( player.volumn <= 0.5 && player.volumn > 0.0 ) {
-            return <i className="fas fa-volume-down"></i>
+    findAudioIcon() {
+        const { volume } = this.state;
+        
+        // debugger
+        if ( volume > 0.5 && volume <= 1.0 ) {
+            return <i className="fas fa-volume-up"></i>;
+        } else if ( volume <= 0.5 && volume > 0.0 ) {
+            return <i className="fas fa-volume-down"></i>;
         } else {
-            return <i className="fas fa-volume-mute"></i>
+            return <i className="fas fa-volume-mute"></i>;
         }
+    }
+
+    findHeight() {
+        const windowEl = this.mainWindow.current;
+        
     }
 
     toggleMute() {
-        const { player } = this.state;
+        const videoEl = this.videoPlayer.current;
 
-        if ( player.muted ) {
-            player.muted = false;
+        if ( videoEl.muted ) {
+            videoEl.muted = false;
         } else {
-            player.muted = false;
+            videoEl.muted = false;
         }
-
-        this.setState({ player });
     }
 
     jumpBack() {
-        const { player } = this.state;
-        player.currentTime = player.currentTime - 10;
+        const videoEl = this.videoPlayer.current;
+        videoEl.currentTime = videoEl.currentTime - 10;
 
-        this.setState({ player });
+        this.setState({ currentPlayerTime: videoEl.currentTime })
     }
 
     jumpForward() {
-        const { player } = this.state;
-        player.currentTime = player.currentTime + 10;
+        const videoEl = this.videoPlayer.current;
+        videoEl.currentTime = videoEl.currentTime + 10;
 
-        this.setState({ player });
+        this.setState({ currentPlayerTime: videoEl.currentTime })
     }
     
     openFullscreen() {
-        const { player } = this.state;
+        const videoEl = this.videoPlayer.current;
 
-        if (player.requestFullscreen) {
-            player.requestFullscreen();
-        } else if (player.mozRequestFullScreen) { /* Firefox */
-            player.mozRequestFullScreen();
-        } else if (player.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-            player.webkitRequestFullscreen();
-        } else if (player.msRequestFullscreen) { /* IE/Edge */
-            player.msRequestFullscreen();
+        if (videoEl.requestFullscreen) {
+            videoEl.requestFullscreen();
+        } else if (videoEl.mozRequestFullScreen) { /* Firefox */
+            videoEl.mozRequestFullScreen();
+        } else if (videoEl.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            videoEl.webkitRequestFullscreen();
+        } else if (videoEl.msRequestFullscreen) { /* IE/Edge */
+            videoEl.msRequestFullscreen();
         }
     }
 
@@ -93,38 +105,57 @@ class Watch extends React.Component {
     }
 
     render() {
-        const { player, currentPlayerTime } = this.state;
+        const { currentPlayerTime, paused } = this.state;
         const { video } = this.props;
+        
+        let playPauseBtn = null, scrubberProgress = null, remainingTime = null, audioBtn = null;
 
-        const playPauseBtn = player.paused ? <i className="fas fa-play"></i> : <i className="fas fa-pause"></i>
-        const audioBtn = this.findAudioLevel();
-        const fullscreenBtn = window.fullScreen ? <button><i className="fas fa-compress"></i></button> 
-                                                : <button><i className="fas fa-expand"></i></button>
+        if ( this.videoPlayer.current !== null ) {
+            playPauseBtn = paused ? <i className="fas fa-play"></i> : <i className="fas fa-pause"></i>
+            remainingTime = video.runtime - currentPlayerTime;
+            scrubberProgress = (currentPlayerTime / video.runtime) * 100;
+            audioBtn = this.findAudioIcon();
+        }
 
-        const remainingTime = video.runtime - currentPlayerTime;
-        const scrubberProgress = (currentPlayerTime / video.runtime) * 100;
+        let fullscreenBtn, fullscreenFunc; 
+        
+        if ( window.fullScreen ) {
+            fullscreenBtn = <i className="fas fa-compress"></i>;
+            fullscreenFunc = this.closeFullscreen;
+        } else {
+            fullscreenBtn = <i className="fas fa-expand"></i>;
+            fullscreenFunc = this.openFullscreen;
+        }
 
         return (
             <figure className="main-video-player"> 
                 
                 <div className="Video-Container">
-                    <video src="video.video_url" id="main-video-tag" autoplay> 
-
+                    <video  className="main-video-tag" 
+                            ref={this.videoPlayer}
+                            poster={window.tempBgURL} 
+                            autoPlay
+                            controls={false}
+                            > 
+                        <source src={window.video}
+                                type="video/mp4"
+                                />
+                        Browser does not support the video tag
                     </video>
                 </div>
 
-                <div className="all-Player-Controls">
-                    <Link to="/browse">
-                        <i class="fas fa-arrow-left"></i>
-                        <h3>Back to browse</h3>
-                    </Link>
+                <div className="all-player-controls">
+                    <div className="full-control-area" onClick={this.togglePlayPause} ref={this.mainWindow}>
+                        <Link to="/browse" className="back-to-browse-btn">
+                            <i className="fas fa-arrow-left"></i>
+                            <h3>Back to browse</h3>
+                        </Link>
 
-                    <div className="full-control-area" onClick={togglePlayPause}>
                         <div className="main-video-bottom-controls">
                             <div className="progress-scrubber">
-                                <figure className="scrubber-bar"></figure>
-                                <figure className="scrubber-progress">
+                                <figure className="scrubber-bar">
                                     <figure className="scrubber-bar-progress" style={{width: scrubberProgress}}>
+                                        <input type="range"/>
                                         <i className="fas fa-circle scrubber-head"></i>
                                     </figure>
                                 </figure>
@@ -132,33 +163,37 @@ class Watch extends React.Component {
                             </div>
 
                             <div className="Player-Controls">
-                                <button>{playPauseBtn}</button>
+                                <div className="left-controls">
+                                    <button className="play-pause-toggle-btn">{playPauseBtn}</button>
 
-                                <button onClick={this.jumpForward}>
-                                    <i className="fas fa-undo"></i>
-                                </button>
+                                    <button onClick={this.jumpForward} className='forward-10-btn'>
+                                        <i className="fas fa-undo"></i>
+                                    </button>
 
-                                <button onClick={this.jumpBack}>
-                                    <i className="fas fa-redo"></i>
-                                </button>
+                                    <button onClick={this.jumpBack} className='back-10-btn'>
+                                        <i className="fas fa-redo"></i>
+                                    </button>
 
-                                <div className="audio-btn-wrapper">
-                                    <button onClick={toggleMute}>{audioBtn}</button>
-                                    <figure className="audio-levels"></figure>
+                                    <button className="audio-btn" onClick={this.toggleMute}>{audioBtn}
+                                        {/* <figure className="audio-levels-popup"></figure> */}
+                                    </button>
+                                                                
+                                    <span className="video-name">{ video ? video.name : null }</span>
+                                </div>    
+                                
+                                <div className="right-controls">
+                                    {/* <button className="episode-list-btn">
+                                        <i className="fas fa-layer-group"></i>
+                                    </button> */}
+
+                                    <button className="fullscreen-toggle" onClick={fullscreenFunc}>
+                                        {fullscreenBtn}
+                                    </button>
                                 </div>
-                        
-                                <span>{video.name}</span>
-
-                                <i className="fas fa-layer-group"></i>
-
-                                {fullscreenBtn}
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
             </figure>
         );
     }

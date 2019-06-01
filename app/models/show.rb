@@ -25,16 +25,16 @@ class Show < ApplicationRecord
     has_many :videos
     after_initialize :default_values
 
-    def episodes_ids 
-       vidoes.map { |video| video.id if video.video_type == "EPISODE" }
+    def episode_ids 
+       videos.map { |video| video.id if video.video_type == "EPISODE" }
     end
 
     def preview_id
         videos.each { |video| return video.id if video.video_type == "PREVIEW"}
     end
 
-    def movie_ids 
-        videos.map { |video| video.id if video.video_type == "MOVIE" }
+    def movie_id 
+        videos.each { |video| return video.id if video.video_type == "MOVIE" }
     end
 
     private

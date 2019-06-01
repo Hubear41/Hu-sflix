@@ -9,8 +9,8 @@ class ShowPreviewPlayerSmall extends React.Component {
             height: 0,
             mute: true,
         };
-        // this.launchPlay = this.launchPlay.bind(this);
-        // this.toggleMute = this.toggleMute.bind(this);
+        this.launchWatch = this.launchWatch.bind(this);
+        this.toggleMute = this.toggleMute.bind(this);
         // this.openDropDown = this.openDropDown.bind(this);
     }
 
@@ -22,7 +22,13 @@ class ShowPreviewPlayerSmall extends React.Component {
     }
     
     launchWatch(e) {
-        this.props.history.push('/watch')    
+        const { show } = this.props;
+        debugger
+        if (show.episodes > 0) {
+            this.props.history.push(`/watch/${show.id}/${show.movie_idd}`)
+        } else {    
+            this.props.history.push(`/watch/${show.id}/${show.episode_ids[0]}`)    
+        }
     }
 
     toggleMute(e) {
@@ -48,16 +54,19 @@ class ShowPreviewPlayerSmall extends React.Component {
 
         return (
             <>
-                <section id="show-peek-preview-wrapper" className={`show-row-item-x item-${show.id}`} style={{height: this.state.height}}>
+                <section    id="show-peek-preview-wrapper" 
+                            className={`show-row-item-x item-${show.id}`} 
+                            style={{height: this.state.height}} 
+                            onClick={this.launchWatch}>
+                                
                     <img src={window.tempBgURL} alt="" className="show-title-card" />
 
                     <figure className="show-peek-preview-player" onClick={this.launchWatch}>
 
                         <figure className="preview-video-player">
-                            <video src="" id={`show-${show.id} preview-video`} poster={window.tempBgURL} defaultMuted>
+                            <video src="" id={`show-${show.id} preview-video`} poster={window.tempBgURL}>
 
                             </video>
-                            {/* need on clicks for the entire video that isn't buttons or the jaw-toggle */}
                            
                             <button onClick={this.clickPlay} className="preview-play-btn">
                                 <figure className="play-btn-icon">
