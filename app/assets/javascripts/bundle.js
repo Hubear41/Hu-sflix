@@ -1664,7 +1664,8 @@ function (_React$Component) {
     _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
     _this.jumpBack = _this.jumpBack.bind(_assertThisInitialized(_this));
     _this.jumpForward = _this.jumpForward.bind(_assertThisInitialized(_this));
-    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    _this.handleTimeChange = _this.handleTimeChange.bind(_assertThisInitialized(_this));
+    _this.handleVolumeChange = _this.handleVolumeChange.bind(_assertThisInitialized(_this));
     _this._tick = _this._tick.bind(_assertThisInitialized(_this));
     setInterval(_this._tick, 500); //updates the timer each half second
 
@@ -1741,19 +1742,26 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "handleChange",
-    value: function handleChange(e) {
-      this.setState({
-        currentPlayerTime: e.target.value
-      });
-    }
-  }, {
     key: "jumpForward",
     value: function jumpForward() {
       var videoEl = this.videoPlayer.current;
       videoEl.currentTime = videoEl.currentTime + 10;
       this.setState({
         currentPlayerTime: videoEl.currentTime
+      });
+    }
+  }, {
+    key: "handleTimeChange",
+    value: function handleTimeChange(e) {
+      this.setState({
+        currentPlayerTime: e.target.value
+      });
+    }
+  }, {
+    key: "handleVolumeChange",
+    value: function handleVolumeChange(e) {
+      this.setState({
+        volume: e.target.value
       });
     }
   }, {
@@ -1868,16 +1876,17 @@ function (_React$Component) {
         className: "progress-scrubber-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "scrubber-bar"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "scrubber-bar-progress"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "range",
         min: "0",
         max: "".concat(this.videoPlayer.duration),
-        onChange: this.handleChange,
-        step: "1",
+        onChange: this.handleTimeChange,
+        className: "slider",
+        step: "0.5",
         value: "".concat(scrubberProgress)
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToTime"](remainingTime))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "scrubber-remaining-time"
+      }, _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToTime"](remainingTime))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "Player-Controls-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "Player-Controls"
@@ -1899,7 +1908,16 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "10")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "audio-btn",
         onClick: this.toggleMute
-      }, audioIcon), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, audioIcon), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "audio-levels-popup"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "range",
+        min: "0.0",
+        max: "1.0",
+        onChange: this.handleVolumeChange,
+        className: "slider",
+        step: "0.05"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "video-name"
       }, video ? video.name : null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "right-controls"

@@ -23,4 +23,5 @@ class Video < ApplicationRecord
     validates :video_type, inclusion: { in: VIDEO_TYPES }, presence: true
 
     belongs_to :show
+    has_one_attached :poster
 end

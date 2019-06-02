@@ -23,6 +23,8 @@ class Show < ApplicationRecord
     validates :view_count, presence: true
     
     has_many :videos
+    has_one_attached :poster
+
     after_initialize :default_values
 
     def episode_ids 

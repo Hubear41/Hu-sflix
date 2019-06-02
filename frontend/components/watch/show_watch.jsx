@@ -17,7 +17,8 @@ class Watch extends React.Component {
         this.toggleMute = this.toggleMute.bind(this);
         this.jumpBack = this.jumpBack.bind(this);
         this.jumpForward = this.jumpForward.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.handleTimeChange = this.handleTimeChange.bind(this);
+        this.handleVolumeChange = this.handleVolumeChange.bind(this);
         this._tick = this._tick.bind(this);
         
         setInterval(this._tick, 500); //updates the timer each half second
@@ -71,16 +72,20 @@ class Watch extends React.Component {
 
         this.setState({ currentPlayerTime: videoEl.currentTime })
     }
-
-    handleChange(e) {
-        this.setState({ currentPlayerTime: e.target.value })
-    }
-
+    
     jumpForward() {
         const videoEl = this.videoPlayer.current;
         videoEl.currentTime = videoEl.currentTime + 10;
 
         this.setState({ currentPlayerTime: videoEl.currentTime })
+    }
+
+    handleTimeChange(e) {
+        this.setState({ currentPlayerTime: e.target.value })
+    }
+
+    handleVolumeChange(e) {
+        this.setState({ volume: e.target.value })
     }
     
     openFullscreen() {
@@ -165,17 +170,17 @@ class Watch extends React.Component {
                         <div className="main-video-bottom-controls">
                             <div className="progress-scrubber-wrapper">
                                 <figure className="scrubber-bar">
-                                    <figure className="scrubber-bar-progress">
-                                        <input  type="range" 
-                                                min="0" 
-                                                max={`${this.videoPlayer.duration}`} 
-                                                onChange={this.handleChange} 
-                                                step="1"
-                                                value={`${scrubberProgress}`} 
-                                        />
-                                    </figure>
+                                    <input  type="range" 
+                                            min="0" 
+                                            max={`${this.videoPlayer.duration}`} 
+                                            onChange={this.handleTimeChange} 
+                                            className="slider"
+                                            step="0.5"
+                                            value={`${scrubberProgress}`} 
+                                    />
+                                    {/* <figure className="scrubber-bar-progress" style={{width: `${scrubberProgress}`}}></figure> */}
                                 </figure>
-                                <span>{DateTimeUTIL.secondsToTime(remainingTime)}</span>
+                                <span className="scrubber-remaining-time">{DateTimeUTIL.secondsToTime(remainingTime)}</span>
                             </div>
 
                             <div className="Player-Controls-wrapper">
@@ -195,8 +200,16 @@ class Watch extends React.Component {
 
                                         <button className="audio-btn" onClick={this.toggleMute}>
                                             {audioIcon}
-                                            {/* <figure className="audio-levels-popup"></figure> */}
                                         </button>
+                                        <figure className="audio-levels-popup">
+                                            <input  type="range" 
+                                                    min='0.0' 
+                                                    max='1.0'
+                                                    onChange={this.handleVolumeChange}
+                                                    className="slider"
+                                                    step="0.05"
+                                            />
+                                        </figure>
                                                                     
                                         <span className="video-name">{ video ? video.name : null }</span>
                                     </div>    
