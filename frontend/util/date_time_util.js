@@ -1,6 +1,6 @@
 
 export const secondsToTime = (seconds) => {
-    if (seconds === null) {
+    if (seconds === null || seconds <= 0) {
         return "00:00:00";
     }
 

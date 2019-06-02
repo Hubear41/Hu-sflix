@@ -1235,10 +1235,9 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.requestAllShows();
-    }
-  }, {
-    key: "toggleShowDetailContainer",
-    value: function toggleShowDetailContainer() {}
+    } // toggleShowDetailContainer() {
+    // }
+
   }, {
     key: "createRowsOf",
     value: function createRowsOf(shows) {
@@ -1656,7 +1655,8 @@ function (_React$Component) {
       currentPlayerTime: 0,
       paused: false,
       fullscreen: false,
-      muted: false
+      muted: false,
+      volume: 0.8
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.openFullscreen = _this.openFullscreen.bind(_assertThisInitialized(_this));
@@ -1675,8 +1675,11 @@ function (_React$Component) {
   _createClass(Watch, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var videoId = this.props.match.params.videoId;
+      var _this$props$match$par = this.props.match.params,
+          videoId = _this$props$match$par.videoId,
+          showId = _this$props$match$par.showId;
       this.props.fetchVideo(videoId);
+      this.props.fetchShow(showId);
     }
   }, {
     key: "togglePlayPause",
@@ -1753,15 +1756,19 @@ function (_React$Component) {
   }, {
     key: "handleTimeChange",
     value: function handleTimeChange(e) {
+      var videoEl = this.videoPlayer.current;
+      videoEl.currentTime = e.target.value;
       this.setState({
-        currentPlayerTime: e.target.value
+        currentPlayerTime: videoEl.currentTime
       });
     }
   }, {
     key: "handleVolumeChange",
     value: function handleVolumeChange(e) {
+      var videoEl = this.videoPlayer.current;
+      videoEl.volume = e.target.value;
       this.setState({
-        volume: e.target.value
+        volume: videoEl.volume
       });
     }
   }, {
@@ -1801,25 +1808,29 @@ function (_React$Component) {
   }, {
     key: "_tick",
     value: function _tick() {
-      this.setState({
-        currentPlayerTime: this.videoPlayer.current.currentTime
-      });
+      if (this.videoPlayer.current) {
+        this.setState({
+          currentPlayerTime: this.videoPlayer.current.currentTime
+        });
+      }
     }
   }, {
     key: "render",
     value: function render() {
       var _this$state = this.state,
           paused = _this$state.paused,
-          currentPlayerTime = _this$state.currentPlayerTime;
-      var video = this.props.video;
+          currentPlayerTime = _this$state.currentPlayerTime,
+          volume = _this$state.volume;
+      var _this$props = this.props,
+          video = _this$props.video,
+          show = _this$props.show;
       var playPauseBtn = null,
-          scrubberProgress = null,
           remainingTime = null,
-          audioIcon = null;
+          audioIcon = null,
+          currProgress = null,
+          volumePercent = 0;
 
       if (this.videoPlayer.current !== null) {
-        var videoEl = this.videoPlayer.current; // debugger
-
         playPauseBtn = paused ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-play"
         }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -1827,7 +1838,10 @@ function (_React$Component) {
         });
         remainingTime = Math.floor(60 - currentPlayerTime); //change to video.runtime
 
-        scrubberProgress = currentPlayerTime / 60 * 100; //change to video.runtime
+        currProgress = currentPlayerTime / 60 * 100; //change to video.runtime
+
+        currProgress = currProgress > 100 ? 100 : currProgress;
+        volumePercent = volume * 100; // volumePercent = volumePercent < 0 ? 0 : volumePercent;
 
         audioIcon = this.findAudioIcon();
       }
@@ -1863,7 +1877,10 @@ function (_React$Component) {
         className: "all-player-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "full-control-area"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "clickable-area",
+        onClick: this.togglePlayPause
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/browse",
         className: "back-to-browse-btn"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -1878,12 +1895,19 @@ function (_React$Component) {
         className: "scrubber-bar"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "range",
+        className: "slider time-slider",
         min: "0",
-        max: "".concat(this.videoPlayer.duration),
+        max: "".concat(60) //change this video.runtime
+        ,
+        step: "0.1",
         onChange: this.handleTimeChange,
-        className: "slider",
-        step: "0.5",
-        value: "".concat(scrubberProgress)
+        onInput: this.handleTimeChange,
+        value: "".concat(currentPlayerTime)
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "current-progress",
+        style: {
+          width: "".concat(currProgress, "%")
+        }
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "scrubber-remaining-time"
       }, _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToTime"](remainingTime))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1905,21 +1929,34 @@ function (_React$Component) {
         className: "back-10-btn"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-redo"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "10")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "10")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "audio-button-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "audio-btn",
         onClick: this.toggleMute
       }, audioIcon), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "audio-levels-popup"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "range",
+        className: "slider volume-slider",
         min: "0.0",
         max: "1.0",
+        step: "0.1",
         onChange: this.handleVolumeChange,
-        className: "slider",
-        step: "0.05"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "video-name"
-      }, video ? video.name : null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onInput: this.handleVolumeChange,
+        value: "".concat(volume)
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "volume-value-bar",
+        style: {
+          height: "".concat(volumePercent, "%")
+        }
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "video-title-ep-name"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "show-title"
+      }, show ? show.title : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "episode-name"
+      }, show && show.show_type === "EPISODIC" ? video.name : null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "right-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "fullscreen-toggle",
@@ -1931,7 +1968,7 @@ function (_React$Component) {
   return Watch;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (Watch);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Watch));
 
 /***/ }),
 
@@ -1955,15 +1992,20 @@ __webpack_require__.r(__webpack_exports__);
 
 var msp = function msp(state, ownProps) {
   var video = state.entities.videos[ownProps.match.params.videoId];
+  var show = state.entities.shows[ownProps.match.params.showId];
   return {
-    video: video
+    video: video,
+    show: show
   };
 };
 
 var mdp = function mdp(dispatch) {
   return {
-    fetchVideo: function fetchVideo(id) {
-      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchVideo"])(id));
+    fetchVideo: function fetchVideo(videoId) {
+      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchVideo"])(videoId));
+    },
+    fetchShow: function fetchShow(showId) {
+      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchShow"])(showId));
     }
   };
 };
@@ -2271,7 +2313,7 @@ var configureStore = function configureStore() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "secondsToTime", function() { return secondsToTime; });
 var secondsToTime = function secondsToTime(seconds) {
-  if (seconds === null) {
+  if (seconds === null || seconds <= 0) {
     return "00:00:00";
   }
 

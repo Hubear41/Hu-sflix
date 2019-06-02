@@ -10,9 +10,9 @@ class ShowGallery extends React.Component {
         this.props.requestAllShows();
     }
 
-    toggleShowDetailContainer() {
+    // toggleShowDetailContainer() {
 
-    }
+    // }
 
     createRowsOf(shows) {
         let row = [];
@@ -29,7 +29,6 @@ class ShowGallery extends React.Component {
 
                 row = [currShow];
             }
-
             idx++;
         }
 

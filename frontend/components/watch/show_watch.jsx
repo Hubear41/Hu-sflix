@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import * as DateTimeUTIL from '../../util/date_time_util';
 
 class Watch extends React.Component {
@@ -10,6 +10,7 @@ class Watch extends React.Component {
             paused: false,
             fullscreen: false,
             muted: false,
+            volume: 0.8,
         };
         this.videoPlayer = React.createRef();
         this.openFullscreen = this.openFullscreen.bind(this);
@@ -25,8 +26,9 @@ class Watch extends React.Component {
     }
 
     componentDidMount() {
-        const { videoId } = this.props.match.params;
+        const { videoId, showId } = this.props.match.params;
         this.props.fetchVideo(videoId);
+        this.props.fetchShow(showId);
     }
 
     togglePlayPause() {   
@@ -81,11 +83,15 @@ class Watch extends React.Component {
     }
 
     handleTimeChange(e) {
-        this.setState({ currentPlayerTime: e.target.value })
+        const videoEl = this.videoPlayer.current;
+        videoEl.currentTime = e.target.value;
+        this.setState({ currentPlayerTime: videoEl.currentTime })
     }
 
     handleVolumeChange(e) {
-        this.setState({ volume: e.target.value })
+        const videoEl = this.videoPlayer.current;
+        videoEl.volume = e.target.value;
+        this.setState({ volume: videoEl.volume })
     }
     
     openFullscreen() {
@@ -115,21 +121,23 @@ class Watch extends React.Component {
     }
 
     _tick() {
-        this.setState({ currentPlayerTime: this.videoPlayer.current.currentTime })
+        if (this.videoPlayer.current) {
+            this.setState({ currentPlayerTime: this.videoPlayer.current.currentTime })
+        }
     }
 
     render() {
-        const { paused, currentPlayerTime } = this.state;
-        const { video } = this.props;
-        
-        let playPauseBtn = null, scrubberProgress = null, remainingTime = null, audioIcon = null;
+        const { paused, currentPlayerTime, volume } = this.state;
+        const { video, show } = this.props;
+        let playPauseBtn = null, remainingTime = null, audioIcon = null, currProgress = null, volumePercent = 0;
 
-        if ( this.videoPlayer.current !== null ) {
-            const videoEl = this.videoPlayer.current;
-            // debugger
+        if ( this.videoPlayer.current !== null ) {               
             playPauseBtn = paused ? <i className="fas fa-play"></i> : <i className="fas fa-pause"></i>
             remainingTime =  Math.floor(60 - currentPlayerTime); //change to video.runtime
-            scrubberProgress = (currentPlayerTime / 60) * 100; //change to video.runtime
+            currProgress = (currentPlayerTime / 60) * 100; //change to video.runtime
+            currProgress = currProgress > 100 ? 100 : currProgress;
+            volumePercent = volume * 100;
+            // volumePercent = volumePercent < 0 ? 0 : volumePercent;
             audioIcon = this.findAudioIcon();
         }
 
@@ -162,6 +170,7 @@ class Watch extends React.Component {
 
                 <div className="all-player-controls">
                     <div className="full-control-area">
+                        <div className="clickable-area" onClick={this.togglePlayPause}></div>
                         <Link to="/browse" className="back-to-browse-btn">
                             <i className="fas fa-arrow-left"></i>
                             <span className="back-to-browse-message">Back to browse</span>
@@ -171,14 +180,15 @@ class Watch extends React.Component {
                             <div className="progress-scrubber-wrapper">
                                 <figure className="scrubber-bar">
                                     <input  type="range" 
+                                            className="slider time-slider"
                                             min="0" 
-                                            max={`${this.videoPlayer.duration}`} 
+                                            max={`${60}`} //change this video.runtime
+                                            step="0.1"
                                             onChange={this.handleTimeChange} 
-                                            className="slider"
-                                            step="0.5"
-                                            value={`${scrubberProgress}`} 
+                                            onInput={this.handleTimeChange}
+                                            value={`${currentPlayerTime}`} 
                                     />
-                                    {/* <figure className="scrubber-bar-progress" style={{width: `${scrubberProgress}`}}></figure> */}
+                                    <figure className="current-progress" style={{width: `${currProgress}%`}}></figure>
                                 </figure>
                                 <span className="scrubber-remaining-time">{DateTimeUTIL.secondsToTime(remainingTime)}</span>
                             </div>
@@ -198,20 +208,28 @@ class Watch extends React.Component {
                                             <span>10</span>
                                         </button>
 
-                                        <button className="audio-btn" onClick={this.toggleMute}>
-                                            {audioIcon}
-                                        </button>
-                                        <figure className="audio-levels-popup">
-                                            <input  type="range" 
-                                                    min='0.0' 
-                                                    max='1.0'
-                                                    onChange={this.handleVolumeChange}
-                                                    className="slider"
-                                                    step="0.05"
-                                            />
-                                        </figure>
+                                        <div className="audio-button-wrapper">
+                                            <button className="audio-btn" onClick={this.toggleMute}>
+                                                {audioIcon}
+                                            </button>
+                                            <figure className="audio-levels-popup">
+                                                <input  type="range" 
+                                                        className="slider volume-slider"
+                                                        min='0.0' 
+                                                        max='1.0'
+                                                        step="0.1"
+                                                        onChange={this.handleVolumeChange}
+                                                        onInput={this.handleVolumeChange}
+                                                        value={`${volume}`}
+                                                />
+                                                <figure className="volume-value-bar" style={{height: `${volumePercent}%`}}></figure>
+                                            </figure>
+                                        </div>
                                                                     
-                                        <span className="video-name">{ video ? video.name : null }</span>
+                                        <article className="video-title-ep-name">
+                                            <span className="show-title">{show ? show.title : null}</span>
+                                            <span className="episode-name">{show && show.show_type === "EPISODIC" ? video.name : null}</span>
+                                        </article>
                                     </div>    
                                     
                                     <div className="right-controls">
@@ -233,4 +251,4 @@ class Watch extends React.Component {
     }
 }
 
-export default Watch;
+export default withRouter(Watch);
