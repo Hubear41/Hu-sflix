@@ -19,9 +19,47 @@
 
 .back-to-browse-btn {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 2.5%;
+    left: 3%;
     z-index: 80;
+    color: white;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    transform: scale(1);
+    transition: transform 0.5s;
+}
+
+.back-to-browse-message {
+    margin-left: 6%;
+    opacity: 0;
+    width: 200px;
+    font-size: 6pt;
+    transition: opactiy 0.2, font-size 0.2s, margin-left 0.2s;
+}
+
+.back-to-browse-btn i {
+    transform: scale(2);
+    margin-bottom: 0;
+    transform-origin: left;
+    transition: transform 0.1s, margin 0.1s;
+}
+
+.back-to-browse-btn:hover i {
+    transform: scale(2.3);
+    margin-bottom: 2%;
+    transition: transform 0.1s, margin 0.1s;
+    transition-timing-function: ease-in;
+}
+
+.back-to-browse-btn:hover .back-to-browse-message {
+    opacity: 1;
+    font-size: 16pt;
+    letter-spacing: 1px;
+    margin-left: 15%;
+    transition: opacity 0.1s, margin-left 0.1s, font-size 0.1s;
+    transition-timing-function: ease-in;
 }
 
 .all-player-controls {
@@ -56,12 +94,22 @@
     justify-content: space-around;
 }
 
+.Player-Controls-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
 .Player-Controls {
     display: flex; 
     align-items: center;
     width: 100%;
+    max-width: 94vw;
     height: 100%;
-    margin-bottom: 2%;
+    position: absolute;
+    bottom: 2%;
+    left: 0.5%;
+    z-index: 80;
 }
 
 .Player-Controls button {
@@ -71,17 +119,20 @@
     border: none;
     transform-origin: center;
     transform: scale(3.6);
+    cursor: pointer;
 }
 
 .left-controls {
     display: flex;
     justify-content: space-between;
     width: 70%;
-    margin-left: 3%;
+    margin-left: 5%;
 }
 
 .left-controls span {
     width: 50%;
+    font-size: 16pt;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .right-controls {
@@ -89,16 +140,34 @@
     justify-content: flex-end;
     width: 25%;
     margin-left: 20px;
-    margin-right: 3%;
 }
 
+.back-10-btn, .forward-10-btn {
+    position: relative;
+}
 
+.back-10-btn span, .forward-10-btn span {
+    position: absolute;
+    top: 40.5%;
+    left: 23%;
+    font-size: 3pt;
+}
 
+.progress-scrubber-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 95vw;
+    margin: 0 3% 0 2%;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
+.scrubber-bar {
+    width: 93%;
+}
 
-
-
-
-
-
-
+.scrubber-bar input[type="range"] {
+    width: 100%;
+    color: red;
+}

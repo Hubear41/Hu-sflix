@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import * as DateTimeUTIL from '../../util/date_time_util';
 
 class Watch extends React.Component {
     constructor(props) {
@@ -7,16 +8,19 @@ class Watch extends React.Component {
         this.state = {
             currentPlayerTime: 0,
             paused: false,
-            volume: 0.8,
             fullscreen: false,
+            muted: false,
         };
         this.videoPlayer = React.createRef();
-        this.mainWindow = React.createRef();
         this.openFullscreen = this.openFullscreen.bind(this);
         this.togglePlayPause = this.togglePlayPause.bind(this);
         this.toggleMute = this.toggleMute.bind(this);
         this.jumpBack = this.jumpBack.bind(this);
         this.jumpForward = this.jumpForward.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this._tick = this._tick.bind(this);
+        
+        setInterval(this._tick, 500); //updates the timer each half second
     }
 
     componentDidMount() {
@@ -37,30 +41,27 @@ class Watch extends React.Component {
     }
 
     findAudioIcon() {
-        const { volume } = this.state;
+        const videoEl = this.videoPlayer.current;
+        const volume = videoEl.volume || 0.8;
         
-        // debugger
-        if ( volume > 0.5 && volume <= 1.0 ) {
-            return <i className="fas fa-volume-up"></i>;
-        } else if ( volume <= 0.5 && volume > 0.0 ) {
-            return <i className="fas fa-volume-down"></i>;
-        } else {
+        if ( videoEl.muted || volume === 0 ) {
             return <i className="fas fa-volume-mute"></i>;
+        } else if ( volume > 0.5 ) {
+            return <i className="fas fa-volume-up"></i>;
+        } else {
+            return <i className="fas fa-volume-down"></i>;
         }
-    }
-
-    findHeight() {
-        const windowEl = this.mainWindow.current;
-        
     }
 
     toggleMute() {
         const videoEl = this.videoPlayer.current;
-
+        
         if ( videoEl.muted ) {
             videoEl.muted = false;
+            this.setState({ muted: false })
         } else {
-            videoEl.muted = false;
+            videoEl.muted = true;
+            this.setState({ muted: true })
         }
     }
 
@@ -69,6 +70,10 @@ class Watch extends React.Component {
         videoEl.currentTime = videoEl.currentTime - 10;
 
         this.setState({ currentPlayerTime: videoEl.currentTime })
+    }
+
+    handleChange(e) {
+        this.setState({ currentPlayerTime: e.target.value })
     }
 
     jumpForward() {
@@ -104,17 +109,23 @@ class Watch extends React.Component {
         }
     }
 
+    _tick() {
+        this.setState({ currentPlayerTime: this.videoPlayer.current.currentTime })
+    }
+
     render() {
-        const { currentPlayerTime, paused } = this.state;
+        const { paused, currentPlayerTime } = this.state;
         const { video } = this.props;
         
-        let playPauseBtn = null, scrubberProgress = null, remainingTime = null, audioBtn = null;
+        let playPauseBtn = null, scrubberProgress = null, remainingTime = null, audioIcon = null;
 
         if ( this.videoPlayer.current !== null ) {
+            const videoEl = this.videoPlayer.current;
+            // debugger
             playPauseBtn = paused ? <i className="fas fa-play"></i> : <i className="fas fa-pause"></i>
-            remainingTime = video.runtime - currentPlayerTime;
-            scrubberProgress = (currentPlayerTime / video.runtime) * 100;
-            audioBtn = this.findAudioIcon();
+            remainingTime =  Math.floor(60 - currentPlayerTime); //change to video.runtime
+            scrubberProgress = (currentPlayerTime / 60) * 100; //change to video.runtime
+            audioIcon = this.findAudioIcon();
         }
 
         let fullscreenBtn, fullscreenFunc; 
@@ -145,50 +156,60 @@ class Watch extends React.Component {
                 </div>
 
                 <div className="all-player-controls">
-                    <div className="full-control-area" onClick={this.togglePlayPause} ref={this.mainWindow}>
+                    <div className="full-control-area">
                         <Link to="/browse" className="back-to-browse-btn">
                             <i className="fas fa-arrow-left"></i>
-                            <h3>Back to browse</h3>
+                            <span className="back-to-browse-message">Back to browse</span>
                         </Link>
 
                         <div className="main-video-bottom-controls">
-                            <div className="progress-scrubber">
+                            <div className="progress-scrubber-wrapper">
                                 <figure className="scrubber-bar">
-                                    <figure className="scrubber-bar-progress" style={{width: scrubberProgress}}>
-                                        <input type="range"/>
-                                        <i className="fas fa-circle scrubber-head"></i>
+                                    <figure className="scrubber-bar-progress">
+                                        <input  type="range" 
+                                                min="0" 
+                                                max={`${this.videoPlayer.duration}`} 
+                                                onChange={this.handleChange} 
+                                                step="1"
+                                                value={`${scrubberProgress}`} 
+                                        />
                                     </figure>
                                 </figure>
-                                <span>{remainingTime}</span>
+                                <span>{DateTimeUTIL.secondsToTime(remainingTime)}</span>
                             </div>
 
-                            <div className="Player-Controls">
-                                <div className="left-controls">
-                                    <button className="play-pause-toggle-btn">{playPauseBtn}</button>
+                            <div className="Player-Controls-wrapper">
+                                <div className="Player-Controls">
+                                    <div className="left-controls">
+                                        <button className="play-pause-toggle-btn" onClick={this.togglePlayPause}>{playPauseBtn}</button>
 
-                                    <button onClick={this.jumpForward} className='forward-10-btn'>
-                                        <i className="fas fa-undo"></i>
-                                    </button>
+                                        <button onClick={this.jumpBack} className='forward-10-btn'>
+                                            <i className="fas fa-undo"></i>
+                                            <span>10</span>
+                                        </button>
 
-                                    <button onClick={this.jumpBack} className='back-10-btn'>
-                                        <i className="fas fa-redo"></i>
-                                    </button>
+                                        <button onClick={this.jumpForward} className='back-10-btn'>
+                                            <i className="fas fa-redo"></i>
+                                            <span>10</span>
+                                        </button>
 
-                                    <button className="audio-btn" onClick={this.toggleMute}>{audioBtn}
-                                        {/* <figure className="audio-levels-popup"></figure> */}
-                                    </button>
-                                                                
-                                    <span className="video-name">{ video ? video.name : null }</span>
-                                </div>    
-                                
-                                <div className="right-controls">
-                                    {/* <button className="episode-list-btn">
-                                        <i className="fas fa-layer-group"></i>
-                                    </button> */}
+                                        <button className="audio-btn" onClick={this.toggleMute}>
+                                            {audioIcon}
+                                            {/* <figure className="audio-levels-popup"></figure> */}
+                                        </button>
+                                                                    
+                                        <span className="video-name">{ video ? video.name : null }</span>
+                                    </div>    
+                                    
+                                    <div className="right-controls">
+                                        {/* <button className="episode-list-btn">
+                                            <i className="fas fa-layer-group"></i>
+                                        </button> */}
 
-                                    <button className="fullscreen-toggle" onClick={fullscreenFunc}>
-                                        {fullscreenBtn}
-                                    </button>
+                                        <button className="fullscreen-toggle" onClick={fullscreenFunc}>
+                                            {fullscreenBtn}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

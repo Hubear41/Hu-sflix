@@ -1618,6 +1618,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/date_time_util */ "./frontend/util/date_time_util.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1639,6 +1640,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Watch =
 /*#__PURE__*/
 function (_React$Component) {
@@ -1653,16 +1655,19 @@ function (_React$Component) {
     _this.state = {
       currentPlayerTime: 0,
       paused: false,
-      volume: 0.8,
-      fullscreen: false
+      fullscreen: false,
+      muted: false
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
-    _this.mainWindow = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.openFullscreen = _this.openFullscreen.bind(_assertThisInitialized(_this));
     _this.togglePlayPause = _this.togglePlayPause.bind(_assertThisInitialized(_this));
     _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
     _this.jumpBack = _this.jumpBack.bind(_assertThisInitialized(_this));
     _this.jumpForward = _this.jumpForward.bind(_assertThisInitialized(_this));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    _this._tick = _this._tick.bind(_assertThisInitialized(_this));
+    setInterval(_this._tick, 500); //updates the timer each half second
+
     return _this;
   }
 
@@ -1692,26 +1697,22 @@ function (_React$Component) {
   }, {
     key: "findAudioIcon",
     value: function findAudioIcon() {
-      var volume = this.state.volume; // debugger
+      var videoEl = this.videoPlayer.current;
+      var volume = videoEl.volume || 0.8;
 
-      if (volume > 0.5 && volume <= 1.0) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-volume-up"
-        });
-      } else if (volume <= 0.5 && volume > 0.0) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-volume-down"
-        });
-      } else {
+      if (videoEl.muted || volume === 0) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-volume-mute"
         });
+      } else if (volume > 0.5) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-up"
+        });
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-down"
+        });
       }
-    }
-  }, {
-    key: "findHeight",
-    value: function findHeight() {
-      var windowEl = this.mainWindow.current;
     }
   }, {
     key: "toggleMute",
@@ -1720,8 +1721,14 @@ function (_React$Component) {
 
       if (videoEl.muted) {
         videoEl.muted = false;
+        this.setState({
+          muted: false
+        });
       } else {
-        videoEl.muted = false;
+        videoEl.muted = true;
+        this.setState({
+          muted: true
+        });
       }
     }
   }, {
@@ -1731,6 +1738,13 @@ function (_React$Component) {
       videoEl.currentTime = videoEl.currentTime - 10;
       this.setState({
         currentPlayerTime: videoEl.currentTime
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(e) {
+      this.setState({
+        currentPlayerTime: e.target.value
       });
     }
   }, {
@@ -1777,26 +1791,37 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "_tick",
+    value: function _tick() {
+      this.setState({
+        currentPlayerTime: this.videoPlayer.current.currentTime
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$state = this.state,
-          currentPlayerTime = _this$state.currentPlayerTime,
-          paused = _this$state.paused;
+          paused = _this$state.paused,
+          currentPlayerTime = _this$state.currentPlayerTime;
       var video = this.props.video;
       var playPauseBtn = null,
           scrubberProgress = null,
           remainingTime = null,
-          audioBtn = null;
+          audioIcon = null;
 
       if (this.videoPlayer.current !== null) {
+        var videoEl = this.videoPlayer.current; // debugger
+
         playPauseBtn = paused ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-play"
         }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-pause"
         });
-        remainingTime = video.runtime - currentPlayerTime;
-        scrubberProgress = currentPlayerTime / video.runtime * 100;
-        audioBtn = this.findAudioIcon();
+        remainingTime = Math.floor(60 - currentPlayerTime); //change to video.runtime
+
+        scrubberProgress = currentPlayerTime / 60 * 100; //change to video.runtime
+
+        audioIcon = this.findAudioIcon();
       }
 
       var fullscreenBtn, fullscreenFunc;
@@ -1829,56 +1854,59 @@ function (_React$Component) {
       }), "Browser does not support the video tag")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-player-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "full-control-area",
-        onClick: this.togglePlayPause,
-        ref: this.mainWindow
+        className: "full-control-area"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/browse",
         className: "back-to-browse-btn"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-arrow-left"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Back to browse")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "back-to-browse-message"
+      }, "Back to browse")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "main-video-bottom-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "progress-scrubber"
+        className: "progress-scrubber-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "scrubber-bar"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "scrubber-bar-progress",
-        style: {
-          width: scrubberProgress
-        }
+        className: "scrubber-bar-progress"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "range"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-circle scrubber-head"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, remainingTime)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        type: "range",
+        min: "0",
+        max: "".concat(this.videoPlayer.duration),
+        onChange: this.handleChange,
+        step: "1",
+        value: "".concat(scrubberProgress)
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToTime"](remainingTime))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "Player-Controls-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "Player-Controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "left-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "play-pause-toggle-btn"
+        className: "play-pause-toggle-btn",
+        onClick: this.togglePlayPause
       }, playPauseBtn), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.jumpForward,
+        onClick: this.jumpBack,
         className: "forward-10-btn"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-undo"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.jumpBack,
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "10")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.jumpForward,
         className: "back-10-btn"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-redo"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "10")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "audio-btn",
         onClick: this.toggleMute
-      }, audioBtn), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, audioIcon), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "video-name"
       }, video ? video.name : null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "right-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "fullscreen-toggle",
         onClick: fullscreenFunc
-      }, fullscreenBtn)))))));
+      }, fullscreenBtn))))))));
     }
   }]);
 
@@ -2211,6 +2239,34 @@ var configureStore = function configureStore() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
+
+/***/ }),
+
+/***/ "./frontend/util/date_time_util.js":
+/*!*****************************************!*\
+  !*** ./frontend/util/date_time_util.js ***!
+  \*****************************************/
+/*! exports provided: secondsToTime */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "secondsToTime", function() { return secondsToTime; });
+var secondsToTime = function secondsToTime(seconds) {
+  if (seconds === null) {
+    return "00:00:00";
+  }
+
+  var hours = Math.floor(seconds / 6000);
+  var remainingSecs = seconds % 6000;
+  var minutes = Math.floor(remainingSecs / 60);
+  remainingSecs = remainingSecs % 60;
+  var secs = Math.floor(remainingSecs);
+  var hoursStr = hours < 10 ? '0' + hours : "".concat(hours);
+  var minutesStr = minutes < 10 ? '0' + minutes : "".concat(minutes);
+  var secondsStr = secs < 10 ? '0' + secs : "".concat(secs);
+  return "".concat(hoursStr, ":").concat(minutesStr, ":").concat(secondsStr);
+};
 
 /***/ }),
 
