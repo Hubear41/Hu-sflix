@@ -24,4 +24,5 @@ class Video < ApplicationRecord
 
     belongs_to :show
     has_one_attached :poster
+    has_one_attached :video
 end
