@@ -1656,7 +1656,8 @@ function (_React$Component) {
       paused: false,
       fullscreen: false,
       muted: false,
-      volume: 0.8
+      volume: 0.8,
+      prevVolume: 0.8
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.openFullscreen = _this.openFullscreen.bind(_assertThisInitialized(_this));
@@ -1667,7 +1668,7 @@ function (_React$Component) {
     _this.handleTimeChange = _this.handleTimeChange.bind(_assertThisInitialized(_this));
     _this.handleVolumeChange = _this.handleVolumeChange.bind(_assertThisInitialized(_this));
     _this._tick = _this._tick.bind(_assertThisInitialized(_this));
-    setInterval(_this._tick, 500); //updates the timer each half second
+    setInterval(_this._tick, 1000); //updates the timer each half second
 
     return _this;
   }
@@ -1701,10 +1702,11 @@ function (_React$Component) {
   }, {
     key: "findAudioIcon",
     value: function findAudioIcon() {
-      var videoEl = this.videoPlayer.current;
-      var volume = videoEl.volume || 0.8;
+      var _this$state = this.state,
+          muted = _this$state.muted,
+          volume = _this$state.volume;
 
-      if (videoEl.muted || volume === 0) {
+      if (muted || volume === 0) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-volume-mute"
         });
@@ -1721,19 +1723,63 @@ function (_React$Component) {
   }, {
     key: "toggleMute",
     value: function toggleMute() {
+      var _this$state2 = this.state,
+          muted = _this$state2.muted,
+          volume = _this$state2.volume,
+          prevVolume = _this$state2.prevVolume;
       var videoEl = this.videoPlayer.current;
+      var currVolume = volume === 0 ? 0.1 : volume;
 
-      if (videoEl.muted) {
+      if (muted) {
         videoEl.muted = false;
+        videoEl.volume = prevVolume;
         this.setState({
-          muted: false
+          muted: false,
+          volume: prevVolume
         });
       } else {
         videoEl.muted = true;
+        videoEl.volume = 0;
         this.setState({
-          muted: true
+          muted: true,
+          volume: 0,
+          prevVolume: currVolume
         });
       }
+    }
+  }, {
+    key: "handleVolumeChange",
+    value: function handleVolumeChange(e) {
+      var videoEl = this.videoPlayer.current;
+      videoEl.volume = e.target.value;
+
+      if (videoEl.volume === 0) {
+        videoEl.muted = true;
+        this.setState({
+          volume: videoEl.volume,
+          muted: true,
+          prevVolume: 0.1
+        });
+      } else if (videoEl.muted) {
+        videoEl.muted = false;
+        this.setState({
+          volume: videoEl.volume,
+          muted: false
+        });
+      } else {
+        this.setState({
+          volume: videoEl.volume
+        });
+      }
+    }
+  }, {
+    key: "handleTimeChange",
+    value: function handleTimeChange(e) {
+      var videoEl = this.videoPlayer.current;
+      videoEl.currentTime = e.target.value;
+      this.setState({
+        currentPlayerTime: videoEl.currentTime
+      });
     }
   }, {
     key: "jumpBack",
@@ -1751,24 +1797,6 @@ function (_React$Component) {
       videoEl.currentTime = videoEl.currentTime + 10;
       this.setState({
         currentPlayerTime: videoEl.currentTime
-      });
-    }
-  }, {
-    key: "handleTimeChange",
-    value: function handleTimeChange(e) {
-      var videoEl = this.videoPlayer.current;
-      videoEl.currentTime = e.target.value;
-      this.setState({
-        currentPlayerTime: videoEl.currentTime
-      });
-    }
-  }, {
-    key: "handleVolumeChange",
-    value: function handleVolumeChange(e) {
-      var videoEl = this.videoPlayer.current;
-      videoEl.volume = e.target.value;
-      this.setState({
-        volume: videoEl.volume
       });
     }
   }, {
@@ -1817,18 +1845,19 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$state = this.state,
-          paused = _this$state.paused,
-          currentPlayerTime = _this$state.currentPlayerTime,
-          volume = _this$state.volume;
+      var _this$state3 = this.state,
+          paused = _this$state3.paused,
+          currentPlayerTime = _this$state3.currentPlayerTime,
+          volume = _this$state3.volume,
+          muted = _this$state3.muted;
       var _this$props = this.props,
           video = _this$props.video,
           show = _this$props.show;
       var playPauseBtn = null,
           remainingTime = null,
           audioIcon = null,
-          currProgress = null,
-          volumePercent = 0;
+          volumeStyle = null,
+          timeStyle = null;
 
       if (this.videoPlayer.current !== null) {
         playPauseBtn = paused ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -1836,13 +1865,17 @@ function (_React$Component) {
         }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-pause"
         });
-        remainingTime = Math.floor(60 - currentPlayerTime); //change to video.runtime
+        remainingTime = Math.floor(60 - currentPlayerTime); //change 60 to video.runtime
 
-        currProgress = currentPlayerTime / 60 * 100; //change to video.runtime
+        var currProgress = currentPlayerTime / 60 * 100; //change 60 to video.runtime
 
-        currProgress = currProgress > 100 ? 100 : currProgress;
-        volumePercent = volume * 100; // volumePercent = volumePercent < 0 ? 0 : volumePercent;
-
+        var currVolume = muted ? 0 : volume;
+        timeStyle = {
+          background: "linear-gradient( to right, red 0%, red ".concat(currProgress, "%, #7c7c7c ").concat(currProgress, "% , #7c7c7c ").concat(remainingTime, "%)")
+        };
+        volumeStyle = {
+          background: "linear-gradient( to right, red 0%, red ".concat(currVolume * 100, "%, #7c7c7c ").concat(currVolume * 100, "%, #7c7c7c ").concat((1 - currVolume) * 100, "% )")
+        };
         audioIcon = this.findAudioIcon();
       }
 
@@ -1876,11 +1909,11 @@ function (_React$Component) {
       }), "Browser does not support the video tag")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-player-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "full-control-area"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "clickable-area",
         onClick: this.togglePlayPause
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "full-control-area"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/browse",
         className: "back-to-browse-btn"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -1902,12 +1935,8 @@ function (_React$Component) {
         step: "0.1",
         onChange: this.handleTimeChange,
         onInput: this.handleTimeChange,
-        value: "".concat(currentPlayerTime)
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "current-progress",
-        style: {
-          width: "".concat(currProgress, "%")
-        }
+        value: "".concat(currentPlayerTime),
+        style: timeStyle
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "scrubber-remaining-time"
       }, _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToTime"](remainingTime))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1944,12 +1973,8 @@ function (_React$Component) {
         step: "0.1",
         onChange: this.handleVolumeChange,
         onInput: this.handleVolumeChange,
-        value: "".concat(volume)
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "volume-value-bar",
-        style: {
-          height: "".concat(volumePercent, "%")
-        }
+        value: "".concat(volume),
+        style: volumeStyle
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "video-title-ep-name"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
