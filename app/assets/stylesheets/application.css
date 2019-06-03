@@ -24,6 +24,8 @@
 .main-content {
     color: white;
     height: 100%;
+    min-height: 90vh;
+    position: relative;
 }
 
 .husflix-footer {

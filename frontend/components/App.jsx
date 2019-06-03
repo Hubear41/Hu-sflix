@@ -7,15 +7,21 @@ import Background from './background/background';
 import ShowIndexGallery from './shows/show_gallery_container';
 import Watch from './watch/show_watch_container';
 import Footer from './footer/footer';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_util';
+import MainNavBar from './navbar/main_nav_container';
 
 const App = () => {
     return (
         <>
             <Background />
             <main className="main-content">
-                <AuthRoute exact path="/" component={Navbar} />
+                <Switch>
+                    <ProtectedRoute path="/browse" component={MainNavBar} />
+                    <AuthRoute path="/signup" component={Navbar} />
+                    <AuthRoute path="/login" component={Navbar} />
+                    <AuthRoute path="/" component={Navbar} />
+                </Switch>
 
                 <AuthRoute exact path="/" component={Splash} />
                 <AuthRoute path="/signup" component={SignUp} />
@@ -24,7 +30,8 @@ const App = () => {
                 <ProtectedRoute path="/watch/:showId/:videoId" component={Watch} />
             </main>
 
-            <AuthRoute exact path="/" component={Footer} />
+            {/* <AuthRoute exact path="/" component={Footer} /> */}
+            <Footer />
         </>
     );
 };

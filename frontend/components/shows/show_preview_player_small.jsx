@@ -23,7 +23,7 @@ class ShowPreviewPlayerSmall extends React.Component {
     
     launchWatch(e) {
         const { show } = this.props;
-        debugger
+        // debugger
         if (show.episodes > 0) {
             this.props.history.push(`/watch/${show.id}/${show.movie_idd}`)
         } else {    
@@ -54,10 +54,10 @@ class ShowPreviewPlayerSmall extends React.Component {
 
         return (
             <>
-                <section    id="show-peek-preview-wrapper" 
-                            className={`show-row-item-x item-${show.id}`} 
-                            style={{height: this.state.height}} 
-                            onClick={this.launchWatch}>
+                <section id="show-peek-preview-wrapper" 
+                         className={`show-row-item-x item-${show.id}`} 
+                         style={{height: this.state.height}} 
+                         onClick={this.launchWatch}>
                                 
                     <img src={window.tempBgURL} alt="" className="show-title-card" />
 

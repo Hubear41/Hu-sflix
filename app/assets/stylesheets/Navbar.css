@@ -79,16 +79,6 @@
     left: 30px;
 }
 
-.logout-btn {
-    background-color: #e32112;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    border:none;
-    color: white;
-    border-radius: 5px;
-    padding: 5px 10px;
-}
-
 .signin-btn {
     display: flex;
     font-family: Arial, Helvetica, sans-serif;

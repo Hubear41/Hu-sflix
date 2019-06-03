@@ -15,6 +15,7 @@ class Watch extends React.Component {
             hidden: true,
             mouseMoving: false,
         };
+        this.timeout;
         this.videoPlayer = React.createRef();
         this.openFullscreen = this.openFullscreen.bind(this);
         this.togglePlayPause = this.togglePlayPause.bind(this);
@@ -36,9 +37,9 @@ class Watch extends React.Component {
         this.props.fetchShow(showId);
     }
 
-    togglePlayPause() {   
+    togglePlayPause(e) {   
         const videoEl = this.videoPlayer.current;
-
+        // debugger
         if (videoEl.paused) {
             videoEl.play();
             this.setState({ paused: false });
@@ -138,18 +139,16 @@ class Watch extends React.Component {
     }
     
     showControls() {
-        let timeout;
-        
         if ( this.state.mouseMoving ) {
-            clearTimeout(timeout);
-            timeout = setTimeout( () => {
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout( () => {
                 this._hideControls();
-            }, 4000);
+            }, 3000);
         } else {
             this.setState({ mouseMoving: true, hidden: false });
-            timeout = setTimeout( () => {
+            this.timeout = setTimeout( () => {
                 this._hideControls();
-            }, 4000);
+            }, 3000);
         }
     }
     
@@ -216,8 +215,8 @@ class Watch extends React.Component {
                 <div className="all-player-controls">
                     <div className="clickable-area" 
                          onClick={this.togglePlayPause} 
-                        //  onMouseOver={this.showControls} 
-                        //  onMouseMove={this.showControls}
+                         onKeyPress={this.togglePlayPause}
+                         onMouseMove={this.showControls} 
                     ></div>
 
                     <div className="full-control-area" style={controlStyle}>

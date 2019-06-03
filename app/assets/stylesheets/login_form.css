@@ -1,7 +1,7 @@
 .login-form-wrapper {
     display: flex;
     flex-direction: column;
-    min-height: 520px;
+    min-height: 110vh;
     width: 440px;
     margin: 0px auto;
     position: relative;

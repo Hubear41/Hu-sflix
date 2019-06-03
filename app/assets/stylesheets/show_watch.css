@@ -78,12 +78,11 @@
     position: relative;
     transition: opacity 0.5s;
 }
-
-
+/* 
 .clickable-area:hover + .full-control-area {
     opacity: 1;
     transition: opacity 1s;
-}
+} */
 
 .clickable-area {
     position: absolute;

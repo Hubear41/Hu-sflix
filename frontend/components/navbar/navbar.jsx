@@ -37,7 +37,7 @@ class Navbar extends React.Component {
                     <section className='header-nav centered'>
                         <Link to="/" className='logo-btn'>
                             <img src={window.logoURL} alt="Hu'sflix Logo" className="husflix-logo" />
-                            </Link>
+                        </Link>
                         
 
                         <button onClick={this.handleClick} className="logout-btn">Log Out</button>
