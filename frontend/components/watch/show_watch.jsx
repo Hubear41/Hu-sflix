@@ -12,6 +12,8 @@ class Watch extends React.Component {
             muted: false,
             volume: 0.8,
             prevVolume: 0.8,
+            hidden: true,
+            mouseMoving: false,
         };
         this.videoPlayer = React.createRef();
         this.openFullscreen = this.openFullscreen.bind(this);
@@ -21,6 +23,8 @@ class Watch extends React.Component {
         this.jumpForward = this.jumpForward.bind(this);
         this.handleTimeChange = this.handleTimeChange.bind(this);
         this.handleVolumeChange = this.handleVolumeChange.bind(this);
+        this.showControls = this.showControls.bind(this);
+        this._hideControls = this._hideControls.bind(this);
         this._tick = this._tick.bind(this);
         
         setInterval(this._tick, 1000); //updates the timer each half second
@@ -132,7 +136,27 @@ class Watch extends React.Component {
             document.msExitFullscreen();
         }
     }
-
+    
+    showControls() {
+        let timeout;
+        
+        if ( this.state.mouseMoving ) {
+            clearTimeout(timeout);
+            timeout = setTimeout( () => {
+                this._hideControls();
+            }, 4000);
+        } else {
+            this.setState({ mouseMoving: true, hidden: false });
+            timeout = setTimeout( () => {
+                this._hideControls();
+            }, 4000);
+        }
+    }
+    
+    _hideControls() {
+        this.setState({ hidden: true, mouseMoving: false })
+    }
+    
     _tick() {
         if (this.videoPlayer.current) {
             this.setState({ currentPlayerTime: this.videoPlayer.current.currentTime })
@@ -140,9 +164,9 @@ class Watch extends React.Component {
     }
 
     render() {
-        const { paused, currentPlayerTime, volume, muted } = this.state;
+        const { paused, currentPlayerTime, volume, muted, hidden } = this.state;
         const { video, show } = this.props;
-        let playPauseBtn = null, remainingTime = null, audioIcon = null, volumeStyle = null, timeStyle = null;
+        let playPauseBtn = null, remainingTime = null, audioIcon = null, volumeStyle = null, timeStyle = null, controlStyle = null;
 
         if ( this.videoPlayer.current !== null ) {               
             playPauseBtn = paused ? <i className="fas fa-play"></i> : <i className="fas fa-pause"></i>
@@ -156,6 +180,9 @@ class Watch extends React.Component {
             volumeStyle = {
                 background: `linear-gradient( to right, red 0%, red ${currVolume * 100}%, #7c7c7c ${currVolume * 100}%, #7c7c7c ${(1 - currVolume) * 100}% )`
             };
+            controlStyle = {
+                opacity: `${ hidden ? 0 : 1 }`
+            }
             audioIcon = this.findAudioIcon();
         }
 
@@ -187,9 +214,13 @@ class Watch extends React.Component {
                 </div>
 
                 <div className="all-player-controls">
-                    <div className="clickable-area" onClick={this.togglePlayPause}></div>
+                    <div className="clickable-area" 
+                         onClick={this.togglePlayPause} 
+                        //  onMouseOver={this.showControls} 
+                        //  onMouseMove={this.showControls}
+                    ></div>
 
-                    <div className="full-control-area">
+                    <div className="full-control-area" style={controlStyle}>
                         <Link to="/browse" className="back-to-browse-btn">
                             <i className="fas fa-arrow-left"></i>
                             <span className="back-to-browse-message">Back to browse</span>
@@ -201,14 +232,13 @@ class Watch extends React.Component {
                                     <input  type="range" 
                                             className="slider time-slider"
                                             min="0" 
-                                            max={`${60}`} //change this video.runtime
+                                            max={`${60}`} //change 60 to video.runtime
                                             step="0.1"
                                             onChange={this.handleTimeChange} 
                                             onInput={this.handleTimeChange}
                                             value={`${currentPlayerTime}`} 
                                             style={timeStyle}
                                     />
-                                    {/* <figure className="current-progress" style={{width: `${currProgress}%`}}></figure> */}
                                 </figure>
                                 <span className="scrubber-remaining-time">{DateTimeUTIL.secondsToTime(remainingTime)}</span>
                             </div>
@@ -243,7 +273,6 @@ class Watch extends React.Component {
                                                         value={`${volume}`}
                                                         style={volumeStyle}
                                                 />
-                                                {/* <figure className="volume-value-bar" style={{height: `${volumePercent}%`}}></figure> */}
                                             </figure>
                                         </div>
                                                                     

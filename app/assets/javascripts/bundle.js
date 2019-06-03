@@ -1657,7 +1657,9 @@ function (_React$Component) {
       fullscreen: false,
       muted: false,
       volume: 0.8,
-      prevVolume: 0.8
+      prevVolume: 0.8,
+      hidden: true,
+      mouseMoving: false
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.openFullscreen = _this.openFullscreen.bind(_assertThisInitialized(_this));
@@ -1667,6 +1669,8 @@ function (_React$Component) {
     _this.jumpForward = _this.jumpForward.bind(_assertThisInitialized(_this));
     _this.handleTimeChange = _this.handleTimeChange.bind(_assertThisInitialized(_this));
     _this.handleVolumeChange = _this.handleVolumeChange.bind(_assertThisInitialized(_this));
+    _this.showControls = _this.showControls.bind(_assertThisInitialized(_this));
+    _this._hideControls = _this._hideControls.bind(_assertThisInitialized(_this));
     _this._tick = _this._tick.bind(_assertThisInitialized(_this));
     setInterval(_this._tick, 1000); //updates the timer each half second
 
@@ -1834,6 +1838,36 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "showControls",
+    value: function showControls() {
+      var _this2 = this;
+
+      var timeout;
+
+      if (this.state.mouseMoving) {
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+          _this2._hideControls();
+        }, 4000);
+      } else {
+        this.setState({
+          mouseMoving: true,
+          hidden: false
+        });
+        timeout = setTimeout(function () {
+          _this2._hideControls();
+        }, 4000);
+      }
+    }
+  }, {
+    key: "_hideControls",
+    value: function _hideControls() {
+      this.setState({
+        hidden: true,
+        mouseMoving: false
+      });
+    }
+  }, {
     key: "_tick",
     value: function _tick() {
       if (this.videoPlayer.current) {
@@ -1849,7 +1883,8 @@ function (_React$Component) {
           paused = _this$state3.paused,
           currentPlayerTime = _this$state3.currentPlayerTime,
           volume = _this$state3.volume,
-          muted = _this$state3.muted;
+          muted = _this$state3.muted,
+          hidden = _this$state3.hidden;
       var _this$props = this.props,
           video = _this$props.video,
           show = _this$props.show;
@@ -1857,7 +1892,8 @@ function (_React$Component) {
           remainingTime = null,
           audioIcon = null,
           volumeStyle = null,
-          timeStyle = null;
+          timeStyle = null,
+          controlStyle = null;
 
       if (this.videoPlayer.current !== null) {
         playPauseBtn = paused ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -1875,6 +1911,9 @@ function (_React$Component) {
         };
         volumeStyle = {
           background: "linear-gradient( to right, red 0%, red ".concat(currVolume * 100, "%, #7c7c7c ").concat(currVolume * 100, "%, #7c7c7c ").concat((1 - currVolume) * 100, "% )")
+        };
+        controlStyle = {
+          opacity: "".concat(hidden ? 0 : 1)
         };
         audioIcon = this.findAudioIcon();
       }
@@ -1910,9 +1949,12 @@ function (_React$Component) {
         className: "all-player-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "clickable-area",
-        onClick: this.togglePlayPause
+        onClick: this.togglePlayPause //  onMouseOver={this.showControls} 
+        //  onMouseMove={this.showControls}
+
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "full-control-area"
+        className: "full-control-area",
+        style: controlStyle
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/browse",
         className: "back-to-browse-btn"
@@ -1930,7 +1972,7 @@ function (_React$Component) {
         type: "range",
         className: "slider time-slider",
         min: "0",
-        max: "".concat(60) //change this video.runtime
+        max: "".concat(60) //change 60 to video.runtime
         ,
         step: "0.1",
         onChange: this.handleTimeChange,
