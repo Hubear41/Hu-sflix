@@ -277,7 +277,7 @@ class Watch extends React.Component {
                                                                     
                                         <article className="video-title-ep-name">
                                             <span className="show-title">{show ? show.title : null}</span>
-                                            <span className="episode-name">{show && show.show_type === "EPISODIC" ? video.name : null}</span>
+                                            {/* <span className="episode-name">{show && show.show_type === "EPISODIC" ? video.name : null}</span> */}
                                         </article>
                                     </div>    
                                     

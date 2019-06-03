@@ -1,0 +1,11 @@
+.show-rows-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 15vh;
+}
+
+.show-rows-wrapper h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: capitalize
+}

@@ -20,7 +20,7 @@ const App = () => {
                     <ProtectedRoute path="/browse" component={MainNavBar} />
                     <AuthRoute path="/signup" component={Navbar} />
                     <AuthRoute path="/login" component={Navbar} />
-                    <AuthRoute path="/" component={Navbar} />
+                    <AuthRoute exact path="/" component={Navbar} />
                 </Switch>
 
                 <AuthRoute exact path="/" component={Splash} />
@@ -30,8 +30,9 @@ const App = () => {
                 <ProtectedRoute path="/watch/:showId/:videoId" component={Watch} />
             </main>
 
-            {/* <AuthRoute exact path="/" component={Footer} /> */}
-            <Footer />
+            <Switch>
+                <Footer />
+            </Switch>
         </>
     );
 };

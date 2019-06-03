@@ -23,9 +23,9 @@ class ShowPreviewPlayerSmall extends React.Component {
     
     launchWatch(e) {
         const { show } = this.props;
-        // debugger
-        if (show.episodes > 0) {
-            this.props.history.push(`/watch/${show.id}/${show.movie_idd}`)
+        
+        if (show.episodes < 1) {
+            this.props.history.push(`/watch/${show.id}/${show.movie_id}`)
         } else {    
             this.props.history.push(`/watch/${show.id}/${show.episode_ids[0]}`)    
         }
@@ -84,7 +84,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                                 </button>
 
                             </aside>
-
+ 
                             <figcaption className="preview-video-info-desc">
                                 <h5 className="preview-show-title">{show.title}</h5>
                                 <span className="show-maturity-rating">{show.maturity_rating}</span>

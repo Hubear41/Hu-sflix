@@ -17,7 +17,7 @@ class ShowRow extends React.Component {
         
         return (
                 <li className={`show-row-${rowNum}-wrapper show-rows-wrapper`}>
-                    <h2>{`row ${rowNum}`}</h2>
+                    <h2>{`row ${rowNum + 1}`}</h2>
                     
                     <figure className={`show-row-${rowNum} show-row`}>
                         {showList}
