@@ -1,5 +1,6 @@
 import React from 'react';
 import ShowRows from './show_rows';
+import Footer from '../footer/footer';
 
 class ShowGallery extends React.Component {
     constructor(props) {
@@ -8,7 +9,6 @@ class ShowGallery extends React.Component {
     
     componentDidMount() {
         this.props.requestAllShows();
-        // this.chooseBigPreviewShow();
     }
 
     // chooseBigPreviewShow() {
@@ -34,9 +34,7 @@ class ShowGallery extends React.Component {
         let showToPreview = null;
         let idx = 0, count = 0;
 
-        // while ( count < 60) {
-        //     idx = 0;
-        while ( count < 4 ) {
+        while ( count < 2 ) {
             idx = 1
 
             while ( idx < shows.length) {
@@ -44,7 +42,9 @@ class ShowGallery extends React.Component {
 
                 if (currShow.title === 'Ling'){
                     showToPreview = currShow;
-                } else if (Math.floor(idx % 3) !== 0) {
+                }
+
+                if (Math.floor(idx % 3) !== 0) {
                     row.push(currShow);
                 } else if (Math.floor(idx % 3) === 0 ) {
                     showsPerRow.push(row);
@@ -88,10 +88,16 @@ class ShowGallery extends React.Component {
                    
                 </figure>
                 <section className="gallery-index-wrapper">
-                    <figure className="index-bg"></figure>
-                    <ul className="show-gallery-index">
+                    
+                    <ul className="show-gallery-index" id="gallery-index-bg">
                         {showRowsList}
                     </ul>
+
+                    <figure className="index-bg">
+                        <footer className="gallery-footer">
+                            <Footer />
+                        </footer>
+                    </figure>
                 </section>
             </main>
         )

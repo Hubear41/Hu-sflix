@@ -14,9 +14,7 @@
  *= require_self
  */
 
-
-
- #root {
+#root {
     background-color: rgb(33, 32, 32);
     position: relative;
 }

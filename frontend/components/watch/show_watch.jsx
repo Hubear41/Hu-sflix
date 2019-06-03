@@ -29,6 +29,13 @@ class Watch extends React.Component {
         this._tick = this._tick.bind(this);
         
         setInterval(this._tick, 1000); //updates the timer each half second
+
+        document.addEventListener('keypress', (e) => {
+            debugger
+            if (this.props.location.pathname.includes('/watch') && e.code === "Space") {
+                this.togglePlayPause();
+            }
+        });
     }
 
     componentDidMount() {
@@ -279,7 +286,7 @@ class Watch extends React.Component {
                                                                     
                                         <article className="video-title-ep-name">
                                             <span className="show-title">{show ? show.title : null}</span>
-                                            {/* <span className="episode-name">{show && show.show_type === "EPISODIC" ? video.name : null}</span> */}
+                                            <span className="episode-name">{show && video === "EPISODIC" ? video.name : null}</span>
                                         </article>
                                     </div>    
                                     

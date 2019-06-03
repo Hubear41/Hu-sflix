@@ -19,11 +19,11 @@ class MainNav extends React.Component {
         return (
             <header className="main-nav-bar-wrapper">
                 <header className="main-nav-bar">
-                    <Link to="/" className='main-logo-btn'>
-                        <img src={window.logoURL} alt="Hu'sflix Logo" className="husflix-logo" />
-                    </Link>
 
                     <section className='left-nav'>
+                        <Link to="/browse" className='main-logo-btn'>
+                            <img src={window.logoURL} alt="Hu'sflix Logo" className="husflix-logo" />
+                        </Link>
                     </section>
 
                     <section className="right-nav">

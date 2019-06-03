@@ -11,8 +11,8 @@
 }   
 
 #show-peek-preview-wrapper {
-    width: 17%;
-    margin-right: 0.5%;
+    width: 12%; /* width for the titlecards */
+    margin-right: 0.3%;
     position: relative;
     transform: scale(1);
     transform-origin: left;
@@ -24,7 +24,7 @@
     border: 1px solid black;
     box-sizing: border-box;
     transform: scale(1.5);
-    margin-right: 10%;
+    margin-right: 6%;
     transition: transform 0.3s, margin-right 0.3s;
     transition-timing-function: ease-in;
     /* transition-delay: 1s; */

@@ -1,6 +1,6 @@
 .main-nav-bar-wrapper {
     width: 98vw;
-    height: 60px;
+    height: 40px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -8,17 +8,21 @@
 }
 
 .main-nav-bar {
-    width: 90%;
+    width: 100%;
     height: 100%;
-    padding: 0 5vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.left-nav {
+    width: 50%;
+}
+
 .main-logo-btn img {
     min-width: 50px;
     height: 25px;   
+    margin-left: 50px;
 }
 
 .right-nav {
@@ -28,6 +32,7 @@
 
 .toggle-nav-dropdown-menu {
     color: white;
+    margin-top: 10px;
 }
 
 .toggle-nav-dropdown-menu:hover + .nav-dropdown-menu {

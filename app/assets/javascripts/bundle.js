@@ -364,7 +364,14 @@ var App = function App() {
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_10__["ProtectedRoute"], {
     path: "/watch/:showId/:videoId",
     component: _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_7__["default"]
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_footer_footer__WEBPACK_IMPORTED_MODULE_8__["default"], null)));
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_10__["AuthRoute"], {
+    exact: true,
+    path: "/",
+    component: _footer_footer__WEBPACK_IMPORTED_MODULE_8__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_10__["AuthRoute"], {
+    path: "/login",
+    component: _footer_footer__WEBPACK_IMPORTED_MODULE_8__["default"]
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -542,16 +549,16 @@ function (_React$Component) {
         className: "main-nav-bar-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
         className: "main-nav-bar"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "left-nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/",
+        to: "/browse",
         className: "main-logo-btn"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: window.logoURL,
         alt: "Hu'sflix Logo",
         className: "husflix-logo"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "left-nav"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "right-nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "search-bar"
@@ -1388,6 +1395,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _show_rows__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./show_rows */ "./frontend/components/shows/show_rows.jsx");
+/* harmony import */ var _footer_footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../footer/footer */ "./frontend/components/footer/footer.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
@@ -1417,6 +1425,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var ShowGallery =
 /*#__PURE__*/
 function (_React$Component) {
@@ -1431,7 +1440,7 @@ function (_React$Component) {
   _createClass(ShowGallery, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.requestAllShows(); // this.chooseBigPreviewShow();
+      this.props.requestAllShows();
     } // chooseBigPreviewShow() {
     //     const { shows } = this.props;
     //     let previewShow, availableShows = [];
@@ -1454,10 +1463,9 @@ function (_React$Component) {
       var showsPerRow = [];
       var showToPreview = null;
       var idx = 0,
-          count = 0; // while ( count < 60) {
-      //     idx = 0;
+          count = 0;
 
-      while (count < 4) {
+      while (count < 2) {
         idx = 1;
 
         while (idx < shows.length) {
@@ -1465,7 +1473,9 @@ function (_React$Component) {
 
           if (currShow.title === 'Ling') {
             showToPreview = currShow;
-          } else if (Math.floor(idx % 3) !== 0) {
+          }
+
+          if (Math.floor(idx % 3) !== 0) {
             row.push(currShow);
           } else if (Math.floor(idx % 3) === 0) {
             showsPerRow.push(row);
@@ -1519,11 +1529,14 @@ function (_React$Component) {
         className: "big-preview-description"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "gallery-index-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "show-gallery-index",
+        id: "gallery-index-bg"
+      }, showRowsList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "index-bg"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "show-gallery-index"
-      }, showRowsList)));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
+        className: "gallery-footer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_footer_footer__WEBPACK_IMPORTED_MODULE_2__["default"], null)))));
     }
   }]);
 
@@ -1912,6 +1925,13 @@ function (_React$Component) {
     _this._tick = _this._tick.bind(_assertThisInitialized(_this));
     setInterval(_this._tick, 1000); //updates the timer each half second
 
+    document.addEventListener('keypress', function (e) {
+      debugger;
+
+      if (_this.props.location.pathname.includes('/watch') && e.code === "Space") {
+        _this.togglePlayPause();
+      }
+    });
     return _this;
   }
 
@@ -2255,7 +2275,9 @@ function (_React$Component) {
         className: "video-title-ep-name"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "show-title"
-      }, show ? show.title : null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, show ? show.title : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "episode-name"
+      }, show && video === "EPISODIC" ? video.name : null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "right-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "fullscreen-toggle",

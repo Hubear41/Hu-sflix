@@ -29,10 +29,8 @@ const App = () => {
                 <ProtectedRoute path="/browse" component={ShowIndexGallery} />
                 <ProtectedRoute path="/watch/:showId/:videoId" component={Watch} />
             </main>
-
-            <Switch>
-                <Footer />
-            </Switch>
+            <AuthRoute exact path="/" component={Footer} />
+            <AuthRoute path="/login" component={Footer} />
         </>
     );
 };
