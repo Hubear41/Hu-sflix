@@ -8,54 +8,91 @@ class ShowGallery extends React.Component {
     
     componentDidMount() {
         this.props.requestAllShows();
+        // this.chooseBigPreviewShow();
     }
 
-    // toggleShowDetailContainer() {
+    // chooseBigPreviewShow() {
+    //     const { shows } = this.props;
+    //     let previewShow, availableShows = [];
+        
+    //     for (let i = 0; i < shows.length; i++) {
+    //         const show = shows[i];
+    //         debugger
+    //         if ( show.title === 'Ling') {
+    //             previewShow = show;
+    //         } else {
+    //             availableShows.push(show);
+    //         }
+    //     }
 
+    //     return previewShow.id;
     // }
 
     createRowsOf(shows) {
         let row = [];
         let showsPerRow = [];
-        let idx = 0;
+        let showToPreview = null;
+        let idx = 0, count = 0;
 
-        while ( idx < shows.length ) {
-            const currShow = shows[idx];
+        // while ( count < 60) {
+        //     idx = 0;
+        while ( count < 4 ) {
+            idx = 1
 
-            if (Math.floor(idx + 1 % 12) !== 0) {
-                row.push(currShow);
-            } else {
-                showsPerRow.push(row);
+            while ( idx < shows.length) {
+                const currShow = shows[idx];
 
-                row = [currShow];
+                if (currShow.title === 'Ling'){
+                    showToPreview = currShow;
+                } else if (Math.floor(idx % 3) !== 0) {
+                    row.push(currShow);
+                } else if (Math.floor(idx % 3) === 0 ) {
+                    showsPerRow.push(row);
+
+                    row = [currShow];
+                }
+                idx++;
             }
-            idx++;
+
+            if ( row.length > 0 ) {
+                showsPerRow.push(row);
+            }
+
+            count++;
         }
 
-        if ( row.length > 0 ) {
-            showsPerRow.push(row);
-        }
 
-        return showsPerRow;
+        return [showsPerRow, showToPreview];
     }
     
     render() {
-        const { shows, requestShow } = this.props;
-        
-        const showsPerRow = this.createRowsOf(shows);   
+        const { videos, shows } = this.props;
+
+        let showsPerRow, showPreview;
+        [showsPerRow, showPreview] = this.createRowsOf(shows);   
 
         const showRowsList = showsPerRow.map( (row, idx) => {
-            return <ShowRows key={idx} rowNum={idx} shows={row} getShowInfo={requestShow} />
+            return <ShowRows key={idx} rowNum={idx} shows={row} />
         }) 
 
         return (
             <main className="show-gallery-index-wrapper">
-                <figure className="big-video-preview">
-                    
+                <figure className="big-video-preview-wrapper">
+                    <img src={showPreview ? showPreview.poster_url : ""} className="big-video-poster"></img>
+                    <video autoPlay className="big-video">
+                        {/* <source src={ videos ? videos[previewShow.preview_id] : ''} type="video/mp4"/> */}
+                    </video>
+                    <article className="big-preview-description">
+
+                    </article>
+                   
                 </figure>
-                <ul className="show-gallery-index">
-                    {showRowsList}
-                </ul>
+                <section className="gallery-index-wrapper">
+                    <figure className="index-bg"></figure>
+                    <ul className="show-gallery-index">
+                        {showRowsList}
+                    </ul>
+                </section>
             </main>
         )
     }   

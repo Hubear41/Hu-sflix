@@ -23,8 +23,7 @@ class ShowPreviewPlayerSmall extends React.Component {
     
     launchWatch(e) {
         const { show } = this.props;
-        
-        if (show.episodes < 1) {
+        if (show.show_type === 'FEATURE') {
             this.props.history.push(`/watch/${show.id}/${show.movie_id}`)
         } else {    
             this.props.history.push(`/watch/${show.id}/${show.episode_ids[0]}`)    
@@ -59,13 +58,13 @@ class ShowPreviewPlayerSmall extends React.Component {
                          style={{height: this.state.height}} 
                          onClick={this.launchWatch}>
                                 
-                    <img src={window.tempBgURL} alt="" className="show-title-card" />
+                    <img src={show ? show.poster_url : ''} alt="" className="show-title-card" />
 
                     <figure className="show-peek-preview-player" onClick={this.launchWatch}>
 
                         <figure className="preview-video-player">
-                            <video src="" id={`show-${show.id} preview-video`} poster={window.tempBgURL}>
-
+                            <video id={`show-${show.id} preview-video`} poster={window.tempBgURL}>
+                                {/* <source src="" type="video/mp4"/> */}
                             </video>
                            
                             <button onClick={this.clickPlay} className="preview-play-btn">

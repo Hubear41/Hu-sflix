@@ -4,6 +4,7 @@ import ShowGallery from './show_gallery';
 
 const msp = ({entities}) => ({
     shows: Object.values(entities.shows),
+    videos: Object.values(entities.videos),
 });
 
 

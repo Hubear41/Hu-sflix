@@ -165,12 +165,13 @@ class Watch extends React.Component {
     render() {
         const { paused, currentPlayerTime, volume, muted, hidden } = this.state;
         const { video, show } = this.props;
+        const runtime = video ? video.runtime : 0;
         let playPauseBtn = null, remainingTime = null, audioIcon = null, volumeStyle = null, timeStyle = null, controlStyle = null;
 
         if ( this.videoPlayer.current !== null ) {               
             playPauseBtn = paused ? <i className="fas fa-play"></i> : <i className="fas fa-pause"></i>
-            remainingTime =  Math.floor(60 - currentPlayerTime); //change 60 to video.runtime
-            const currProgress = (currentPlayerTime / 60) * 100; //change 60 to video.runtime
+            remainingTime =  Math.floor(runtime - currentPlayerTime);
+            const currProgress = (currentPlayerTime / runtime) * 100;
             const currVolume = muted ? 0 : volume;
             
             timeStyle = {
@@ -205,6 +206,7 @@ class Watch extends React.Component {
                             autoPlay
                             controls={false}
                             > 
+                        {/* <source src={video ? video.video_url : ''} */}
                         <source src={window.video}
                                 type="video/mp4"
                                 />
@@ -231,7 +233,7 @@ class Watch extends React.Component {
                                     <input  type="range" 
                                             className="slider time-slider"
                                             min="0" 
-                                            max={`${60}`} //change 60 to video.runtime
+                                            max={`${runtime}`} 
                                             step="0.1"
                                             onChange={this.handleTimeChange} 
                                             onInput={this.handleTimeChange}

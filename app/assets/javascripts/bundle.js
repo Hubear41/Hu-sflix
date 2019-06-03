@@ -1390,6 +1390,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _show_rows__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./show_rows */ "./frontend/components/shows/show_rows.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1423,8 +1431,20 @@ function (_React$Component) {
   _createClass(ShowGallery, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.requestAllShows();
-    } // toggleShowDetailContainer() {
+      this.props.requestAllShows(); // this.chooseBigPreviewShow();
+    } // chooseBigPreviewShow() {
+    //     const { shows } = this.props;
+    //     let previewShow, availableShows = [];
+    //     for (let i = 0; i < shows.length; i++) {
+    //         const show = shows[i];
+    //         debugger
+    //         if ( show.title === 'Ling') {
+    //             previewShow = show;
+    //         } else {
+    //             availableShows.push(show);
+    //         }
+    //     }
+    //     return previewShow.id;
     // }
 
   }, {
@@ -1432,49 +1452,78 @@ function (_React$Component) {
     value: function createRowsOf(shows) {
       var row = [];
       var showsPerRow = [];
-      var idx = 0;
+      var showToPreview = null;
+      var idx = 0,
+          count = 0; // while ( count < 60) {
+      //     idx = 0;
 
-      while (idx < shows.length) {
-        var currShow = shows[idx];
+      while (count < 4) {
+        idx = 1;
 
-        if (Math.floor(idx + 1 % 12) !== 0) {
-          row.push(currShow);
-        } else {
-          showsPerRow.push(row);
-          row = [currShow];
+        while (idx < shows.length) {
+          var currShow = shows[idx];
+
+          if (currShow.title === 'Ling') {
+            showToPreview = currShow;
+          } else if (Math.floor(idx % 3) !== 0) {
+            row.push(currShow);
+          } else if (Math.floor(idx % 3) === 0) {
+            showsPerRow.push(row);
+            row = [currShow];
+          }
+
+          idx++;
         }
 
-        idx++;
+        if (row.length > 0) {
+          showsPerRow.push(row);
+        }
+
+        count++;
       }
 
-      if (row.length > 0) {
-        showsPerRow.push(row);
-      }
-
-      return showsPerRow;
+      return [showsPerRow, showToPreview];
     }
   }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
-          shows = _this$props.shows,
-          requestShow = _this$props.requestShow;
-      var showsPerRow = this.createRowsOf(shows);
+          videos = _this$props.videos,
+          shows = _this$props.shows;
+      var showsPerRow, showPreview;
+
+      var _this$createRowsOf = this.createRowsOf(shows);
+
+      var _this$createRowsOf2 = _slicedToArray(_this$createRowsOf, 2);
+
+      showsPerRow = _this$createRowsOf2[0];
+      showPreview = _this$createRowsOf2[1];
       var showRowsList = showsPerRow.map(function (row, idx) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: idx,
           rowNum: idx,
-          shows: row,
-          getShowInfo: requestShow
+          shows: row
         });
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
         className: "show-gallery-index-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "big-video-preview"
+        className: "big-video-preview-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: showPreview ? showPreview.poster_url : "",
+        className: "big-video-poster"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+        autoPlay: true,
+        className: "big-video"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "big-preview-description"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "gallery-index-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "index-bg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "show-gallery-index"
-      }, showRowsList));
+      }, showRowsList)));
     }
   }]);
 
@@ -1504,7 +1553,8 @@ __webpack_require__.r(__webpack_exports__);
 var msp = function msp(_ref) {
   var entities = _ref.entities;
   return {
-    shows: Object.values(entities.shows)
+    shows: Object.values(entities.shows),
+    videos: Object.values(entities.videos)
   };
 };
 
@@ -1593,7 +1643,7 @@ function (_React$Component) {
     value: function launchWatch(e) {
       var show = this.props.show;
 
-      if (show.episodes < 1) {
+      if (show.show_type === 'FEATURE') {
         this.props.history.push("/watch/".concat(show.id, "/").concat(show.movie_id));
       } else {
         this.props.history.push("/watch/".concat(show.id, "/").concat(show.episode_ids[0]));
@@ -1634,7 +1684,7 @@ function (_React$Component) {
         },
         onClick: this.launchWatch
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: window.tempBgURL,
+        src: show ? show.poster_url : '',
         alt: "",
         className: "show-title-card"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
@@ -1643,7 +1693,6 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "preview-video-player"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-        src: "",
         id: "show-".concat(show.id, " preview-video"),
         poster: window.tempBgURL
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -2075,6 +2124,7 @@ function (_React$Component) {
       var _this$props = this.props,
           video = _this$props.video,
           show = _this$props.show;
+      var runtime = video ? video.runtime : 0;
       var playPauseBtn = null,
           remainingTime = null,
           audioIcon = null,
@@ -2088,10 +2138,8 @@ function (_React$Component) {
         }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-pause"
         });
-        remainingTime = Math.floor(60 - currentPlayerTime); //change 60 to video.runtime
-
-        var currProgress = currentPlayerTime / 60 * 100; //change 60 to video.runtime
-
+        remainingTime = Math.floor(runtime - currentPlayerTime);
+        var currProgress = currentPlayerTime / runtime * 100;
         var currVolume = muted ? 0 : volume;
         timeStyle = {
           background: "linear-gradient( to right, red 0%, red ".concat(currProgress, "%, #7c7c7c ").concat(currProgress, "% , #7c7c7c ").concat(remainingTime, "%)")
@@ -2159,8 +2207,7 @@ function (_React$Component) {
         type: "range",
         className: "slider time-slider",
         min: "0",
-        max: "".concat(60) //change 60 to video.runtime
-        ,
+        max: "".concat(runtime),
         step: "0.1",
         onChange: this.handleTimeChange,
         onInput: this.handleTimeChange,

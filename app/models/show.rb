@@ -31,19 +31,21 @@ class Show < ApplicationRecord
     after_initialize :default_values
 
     def episode_ids 
-        return [] if self.show_type == "FEATURE"
+        return nil if self.show_type == "FEATURE"
 
-        videos.map { |video| video.id if video.video_type == "EPISODE" }
+        videos.where.not(video_type: 'PREVIEW').order(:episode_num).map { |video| video.id }
     end
 
     def preview_id
-        videos.each { |video| return video.id if video.video_type == "PREVIEW"}
+        preview = videos.where(video_type: 'PREVIEW').first
+
+        preview.nil? ? nil : preview.id
     end
 
     def movie_id 
         return nil if self.show_type == 'EPISODIC'
 
-        videos.each { |video| return video.id if video.video_type == "MOVIE" }
+        videos.where.not(video_type: 'PREVIEW').first.id
     end
 
     private
@@ -51,4 +53,5 @@ class Show < ApplicationRecord
     def default_values 
         self.view_count ||= 0
     end
+
 end

@@ -1,6 +1,6 @@
 class Api::ShowsController < ApplicationController 
     def index
-        @shows = Show.all
+        @shows = Show.all.includes(:videos)
 
         render :index
     end
