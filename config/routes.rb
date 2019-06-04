@@ -9,5 +9,6 @@ Rails.application.routes.draw do
     
     resources :videos, only: [:show]
     resources :shows, only: [:index, :show]
+    resources :genres, only: [:show]
   end
 end

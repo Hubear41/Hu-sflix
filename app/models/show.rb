@@ -25,8 +25,13 @@ class Show < ApplicationRecord
     validates :show_type, presence: true, inclusion: { in: SHOW_TYPES }
     validates :view_count, presence: true
     
-    has_many :videos
     has_one_attached :poster
+    has_many :videos
+    has_many :show_genres
+    has_many :genres,
+        through: :show_genres,
+        source: :genre
+        
 
     after_initialize :default_values
 

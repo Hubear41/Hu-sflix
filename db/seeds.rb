@@ -12,8 +12,11 @@ User.destroy_all
 Video.destroy_all
 Show.destroy_all
 
+# Default User
 User.create!(email: 'guest@guest.com', password: 'go_password_go')
 
+
+# Shows and Videos 
 caroline_show = Show.create!( title: 'Caroline', 
                               director: 'ELO Films', 
                               tagline: 'When plans fall through, a six-year-old is faced with a big responsibility on a hot Texas day.',
@@ -40,6 +43,23 @@ caroline_video = caroline_show.videos.create!( name: 'Caroline',
 # caroline_video.video_file.attach(io: caroline_file, filename: 'Carolin_Husflix_720p.mp4')
 # caroline_video.save!
 
+mouse_show = Show.create!( title: 'Mouse',
+                           director: 'ELO Films',
+                           tagline: 'Fueled by coke, a desperate couple attempts to capitalize on an unlikely opportunity.',
+                           year: 2016,
+                           maturity_rating: 'R',
+                           show_type: 'FEATURE',
+                           poster_url: 'temp'
+)
+
+mouse_video = mouse_show.videos.create!( name: 'Mouse',
+                                         description: 'Fueled by coke, a desperate couple attempts to capitalize on an unlikely opportunity.',
+                                         video_type: 'FILM',
+                                         runtime: 189,
+                                         credits_time: 189,
+                                         video_url: 'asghadflkja'
+)
+
 heart_show = Show.create!( title: 'Heart',
                           director: 'Dorian Cambi',
                           tagline: 'Alex has given up on love completely, until one day his heart calls him via a public payphone to convince  otherwise.',
@@ -59,6 +79,43 @@ heart_video = heart_show.videos.create!( name: 'Heart',
                           runtime: 890,
                           credits_time: 830,
                           video_url: "3"
+)
+
+ramona_show = Show.create!( title: 'Ramona',
+                            director: 'Dorian Cambi',
+                            tagline: 'Ramona has an inability to express emotions verbally. The only person that might be able to help her is her dashing therapist.',
+                            year: 2014,
+                            maturity_rating: 'PG',
+                            show_type: 'FEATURE',
+                            poster_url: 'asjdhgadl;fa'
+)
+
+ramona_video = ramona_show.videos.create!( name: 'Ramona',
+                                           description: 'N/A',
+                                           video_type: 'FILM',
+                                           runtime: 98,
+                                           credits_time: 95,
+                                           video_url: 'oijkelr'
+)
+
+
+stumped_show = Show.create!( title: 'Stumped',
+                             director: 'Matthew Puccini',
+                             description: 'An awkward dinner escalates into a full-blown musical number as a young man struggles to come out to his parents.' ,
+                             video_type: 'FILM',
+                             year: 2017,
+                             maturity_rating: 'PG',
+                             show_type: 'FEATURE',
+                             poster_url: 'asfghadsf;jcne'
+                             
+) 
+
+stumped_show = stumped_show.videos.create!( name: 'Stumped',
+                                            description: 'N/A',
+                                            video_type: 'FILM',
+                                            runtime: 86,
+                                            credits_time: 80,
+                                            video_url: 'asghaldsfkasd'
 )
 
 # heart_file = open('/Users/dennishu/Documents/Bootcamp\ Work/Fullstack\ Project/video_assets/Heart_Husflix_720p.mp4')
@@ -89,6 +146,59 @@ midnight_girl_video = midnight_girl_show.videos.create!( name: 'Kate',
 
 # midnight_girl_file = open('')
 
+marina_show = Show.create!( title: 'Marina',
+                            director: 'Story Chen',
+                            tagline: 'Marina is a story about a girl who inherited Spinal Muscular Atrophy from her mom. Before she lose the control of her body, does she have the right to decide her own life and death?',
+                            year: 2018,
+                            maturity_rating: 'PG-13',
+                            show_type: 'FEATURE',
+                            poster_url: 'asdfacxz/comah;df'
+)
+
+marina_video = marina_show.videos.create!( name: 'Marina',
+                                           description: 'N/A',
+                                           video_type: 'FILM',
+                                           runtime: 110,
+                                           credits_time: 100,
+                                           video_url: 'askgbasdfa'
+
+)
+
+charm_city_show = Show.create( title: 'Goodbye Charm City',
+                               director: 'Christian Grier',
+                               year: 2015,
+                               tagline: 'A mother prepares her final impact statement to the man that murdered her son.',
+                               maturity_rating: "R",
+                               show_type: 'FEATURE',
+                               poster_url: 'aslhgalsdf'
+)
+
+charm_city_video = charm_city_show.videos.create!( name: 'Goodbye Charm City',
+                                                   description: 'N/A',
+                                                   video_type: 'FILM',
+                                                   runtime: 146,
+                                                   credits_time: 125,
+                                                   video_url: 'aklshdf'
+)
+
+malis_tribute = Show.create( title: "Mali's Tribute",
+                             director: 'Dircelene Castilho Torres',
+                             tagline: "In an attempt to honor her brother's memory through clothing, a young woman must wrestle with the questions of sexuality her fashion choices prompt in her peers and, ultimately, herself.",
+                             year: 2016,
+                             maturity_rating: 'PG-13',
+                             show_type: 'FEATURE',
+                             poster_url: '38xbsdf0dibgc'
+)
+
+malis_tribute_video = malis_tribute.videos.create!( name: "Mali's Tribute",
+                                                   description: 'N/A',
+                                                   video_type: 'FILM',
+                                                   runtime: 80,
+                                                   credits_time: 67,
+                                                   video_url: 'aklslshdf'
+)
+
+
 ling_show = Show.create!( title: 'Ling',
                           director: 'Dennis Liu',
                           tagline: 'something',
@@ -102,11 +212,40 @@ ling_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/ling_husflix_
 ling_show.poster.attach( io: ling_poster, filename: 'ling_poster.jpg')
 ling_show.save!
 
+
+
 ling_show.videos.create!( name: 'Ling Promo',
                           description: 'Ling Promo',
                           runtime: '272',
                           video_type: 'PREVIEW',
                           video_url: '6'
+)
+
+max_out_show = Show.create!( title: 'Max Out',
+                             director: 'Max Talisman',
+                             tagline: 'Four friends try their best to overcome living and dating in NYC',
+                             year: 2016,
+                             maturity_rating: 'PG-13',
+                             show_type: 'EPISODIC',
+                             poster_url: 'ashgasdf'
+)
+
+max_out_ep1 = max_out_show.videos.create!( name: 'Worst Date Ever',
+                                           description: 'Online dating can lead to unexpected adventures',
+                                           video_type: 'EPISODE',
+                                           episode_num: 2,
+                                           runtime: 78,
+                                           credits_time: 65,
+                                           video_url: '2hsfksadjfag'  
+)
+
+max_out_ep2 = max_out_show.videos.create!( name: 'Audition Animal',
+                                           description: 'Max tries out for a movie',
+                                           video_type: 'EPISODE',
+                                           episode_num: 1,
+                                           runtime: 89,
+                                           credits_time: 75,
+                                           video_url: '2hsfkasdfsadjfag'  
 )
 
 foolish_gents_show = Show.create!( title:'The Fantastic Adventures of Foolish Gentlemen',
@@ -182,3 +321,4 @@ foolish_gents_ep6 = foolish_gents_show.videos.create!( name: 'Truth',
 
 )
 
+# Genres
