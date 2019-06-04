@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
-import { fetchShows, fetchShow, fetchVideo } from '../../actions/show_actions';
+import { fetchShows, fetchVideo } from '../../actions/show_actions';
 import ShowGallery from './show_gallery';
 
-const msp = ({entities}) => ({
-    shows: Object.values(entities.shows),
-    videos: Object.values(entities.videos),
-});
-
+const msp = ({entities}) => {
+    return {
+        shows: Object.values(entities.shows),
+        galleryType: 'showsIndex',
+    }
+};
 
 const mdp = dispatch => ({
     requestAllShows: () => dispatch(fetchShows()),

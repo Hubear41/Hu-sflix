@@ -24,6 +24,8 @@ class MainNav extends React.Component {
                         <Link to="/browse" className='main-logo-btn'>
                             <img src={window.logoURL} alt="Hu'sflix Logo" className="husflix-logo" />
                         </Link>
+
+                        <Link to="/browse" className="home-btn">Home</Link>
                     </section>
 
                     <section className="right-nav">

@@ -28,6 +28,7 @@ const App = () => {
                 <AuthRoute path="/login" component={Login} />
                 <ProtectedRoute path="/browse" component={ShowIndexGallery} />
                 <ProtectedRoute path="/watch/:showId/:videoId" component={Watch} />
+                {/* <ProtectedRoute path="/genre/:genreId" component={GenreGallery} /> */}
             </main>
             <AuthRoute exact path="/" component={Footer} />
             <AuthRoute path="/login" component={Footer} />

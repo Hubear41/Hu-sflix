@@ -50,7 +50,7 @@ class ShowPreviewPlayerSmall extends React.Component {
     render() {
         const { show } = this.props;
         const muteBtn = this.state.mute ? <i className="fas fa-volume-mute mute-symbol"></i> : <i className="fas fa-volume-up mute-symbol"></i>
-        debugger
+        
         return (
             <>
                 <section id="show-peek-preview-wrapper" 

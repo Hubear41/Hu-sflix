@@ -606,7 +606,10 @@ function (_React$Component) {
         src: window.logoURL,
         alt: "Hu'sflix Logo",
         className: "husflix-logo"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/browse",
+        className: "home-btn"
+      }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "right-nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "search-bar"
@@ -1493,21 +1496,7 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.requestAllShows();
-    } // chooseBigPreviewShow() {
-    //     const { shows } = this.props;
-    //     let previewShow, availableShows = [];
-    //     for (let i = 0; i < shows.length; i++) {
-    //         const show = shows[i];
-    //         debugger
-    //         if ( show.title === 'Ling') {
-    //             previewShow = show;
-    //         } else {
-    //             availableShows.push(show);
-    //         }
-    //     }
-    //     return previewShow.id;
-    // }
-
+    }
   }, {
     key: "createRowsOf",
     value: function createRowsOf(shows) {
@@ -1550,8 +1539,8 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var _this$props = this.props,
-          videos = _this$props.videos,
-          shows = _this$props.shows;
+          shows = _this$props.shows,
+          galleryType = _this$props.galleryType;
       var showsPerRow, showPreview;
 
       var _this$createRowsOf = this.createRowsOf(shows);
@@ -1564,10 +1553,10 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: idx,
           rowNum: idx,
-          shows: row
+          shows: row,
+          galleryType: galleryType
         });
       });
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
         className: "show-gallery-index-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
@@ -1620,7 +1609,7 @@ var msp = function msp(_ref) {
   var entities = _ref.entities;
   return {
     shows: Object.values(entities.shows),
-    videos: Object.values(entities.videos)
+    galleryType: 'showsIndex'
   };
 };
 
@@ -1742,7 +1731,6 @@ function (_React$Component) {
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-volume-up mute-symbol"
       });
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         id: "show-peek-preview-wrapper",
         className: "show-row-item-x item-".concat(show.id),
@@ -1856,7 +1844,8 @@ function (_React$Component) {
     value: function render() {
       var _this$props = this.props,
           shows = _this$props.shows,
-          rowNum = _this$props.rowNum;
+          rowNum = _this$props.rowNum,
+          galleryType = _this$props.galleryType;
       var showList = [];
       shows.forEach(function (show) {
         showList.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_preview_player_small__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -1864,10 +1853,11 @@ function (_React$Component) {
           show: show
         }));
       });
+      var headerText = galleryType ? "row ".concat(rowNum + 1) : "";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "show-row-".concat(rowNum, "-wrapper show-rows-wrapper")
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "row ".concat(rowNum + 1)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "show-row-".concat(rowNum, " show-row")
+        className: "row-".concat(rowNum, "-wrapper show-rows-wrapper")
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, headerText), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "row-".concat(rowNum, " show-row")
       }, showList));
     }
   }]);

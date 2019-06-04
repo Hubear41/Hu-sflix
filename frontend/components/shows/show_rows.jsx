@@ -8,18 +8,20 @@ class ShowRow extends React.Component {
     }
 
     render() {
-        const { shows, rowNum } = this.props;
+        const { shows, rowNum, galleryType } = this.props;
         
         const showList = [];
         shows.forEach( show => {
             showList.push(<ShowPreviewPlayer key={show.id} show={show} />); 
         } );
         
+        const headerText = galleryType ? `row ${rowNum + 1}` : "";
+
         return (
-                <li className={`show-row-${rowNum}-wrapper show-rows-wrapper`}>
-                    <h2>{`row ${rowNum + 1}`}</h2>
+                <li className={`row-${rowNum}-wrapper show-rows-wrapper`}>
+                    <h2>{headerText}</h2>
                     
-                    <figure className={`show-row-${rowNum} show-row`}>
+                    <figure className={`row-${rowNum} show-row`}>
                         {showList}
                     </figure>
                 </li>

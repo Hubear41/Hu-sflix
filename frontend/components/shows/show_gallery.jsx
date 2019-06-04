@@ -11,23 +11,6 @@ class ShowGallery extends React.Component {
         this.props.requestAllShows();
     }
 
-    // chooseBigPreviewShow() {
-    //     const { shows } = this.props;
-    //     let previewShow, availableShows = [];
-        
-    //     for (let i = 0; i < shows.length; i++) {
-    //         const show = shows[i];
-    //         debugger
-    //         if ( show.title === 'Ling') {
-    //             previewShow = show;
-    //         } else {
-    //             availableShows.push(show);
-    //         }
-    //     }
-
-    //     return previewShow.id;
-    // }
-
     createRowsOf(shows) {
         let row = [];
         let showsPerRow = [];
@@ -66,15 +49,15 @@ class ShowGallery extends React.Component {
     }
     
     render() {
-        const { videos, shows } = this.props;
+        const { shows, galleryType } = this.props;
 
         let showsPerRow, showPreview;
         [showsPerRow, showPreview] = this.createRowsOf(shows);   
 
         const showRowsList = showsPerRow.map( (row, idx) => {
-            return <ShowRows key={idx} rowNum={idx} shows={row} />
+            return <ShowRows key={idx} rowNum={idx} shows={row} galleryType={galleryType}/>
         }) 
-        debugger
+        
         return (
             <main className="show-gallery-index-wrapper">
                 <figure className="big-video-preview-wrapper">
