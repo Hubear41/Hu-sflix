@@ -34,7 +34,7 @@ class ShowGallery extends React.Component {
         let showToPreview = null;
         let idx = 0, count = 0;
         
-        while ( count < 2 ) {
+        while ( count < 1 ) {
             idx = 0
 
             while ( idx < shows.length) {
