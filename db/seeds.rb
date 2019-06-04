@@ -48,6 +48,9 @@ mouse_show = Show.create!( title: 'Mouse',
                            show_type: 'FEATURE',
 )
 
+mouse_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/mouse_husflix_poster.jpg')
+mouse_show.poster.attach(io: mouse_poster, filename:'mouse_poster.jpg')
+
 mouse_video = mouse_show.videos.create!( name: 'Mouse',
                                          description: 'Fueled by coke, a desperate couple attempts to capitalize on an unlikely opportunity.',
                                          video_type: 'FILM',
@@ -89,6 +92,9 @@ ramona_show = Show.create!( title: 'Ramona',
                             maturity_rating: 'PG',
                             show_type: 'FEATURE',
 )
+
+ramona_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/Ramona_poster.png')
+ramona_show.poster.attach(io: ramona_poster, filename: 'ramona_poster.png')
 
 ramona_video = ramona_show.videos.create!( name: 'Ramona',
                                            description: 'N/A',
@@ -153,6 +159,10 @@ marina_show = Show.create!( title: 'Marina',
                             show_type: 'FEATURE',
 )
 
+marina_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/Marina_poster.jpg')
+marina_show.poster.attach(io: marina_poster, filename: 'marina_poster.jpg')
+marina_show.save!
+
 marina_video = marina_show.videos.create!( name: 'Marina',
                                            description: 'N/A',
                                            video_type: 'FILM',
@@ -171,6 +181,10 @@ charm_city_show = Show.create( title: 'Goodbye Charm City',
                                maturity_rating: "R",
                                show_type: 'FEATURE',
 )
+
+charm_city_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/GCC_poster.png')
+charm_city_show.poster.attach(io: charm_city_poster, filename: 'charm_city_poster.png')
+charm_city_show.save!
 
 charm_city_video = charm_city_show.videos.create!( name: 'Goodbye Charm City',
                                                    description: 'N/A',
@@ -208,7 +222,11 @@ freeze = Show.create!( title: 'Freeze',
                        year: 2016,
                        maturity_rating: 'R',
                        show_type: 'FEATURE'
-)             
+)    
+
+freeze_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/Freeze_poster.jpg')
+freeze.poster.attach(io: freeze_poster, filename: 'freeze_poster.jpg')
+freeze.save!
 
 freeze_video = freeze.videos.create!( name: 'Freeze',
                                       description: 'n/a',
@@ -228,6 +246,10 @@ freak = Show.create!( title: 'Freak',
                       maturity_rating: 'R',
                       show_type: 'FEATURE'
 )
+
+freak_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/freak_poster.png')
+freak.poster.attach(io: freak_poster, filename: 'freak_poster.png')
+freak.save!
 
 freak_video = freak.videos.create!( name: 'Freak',
                                     description: 'n/a',
