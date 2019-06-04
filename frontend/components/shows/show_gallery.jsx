@@ -44,7 +44,7 @@ class ShowGallery extends React.Component {
                     showToPreview = currShow;
                 }
 
-                if (Math.floor(idx % 3) !== 0) {
+                if (Math.floor(idx % 3) !== 0 || idx === 0) {
                     row.push(currShow);
                 } else if (Math.floor(idx % 3) === 0 ) {
                     showsPerRow.push(row);

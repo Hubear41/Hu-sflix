@@ -64,7 +64,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                     <figure className="show-peek-preview-player" onClick={this.launchWatch}>
 
                         <figure className="preview-video-player">
-                            <video id={`show-${show.id} preview-video`} poster={window.tempBgURL}>
+                            <video id={`show-${show.id} preview-video`} poster={show ? show.posterUrl : window.tempBgURL}>
                                 {/* <source src="" type="video/mp4"/> */}
                             </video>
                            

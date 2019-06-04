@@ -1479,7 +1479,7 @@ function (_React$Component) {
             showToPreview = currShow;
           }
 
-          if (Math.floor(idx % 3) !== 0) {
+          if (Math.floor(idx % 3) !== 0 || idx === 0) {
             row.push(currShow);
           } else if (Math.floor(idx % 3) === 0) {
             showsPerRow.push(row);
@@ -1713,7 +1713,7 @@ function (_React$Component) {
         className: "preview-video-player"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         id: "show-".concat(show.id, " preview-video"),
-        poster: window.tempBgURL
+        poster: show ? show.posterUrl : window.tempBgURL
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.clickPlay,
         className: "preview-play-btn"
