@@ -37,6 +37,10 @@ caroline_video = caroline_show.videos.create!( name: 'Caroline',
                              credits_time: 677,
 )
 
+caroline_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Caroline_Husflix_short_720p.mp4')
+caroline_video.video_file.attach(io: caroline_file, filename: 'Caroline.mp4')
+caroline_video.save!
+
 # caroline_file = open("/Users/dennishu/Documents/Bootcamp\ Work/Fullstack\ Project/video_assets/Carolin_Husflix_720p.mp4")
 # caroline_video.video_file.attach(io: caroline_file, filename: 'Carolin_Husflix_720p.mp4')
 # caroline_video.save!
@@ -53,9 +57,12 @@ mouse_video = mouse_show.videos.create!( name: 'Mouse',
                                          description: 'Fueled by coke, a desperate couple attempts to capitalize on an unlikely opportunity.',
                                          video_type: 'FILM',
                                          runtime: 189,
-                                         credits_time: 189,
+                                         credits_time: 189
+)
 
-                                         )
+mouse_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Mouse_Husflix_short_720p.mp4')
+mouse_video.video_file.attach(io: mouse_file, filename: 'Mouse.mp4')
+mouse_video.save!
 
 heart_show = Show.create!( title: 'Heart',
                           director: 'Dorian Cambi',
@@ -76,6 +83,10 @@ heart_video = heart_show.videos.create!( name: 'Heart',
                           credits_time: 830,
 )
 
+heart_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Heart_Husflix_short_720p.mp4')
+heart_video.video_file.attach(io: heart_file, filename: 'Heart.mp4')
+heart_video.save!
+
 ramona_show = Show.create!( title: 'Ramona',
                             director: 'Dorian Cambi',
                             tagline: 'Ramona has an inability to express emotions verbally. The only person that might be able to help her is her dashing therapist.',
@@ -92,9 +103,13 @@ ramona_video = ramona_show.videos.create!( name: 'Ramona',
 )
 
 
+ramona_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Ramona_Husflix_short_720p.mp4')
+ramona_video.video_file.attach(io: ramona_file, filename: 'Ramona.mp4')
+ramona_video.save!
+
 stumped_show = Show.create!( title: 'Stumped',
                              director: 'Matthew Puccini',
-                             description: 'An awkward dinner escalates into a full-blown musical number as a young man struggles to come out to his parents.' ,
+                             tagline: 'An awkward dinner escalates into a full-blown musical number as a young man struggles to come out to his parents.' ,
                              video_type: 'FILM',
                              year: 2017,
                              maturity_rating: 'PG',
@@ -102,17 +117,16 @@ stumped_show = Show.create!( title: 'Stumped',
                              
 ) 
 
-stumped_show = stumped_show.videos.create!( name: 'Stumped',
+stumped_video = stumped_show.videos.create!( name: 'Stumped',
                                             description: 'N/A',
                                             video_type: 'FILM',
                                             runtime: 86,
                                             credits_time: 80,
+)
 
-                                            )
-
-# heart_file = open('/Users/dennishu/Documents/Bootcamp\ Work/Fullstack\ Project/video_assets/Heart_Husflix_720p.mp4')
-# heart_video.video_file.attach(io: heart_file, filename: 'Heart_Husflix_720p.mp4')
-# heart_video.save!
+stumped_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Stumped_Husflix_short_720p.mp4')
+stumped_video.video_file.attach(io: stumped_file, filename: 'Stumped.mp4')
+stumped_video.save!
 
 midnight_girl_show = Show.create!( title: 'Kate',
                                   director: 'Christina Yoon',
@@ -130,12 +144,12 @@ midnight_girl_video = midnight_girl_show.videos.create!( name: 'Kate',
                                                         description: 'A shy high schooler dealing with the aftermath of sexual assault meets a "cam girl" who shows her a very different side of sexuality.',
                                                         video_type: 'FILM',
                                                         runtime: 1069,
-                                                        credits_time: 1043,
-
-                                                        
+                                                        credits_time: 1043,                                                       
 )
 
-# midnight_girl_file = open('')
+midnight_girl_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Midnight+Girl_Husflix_short_720p.mp4')
+midnight_girl_video.video_file.attach(io: midnight_girl_file, filename: 'Midnight_Girl.mp4')
+midnight_girl_video.save!
 
 marina_show = Show.create!( title: 'Marina',
                             director: 'Story Chen',
@@ -149,10 +163,12 @@ marina_video = marina_show.videos.create!( name: 'Marina',
                                            description: 'N/A',
                                            video_type: 'FILM',
                                            runtime: 110,
-                                           credits_time: 100,
-
-                                           
+                                           credits_time: 100,                                         
 )
+
+marina_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Marina_Husflix_short_720p.mp4')
+marina_video.video_file.attach(io: marina_file, filename: 'Marina.mp4')
+marina_video.save!
 
 charm_city_show = Show.create( title: 'Goodbye Charm City',
                                director: 'Christian Grier',
@@ -167,8 +183,11 @@ charm_city_video = charm_city_show.videos.create!( name: 'Goodbye Charm City',
                                                    video_type: 'FILM',
                                                    runtime: 146,
                                                    credits_time: 125,
+)
 
-                                                   )
+charm_city_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Goodbye_Charm_City_Husflix_short_720p.mp4')
+charm_city_video.video_file.attach(io: charm_city_file)
+charm_city_video.save!
 
 malis_tribute = Show.create( title: "Mali's Tribute",
                              director: 'Dircelene Castilho Torres',
@@ -182,10 +201,50 @@ malis_tribute_video = malis_tribute.videos.create!( name: "Mali's Tribute",
                                                    description: 'N/A',
                                                    video_type: 'FILM',
                                                    runtime: 80,
-                                                   credits_time: 67,
+                                                   credits_time: 67
+)
 
-                                                   )
+malis_tribute_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Malis_Tribute_Husflix_short_720p.mp4')
+malis_tribute_video.video_file.attach(io: malis_tribute_file)
+malis_tribute_video.save!
 
+freeze = Show.create!( title: 'Freeze',
+                       director: 'Nelicia Low',
+                       tagline: 'We all do terrible things when we think that no one is watching. When her distant husband cannot give her the love she desires, the lonely and insecure Hui will do anything to feel loved. Caught in an unusual love triangle with her autistic brother, Hui has found a constant source of comfort.',
+                       year: 2016,
+                       maturity_rating: 'R',
+                       show_type: 'FEATURE'
+)             
+
+freeze_video = freeze.videos.create!( name: 'Freeze',
+                                      description: 'n/a',
+                                      video_type: 'FILM',
+                                      runtime: 60,
+                                      credits_time: 68
+)
+
+freeze_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Freeze_Husflix_short_720p.mp4')
+freeze_video.video_file.attach(io: freeze_file)
+freeze_video.save!
+
+freak = Show.create!( title: 'Freak',
+                      director: 'Nelicia Low',
+                      tagline: "When her husband mysteriously goes missing, Mrs. Wang begins to suspect that her androgynous daughter had something to do with his disappearance.",
+                      year: 2014,
+                      maturity_rating: 'R',
+                      show_type: 'FEATURE'
+)
+
+freak_video = freak.videos.create!( name: 'Freak',
+                                    description: 'n/a',
+                                    video_type: 'FILM',
+                                    runtime: 78,
+                                    credits_time: 69
+)
+
+freak_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Freak_Husflix_short_720p.mp4')
+freak_video.video_file.attach(io: freak_file)
+freak_video.save!
 
 ling_show = Show.create!( title: 'Ling',
                           director: 'Dennis Liu',
@@ -198,8 +257,6 @@ ling_show = Show.create!( title: 'Ling',
 ling_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/ling_husflix_poster.png')
 ling_show.poster.attach( io: ling_poster, filename: 'ling_poster.jpg')
 ling_show.save!
-
-
 
 ling_show.videos.create!( name: 'Ling Promo',
                           description: 'Ling Promo',
@@ -222,8 +279,11 @@ max_out_ep1 = max_out_show.videos.create!( name: 'Worst Date Ever',
                                            episode_num: 2,
                                            runtime: 78,
                                            credits_time: 65,
+)
 
-                                           )
+max_ep1_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Max_Out_Ep1_Husflix_short_720p.mp4')
+max_out_ep1.video_file.attach(io: max_ep1_file)
+max_out_ep1.save!
 
 max_out_ep2 = max_out_show.videos.create!( name: 'Audition Animal',
                                            description: 'Max tries out for a movie',
@@ -231,8 +291,12 @@ max_out_ep2 = max_out_show.videos.create!( name: 'Audition Animal',
                                            episode_num: 1,
                                            runtime: 89,
                                            credits_time: 75,
+)
 
-                                           )
+
+max_ep2_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Max_Out_Ep2_Husflix_short_720p.mp4')
+max_out_ep2.video_file.attach(io: max_ep2_file)
+max_out_ep2.save!
 
 foolish_gents_show = Show.create!( title:'The Fantastic Adventures of Foolish Gentlemen',
                                   director: 'Jake Rubin Max Pava',
@@ -251,10 +315,12 @@ foolish_gents_ep1 = foolish_gents_show.videos.create!( name: 'Discontent',
                                                       video_type: 'EPISODE',
                                                       runtime: 0,
                                                       credits_time: 0,
-                                                      episode_num: 1,
-
-                                                      
+                                                      episode_num: 1,                                                     
 )
+
+gents_ep1 = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Foolish_Gents_Ep1_Husflix_short_720p.mp4')
+foolish_gents_ep1.video_file.attach(io: gents_ep1)
+foolish_gents_ep1.save!
 
 foolish_gents_ep2 = foolish_gents_show.videos.create!( name: 'Confusion',
                                                       description: "Tim is haunted by last night's drunken escapades, Jonathan grapples with love for the first time, and Peter fantasizes about how to spice up his relationship.",
@@ -264,6 +330,10 @@ foolish_gents_ep2 = foolish_gents_show.videos.create!( name: 'Confusion',
                                                       episode_num: 2,                                                
 )
 
+gents_ep2 = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Foolish_Gents_Ep2_Husflix_short_720p.mp4')
+foolish_gents_ep2.video_file.attach(io: gents_ep2)
+foolish_gents_ep2.save!
+
 foolish_gents_ep3 = foolish_gents_show.videos.create!( name: 'Timing',
                                                       description: "Tim asks Ellie out on a date, Jonathan embarks on a quest to find his one true love, and Peter connects with a stranger in the park.",
                                                       video_type: 'EPISODE',
@@ -271,6 +341,10 @@ foolish_gents_ep3 = foolish_gents_show.videos.create!( name: 'Timing',
                                                       credits_time: 0,
                                                       episode_num: 3,                                           
 )
+
+gents_ep3 = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Foolish_Gents_Ep3_Husflix_short_720p.mp4')
+foolish_gents_ep3.video_file.attach(io: gents_ep3)
+foolish_gents_ep3.save!
 
 foolish_gents_ep4 = foolish_gents_show.videos.create!( name: 'Games ',
                                                       description: "Jonathan calls for a meeting of the minds, Tim and Peter attempt to drink their way to clarity.",
@@ -280,6 +354,10 @@ foolish_gents_ep4 = foolish_gents_show.videos.create!( name: 'Games ',
                                                       episode_num: 4,
 )
 
+gents_ep4 = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Foolish_Gents_Ep4_Husflix_short_720p.mp4')
+foolish_gents_ep4.video_file.attach(io: gents_ep4)
+foolish_gents_ep4.save!
+
 foolish_gents_ep5 = foolish_gents_show.videos.create!( name: 'Love',
                                                       description: 'The gang attends a formal event, Tim and Jonathan face a new rival, and Peter makes a stand.',
                                                       video_type: 'EPISODE',
@@ -288,6 +366,10 @@ foolish_gents_ep5 = foolish_gents_show.videos.create!( name: 'Love',
                                                       episode_num: 5,
 )
 
+gents_ep5 = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Foolish_Gents_Ep5_Husflix_short_720p.mp4')
+foolish_gents_ep5.video_file.attach(io: gents_ep5)
+foolish_gents_ep5.save!
+
 foolish_gents_ep6 = foolish_gents_show.videos.create!( name: 'Truth',
                                                       description: 'The gentlemen face their problems without the help of their fantastic imaginations.',
                                                       video_type: 'EPISODE',
@@ -295,5 +377,9 @@ foolish_gents_ep6 = foolish_gents_show.videos.create!( name: 'Truth',
                                                       credits_time: 0,
                                                       episode_num: 6,
 )
+
+gents_ep6 = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Foolish_Gents_Ep6_Husflix_short_720p.mp4')
+foolish_gents_ep6.video_file.attach(io: gents_ep6)
+foolish_gents_ep6.save!
 
 # Genres

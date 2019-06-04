@@ -17,9 +17,9 @@
 
 class Video < ApplicationRecord
     include Comparable
+    
     VIDEO_TYPES = %w(PREVIEW EPISODE FILM)
     
-    validates :video_url, uniqueness: true, presence: true
     validates :show_id, :name, :description, :runtime, presence: true
     validates :video_type, inclusion: { in: VIDEO_TYPES }, presence: true
 

@@ -19,7 +19,7 @@ class Show < ApplicationRecord
     MATURITY_RATINGS = %w(G PG PG-13 R NC-17)
     SHOW_TYPES = %w(FEATURE EPISODIC)
     
-    validates :poster_url, :title, :director, :tagline, presence: true
+    validates :title, :director, :tagline, presence: true
     validates :maturity_rating, inclusion: { in: MATURITY_RATINGS }
     validates :show_type, presence: true, inclusion: { in: SHOW_TYPES }
     validates :view_count, presence: true

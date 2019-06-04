@@ -2144,7 +2144,7 @@ function (_React$Component) {
       var _this$props = this.props,
           video = _this$props.video,
           show = _this$props.show;
-      var runtime = video ? video.runtime : 0;
+      var runtime = 0;
       var playPauseBtn = null,
           remainingTime = null,
           audioIcon = null,
@@ -2158,6 +2158,7 @@ function (_React$Component) {
         }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-pause"
         });
+        runtime = this.videoPlayer.current.duration;
         remainingTime = Math.floor(runtime - currentPlayerTime);
         var currProgress = currentPlayerTime / runtime * 100;
         var currVolume = muted ? 0 : volume;
