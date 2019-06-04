@@ -1,6 +1,7 @@
 import React from 'react';
 import ShowRows from './show_rows';
 import Footer from '../footer/footer';
+import BigPreviewContainer from '../BigPreview/big_preview_container'
 
 class ShowGallery extends React.Component {
     constructor(props) {
@@ -60,16 +61,8 @@ class ShowGallery extends React.Component {
         
         return (
             <main className="show-gallery-index-wrapper">
-                <figure className="big-video-preview-wrapper">
-                    <img src={showPreview && showPreview.posterUrl ? showPreview.posterUrl : window.tempBgURL } className="big-video-poster"></img>
-                    <video autoPlay className="big-video">
-                        {/* <source src={ videos ? videos[previewShow.preview_id] : ''} type="video/mp4"/> */}
-                    </video>
-                    <article className="big-preview-description">
+                <BigPreviewContainer show={showPreview} />
 
-                    </article>
-                   
-                </figure>
                 <section className="gallery-index-wrapper">
                     
                     <ul className="show-gallery-index" id="gallery-index-bg">

@@ -28,15 +28,25 @@ class Watch extends React.Component {
         this.showControls = this.showControls.bind(this);
         this._hideControls = this._hideControls.bind(this);
         this._tick = this._tick.bind(this);
+        this.determineKeyPress = this.determineKeyPress.bind(this);
         
         setInterval(this._tick, 1000); //updates the timer each half second
 
-        document.addEventListener('keypress', (e) => {
-            debugger
-            if (this.props.location.pathname.includes('/watch') && e.code === "Space") {
+        document.addEventListener('keydown', e => this.determineKeyPress(e));
+    }
+
+    determineKeyPress(e) {
+        debugger
+        switch (e.code) {
+            case 'Space':
                 this.togglePlayPause();
-            }
-        });
+            case 'ArrowRight':
+                this.jumpForward();
+            case 'ArrowLeft':
+                this.jumpBack();
+            default:
+                break;
+        }
     }
 
     componentDidMount() {
@@ -54,7 +64,7 @@ class Watch extends React.Component {
 
     togglePlayPause(e) {   
         const videoEl = this.videoPlayer.current;
-        debugger
+        
         if (videoEl.paused) {
             videoEl.play();
             this.setState({ paused: false });
@@ -115,14 +125,15 @@ class Watch extends React.Component {
 
     jumpBack() {
         const videoEl = this.videoPlayer.current;
-        videoEl.currentTime = videoEl.currentTime - 10;
+        videoEl.currentTime -= 10;
 
         this.setState({ currentPlayerTime: videoEl.currentTime })
     }
     
     jumpForward() {
+        // debugger
         const videoEl = this.videoPlayer.current;
-        videoEl.currentTime = videoEl.currentTime + 10;
+        videoEl.currentTime += 10;
 
         this.setState({ currentPlayerTime: videoEl.currentTime })
     }
@@ -210,7 +221,7 @@ class Watch extends React.Component {
             fullscreenBtn = <i className="fas fa-expand"></i>;
             fullscreenFunc = this.openFullscreen;
         }
-        debugger
+        
         return (
             <figure className="main-video-player"> 
                 

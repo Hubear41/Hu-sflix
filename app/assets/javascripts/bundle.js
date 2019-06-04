@@ -426,6 +426,135 @@ var App = function App() {
 
 /***/ }),
 
+/***/ "./frontend/components/BigPreview/big_preview.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/BigPreview/big_preview.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var BigPreview =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(BigPreview, _React$Component);
+
+  function BigPreview(props) {
+    var _this;
+
+    _classCallCheck(this, BigPreview);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(BigPreview).call(this, props));
+    _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    return _this;
+  }
+
+  _createClass(BigPreview, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var show = this.props.show;
+
+      if (show) {
+        var previewId = this.props.show.preview_id;
+        this.props.fetchVideo(previewId);
+      }
+    }
+  }, {
+    key: "togglePlayPause",
+    value: function togglePlayPause() {}
+  }, {
+    key: "toggleMute",
+    value: function toggleMute() {}
+  }, {
+    key: "render",
+    value: function render() {
+      var show = this.props.show;
+
+      if (!show) {
+        return null;
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "big-video-preview-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: show && show.posterUrl ? show.posterUrl : window.tempBgURL,
+        className: "big-video-poster"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+        autoPlay: true,
+        className: "big-video",
+        ref: this.videoPlayer
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "big-preview-description"
+      }));
+    }
+  }]);
+
+  return BigPreview;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (BigPreview);
+
+/***/ }),
+
+/***/ "./frontend/components/BigPreview/big_preview_container.js":
+/*!*****************************************************************!*\
+  !*** ./frontend/components/BigPreview/big_preview_container.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/show_actions */ "./frontend/actions/show_actions.js");
+/* harmony import */ var _big_preview__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./big_preview */ "./frontend/components/BigPreview/big_preview.jsx");
+
+
+
+
+var msp = function msp(state, ownProps) {
+  var show = ownProps.show;
+  var previewVideo = show ? state.entities.videos[show.preview_id] : null;
+  return {
+    video: previewVideo
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    requestVideo: function requestVideo(id) {
+      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchVideo"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_big_preview__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
 /***/ "./frontend/components/background/background.jsx":
 /*!*******************************************************!*\
   !*** ./frontend/components/background/background.jsx ***!
@@ -599,6 +728,8 @@ function (_React$Component) {
         className: "main-nav-bar"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "left-nav"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "main-logo-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/browse",
         className: "main-logo-btn"
@@ -606,10 +737,12 @@ function (_React$Component) {
         src: window.logoURL,
         alt: "Hu'sflix Logo",
         className: "husflix-logo"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+        className: "nav-btns"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/browse",
         className: "home-btn"
-      }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }, "Home"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "right-nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "search-bar"
@@ -1451,6 +1584,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _show_rows__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./show_rows */ "./frontend/components/shows/show_rows.jsx");
 /* harmony import */ var _footer_footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../footer/footer */ "./frontend/components/footer/footer.jsx");
+/* harmony import */ var _BigPreview_big_preview_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../BigPreview/big_preview_container */ "./frontend/components/BigPreview/big_preview_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
@@ -1476,6 +1610,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1559,17 +1694,9 @@ function (_React$Component) {
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
         className: "show-gallery-index-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "big-video-preview-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: showPreview && showPreview.posterUrl ? showPreview.posterUrl : window.tempBgURL,
-        className: "big-video-poster"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-        autoPlay: true,
-        className: "big-video"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
-        className: "big-preview-description"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BigPreview_big_preview_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        show: showPreview
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "gallery-index-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "show-gallery-index",
@@ -1600,7 +1727,9 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/show_actions */ "./frontend/actions/show_actions.js");
-/* harmony import */ var _show_gallery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./show_gallery */ "./frontend/components/shows/show_gallery.jsx");
+/* harmony import */ var _actions_genre_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/genre_actions */ "./frontend/actions/genre_actions.js");
+/* harmony import */ var _show_gallery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./show_gallery */ "./frontend/components/shows/show_gallery.jsx");
+
 
 
 
@@ -1609,12 +1738,16 @@ var msp = function msp(_ref) {
   var entities = _ref.entities;
   return {
     shows: Object.values(entities.shows),
+    genres: Object.values(entities.genres),
     galleryType: 'showsIndex'
   };
 };
 
 var mdp = function mdp(dispatch) {
   return {
+    requestGenres: function requestGenres() {
+      return dispatch(Object(_actions_genre_actions__WEBPACK_IMPORTED_MODULE_2__["fetchGenres"])());
+    },
     requestAllShows: function requestAllShows() {
       return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchShows"])());
     },
@@ -1624,7 +1757,7 @@ var mdp = function mdp(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_show_gallery__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_show_gallery__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -1973,19 +2106,35 @@ function (_React$Component) {
     _this.showControls = _this.showControls.bind(_assertThisInitialized(_this));
     _this._hideControls = _this._hideControls.bind(_assertThisInitialized(_this));
     _this._tick = _this._tick.bind(_assertThisInitialized(_this));
+    _this.determineKeyPress = _this.determineKeyPress.bind(_assertThisInitialized(_this));
     setInterval(_this._tick, 1000); //updates the timer each half second
 
-    document.addEventListener('keypress', function (e) {
-      debugger;
-
-      if (_this.props.location.pathname.includes('/watch') && e.code === "Space") {
-        _this.togglePlayPause();
-      }
+    document.addEventListener('keydown', function (e) {
+      return _this.determineKeyPress(e);
     });
     return _this;
   }
 
   _createClass(Watch, [{
+    key: "determineKeyPress",
+    value: function determineKeyPress(e) {
+      debugger;
+
+      switch (e.code) {
+        case 'Space':
+          this.togglePlayPause();
+
+        case 'ArrowRight':
+          this.jumpForward();
+
+        case 'ArrowLeft':
+          this.jumpBack();
+
+        default:
+          break;
+      }
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this$props$match$par = this.props.match.params,
@@ -2008,7 +2157,6 @@ function (_React$Component) {
     key: "togglePlayPause",
     value: function togglePlayPause(e) {
       var videoEl = this.videoPlayer.current;
-      debugger;
 
       if (videoEl.paused) {
         videoEl.play();
@@ -2108,7 +2256,7 @@ function (_React$Component) {
     key: "jumpBack",
     value: function jumpBack() {
       var videoEl = this.videoPlayer.current;
-      videoEl.currentTime = videoEl.currentTime - 10;
+      videoEl.currentTime -= 10;
       this.setState({
         currentPlayerTime: videoEl.currentTime
       });
@@ -2116,8 +2264,9 @@ function (_React$Component) {
   }, {
     key: "jumpForward",
     value: function jumpForward() {
+      // debugger
       var videoEl = this.videoPlayer.current;
-      videoEl.currentTime = videoEl.currentTime + 10;
+      videoEl.currentTime += 10;
       this.setState({
         currentPlayerTime: videoEl.currentTime
       });
@@ -2248,7 +2397,6 @@ function (_React$Component) {
         fullscreenFunc = this.openFullscreen;
       }
 
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "main-video-player"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
