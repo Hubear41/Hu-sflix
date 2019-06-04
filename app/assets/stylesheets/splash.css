@@ -1,6 +1,17 @@
-.splash-wrapper img{
+.welcome-image {
+    position: absolute;
+    z-index: 1;
     height: 100%;
-    opacity: 0.5;
+    width: 100vw;
+    filter: brightness(40%);
+}
+
+.splash-content-wrapper {
+    position: absolute;
+    top: 195px;
+    left: 0;
+    z-index: 20;
+    width: 100%;
 }
 
 .splash-content {
@@ -8,7 +19,6 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin: 195px 0 0 0;
     font-family: sans-serif;
     height: 286px;
 }

@@ -50,7 +50,7 @@ class ShowPreviewPlayerSmall extends React.Component {
     render() {
         const { show } = this.props;
         const muteBtn = this.state.mute ? <i className="fas fa-volume-mute mute-symbol"></i> : <i className="fas fa-volume-up mute-symbol"></i>
-
+        debugger
         return (
             <>
                 <section id="show-peek-preview-wrapper" 
@@ -58,7 +58,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                          style={{height: this.state.height}} 
                          onClick={this.launchWatch}>
                                 
-                    <img src={show ? show.poster_url : ''} alt="" className="show-title-card" />
+                    <img src={show ? show.posterUrl : window.tempBgURL} alt="" className="show-title-card" />
 
                     <figure className="show-peek-preview-player" onClick={this.launchWatch}>
 

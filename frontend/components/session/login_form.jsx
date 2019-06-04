@@ -81,53 +81,56 @@ class LoginForm extends React.Component {
         }
 
         return (
-            <section className={`login-form-wrapper`}>
-                    <section className="login-form-body">
-                        <h3>{formName}</h3>
-                            
-                        <form className="login-form" onSubmit={this.handleSubmit}>
-                                {logininError}
-                            
-                            <div className="login-inputs">
-                                <label htmlFor="email">
-                                    <input type="text"
-                                        id="email"
-                                        onChange={this.handleChange('email')}
-                                        value={this.state.email}
-                                        className={emailError ? 'email-login error-orange' : "email-login"}
-                                    />
-                                    <span className={emailDescClass}>Email</span>
-                                    {emailError}
-                                </label>
-
-                                <div className ='password-wrapper'>
-                                    <label htmlFor="password" className={passwordError ? "password-login error-orange" : 'password-login'}>
-                                        <input type={passwordIptType}
-                                            id="password"
-                                            onChange={this.handleChange('password')}
-                                            value={this.state.password} 
+            <>
+                <img src={window.splashBg} alt="" className="welcome-image login-bg"/>
+                <section className={`login-form-wrapper`}>
+                        <section className="login-form-body">
+                            <h3>{formName}</h3>
+                                
+                            <form className="login-form" onSubmit={this.handleSubmit}>
+                                    {logininError}
+                                
+                                <div className="login-inputs">
+                                    <label htmlFor="email">
+                                        <input type="text"
+                                            id="email"
+                                            onChange={this.handleChange('email')}
+                                            value={this.state.email}
+                                            className={emailError ? 'email-login error-orange' : "email-login"}
                                         />
+                                        <span className={emailDescClass}>Email</span>
+                                        {emailError}
                                     </label>
-                                    <span className={`${passwordDescClass} password-move`}>Password</span>
-                                    {passwordError}
 
-                                    <button className={`${hiddenClass} toggle-show-hide`} onClick={this.togglePassword}>
-                                        {togglePasswordBtn}
-                                    </button>
+                                    <div className ='password-wrapper'>
+                                        <label htmlFor="password" className={passwordError ? "password-login error-orange" : 'password-login'}>
+                                            <input type={passwordIptType}
+                                                id="password"
+                                                onChange={this.handleChange('password')}
+                                                value={this.state.password} 
+                                            />
+                                        </label>
+                                        <span className={`${passwordDescClass} password-move`}>Password</span>
+                                        {passwordError}
+
+                                        <button className={`${hiddenClass} toggle-show-hide`} onClick={this.togglePassword}>
+                                            {togglePasswordBtn}
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <input type="submit" value={formName}/>
-                        </form>
+                                <input type="submit" value={formName}/>
+                            </form>
 
-                        <form onSubmit={this.handleGuestSubmit}>
-                            <input type="submit" value="Guest Login" className="login-guest-btn" />
-                        </form>
+                            <form onSubmit={this.handleGuestSubmit}>
+                                <input type="submit" value="Guest Login" className="login-guest-btn" />
+                            </form>
 
-                        <span className="new-to-netflix-signup">New to Hu'sflix? <Link to="/signup" className="signup-link">Sign up now</Link>.</span>
-                    </section>
-                    <figure className="black-bg"></figure>
-            </section>
+                            <span className="new-to-netflix-signup">New to Hu'sflix? <Link to="/signup" className="signup-link">Sign up now</Link>.</span>
+                        </section>
+                        <figure className="black-bg"></figure>
+                </section>
+            </>
         )
     }
 }

@@ -33,9 +33,9 @@ class ShowGallery extends React.Component {
         let showsPerRow = [];
         let showToPreview = null;
         let idx = 0, count = 0;
-
+        
         while ( count < 2 ) {
-            idx = 1
+            idx = 0
 
             while ( idx < shows.length) {
                 const currShow = shows[idx];
@@ -74,7 +74,7 @@ class ShowGallery extends React.Component {
         const showRowsList = showsPerRow.map( (row, idx) => {
             return <ShowRows key={idx} rowNum={idx} shows={row} />
         }) 
-
+        debugger
         return (
             <main className="show-gallery-index-wrapper">
                 <figure className="big-video-preview-wrapper">

@@ -14,6 +14,7 @@ class Watch extends React.Component {
             prevVolume: 0.8,
             hidden: true,
             mouseMoving: false,
+            loaded: false,
         };
         this.timeout;
         this.videoPlayer = React.createRef();
@@ -44,9 +45,16 @@ class Watch extends React.Component {
         this.props.fetchShow(showId);
     }
 
+    componentDidUpdate() {
+        if ( this.state.loaded === false ) {
+            this.videoPlayer.current.load();
+            this.setState({ loaded: true });
+        }
+    }
+
     togglePlayPause(e) {   
         const videoEl = this.videoPlayer.current;
-        // debugger
+        debugger
         if (videoEl.paused) {
             videoEl.play();
             this.setState({ paused: false });
@@ -172,12 +180,11 @@ class Watch extends React.Component {
     render() {
         const { paused, currentPlayerTime, volume, muted, hidden } = this.state;
         const { video, show } = this.props;
-        let runtime = 0;
+        let runtime = video ? video.runtime : 0;
         let playPauseBtn = null, remainingTime = null, audioIcon = null, volumeStyle = null, timeStyle = null, controlStyle = null;
 
         if ( this.videoPlayer.current !== null ) {               
             playPauseBtn = paused ? <i className="fas fa-play"></i> : <i className="fas fa-pause"></i>
-            runtime = this.videoPlayer.current.duration;
             remainingTime =  Math.floor(runtime - currentPlayerTime);
             const currProgress = (currentPlayerTime / runtime) * 100;
             const currVolume = muted ? 0 : volume;
@@ -203,7 +210,7 @@ class Watch extends React.Component {
             fullscreenBtn = <i className="fas fa-expand"></i>;
             fullscreenFunc = this.openFullscreen;
         }
-
+        debugger
         return (
             <figure className="main-video-player"> 
                 
@@ -214,10 +221,10 @@ class Watch extends React.Component {
                             autoPlay
                             controls={false}
                             > 
-                        {/* <source src={video ? video.videoUrl : ''} /> */}
-                         <source src={window.video}
+                        <source src={video ? video.videoUrl : ''} />
+                         {/* <source src={window.videoBunny}
                                  type="video/mp4"
-                                 />
+                                 /> */}
                         Browser does not support the video tag
                     </video>
                 </div>

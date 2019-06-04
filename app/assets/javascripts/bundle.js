@@ -965,7 +965,11 @@ function (_React$Component) {
         passwordIptType = 'password';
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: window.splashBg,
+        alt: "",
+        className: "welcome-image login-bg"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "login-form-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "login-form-body"
@@ -1015,7 +1019,7 @@ function (_React$Component) {
         className: "signup-link"
       }, "Sign up now"), ".")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "black-bg"
-      }));
+      })));
     }
   }]);
 
@@ -1466,7 +1470,7 @@ function (_React$Component) {
           count = 0;
 
       while (count < 2) {
-        idx = 1;
+        idx = 0;
 
         while (idx < shows.length) {
           var currShow = shows[idx];
@@ -1515,6 +1519,7 @@ function (_React$Component) {
           shows: row
         });
       });
+      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
         className: "show-gallery-index-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
@@ -1689,6 +1694,7 @@ function (_React$Component) {
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-volume-up mute-symbol"
       });
+      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         id: "show-peek-preview-wrapper",
         className: "show-row-item-x item-".concat(show.id),
@@ -1697,7 +1703,7 @@ function (_React$Component) {
         },
         onClick: this.launchWatch
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: show ? show.poster_url : '',
+        src: show ? show.posterUrl : window.tempBgURL,
         alt: "",
         className: "show-title-card"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
@@ -1841,14 +1847,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Splash = function Splash(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: window.splashBg,
+    className: "welcome-image"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "splash-wrapper"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "splash-content-wrapper"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: "splash-content"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "See what's next."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Watch Anywhere. Cancel Anytime."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/signup",
     className: "splash-signup-btn"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Sign Up Today!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, ">"))));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Sign Up Today!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, ">"))))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Splash);
@@ -1909,7 +1920,8 @@ function (_React$Component) {
       volume: 0.8,
       prevVolume: 0.8,
       hidden: true,
-      mouseMoving: false
+      mouseMoving: false,
+      loaded: false
     };
     _this.timeout;
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
@@ -1945,9 +1957,20 @@ function (_React$Component) {
       this.props.fetchShow(showId);
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      if (this.state.loaded === false) {
+        this.videoPlayer.current.load();
+        this.setState({
+          loaded: true
+        });
+      }
+    }
+  }, {
     key: "togglePlayPause",
     value: function togglePlayPause(e) {
-      var videoEl = this.videoPlayer.current; // debugger
+      var videoEl = this.videoPlayer.current;
+      debugger;
 
       if (videoEl.paused) {
         videoEl.play();
@@ -2144,7 +2167,7 @@ function (_React$Component) {
       var _this$props = this.props,
           video = _this$props.video,
           show = _this$props.show;
-      var runtime = 0;
+      var runtime = video ? video.runtime : 0;
       var playPauseBtn = null,
           remainingTime = null,
           audioIcon = null,
@@ -2158,7 +2181,6 @@ function (_React$Component) {
         }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-pause"
         });
-        runtime = this.videoPlayer.current.duration;
         remainingTime = Math.floor(runtime - currentPlayerTime);
         var currProgress = currentPlayerTime / runtime * 100;
         var currVolume = muted ? 0 : volume;
@@ -2188,6 +2210,7 @@ function (_React$Component) {
         fullscreenFunc = this.openFullscreen;
       }
 
+      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "main-video-player"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2199,8 +2222,7 @@ function (_React$Component) {
         autoPlay: true,
         controls: false
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-        src: window.video,
-        type: "video/mp4"
+        src: video ? video.videoUrl : ''
       }), "Browser does not support the video tag")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-player-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

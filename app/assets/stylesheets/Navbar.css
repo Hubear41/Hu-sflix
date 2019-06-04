@@ -6,10 +6,11 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    /* position: absolute; */
+    position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
     width: 100%;
+    z-index: 100;
 }
 
 .left-header-wrapper {
@@ -18,7 +19,7 @@
     align-items: center;
     position: absolute;
     width: 100%;
-    z-index: 10;
+    z-index: 100;
 }
 
 .signup-border {
