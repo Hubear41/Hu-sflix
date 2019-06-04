@@ -1,1 +1,1 @@
-json.extract! @genre, :id, :name, :shows_with_genre_ids
+json.partial! 'api/genres/genre', genre: @genre
