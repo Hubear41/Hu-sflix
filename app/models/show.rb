@@ -3,7 +3,6 @@
 # Table name: shows
 #
 #  id              :bigint           not null, primary key
-#  poster_url      :string           not null
 #  title           :string           not null
 #  director        :string           not null
 #  tagline         :string           not null
@@ -28,10 +27,10 @@ class Show < ApplicationRecord
     has_one_attached :poster
     has_many :videos
     has_many :show_genres
+
     has_many :genres,
         through: :show_genres,
         source: :genre
-        
 
     after_initialize :default_values
 

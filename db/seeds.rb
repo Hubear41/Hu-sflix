@@ -23,7 +23,6 @@ caroline_show = Show.create!( title: 'Caroline',
                               year: 2018,
                               maturity_rating: 'PG-13',
                               show_type: 'FEATURE',
-                              poster_url: 'https://hu-sflix-seed.s3.amazonaws.com/posters/caroline-husflix-poster.jpg',
 )
 
 caroline_poster_file = open('https://hu-sflix-seed.s3.amazonaws.com/posters/caroline-husflix-poster.jpg')
@@ -36,7 +35,6 @@ caroline_video = caroline_show.videos.create!( name: 'Caroline',
                              video_type: 'FILM',
                              runtime: 713,
                              credits_time: 677,
-                             video_url: "1"
 )
 
 # caroline_file = open("/Users/dennishu/Documents/Bootcamp\ Work/Fullstack\ Project/video_assets/Carolin_Husflix_720p.mp4")
@@ -49,7 +47,6 @@ mouse_show = Show.create!( title: 'Mouse',
                            year: 2016,
                            maturity_rating: 'R',
                            show_type: 'FEATURE',
-                           poster_url: 'temp'
 )
 
 mouse_video = mouse_show.videos.create!( name: 'Mouse',
@@ -57,8 +54,8 @@ mouse_video = mouse_show.videos.create!( name: 'Mouse',
                                          video_type: 'FILM',
                                          runtime: 189,
                                          credits_time: 189,
-                                         video_url: 'asghadflkja'
-)
+
+                                         )
 
 heart_show = Show.create!( title: 'Heart',
                           director: 'Dorian Cambi',
@@ -66,7 +63,6 @@ heart_show = Show.create!( title: 'Heart',
                           year: 2016,
                           maturity_rating: 'PG',
                           show_type: 'FEATURE',
-                          poster_url: 'https://hu-sflix-seed.s3.amazonaws.com/posters/heart_husflix_poster.png'
 )
 
 heart_poster = open ('https://hu-sflix-seed.s3.amazonaws.com/posters/heart_husflix_poster.png')
@@ -78,7 +74,6 @@ heart_video = heart_show.videos.create!( name: 'Heart',
                           video_type: 'FILM',
                           runtime: 890,
                           credits_time: 830,
-                          video_url: "3"
 )
 
 ramona_show = Show.create!( title: 'Ramona',
@@ -87,7 +82,6 @@ ramona_show = Show.create!( title: 'Ramona',
                             year: 2014,
                             maturity_rating: 'PG',
                             show_type: 'FEATURE',
-                            poster_url: 'asjdhgadl;fa'
 )
 
 ramona_video = ramona_show.videos.create!( name: 'Ramona',
@@ -95,7 +89,6 @@ ramona_video = ramona_show.videos.create!( name: 'Ramona',
                                            video_type: 'FILM',
                                            runtime: 98,
                                            credits_time: 95,
-                                           video_url: 'oijkelr'
 )
 
 
@@ -106,7 +99,6 @@ stumped_show = Show.create!( title: 'Stumped',
                              year: 2017,
                              maturity_rating: 'PG',
                              show_type: 'FEATURE',
-                             poster_url: 'asfghadsf;jcne'
                              
 ) 
 
@@ -115,8 +107,8 @@ stumped_show = stumped_show.videos.create!( name: 'Stumped',
                                             video_type: 'FILM',
                                             runtime: 86,
                                             credits_time: 80,
-                                            video_url: 'asghaldsfkasd'
-)
+
+                                            )
 
 # heart_file = open('/Users/dennishu/Documents/Bootcamp\ Work/Fullstack\ Project/video_assets/Heart_Husflix_720p.mp4')
 # heart_video.video_file.attach(io: heart_file, filename: 'Heart_Husflix_720p.mp4')
@@ -128,7 +120,6 @@ midnight_girl_show = Show.create!( title: 'Kate',
                                   year: 2018,
                                   maturity_rating: 'R',
                                   show_type: 'FEATURE',
-                                  poster_url: 'https://hu-sflix-seed.s3.amazonaws.com/posters/midnight_girl_husflix_poster.jpg'                 
 )
 
 midnight_girl_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/midnight_girl_husflix_poster.jpg')
@@ -140,8 +131,8 @@ midnight_girl_video = midnight_girl_show.videos.create!( name: 'Kate',
                                                         video_type: 'FILM',
                                                         runtime: 1069,
                                                         credits_time: 1043,
-                                                        video_url: "/Users/dennishu/Documents/Bootcamp\ Work/Fullstack\ Project/Hu-sflix/app/assets/videos/Kate_Husflix_720p.mp4"
 
+                                                        
 )
 
 # midnight_girl_file = open('')
@@ -152,7 +143,6 @@ marina_show = Show.create!( title: 'Marina',
                             year: 2018,
                             maturity_rating: 'PG-13',
                             show_type: 'FEATURE',
-                            poster_url: 'asdfacxz/comah;df'
 )
 
 marina_video = marina_show.videos.create!( name: 'Marina',
@@ -160,8 +150,8 @@ marina_video = marina_show.videos.create!( name: 'Marina',
                                            video_type: 'FILM',
                                            runtime: 110,
                                            credits_time: 100,
-                                           video_url: 'askgbasdfa'
 
+                                           
 )
 
 charm_city_show = Show.create( title: 'Goodbye Charm City',
@@ -170,7 +160,6 @@ charm_city_show = Show.create( title: 'Goodbye Charm City',
                                tagline: 'A mother prepares her final impact statement to the man that murdered her son.',
                                maturity_rating: "R",
                                show_type: 'FEATURE',
-                               poster_url: 'aslhgalsdf'
 )
 
 charm_city_video = charm_city_show.videos.create!( name: 'Goodbye Charm City',
@@ -178,8 +167,8 @@ charm_city_video = charm_city_show.videos.create!( name: 'Goodbye Charm City',
                                                    video_type: 'FILM',
                                                    runtime: 146,
                                                    credits_time: 125,
-                                                   video_url: 'aklshdf'
-)
+
+                                                   )
 
 malis_tribute = Show.create( title: "Mali's Tribute",
                              director: 'Dircelene Castilho Torres',
@@ -187,7 +176,6 @@ malis_tribute = Show.create( title: "Mali's Tribute",
                              year: 2016,
                              maturity_rating: 'PG-13',
                              show_type: 'FEATURE',
-                             poster_url: '38xbsdf0dibgc'
 )
 
 malis_tribute_video = malis_tribute.videos.create!( name: "Mali's Tribute",
@@ -195,8 +183,8 @@ malis_tribute_video = malis_tribute.videos.create!( name: "Mali's Tribute",
                                                    video_type: 'FILM',
                                                    runtime: 80,
                                                    credits_time: 67,
-                                                   video_url: 'aklslshdf'
-)
+
+                                                   )
 
 
 ling_show = Show.create!( title: 'Ling',
@@ -205,7 +193,6 @@ ling_show = Show.create!( title: 'Ling',
                           year: 2018,
                           maturity_rating: 'PG',
                           show_type: 'EPISODIC',
-                          poster_url: 'https://hu-sflix-seed.s3.amazonaws.com/posters/ling_husflix_poster.png'
 )
 
 ling_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/ling_husflix_poster.png')
@@ -218,8 +205,8 @@ ling_show.videos.create!( name: 'Ling Promo',
                           description: 'Ling Promo',
                           runtime: '272',
                           video_type: 'PREVIEW',
-                          video_url: '6'
-)
+
+                          )
 
 max_out_show = Show.create!( title: 'Max Out',
                              director: 'Max Talisman',
@@ -227,7 +214,6 @@ max_out_show = Show.create!( title: 'Max Out',
                              year: 2016,
                              maturity_rating: 'PG-13',
                              show_type: 'EPISODIC',
-                             poster_url: 'ashgasdf'
 )
 
 max_out_ep1 = max_out_show.videos.create!( name: 'Worst Date Ever',
@@ -236,8 +222,8 @@ max_out_ep1 = max_out_show.videos.create!( name: 'Worst Date Ever',
                                            episode_num: 2,
                                            runtime: 78,
                                            credits_time: 65,
-                                           video_url: '2hsfksadjfag'  
-)
+
+                                           )
 
 max_out_ep2 = max_out_show.videos.create!( name: 'Audition Animal',
                                            description: 'Max tries out for a movie',
@@ -245,17 +231,15 @@ max_out_ep2 = max_out_show.videos.create!( name: 'Audition Animal',
                                            episode_num: 1,
                                            runtime: 89,
                                            credits_time: 75,
-                                           video_url: '2hsfkasdfsadjfag'  
-)
+
+                                           )
 
 foolish_gents_show = Show.create!( title:'The Fantastic Adventures of Foolish Gentlemen',
                                   director: 'Jake Rubin Max Pava',
                                   tagline: 'Fools are silly and carefree. Gentlemen are honorable and chivalrous. The Foolish Gents hope to marry these attributes to create! high quality, entertaining, and original content for years to come.',
                                   year: 2014,
                                   maturity_rating: 'PG-13',
-                                  show_type: 'EPISODIC',
-                                  poster_url: 'https://hu-sflix-seed.s3.amazonaws.com/posters/foolish_gents_husflix_poster.png'
- 
+                                  show_type: 'EPISODIC', 
 )
 
 foolish_gents_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/foolish_gents_husflix_poster.png')
@@ -268,8 +252,8 @@ foolish_gents_ep1 = foolish_gents_show.videos.create!( name: 'Discontent',
                                                       runtime: 0,
                                                       credits_time: 0,
                                                       episode_num: 1,
-                                                      video_url: 'video url4'
 
+                                                      
 )
 
 foolish_gents_ep2 = foolish_gents_show.videos.create!( name: 'Confusion',
@@ -277,9 +261,7 @@ foolish_gents_ep2 = foolish_gents_show.videos.create!( name: 'Confusion',
                                                       video_type: 'EPISODE',
                                                       runtime: 0,
                                                       credits_time: 0,
-                                                      episode_num: 2,
-                                                      video_url: 'video url5'
-
+                                                      episode_num: 2,                                                
 )
 
 foolish_gents_ep3 = foolish_gents_show.videos.create!( name: 'Timing',
@@ -287,9 +269,7 @@ foolish_gents_ep3 = foolish_gents_show.videos.create!( name: 'Timing',
                                                       video_type: 'EPISODE',
                                                       runtime: 0,
                                                       credits_time: 0,
-                                                      episode_num: 3,
-                                                      video_url: 'video url6'
-
+                                                      episode_num: 3,                                           
 )
 
 foolish_gents_ep4 = foolish_gents_show.videos.create!( name: 'Games ',
@@ -298,8 +278,6 @@ foolish_gents_ep4 = foolish_gents_show.videos.create!( name: 'Games ',
                                                       runtime: 0,
                                                       credits_time: 0,
                                                       episode_num: 4,
-                                                      video_url: 'video url7'
-
 )
 
 foolish_gents_ep5 = foolish_gents_show.videos.create!( name: 'Love',
@@ -308,7 +286,6 @@ foolish_gents_ep5 = foolish_gents_show.videos.create!( name: 'Love',
                                                       runtime: 0,
                                                       credits_time: 0,
                                                       episode_num: 5,
-                                                      video_url: 'video9'
 )
 
 foolish_gents_ep6 = foolish_gents_show.videos.create!( name: 'Truth',
@@ -317,8 +294,6 @@ foolish_gents_ep6 = foolish_gents_show.videos.create!( name: 'Truth',
                                                       runtime: 0,
                                                       credits_time: 0,
                                                       episode_num: 6,
-                                                      video_url: 'video url8'
-
 )
 
 # Genres

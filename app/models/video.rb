@@ -3,7 +3,6 @@
 # Table name: videos
 #
 #  id           :bigint           not null, primary key
-#  video_url    :string           not null
 #  show_id      :integer          not null
 #  name         :string           not null
 #  description  :string           not null
@@ -25,7 +24,7 @@ class Video < ApplicationRecord
     validates :video_type, inclusion: { in: VIDEO_TYPES }, presence: true
 
     belongs_to :show
-    has_one_attached :poster
+    has_one_attached :cover_image
     has_one_attached :video_file
 
     def <=>(other_video)
