@@ -4,3 +4,10 @@ export const fetchGenre = id => {
         url: `api/genres/${id}`
     });
 };
+
+export const fetchGenres = () => {
+    return $.ajax({
+        method: 'GET',
+        url: 'api/genres'
+    });
+};

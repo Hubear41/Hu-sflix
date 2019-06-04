@@ -162,6 +162,54 @@ var clearErrors = function clearErrors() {
 
 /***/ }),
 
+/***/ "./frontend/actions/genre_actions.js":
+/*!*******************************************!*\
+  !*** ./frontend/actions/genre_actions.js ***!
+  \*******************************************/
+/*! exports provided: RECEIVE_GENRE, RECEIVE_GENRES, fetchGenre, fetchGenres */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_GENRE", function() { return RECEIVE_GENRE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_GENRES", function() { return RECEIVE_GENRES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchGenre", function() { return fetchGenre; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchGenres", function() { return fetchGenres; });
+/* harmony import */ var _util_genre_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/genre_util */ "./frontend/util/genre_util.js");
+
+var RECEIVE_GENRE = 'RECEIVE_GENRE';
+var RECEIVE_GENRES = 'RECEIVE_GENRES';
+var fetchGenre = function fetchGenre(id) {
+  return function (dispatch) {
+    return _util_genre_util__WEBPACK_IMPORTED_MODULE_0__["fetchGenre"](id).then(function (genre) {
+      return dispatch(receiveGenre(genre));
+    });
+  };
+};
+var fetchGenres = function fetchGenres() {
+  return function (dispatch) {
+    return _util_genre_util__WEBPACK_IMPORTED_MODULE_0__["fetchGenres"]().then(function (genres) {
+      return dispatch(receiveGenres(genres));
+    });
+  };
+};
+
+var receiveGenre = function receiveGenre(genre) {
+  return {
+    type: RECEIVE_GENRE,
+    genre: genre
+  };
+};
+
+var receiveGenres = function receiveGenres(genres) {
+  return {
+    type: RECEIVE_GENRES,
+    genres: genres
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/session_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
@@ -2371,6 +2419,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
 /* harmony import */ var _videos_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./videos_reducer */ "./frontend/reducers/videos_reducer.js");
 /* harmony import */ var _shows_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shows_reducer */ "./frontend/reducers/shows_reducer.js");
+/* harmony import */ var _genre_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./genre_reducer */ "./frontend/reducers/genre_reducer.js");
+
 
 
 
@@ -2378,7 +2428,8 @@ __webpack_require__.r(__webpack_exports__);
 var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   videos: _videos_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
-  shows: _shows_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
+  shows: _shows_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
+  genres: _genre_reducer__WEBPACK_IMPORTED_MODULE_4__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
 
@@ -2401,6 +2452,45 @@ var errorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
   session: _session_errors_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (errorsReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/genre_reducer.js":
+/*!********************************************!*\
+  !*** ./frontend/reducers/genre_reducer.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_genre_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/genre_actions */ "./frontend/actions/genre_actions.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var genreReducer = function genreReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_genre_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_GENRES"]:
+      return action.genres;
+
+    case _actions_genre_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_GENRE"]:
+      var genre = action.genre;
+      return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, state, _defineProperty({}, genre.id, genre));
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (genreReducer);
 
 /***/ }),
 
@@ -2670,6 +2760,32 @@ var secondsToTime = function secondsToTime(seconds) {
   var minutesStr = minutes < 10 ? '0' + minutes : "".concat(minutes);
   var secondsStr = secs < 10 ? '0' + secs : "".concat(secs);
   return "".concat(hoursStr, ":").concat(minutesStr, ":").concat(secondsStr);
+};
+
+/***/ }),
+
+/***/ "./frontend/util/genre_util.js":
+/*!*************************************!*\
+  !*** ./frontend/util/genre_util.js ***!
+  \*************************************/
+/*! exports provided: fetchGenre, fetchGenres */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchGenre", function() { return fetchGenre; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchGenres", function() { return fetchGenres; });
+var fetchGenre = function fetchGenre(id) {
+  return $.ajax({
+    method: 'GET',
+    url: "api/genres/".concat(id)
+  });
+};
+var fetchGenres = function fetchGenres() {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/genres'
+  });
 };
 
 /***/ }),

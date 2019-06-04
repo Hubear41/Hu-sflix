@@ -5,7 +5,6 @@
             json.posterUrl url_for(show.poster)
         else
             json.posterUrl image_url('temp-bg.png')
-        end
-            
+        end    
     end
 end
