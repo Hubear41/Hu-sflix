@@ -1704,7 +1704,7 @@ function (_React$Component) {
         onClick: this.launchWatch
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: show ? show.posterUrl : window.tempBgURL,
-        alt: "",
+        alt: show.title,
         className: "show-title-card"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "show-peek-preview-player",
