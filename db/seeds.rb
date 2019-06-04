@@ -41,10 +41,6 @@ caroline_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Caroline_Hus
 caroline_video.video_file.attach(io: caroline_file, filename: 'Caroline.mp4')
 caroline_video.save!
 
-# caroline_file = open("/Users/dennishu/Documents/Bootcamp\ Work/Fullstack\ Project/video_assets/Carolin_Husflix_720p.mp4")
-# caroline_video.video_file.attach(io: caroline_file, filename: 'Carolin_Husflix_720p.mp4')
-# caroline_video.save!
-
 mouse_show = Show.create!( title: 'Mouse',
                            director: 'ELO Films',
                            tagline: 'Fueled by coke, a desperate couple attempts to capitalize on an unlikely opportunity.',
@@ -110,7 +106,6 @@ ramona_video.save!
 stumped_show = Show.create!( title: 'Stumped',
                              director: 'Matthew Puccini',
                              tagline: 'An awkward dinner escalates into a full-blown musical number as a young man struggles to come out to his parents.' ,
-                             video_type: 'FILM',
                              year: 2017,
                              maturity_rating: 'PG',
                              show_type: 'FEATURE',
@@ -186,7 +181,7 @@ charm_city_video = charm_city_show.videos.create!( name: 'Goodbye Charm City',
 )
 
 charm_city_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Goodbye_Charm_City_Husflix_short_720p.mp4')
-charm_city_video.video_file.attach(io: charm_city_file)
+charm_city_video.video_file.attach(io: charm_city_file, filename: 'charm-city.mp4')
 charm_city_video.save!
 
 malis_tribute = Show.create( title: "Mali's Tribute",
@@ -205,7 +200,7 @@ malis_tribute_video = malis_tribute.videos.create!( name: "Mali's Tribute",
 )
 
 malis_tribute_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Malis_Tribute_Husflix_short_720p.mp4')
-malis_tribute_video.video_file.attach(io: malis_tribute_file)
+malis_tribute_video.video_file.attach(io: malis_tribute_file, filename: 'tribute.mp4')
 malis_tribute_video.save!
 
 freeze = Show.create!( title: 'Freeze',
@@ -224,7 +219,7 @@ freeze_video = freeze.videos.create!( name: 'Freeze',
 )
 
 freeze_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Freeze_Husflix_short_720p.mp4')
-freeze_video.video_file.attach(io: freeze_file)
+freeze_video.video_file.attach(io: freeze_file, filename: 'freeze.mp4')
 freeze_video.save!
 
 freak = Show.create!( title: 'Freak',
@@ -243,7 +238,7 @@ freak_video = freak.videos.create!( name: 'Freak',
 )
 
 freak_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Freak_Husflix_short_720p.mp4')
-freak_video.video_file.attach(io: freak_file)
+freak_video.video_file.attach(io: freak_file, filename: 'freak.mp4')
 freak_video.save!
 
 ling_show = Show.create!( title: 'Ling',
@@ -282,7 +277,7 @@ max_out_ep1 = max_out_show.videos.create!( name: 'Worst Date Ever',
 )
 
 max_ep1_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Max_Out_Ep1_Husflix_short_720p.mp4')
-max_out_ep1.video_file.attach(io: max_ep1_file)
+max_out_ep1.video_file.attach(io: max_ep1_file, filename: 'maxout1.mp4')
 max_out_ep1.save!
 
 max_out_ep2 = max_out_show.videos.create!( name: 'Audition Animal',
@@ -295,7 +290,7 @@ max_out_ep2 = max_out_show.videos.create!( name: 'Audition Animal',
 
 
 max_ep2_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Max_Out_Ep2_Husflix_short_720p.mp4')
-max_out_ep2.video_file.attach(io: max_ep2_file)
+max_out_ep2.video_file.attach(io: max_ep2_file, filename: 'maxout2.mp4')
 max_out_ep2.save!
 
 foolish_gents_show = Show.create!( title:'The Fantastic Adventures of Foolish Gentlemen',
@@ -319,7 +314,7 @@ foolish_gents_ep1 = foolish_gents_show.videos.create!( name: 'Discontent',
 )
 
 gents_ep1 = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Foolish_Gents_Ep1_Husflix_short_720p.mp4')
-foolish_gents_ep1.video_file.attach(io: gents_ep1)
+foolish_gents_ep1.video_file.attach(io: gents_ep1, filename: 'gents1.mp4')
 foolish_gents_ep1.save!
 
 foolish_gents_ep2 = foolish_gents_show.videos.create!( name: 'Confusion',
@@ -331,7 +326,7 @@ foolish_gents_ep2 = foolish_gents_show.videos.create!( name: 'Confusion',
 )
 
 gents_ep2 = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Foolish_Gents_Ep2_Husflix_short_720p.mp4')
-foolish_gents_ep2.video_file.attach(io: gents_ep2)
+foolish_gents_ep2.video_file.attach(io: gents_ep2, filename: 'gents2.mp4')
 foolish_gents_ep2.save!
 
 foolish_gents_ep3 = foolish_gents_show.videos.create!( name: 'Timing',
@@ -343,7 +338,7 @@ foolish_gents_ep3 = foolish_gents_show.videos.create!( name: 'Timing',
 )
 
 gents_ep3 = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Foolish_Gents_Ep3_Husflix_short_720p.mp4')
-foolish_gents_ep3.video_file.attach(io: gents_ep3)
+foolish_gents_ep3.video_file.attach(io: gents_ep3, filename: 'gents3.mp4')
 foolish_gents_ep3.save!
 
 foolish_gents_ep4 = foolish_gents_show.videos.create!( name: 'Games ',
@@ -355,7 +350,7 @@ foolish_gents_ep4 = foolish_gents_show.videos.create!( name: 'Games ',
 )
 
 gents_ep4 = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Foolish_Gents_Ep4_Husflix_short_720p.mp4')
-foolish_gents_ep4.video_file.attach(io: gents_ep4)
+foolish_gents_ep4.video_file.attach(io: gents_ep4, filename: 'gents4.mp4')
 foolish_gents_ep4.save!
 
 foolish_gents_ep5 = foolish_gents_show.videos.create!( name: 'Love',
@@ -367,7 +362,7 @@ foolish_gents_ep5 = foolish_gents_show.videos.create!( name: 'Love',
 )
 
 gents_ep5 = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Foolish_Gents_Ep5_Husflix_short_720p.mp4')
-foolish_gents_ep5.video_file.attach(io: gents_ep5)
+foolish_gents_ep5.video_file.attach(io: gents_ep5, filename: 'gents5.mp4')
 foolish_gents_ep5.save!
 
 foolish_gents_ep6 = foolish_gents_show.videos.create!( name: 'Truth',
@@ -379,7 +374,7 @@ foolish_gents_ep6 = foolish_gents_show.videos.create!( name: 'Truth',
 )
 
 gents_ep6 = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Foolish_Gents_Ep6_Husflix_short_720p.mp4')
-foolish_gents_ep6.video_file.attach(io: gents_ep6)
+foolish_gents_ep6.video_file.attach(io: gents_ep6, filename: 'gents6.mp4')
 foolish_gents_ep6.save!
 
 # Genres

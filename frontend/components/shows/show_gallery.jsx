@@ -78,7 +78,7 @@ class ShowGallery extends React.Component {
         return (
             <main className="show-gallery-index-wrapper">
                 <figure className="big-video-preview-wrapper">
-                    <img src={showPreview ? showPreview.poster_url : ""} className="big-video-poster"></img>
+                    <img src={showPreview && showPreview.posterUrl ? showPreview.posterUrl : window.tempBgURL } className="big-video-poster"></img>
                     <video autoPlay className="big-video">
                         {/* <source src={ videos ? videos[previewShow.preview_id] : ''} type="video/mp4"/> */}
                     </video>

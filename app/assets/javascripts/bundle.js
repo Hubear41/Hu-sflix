@@ -1520,7 +1520,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-video-preview-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: showPreview ? showPreview.poster_url : "",
+        src: showPreview && showPreview.posterUrl ? showPreview.posterUrl : window.tempBgURL,
         className: "big-video-poster"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         autoPlay: true,
