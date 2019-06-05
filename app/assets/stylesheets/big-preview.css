@@ -5,13 +5,13 @@
     align-items: center;
     background-color: #212020;
     height: 50vh;
+    position: relative;
 }
 
 .big-video-poster {
-    height: 100%;
     width: 100%;
-    max-width: 100vw;
-    max-height: 95vh;
+    max-width: 195vw;
+    min-height: 90vh;
     position: absolute;
     top: 0;
     left: 0;
@@ -21,6 +21,27 @@
     -webkit-mask-image: linear-gradient( to bottom,rgba(0,0,0,1) 70%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0) 100%);
     mask-image: linear-gradient( to bottom,rgba(0,0,0,1) 70%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0) 100%);    
     transition: opactiy 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.big-video-poster img {
+    position: absolute;
+    top: 5%;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 80;
+}
+
+.poster-black-bg {
+    width: 100%;
+    height: 100vh;
+    -webkit-mask-image: linear-gradient( to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient( to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+    background-color: black;
 }
 
 .video-el-wrapper {
@@ -31,9 +52,9 @@
 
 .big-video {
     position: absolute;
-    min-height: 95vh;
+    max-height: 90vh;
     max-width: 100vw;
-    height: 120%;
+    height: auto;
     width: 100%;
     object-fit: fill;
     z-index: 40;
@@ -65,7 +86,7 @@
 
 .big-preview-show-title {
     font-family: 'Roboto', sans-serif;
-    font-size: 25pt;
+    font-size: 20pt;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 300;
@@ -78,22 +99,26 @@
 .big-preview-show-title article{
     display: flex;
     align-items: center;
-    height: 20vh;
+    height: 15vh;
+    max-width: 40%;
+    overflow: hidden;
 }
 
 .big-preview-show-title h1 {
     background-color: white;
     color: black;
-    font-size: 40pt;
+    font-size: 30pt;
     font-weight: bold;
     letter-spacing: none;
     padding: 3px;
+    width: auto;
 }
 
 .big-preview-play-mylist-btns {
     display: flex;
     justify-content: space-between;
     width: 10vw;
+    min-height: 10vh;
 }
 
 .big-preview-play-mylist-btns button {
@@ -159,11 +184,12 @@
     width: 700px;
     overflow: hidden;
     line-height: 30px;
+    min-height: 10vh;
 }
 
 .big-preview-right-content {
     position: absolute;
-    bottom: 25vh;
+    bottom: -10vh;
     right: 0;
     z-index: 120;
     height: 10vh;

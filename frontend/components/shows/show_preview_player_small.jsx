@@ -23,7 +23,7 @@ class ShowPreviewPlayerSmall extends React.Component {
     
     launchWatch(e) {
         const { show } = this.props;
-        debugger
+        
         if (show.show_type === 'FEATURE') {
             this.props.history.push(`/watch/${show.id}/${show.movie_id}`)
         } else {    

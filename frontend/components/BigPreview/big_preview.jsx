@@ -47,7 +47,7 @@ class BigPreview extends React.Component {
     revealVideo() {
         const videoEl = this.videoPlayer.current;
 
-        videoEl.play();
+        // videoEl.play();
         this.setState({ imageOpacity: 0, ended: false, started: true });
     }
 
@@ -63,18 +63,18 @@ class BigPreview extends React.Component {
     }
 
     videoControllerIcon() {
-        const { muted, started } = this.state;
+        const { muted, started, ended } = this.state;
         
         if ( !started ) {
             return null;
         }
 
-        if ( muted ) {
-            return <i className="fas fa-volume-mute"></i>
+        if ( ended ) {
+            return <i className="fas fa-redo"></i>
         } else if ( !muted) {
             return <i className="fas fa-volume-up"></i>
         } else {
-            return <i className="fas fa-redo"></i>
+            return <i className="fas fa-volume-mute"></i>
         }
     }
 
@@ -113,12 +113,13 @@ class BigPreview extends React.Component {
 
         return (
             <figure className="big-video-preview-wrapper">
-                <img src={show && show.posterUrl ? show.posterUrl : window.tempBgURL} 
-                     className="big-video-poster"
-                     style={{ opacity: imageOpacity }}
-                     ref={this.poster}
-                    //  onClick={this.playVideo}
-                ></img>
+                <section className="big-video-poster" style={{ opacity: imageOpacity }}>
+                    <img src={show && show.posterUrl ? show.posterUrl : window.tempBgURL} 
+                        className="preview-poster"
+                        ref={this.poster}
+                    ></img>
+                    <figure className="poster-black-bg"></figure>
+                </section>
 
                 <section className="video-el-wrapper" style={{ opacity: videoOpacity }}>
                     <figure className="big-video-bg"></figure>
@@ -162,7 +163,7 @@ class BigPreview extends React.Component {
                         <span>{show.tagline}</span>
                     </p>
                 </article>
-
+                            
                 <figure className="big-preview-right-content">
                     <article className="preview-maturity-wrapper">
                         <figure className="maturity-bg"></figure>

@@ -7,10 +7,10 @@
 .gallery-index-wrapper {
     min-height: 1000px;
     position: absolute;
-    top: 90vh;
+    top: 85vh;
     left: 0;
     width: 100%;
-    z-index: 30;
+    z-index: 500;
 }
 
 .show-gallery-index {

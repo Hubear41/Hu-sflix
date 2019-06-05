@@ -4,9 +4,10 @@ import { fetchGenres } from '../../actions/genre_actions';
 import ShowGallery from './show_gallery';
 
 const msp = ({entities}) => {
+    const shows = Object.values(entities.shows);
+    
     return {
-        shows: Object.values(entities.shows),
-        genres: Object.values(entities.genres),
+        shows,
         galleryType: 'showsIndex',
     }
 };
@@ -16,5 +17,7 @@ const mdp = dispatch => ({
     requestAllShows: () => dispatch(fetchShows()),
     requestVideo: id => dispatch(fetchVideo(id)),
 });
+
+
 
 export default connect(msp, mdp)(ShowGallery);

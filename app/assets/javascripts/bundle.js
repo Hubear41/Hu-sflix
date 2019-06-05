@@ -528,8 +528,8 @@ function (_React$Component) {
   }, {
     key: "revealVideo",
     value: function revealVideo() {
-      var videoEl = this.videoPlayer.current;
-      videoEl.play();
+      var videoEl = this.videoPlayer.current; // videoEl.play();
+
       this.setState({
         imageOpacity: 0,
         ended: false,
@@ -559,15 +559,16 @@ function (_React$Component) {
     value: function videoControllerIcon() {
       var _this$state = this.state,
           muted = _this$state.muted,
-          started = _this$state.started;
+          started = _this$state.started,
+          ended = _this$state.ended;
 
       if (!started) {
         return null;
       }
 
-      if (muted) {
+      if (ended) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-volume-mute"
+          className: "fas fa-redo"
         });
       } else if (!muted) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -575,7 +576,7 @@ function (_React$Component) {
         });
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-redo"
+          className: "fas fa-volume-mute"
         });
       }
     }
@@ -628,15 +629,18 @@ function (_React$Component) {
       };
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-video-preview-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: show && show.posterUrl ? show.posterUrl : window.tempBgURL,
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "big-video-poster",
         style: {
           opacity: imageOpacity
-        },
-        ref: this.poster //  onClick={this.playVideo}
-
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: show && show.posterUrl ? show.posterUrl : window.tempBgURL,
+        className: "preview-poster",
+        ref: this.poster
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "poster-black-bg"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "video-el-wrapper",
         style: {
           opacity: videoOpacity
@@ -1812,7 +1816,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowGallery).call(this, props));
     _this.state = {
-      previewVideoId: Math.floor(Math.random() * 18)
+      previewId: null
     };
     return _this;
   }
@@ -1821,27 +1825,12 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.requestAllShows();
-    } // static getDerivedStateFromProps(props) {
-    //     if ( props.shows.length < 1 ) {
-    //         return [];
-    //     }
-    //     // finds a random video to put into the preview after requesting all shows
-    //     let previewId = null;
-    //     let found = false;
-    //     while (!found) {
-    //         const randomId = ;
-    //         if (props.shows[randomId].director !== 'Nelicia Low' || props.shows[randomId].title !== 'Ling') {
-    //             found = true;
-    //             previewId = randomId;
-    //         }
-    //     }
-    //     return { previewId };
-    // }
-
+    }
   }, {
-    key: "createRowsOf",
-    value: function createRowsOf(previewId) {
+    key: "createRows",
+    value: function createRows() {
       var shows = this.props.shows;
+      var previewId = this.state.previewId;
       var row = [];
       var showsPerRow = [];
       var idx = 0,
@@ -1854,18 +1843,19 @@ function (_React$Component) {
         while (idx < shows.length) {
           var currShow = shows[idx];
 
-          if (currShow.id === previewId) {
+          if (idx === previewId) {
+            idx++;
             continue;
-          }
+          } else {
+            if (Math.floor(row.length % 6) !== 0 || idx === 0) {
+              row.push(currShow);
+            } else if (Math.floor(row.length % 6) === 0) {
+              showsPerRow.push(row);
+              row = [currShow];
+            }
 
-          if (Math.floor(idx % 6) !== 0 || idx === 0) {
-            row.push(currShow);
-          } else if (Math.floor(idx % 6) === 0) {
-            showsPerRow.push(row);
-            row = [currShow];
+            idx++;
           }
-
-          idx++;
         }
 
         if (row.length > 0) {
@@ -1883,13 +1873,12 @@ function (_React$Component) {
       var _this$props = this.props,
           shows = _this$props.shows,
           galleryType = _this$props.galleryType;
-      var previewVideoId = this.state.previewVideoId;
       var showsPerRow = null,
           previewShow = null,
           showRowsList = null;
 
       if (shows.length > 0) {
-        showsPerRow = this.createRowsOf(previewVideoId);
+        showsPerRow = this.createRows();
         previewShow = showsPerRow[0][0];
         showRowsList = showsPerRow.map(function (row, idx) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -1915,6 +1904,31 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
         className: "gallery-footer"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_footer_footer__WEBPACK_IMPORTED_MODULE_2__["default"], null)))));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      if (state.previewId !== null || props.shows.length < 1) {
+        return {
+          previewId: state.previewId
+        };
+      }
+
+      var previewId = null;
+      var found = false;
+
+      while (!found) {
+        var randomId = Math.floor(Math.random() * 18);
+
+        if (props.shows[randomId].director !== 'Nelicia Low' || props.shows[randomId].title !== 'Ling') {
+          found = true;
+          previewId = randomId;
+        }
+      }
+
+      return {
+        previewId: previewId
+      };
     }
   }]);
 
@@ -1945,9 +1959,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var msp = function msp(_ref) {
   var entities = _ref.entities;
+  var shows = Object.values(entities.shows);
   return {
-    shows: Object.values(entities.shows),
-    genres: Object.values(entities.genres),
+    shows: shows,
     galleryType: 'showsIndex'
   };
 };
@@ -2039,7 +2053,6 @@ function (_React$Component) {
     key: "launchWatch",
     value: function launchWatch(e) {
       var show = this.props.show;
-      debugger;
 
       if (show.show_type === 'FEATURE') {
         this.props.history.push("/watch/".concat(show.id, "/").concat(show.movie_id));
@@ -2192,7 +2205,7 @@ function (_React$Component) {
       var showList = [];
       shows.forEach(function (show) {
         showList.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_preview_player_small__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          key: show.id,
+          key: "".concat(show.id).concat(rowNum),
           show: show
         }));
       });

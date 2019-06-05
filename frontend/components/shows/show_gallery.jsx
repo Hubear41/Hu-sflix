@@ -5,63 +5,64 @@ import BigPreviewContainer from '../BigPreview/big_preview_container'
 
 class ShowGallery extends React.Component {
     constructor(props) {
-        super(props);
+        super(props); 
         this.state = {
-            previewVideoId: Math.floor(Math.random() * 18),
-        };
+            previewId: null,
+        }
     }
     
     componentDidMount() {
         this.props.requestAllShows();
     }
 
-    // static getDerivedStateFromProps(props) {
-    //     if ( props.shows.length < 1 ) {
-    //         return [];
-    //     }
+    static getDerivedStateFromProps(props, state) {
+        if (state.previewId !== null || props.shows.length < 1) {
+            return { previewId: state.previewId };
+        }
+        
+        let previewId = null;
+        let found = false;
 
-    //     // finds a random video to put into the preview after requesting all shows
-    //     let previewId = null;
-    //     let found = false;
+        while (!found) {
+            const randomId = Math.floor(Math.random() * 18);
 
-    //     while (!found) {
-    //         const randomId = ;
+            if (props.shows[randomId].director !== 'Nelicia Low' || props.shows[randomId].title !== 'Ling') {
+                found = true;
+                previewId = randomId;
+            }
+        }
 
-    //         if (props.shows[randomId].director !== 'Nelicia Low' || props.shows[randomId].title !== 'Ling') {
-    //             found = true;
-    //             previewId = randomId;
-    //         }
-    //     }
+        return { previewId };
+    }
 
-    //     return { previewId };
-    // }
-
-    createRowsOf(previewId) {
+    createRows() {
         const { shows } = this.props;
+        const { previewId } = this.state;
         let row = [];
         let showsPerRow = [];
         let idx = 0, count = 0;
-
+        
         row.push(shows[previewId]);
-
+        
         while ( count < 1 ) {
             idx = 0
 
             while ( idx < shows.length) {
                 const currShow = shows[idx];
 
-                if ( currShow.id === previewId ) {
+                if ( idx === previewId ) {
+                    idx++;
                     continue;
+                } else {
+                    if (Math.floor(row.length % 6) !== 0 || idx === 0) {
+                        row.push(currShow);
+                    } else if (Math.floor(row.length % 6) === 0 ) {
+                        showsPerRow.push(row);
+    
+                        row = [currShow];
+                    }
+                    idx++;
                 }
-
-                if (Math.floor(idx % 6) !== 0 || idx === 0) {
-                    row.push(currShow);
-                } else if (Math.floor(idx % 6) === 0 ) {
-                    showsPerRow.push(row);
-
-                    row = [currShow];
-                }
-                idx++;
             }
 
             if ( row.length > 0 ) {
@@ -69,17 +70,17 @@ class ShowGallery extends React.Component {
             }
             count++;
         }
-
+        
+        
         return showsPerRow;
     }
     
     render() {
         const { shows, galleryType } = this.props;
-        const { previewVideoId } = this.state;
 
         let showsPerRow = null, previewShow = null, showRowsList = null;
         if ( shows.length > 0 ) {
-            showsPerRow = this.createRowsOf(previewVideoId);
+            showsPerRow = this.createRows();
             previewShow = showsPerRow[0][0];
             
             showRowsList = showsPerRow.map( (row, idx) => {
