@@ -6,9 +6,13 @@ class MainNav extends React.Component {
         super(props);
         this.state = {
             dropdown: false,
-        }
-
+        };
+        this.navbar = React.createRef();
         this.handleLogout = this.handleLogout.bind(this);
+
+        document.addEventListener('scroll', e => {
+            const navbarEl = this.navbar.current;
+        });
     }
     
     handleLogout() {
@@ -16,9 +20,11 @@ class MainNav extends React.Component {
     }
 
     render() {
+        const { pathname } = this.props.history.location;
+
         return (
             <header className="main-nav-bar-wrapper">
-                <header className="main-nav-bar">
+                <header className="main-nav-bar" ref={this.navbar}>
                     <section className='left-nav'>
                         <section className="main-logo-container">
                             <Link to="/browse" className='main-logo-btn'>

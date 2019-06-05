@@ -1,0 +1,53 @@
+
+.big-video-preview-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #212020;
+    height: 50vh;
+}
+
+.big-video-poster {
+    height: 100%;
+    width: 100%;
+    max-width: 100vw;
+    max-height: 95vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 80;
+    border: none;
+    -webkit-mask-image: linear-gradient( to bottom,rgba(0,0,0,1) 70%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient( to bottom,rgba(0,0,0,1) 70%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0) 100%);    
+    transition: opactiy 0.5s;
+}
+
+.video-el-wrapper {
+    position :relative;
+    height: 100%;
+    width: 100%
+}
+
+.big-video {
+    position: absolute;
+    min-height: 95vh;
+    max-width: 100vw;
+    height: 120%;
+    width: 100%;
+    object-fit: fill;
+    z-index: 40;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient( to bottom,rgba(0,0,0,1) 70%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient( to bottom,rgba(0,0,0,1) 70%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0) 100%);
+
+}
+
+.big-video-bg {
+    width: 100%;
+    height: 100vh;
+    -webkit-mask-image: linear-gradient( to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient( to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+    background-color: black;
+}

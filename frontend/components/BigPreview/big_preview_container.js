@@ -4,15 +4,19 @@ import BigPreview from './big_preview';
 
 const msp = (state, ownProps) => {
     const { show } = ownProps;
-    
-    const previewVideo = show ? state.entities.videos[show.preview_id] : null;
+
+    const previewId = show.show_type === 'FEATURE' ? show.movie_id : show.episode_ids[0];
+
+    const previewVideo = state.entities.videos[previewId] || null;
+    debugger
     return {
         video: previewVideo,
+        previewId,
     };
 };
 
 const mdp = dispatch => ({
-    requestVideo: id => dispatch(fetchVideo()),
+    requestVideo: id => dispatch(fetchVideo(id)),
 });
 
 export default connect(msp, mdp)(BigPreview);

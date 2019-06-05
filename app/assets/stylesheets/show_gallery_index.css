@@ -4,32 +4,6 @@
     min-height: 1000px;
 }
 
-.big-video-preview-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #212020;
-    height: 50vh;
-}
-
-.big-video-poster {
-    height: 100%;
-    width: 100%;
-    max-width: 100vw;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 20;
-    border: none;
-    -webkit-mask-image: linear-gradient( to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
-    mask-image: linear-gradient( to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);    
-}
-
-.big-video {
-    height: 100%;
-    width: 100%;
-}
-
 .gallery-index-wrapper {
     min-height: 1000px;
     position: absolute;
@@ -52,7 +26,7 @@
     z-index: -1;
     width: 100%;
     height: 110%;
-    background-color: rgb(33, 32, 32);
+    background-color: #141414;
     -webkit-mask-image: linear-gradient( to top, rgba(0,0,0,1) 95%, rgba(0,0,0,0) 100%);
     mask-image: linear-gradient( to top, rgba(0,0,0,1) 95%, rgba(0,0,0,0) 100%);
 }

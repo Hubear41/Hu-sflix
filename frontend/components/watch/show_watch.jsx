@@ -36,11 +36,11 @@ class Watch extends React.Component {
     }
 
     determineKeyPress(e) {
-        debugger
         switch (e.code) {
             case 'Space':
                 this.togglePlayPause();
             case 'ArrowRight':
+                e.preventDefault();
                 this.jumpForward();
             case 'ArrowLeft':
                 this.jumpBack();

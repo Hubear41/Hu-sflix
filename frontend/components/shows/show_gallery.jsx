@@ -6,27 +6,27 @@ import BigPreviewContainer from '../BigPreview/big_preview_container'
 class ShowGallery extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            previewVideoId: 0,
+        }
     }
     
     componentDidMount() {
         this.props.requestAllShows();
+
+        this.setState({ previewVideoId: Math.floor(Math.random() * 8) });
     }
 
     createRowsOf(shows) {
         let row = [];
         let showsPerRow = [];
-        let showToPreview = null;
         let idx = 0, count = 0;
-        
+
         while ( count < 1 ) {
             idx = 0
 
             while ( idx < shows.length) {
                 const currShow = shows[idx];
-
-                if (currShow.title === 'Ling'){
-                    showToPreview = currShow;
-                }
 
                 if (Math.floor(idx % 3) !== 0 || idx === 0) {
                     row.push(currShow);
@@ -41,27 +41,26 @@ class ShowGallery extends React.Component {
             if ( row.length > 0 ) {
                 showsPerRow.push(row);
             }
-
             count++;
         }
 
-
-        return [showsPerRow, showToPreview];
+        return showsPerRow;
     }
     
     render() {
         const { shows, galleryType } = this.props;
+        const { previewVideoId } = this.state;
 
-        let showsPerRow, showPreview;
-        [showsPerRow, showPreview] = this.createRowsOf(shows);   
-
+        const showsPerRow = shows ? this.createRowsOf(shows) : null;
+        const previewShow = shows ? shows[previewVideoId] : null;   
+    
         const showRowsList = showsPerRow.map( (row, idx) => {
             return <ShowRows key={idx} rowNum={idx} shows={row} galleryType={galleryType}/>
         }) 
         
         return (
             <main className="show-gallery-index-wrapper">
-                <BigPreviewContainer show={showPreview} />
+                { previewShow ? <BigPreviewContainer show={previewShow} /> : null }
 
                 <section className="gallery-index-wrapper">
                     

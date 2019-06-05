@@ -447,9 +447,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -468,45 +468,93 @@ function (_React$Component) {
     _classCallCheck(this, BigPreview);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(BigPreview).call(this, props));
+    _this.state = {
+      muted: true,
+      imageOpacity: 1
+    };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.poster = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.startVideo = _this.startVideo.bind(_assertThisInitialized(_this));
+    _this.videoEnded = _this.videoEnded.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(BigPreview, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var show = this.props.show;
+      var previewId = this.props.previewId;
+      this.props.requestVideo(previewId);
+    }
+  }, {
+    key: "toggleMute",
+    value: function toggleMute() {
+      var videoEl = this.videoPlayer.current;
 
-      if (show) {
-        var previewId = this.props.show.preview_id;
-        this.props.fetchVideo(previewId);
+      if (videoEl.muted) {
+        videoEl.muted = false;
+        this.setState({
+          muted: false
+        });
+      } else {
+        videoEl.muted = true;
+        this.setState({
+          muted: true
+        });
       }
     }
   }, {
-    key: "togglePlayPause",
-    value: function togglePlayPause() {}
+    key: "startVideo",
+    value: function startVideo() {
+      var _this2 = this;
+
+      var videoEl = this.videoPlayer.current;
+      setTimeout(function () {
+        videoEl.play();
+
+        _this2.setState({
+          imageOpacity: 0
+        });
+      }, 2000);
+    }
   }, {
-    key: "toggleMute",
-    value: function toggleMute() {}
+    key: "videoEnded",
+    value: function videoEnded() {
+      this.setState({
+        imageOpacity: 1
+      });
+    }
   }, {
     key: "render",
     value: function render() {
-      var show = this.props.show;
-
-      if (!show) {
-        return null;
-      }
-
+      var _this$props = this.props,
+          show = _this$props.show,
+          video = _this$props.video;
+      var imageOpacity = this.state.imageOpacity;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-video-preview-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: show && show.posterUrl ? show.posterUrl : window.tempBgURL,
-        className: "big-video-poster"
+        className: "big-video-poster",
+        style: {
+          opacity: imageOpacity === 0
+        },
+        ref: this.poster
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "video-el-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "big-video-bg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+        controls: true,
         autoPlay: true,
+        muted: true,
         className: "big-video",
-        ref: this.videoPlayer
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        ref: this.videoPlayer,
+        onCanPlay: this.startVideo,
+        onEnded: this.videoEnded
+      }, video && video.videoUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+        src: video.videoUrl,
+        type: "video/mp4"
+      }) : null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "big-preview-description"
       }));
     }
@@ -537,16 +585,19 @@ __webpack_require__.r(__webpack_exports__);
 
 var msp = function msp(state, ownProps) {
   var show = ownProps.show;
-  var previewVideo = show ? state.entities.videos[show.preview_id] : null;
+  var previewId = show.show_type === 'FEATURE' ? show.movie_id : show.episode_ids[0];
+  var previewVideo = state.entities.videos[previewId] || null;
+  debugger;
   return {
-    video: previewVideo
+    video: previewVideo,
+    previewId: previewId
   };
 };
 
 var mdp = function mdp(dispatch) {
   return {
     requestVideo: function requestVideo(id) {
-      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchVideo"])());
+      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchVideo"])(id));
     }
   };
 };
@@ -710,7 +761,11 @@ function (_React$Component) {
     _this.state = {
       dropdown: false
     };
+    _this.navbar = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
+    document.addEventListener('scroll', function (e) {
+      var navbarEl = _this.navbar.current;
+    });
     return _this;
   }
 
@@ -722,10 +777,12 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var pathname = this.props.history.location.pathname;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
         className: "main-nav-bar-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
-        className: "main-nav-bar"
+        className: "main-nav-bar",
+        ref: this.navbar
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "left-nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
@@ -1587,14 +1644,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BigPreview_big_preview_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../BigPreview/big_preview_container */ "./frontend/components/BigPreview/big_preview_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1622,22 +1671,30 @@ function (_React$Component) {
   _inherits(ShowGallery, _React$Component);
 
   function ShowGallery(props) {
+    var _this;
+
     _classCallCheck(this, ShowGallery);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(ShowGallery).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowGallery).call(this, props));
+    _this.state = {
+      previewVideoId: 0
+    };
+    return _this;
   }
 
   _createClass(ShowGallery, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.requestAllShows();
+      this.setState({
+        previewVideoId: Math.floor(Math.random() * 8)
+      });
     }
   }, {
     key: "createRowsOf",
     value: function createRowsOf(shows) {
       var row = [];
       var showsPerRow = [];
-      var showToPreview = null;
       var idx = 0,
           count = 0;
 
@@ -1646,10 +1703,6 @@ function (_React$Component) {
 
         while (idx < shows.length) {
           var currShow = shows[idx];
-
-          if (currShow.title === 'Ling') {
-            showToPreview = currShow;
-          }
 
           if (Math.floor(idx % 3) !== 0 || idx === 0) {
             row.push(currShow);
@@ -1668,7 +1721,7 @@ function (_React$Component) {
         count++;
       }
 
-      return [showsPerRow, showToPreview];
+      return showsPerRow;
     }
   }, {
     key: "render",
@@ -1676,14 +1729,9 @@ function (_React$Component) {
       var _this$props = this.props,
           shows = _this$props.shows,
           galleryType = _this$props.galleryType;
-      var showsPerRow, showPreview;
-
-      var _this$createRowsOf = this.createRowsOf(shows);
-
-      var _this$createRowsOf2 = _slicedToArray(_this$createRowsOf, 2);
-
-      showsPerRow = _this$createRowsOf2[0];
-      showPreview = _this$createRowsOf2[1];
+      var previewVideoId = this.state.previewVideoId;
+      var showsPerRow = shows ? this.createRowsOf(shows) : null;
+      var previewShow = shows ? shows[previewVideoId] : null;
       var showRowsList = showsPerRow.map(function (row, idx) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: idx,
@@ -1694,9 +1742,9 @@ function (_React$Component) {
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
         className: "show-gallery-index-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BigPreview_big_preview_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        show: showPreview
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }, previewShow ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BigPreview_big_preview_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        show: previewShow
+      }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "gallery-index-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "show-gallery-index",
@@ -1830,6 +1878,7 @@ function (_React$Component) {
     key: "launchWatch",
     value: function launchWatch(e) {
       var show = this.props.show;
+      debugger;
 
       if (show.show_type === 'FEATURE') {
         this.props.history.push("/watch/".concat(show.id, "/").concat(show.movie_id));
@@ -2118,13 +2167,12 @@ function (_React$Component) {
   _createClass(Watch, [{
     key: "determineKeyPress",
     value: function determineKeyPress(e) {
-      debugger;
-
       switch (e.code) {
         case 'Space':
           this.togglePlayPause();
 
         case 'ArrowRight':
+          e.preventDefault();
           this.jumpForward();
 
         case 'ArrowLeft':
@@ -45925,7 +45973,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

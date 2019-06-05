@@ -20,7 +20,8 @@
     width: 50%;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    padding-top: 5px;
+    /* justify-content: flex-start; */
 }
 
 .left-nav a {
@@ -53,7 +54,7 @@
 .main-logo-btn img {
     min-width: 50px;
     height: 25px;
-    top: -8px;
+    top: -13px;
     left: 70px;
     z-index: 100;
 }
@@ -66,6 +67,7 @@
 .toggle-nav-dropdown-menu {
     color: white;
     margin-top: 10px;
+    margin-right: 30px;
 }
 
 .toggle-nav-dropdown-menu:hover + .nav-dropdown-menu {
@@ -84,8 +86,8 @@
 
 .nav-dropdown-menu {
     position: absolute;
-    right: 0;
-    top: 50px;
+    right: 29px;
+    top: 60px;
     width: 150px;
     letter-spacing: 0.5px;
     background-color: black;

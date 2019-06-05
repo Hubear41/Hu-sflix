@@ -19,8 +19,4 @@ class Genre < ApplicationRecord
     has_many :associated_genres,
         through: :shows_with_genre,
         source: :genres 
-
-    def related_genre_ids 
-        associated_genres.map { |genre| genre.id unless genre.name === self.name }
-    end
 end
