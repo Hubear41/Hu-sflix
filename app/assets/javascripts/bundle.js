@@ -1840,8 +1840,8 @@ function (_React$Component) {
 
   }, {
     key: "createRowsOf",
-    value: function createRowsOf(shows) {
-      var previewId = this.state.previewId;
+    value: function createRowsOf(previewId) {
+      var shows = this.props.shows;
       var row = [];
       var showsPerRow = [];
       var idx = 0,
@@ -1853,6 +1853,10 @@ function (_React$Component) {
 
         while (idx < shows.length) {
           var currShow = shows[idx];
+
+          if (currShow.id === previewId) {
+            continue;
+          }
 
           if (Math.floor(idx % 6) !== 0 || idx === 0) {
             row.push(currShow);
@@ -1880,15 +1884,13 @@ function (_React$Component) {
           shows = _this$props.shows,
           galleryType = _this$props.galleryType;
       var previewVideoId = this.state.previewVideoId;
-      debugger;
       var showsPerRow = null,
           previewShow = null,
           showRowsList = null;
 
-      if (shows) {
-        showsPerRow = this.createRowsOf(shows);
+      if (shows.length > 0) {
+        showsPerRow = this.createRowsOf(previewVideoId);
         previewShow = showsPerRow[0][0];
-        debugger;
         showRowsList = showsPerRow.map(function (row, idx) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
             key: idx,
@@ -1902,7 +1904,7 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
         className: "show-gallery-index-wrapper"
       }, previewShow ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BigPreview_big_preview_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        show: shows ? previewShow : null
+        show: previewShow
       }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "gallery-index-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -2188,7 +2190,6 @@ function (_React$Component) {
           rowNum = _this$props.rowNum,
           galleryType = _this$props.galleryType;
       var showList = [];
-      debugger;
       shows.forEach(function (show) {
         showList.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_preview_player_small__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: show.id,

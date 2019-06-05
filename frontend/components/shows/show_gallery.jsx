@@ -36,8 +36,8 @@ class ShowGallery extends React.Component {
     //     return { previewId };
     // }
 
-    createRowsOf(shows) {
-        const { previewId } = this.state;
+    createRowsOf(previewId) {
+        const { shows } = this.props;
         let row = [];
         let showsPerRow = [];
         let idx = 0, count = 0;
@@ -49,6 +49,10 @@ class ShowGallery extends React.Component {
 
             while ( idx < shows.length) {
                 const currShow = shows[idx];
+
+                if ( currShow.id === previewId ) {
+                    continue;
+                }
 
                 if (Math.floor(idx % 6) !== 0 || idx === 0) {
                     row.push(currShow);
@@ -72,13 +76,12 @@ class ShowGallery extends React.Component {
     render() {
         const { shows, galleryType } = this.props;
         const { previewVideoId } = this.state;
-        debugger
 
         let showsPerRow = null, previewShow = null, showRowsList = null;
-        if ( shows ) {
-            showsPerRow = this.createRowsOf(shows);
+        if ( shows.length > 0 ) {
+            showsPerRow = this.createRowsOf(previewVideoId);
             previewShow = showsPerRow[0][0];
-            debugger
+            
             showRowsList = showsPerRow.map( (row, idx) => {
                 return <ShowRows key={idx} rowNum={idx} shows={row} galleryType={galleryType}/>
             }) 
@@ -86,7 +89,7 @@ class ShowGallery extends React.Component {
         
         return (
             <main className="show-gallery-index-wrapper">
-                { previewShow ? <BigPreviewContainer show={ shows ? previewShow : null } /> : null }
+                { previewShow ? <BigPreviewContainer show={previewShow} /> : null }
 
                 <section className="gallery-index-wrapper">
                     
