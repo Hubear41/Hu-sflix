@@ -29,7 +29,7 @@ class LoginForm extends React.Component {
         const { email, password } = this.state;
 
         const user = { email, password };
-        this.props.processForm(user).then( () => this.props.history.push('/browse'));
+        this.props.loginUser(user).then( () => this.props.history.push('/browse'));
     } 
 
     handleGuestSubmit(e) {
