@@ -18,7 +18,9 @@ class Watch extends React.Component {
         };
         this.timeout;
         this.videoPlayer = React.createRef();
+        this.fullControlArea = React.createRef();
         this.openFullscreen = this.openFullscreen.bind(this);
+        this.closeFullscreen = this.closeFullscreen.bind(this);
         this.togglePlayPause = this.togglePlayPause.bind(this);
         this.toggleMute = this.toggleMute.bind(this);
         this.jumpBack = this.jumpBack.bind(this);
@@ -35,15 +37,27 @@ class Watch extends React.Component {
         document.addEventListener('keydown', e => this.determineKeyPress(e));
     }
 
-    determineKeyPress(e) {
-        switch (e.code) {
-            case 'Space':
+    determineKeyPress(e) {        
+        switch (e.keyCode) {
+            case 32:  // spacebar
                 this.togglePlayPause();
-            case 'ArrowRight':
-                e.preventDefault();
+                break;
+            case 27:  // escape
+                document.fullscreen ? this.closeFullscreen() : null;
+                break;
+            case 39:  // right arrow
                 this.jumpForward();
-            case 'ArrowLeft':
+                break;
+            case 37:  // left arrow
                 this.jumpBack();
+                break;
+            case 70:  // f key
+                if (document.fullscreen) {
+                    this.closeFullscreen();
+                } else {
+                    this.openFullscreen();
+                }
+                break;
             default:
                 break;
         }
@@ -131,7 +145,6 @@ class Watch extends React.Component {
     }
     
     jumpForward() {
-        // debugger
         const videoEl = this.videoPlayer.current;
         videoEl.currentTime += 10;
 
@@ -139,17 +152,19 @@ class Watch extends React.Component {
     }
     
     openFullscreen() {
-        const videoEl = this.videoPlayer.current;
+        const entireVideoEl = this.fullControlArea.current;
 
-        if (videoEl.requestFullscreen) {
-            videoEl.requestFullscreen();
-        } else if (videoEl.mozRequestFullScreen) { /* Firefox */
-            videoEl.mozRequestFullScreen();
-        } else if (videoEl.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-            videoEl.webkitRequestFullscreen();
-        } else if (videoEl.msRequestFullscreen) { /* IE/Edge */
-            videoEl.msRequestFullscreen();
+        if (entireVideoEl.requestFullscreen) {
+            entireVideoEl.requestFullscreen();
+        } else if (entireVideoEl.mozRequestFullScreen) { /* Firefox */
+            entireVideoEl.mozRequestFullScreen();
+        } else if (entireVideoEl.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            entireVideoEl.webkitRequestFullscreen();
+        } else if (entireVideoEl.msRequestFullscreen) { /* IE/Edge */
+            entireVideoEl.msRequestFullscreen();
         }
+
+        this.setState({ fullscreen: true })
     }
 
     closeFullscreen() {
@@ -162,6 +177,8 @@ class Watch extends React.Component {
         } else if (document.msExitFullscreen) { /* IE/Edge */
             document.msExitFullscreen();
         }
+
+        this.setState({ fullscreen: false })
     }
     
     showControls() {
@@ -189,7 +206,7 @@ class Watch extends React.Component {
     }
 
     render() {
-        const { paused, currentPlayerTime, volume, muted, hidden } = this.state;
+        const { paused, currentPlayerTime, volume, muted, hidden, fullscreen } = this.state;
         const { video, show } = this.props;
         let runtime = video ? video.runtime : 0;
         let playPauseBtn = null, remainingTime = null, audioIcon = null, volumeStyle = null, timeStyle = null, controlStyle = null;
@@ -214,7 +231,7 @@ class Watch extends React.Component {
 
         let fullscreenBtn, fullscreenFunc; 
         
-        if ( window.fullScreen ) {
+        if ( fullscreen === true ) {
             fullscreenBtn = <i className="fas fa-compress"></i>;
             fullscreenFunc = this.closeFullscreen;
         } else {
@@ -223,7 +240,7 @@ class Watch extends React.Component {
         }
         
         return (
-            <figure className="main-video-player"> 
+            <figure className="main-video-player" ref={this.fullControlArea}> 
                 
                 <div className="Video-Container">
                     <video  className="main-video-tag" 

@@ -586,8 +586,8 @@ __webpack_require__.r(__webpack_exports__);
 var msp = function msp(state, ownProps) {
   var show = ownProps.show;
   var previewId = show.show_type === 'FEATURE' ? show.movie_id : show.episode_ids[0];
-  var previewVideo = state.entities.videos[previewId] || null;
-  debugger;
+  var previewVideo = state.entities.videos[previewId] || null; // debugger
+
   return {
     video: previewVideo,
     previewId: previewId
@@ -1687,7 +1687,7 @@ function (_React$Component) {
     value: function componentDidMount() {
       this.props.requestAllShows();
       this.setState({
-        previewVideoId: Math.floor(Math.random() * 8)
+        previewVideoId: Math.floor(Math.random() * 18)
       });
     }
   }, {
@@ -1704,9 +1704,9 @@ function (_React$Component) {
         while (idx < shows.length) {
           var currShow = shows[idx];
 
-          if (Math.floor(idx % 3) !== 0 || idx === 0) {
+          if (Math.floor(idx % 6) !== 0 || idx === 0) {
             row.push(currShow);
-          } else if (Math.floor(idx % 3) === 0) {
+          } else if (Math.floor(idx % 6) === 0) {
             showsPerRow.push(row);
             row = [currShow];
           }
@@ -2145,7 +2145,9 @@ function (_React$Component) {
     };
     _this.timeout;
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.fullControlArea = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.openFullscreen = _this.openFullscreen.bind(_assertThisInitialized(_this));
+    _this.closeFullscreen = _this.closeFullscreen.bind(_assertThisInitialized(_this));
     _this.togglePlayPause = _this.togglePlayPause.bind(_assertThisInitialized(_this));
     _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
     _this.jumpBack = _this.jumpBack.bind(_assertThisInitialized(_this));
@@ -2167,16 +2169,36 @@ function (_React$Component) {
   _createClass(Watch, [{
     key: "determineKeyPress",
     value: function determineKeyPress(e) {
-      switch (e.code) {
-        case 'Space':
+      switch (e.keyCode) {
+        case 32:
+          // spacebar
           this.togglePlayPause();
+          break;
 
-        case 'ArrowRight':
-          e.preventDefault();
+        case 27:
+          // escape
+          document.fullscreen ? this.closeFullscreen() : null;
+          break;
+
+        case 39:
+          // right arrow
           this.jumpForward();
+          break;
 
-        case 'ArrowLeft':
+        case 37:
+          // left arrow
           this.jumpBack();
+          break;
+
+        case 70:
+          // f key
+          if (document.fullscreen) {
+            this.closeFullscreen();
+          } else {
+            this.openFullscreen();
+          }
+
+          break;
 
         default:
           break;
@@ -2312,7 +2334,6 @@ function (_React$Component) {
   }, {
     key: "jumpForward",
     value: function jumpForward() {
-      // debugger
       var videoEl = this.videoPlayer.current;
       videoEl.currentTime += 10;
       this.setState({
@@ -2322,20 +2343,24 @@ function (_React$Component) {
   }, {
     key: "openFullscreen",
     value: function openFullscreen() {
-      var videoEl = this.videoPlayer.current;
+      var entireVideoEl = this.fullControlArea.current;
 
-      if (videoEl.requestFullscreen) {
-        videoEl.requestFullscreen();
-      } else if (videoEl.mozRequestFullScreen) {
+      if (entireVideoEl.requestFullscreen) {
+        entireVideoEl.requestFullscreen();
+      } else if (entireVideoEl.mozRequestFullScreen) {
         /* Firefox */
-        videoEl.mozRequestFullScreen();
-      } else if (videoEl.webkitRequestFullscreen) {
+        entireVideoEl.mozRequestFullScreen();
+      } else if (entireVideoEl.webkitRequestFullscreen) {
         /* Chrome, Safari and Opera */
-        videoEl.webkitRequestFullscreen();
-      } else if (videoEl.msRequestFullscreen) {
+        entireVideoEl.webkitRequestFullscreen();
+      } else if (entireVideoEl.msRequestFullscreen) {
         /* IE/Edge */
-        videoEl.msRequestFullscreen();
+        entireVideoEl.msRequestFullscreen();
       }
+
+      this.setState({
+        fullscreen: true
+      });
     }
   }, {
     key: "closeFullscreen",
@@ -2352,6 +2377,10 @@ function (_React$Component) {
         /* IE/Edge */
         document.msExitFullscreen();
       }
+
+      this.setState({
+        fullscreen: false
+      });
     }
   }, {
     key: "showControls",
@@ -2398,7 +2427,8 @@ function (_React$Component) {
           currentPlayerTime = _this$state3.currentPlayerTime,
           volume = _this$state3.volume,
           muted = _this$state3.muted,
-          hidden = _this$state3.hidden;
+          hidden = _this$state3.hidden,
+          fullscreen = _this$state3.fullscreen;
       var _this$props = this.props,
           video = _this$props.video,
           show = _this$props.show;
@@ -2433,7 +2463,7 @@ function (_React$Component) {
 
       var fullscreenBtn, fullscreenFunc;
 
-      if (window.fullScreen) {
+      if (fullscreen === true) {
         fullscreenBtn = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-compress"
         });
@@ -2446,7 +2476,8 @@ function (_React$Component) {
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "main-video-player"
+        className: "main-video-player",
+        ref: this.fullControlArea
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "Video-Container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {

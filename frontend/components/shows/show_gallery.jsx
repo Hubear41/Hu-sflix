@@ -14,7 +14,7 @@ class ShowGallery extends React.Component {
     componentDidMount() {
         this.props.requestAllShows();
 
-        this.setState({ previewVideoId: Math.floor(Math.random() * 8) });
+        this.setState({ previewVideoId: Math.floor(Math.random() * 18) });
     }
 
     createRowsOf(shows) {
@@ -28,9 +28,9 @@ class ShowGallery extends React.Component {
             while ( idx < shows.length) {
                 const currShow = shows[idx];
 
-                if (Math.floor(idx % 3) !== 0 || idx === 0) {
+                if (Math.floor(idx % 6) !== 0 || idx === 0) {
                     row.push(currShow);
-                } else if (Math.floor(idx % 3) === 0 ) {
+                } else if (Math.floor(idx % 6) === 0 ) {
                     showsPerRow.push(row);
 
                     row = [currShow];
