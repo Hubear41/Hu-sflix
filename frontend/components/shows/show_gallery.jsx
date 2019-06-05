@@ -7,20 +7,42 @@ class ShowGallery extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            previewVideoId: 0,
-        }
+            previewVideoId: Math.floor(Math.random() * 18),
+        };
     }
     
     componentDidMount() {
         this.props.requestAllShows();
-
-        this.setState({ previewVideoId: Math.floor(Math.random() * 18) });
     }
 
+    // static getDerivedStateFromProps(props) {
+    //     if ( props.shows.length < 1 ) {
+    //         return [];
+    //     }
+
+    //     // finds a random video to put into the preview after requesting all shows
+    //     let previewId = null;
+    //     let found = false;
+
+    //     while (!found) {
+    //         const randomId = ;
+
+    //         if (props.shows[randomId].director !== 'Nelicia Low' || props.shows[randomId].title !== 'Ling') {
+    //             found = true;
+    //             previewId = randomId;
+    //         }
+    //     }
+
+    //     return { previewId };
+    // }
+
     createRowsOf(shows) {
+        const { previewId } = this.state;
         let row = [];
         let showsPerRow = [];
         let idx = 0, count = 0;
+
+        row.push(shows[previewId]);
 
         while ( count < 1 ) {
             idx = 0
@@ -50,17 +72,21 @@ class ShowGallery extends React.Component {
     render() {
         const { shows, galleryType } = this.props;
         const { previewVideoId } = this.state;
+        debugger
 
-        const showsPerRow = shows ? this.createRowsOf(shows) : null;
-        const previewShow = shows ? shows[previewVideoId] : null;   
-    
-        const showRowsList = showsPerRow.map( (row, idx) => {
-            return <ShowRows key={idx} rowNum={idx} shows={row} galleryType={galleryType}/>
-        }) 
+        let showsPerRow = null, previewShow = null, showRowsList = null;
+        if ( shows ) {
+            showsPerRow = this.createRowsOf(shows);
+            previewShow = showsPerRow[0][0];
+            debugger
+            showRowsList = showsPerRow.map( (row, idx) => {
+                return <ShowRows key={idx} rowNum={idx} shows={row} galleryType={galleryType}/>
+            }) 
+        }
         
         return (
             <main className="show-gallery-index-wrapper">
-                { previewShow ? <BigPreviewContainer show={previewShow} /> : null }
+                { previewShow ? <BigPreviewContainer show={ shows ? previewShow : null } /> : null }
 
                 <section className="gallery-index-wrapper">
                     

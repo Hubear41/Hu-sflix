@@ -437,6 +437,7 @@ var App = function App() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -457,6 +458,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var BigPreview =
 /*#__PURE__*/
 function (_React$Component) {
@@ -469,21 +471,33 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(BigPreview).call(this, props));
     _this.state = {
+      started: false,
       muted: true,
-      imageOpacity: 1
+      imageOpacity: 1,
+      ended: false
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.poster = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
-    _this.startVideo = _this.startVideo.bind(_assertThisInitialized(_this));
+    _this.videoReady = _this.videoReady.bind(_assertThisInitialized(_this));
     _this.videoEnded = _this.videoEnded.bind(_assertThisInitialized(_this));
+    _this.revealVideo = _this.revealVideo.bind(_assertThisInitialized(_this));
+    _this.pauseVideo = _this.pauseVideo.bind(_assertThisInitialized(_this));
+    _this.launchWatch = _this.launchWatch.bind(_assertThisInitialized(_this));
+    _this.videoControllerIcon = _this.videoControllerIcon.bind(_assertThisInitialized(_this));
+    _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(BigPreview, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       var previewId = this.props.previewId;
       this.props.requestVideo(previewId);
+      window.addEventListener('scroll', function () {
+        return _this2.pauseVideo();
+      });
     }
   }, {
     key: "toggleMute",
@@ -503,25 +517,97 @@ function (_React$Component) {
       }
     }
   }, {
-    key: "startVideo",
-    value: function startVideo() {
-      var _this2 = this;
+    key: "videoReady",
+    value: function videoReady() {
+      var _this3 = this;
+
+      setTimeout(function () {
+        return _this3.revealVideo();
+      }, 2000);
+    }
+  }, {
+    key: "revealVideo",
+    value: function revealVideo() {
+      var videoEl = this.videoPlayer.current;
+      videoEl.play();
+      this.setState({
+        imageOpacity: 0,
+        ended: false,
+        started: true
+      });
+    }
+  }, {
+    key: "pauseVideo",
+    value: function pauseVideo() {
+      var _this4 = this;
 
       var videoEl = this.videoPlayer.current;
-      setTimeout(function () {
-        videoEl.play();
 
-        _this2.setState({
-          imageOpacity: 0
+      if (!videoEl.paused) {
+        setTimeout(function () {
+          _this4.videoPlayer.current.pause();
+
+          _this4.setState({
+            imageOpacity: 1,
+            ended: true
+          });
+        }, 1000);
+      }
+    }
+  }, {
+    key: "videoControllerIcon",
+    value: function videoControllerIcon() {
+      var _this$state = this.state,
+          muted = _this$state.muted,
+          started = _this$state.started;
+
+      if (!started) {
+        return null;
+      }
+
+      if (muted) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-mute"
         });
-      }, 2000);
+      } else if (!muted) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-up"
+        });
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-redo"
+        });
+      }
+    }
+  }, {
+    key: "videoFunction",
+    value: function videoFunction() {
+      var ended = this.state.ended;
+
+      if (ended) {
+        return this.revealVideo;
+      } else {
+        return this.toggleMute;
+      }
     }
   }, {
     key: "videoEnded",
     value: function videoEnded() {
       this.setState({
-        imageOpacity: 1
+        imageOpacity: 1,
+        ended: true
       });
+    }
+  }, {
+    key: "launchWatch",
+    value: function launchWatch() {
+      var show = this.props.show;
+
+      if (show.show_type === 'FEATURE') {
+        this.props.history.push("/watch/".concat(show.id, "/").concat(show.movie_id));
+      } else {
+        this.props.history.push("/watch/".concat(show.id, "/").concat(show.episode_ids[0]));
+      }
     }
   }, {
     key: "render",
@@ -529,41 +615,90 @@ function (_React$Component) {
       var _this$props = this.props,
           show = _this$props.show,
           video = _this$props.video;
-      var imageOpacity = this.state.imageOpacity;
+      var _this$state2 = this.state,
+          imageOpacity = _this$state2.imageOpacity,
+          started = _this$state2.started;
+      var videoOpacity = imageOpacity === 1 ? 0 : 1;
+      var buttonIcon = this.videoPlayer.current ? this.videoControllerIcon() : null;
+      var buttonFunc = this.videoPlayer.current ? this.videoFunction() : null;
+      var iconStyle = started ? {
+        opacity: 1
+      } : {
+        opacity: 0
+      };
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-video-preview-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: show && show.posterUrl ? show.posterUrl : window.tempBgURL,
         className: "big-video-poster",
         style: {
-          opacity: imageOpacity === 0
+          opacity: imageOpacity
         },
-        ref: this.poster
+        ref: this.poster //  onClick={this.playVideo}
+
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "video-el-wrapper"
+        className: "video-el-wrapper",
+        style: {
+          opacity: videoOpacity
+        }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-video-bg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         controls: true,
-        autoPlay: true,
         muted: true,
         className: "big-video",
         ref: this.videoPlayer,
-        onCanPlay: this.startVideo,
+        onCanPlayThrough: this.videoReady,
         onEnded: this.videoEnded
       }, video && video.videoUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         src: video.videoUrl,
         type: "video/mp4"
       }) : null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
-        className: "big-preview-description"
-      }));
+        className: "big-preview-left-controls"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "big-preview-show-title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Hu'sflix"), " Original"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "title-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, show.title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "big-preview-play-mylist-btns"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "big-preview-play",
+        onClick: this.launchWatch
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-play"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Play")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "big-preview-btn-bg"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "big-preview-show-tagline",
+        style: {
+          opacity: imageOpacity
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, show.tagline))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "big-preview-right-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "preview-maturity-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "maturity-bg"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show.maturity_rating)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "big-preview-video-controls",
+        style: iconStyle,
+        onClick: buttonFunc
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "preview-icon"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "preview-current-icon"
+      }, buttonIcon), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-circle preview-circle"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "far fa-circle preview-outline"
+      })))));
     }
   }]);
 
   return BigPreview;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (BigPreview);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(BigPreview));
 
 /***/ }),
 
@@ -1677,7 +1812,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowGallery).call(this, props));
     _this.state = {
-      previewVideoId: 0
+      previewVideoId: Math.floor(Math.random() * 18)
     };
     return _this;
   }
@@ -1686,17 +1821,32 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.requestAllShows();
-      this.setState({
-        previewVideoId: Math.floor(Math.random() * 18)
-      });
-    }
+    } // static getDerivedStateFromProps(props) {
+    //     if ( props.shows.length < 1 ) {
+    //         return [];
+    //     }
+    //     // finds a random video to put into the preview after requesting all shows
+    //     let previewId = null;
+    //     let found = false;
+    //     while (!found) {
+    //         const randomId = ;
+    //         if (props.shows[randomId].director !== 'Nelicia Low' || props.shows[randomId].title !== 'Ling') {
+    //             found = true;
+    //             previewId = randomId;
+    //         }
+    //     }
+    //     return { previewId };
+    // }
+
   }, {
     key: "createRowsOf",
     value: function createRowsOf(shows) {
+      var previewId = this.state.previewId;
       var row = [];
       var showsPerRow = [];
       var idx = 0,
           count = 0;
+      row.push(shows[previewId]);
 
       while (count < 1) {
         idx = 0;
@@ -1730,20 +1880,29 @@ function (_React$Component) {
           shows = _this$props.shows,
           galleryType = _this$props.galleryType;
       var previewVideoId = this.state.previewVideoId;
-      var showsPerRow = shows ? this.createRowsOf(shows) : null;
-      var previewShow = shows ? shows[previewVideoId] : null;
-      var showRowsList = showsPerRow.map(function (row, idx) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          key: idx,
-          rowNum: idx,
-          shows: row,
-          galleryType: galleryType
+      debugger;
+      var showsPerRow = null,
+          previewShow = null,
+          showRowsList = null;
+
+      if (shows) {
+        showsPerRow = this.createRowsOf(shows);
+        previewShow = showsPerRow[0][0];
+        debugger;
+        showRowsList = showsPerRow.map(function (row, idx) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            key: idx,
+            rowNum: idx,
+            shows: row,
+            galleryType: galleryType
+          });
         });
-      });
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
         className: "show-gallery-index-wrapper"
       }, previewShow ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BigPreview_big_preview_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        show: previewShow
+        show: shows ? previewShow : null
       }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "gallery-index-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -2029,6 +2188,7 @@ function (_React$Component) {
           rowNum = _this$props.rowNum,
           galleryType = _this$props.galleryType;
       var showList = [];
+      debugger;
       shows.forEach(function (show) {
         showList.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_preview_player_small__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: show.id,
@@ -2158,15 +2318,26 @@ function (_React$Component) {
     _this._hideControls = _this._hideControls.bind(_assertThisInitialized(_this));
     _this._tick = _this._tick.bind(_assertThisInitialized(_this));
     _this.determineKeyPress = _this.determineKeyPress.bind(_assertThisInitialized(_this));
-    setInterval(_this._tick, 1000); //updates the timer each half second
-
-    document.addEventListener('keydown', function (e) {
-      return _this.determineKeyPress(e);
-    });
     return _this;
   }
 
   _createClass(Watch, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var _this$props$match$par = this.props.match.params,
+          videoId = _this$props$match$par.videoId,
+          showId = _this$props$match$par.showId;
+      this.props.fetchVideo(videoId);
+      this.props.fetchShow(showId);
+      setInterval(this._tick, 1000); //updates the timer each half second
+
+      document.addEventListener('keydown', function (e) {
+        return _this2.determineKeyPress(e);
+      });
+    }
+  }, {
     key: "determineKeyPress",
     value: function determineKeyPress(e) {
       switch (e.keyCode) {
@@ -2203,15 +2374,6 @@ function (_React$Component) {
         default:
           break;
       }
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this$props$match$par = this.props.match.params,
-          videoId = _this$props$match$par.videoId,
-          showId = _this$props$match$par.showId;
-      this.props.fetchVideo(videoId);
-      this.props.fetchShow(showId);
     }
   }, {
     key: "componentDidUpdate",
@@ -2385,12 +2547,12 @@ function (_React$Component) {
   }, {
     key: "showControls",
     value: function showControls() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.state.mouseMoving) {
         clearTimeout(this.timeout);
         this.timeout = setTimeout(function () {
-          _this2._hideControls();
+          _this3._hideControls();
         }, 3000);
       } else {
         this.setState({
@@ -2398,7 +2560,7 @@ function (_React$Component) {
           hidden: false
         });
         this.timeout = setTimeout(function () {
-          _this2._hideControls();
+          _this3._hideControls();
         }, 3000);
       }
     }

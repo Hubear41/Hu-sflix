@@ -11,6 +11,7 @@ class ShowRow extends React.Component {
         const { shows, rowNum, galleryType } = this.props;
         
         const showList = [];
+        debugger
         shows.forEach( show => {
             showList.push(<ShowPreviewPlayer key={show.id} show={show} />); 
         } );

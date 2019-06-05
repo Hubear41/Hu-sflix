@@ -17,6 +17,7 @@
     left: 0;
     z-index: 80;
     border: none;
+    cursor: pointer;
     -webkit-mask-image: linear-gradient( to bottom,rgba(0,0,0,1) 70%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0) 100%);
     mask-image: linear-gradient( to bottom,rgba(0,0,0,1) 70%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0) 100%);    
     transition: opactiy 0.5s;
@@ -51,3 +52,221 @@
     mask-image: linear-gradient( to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
     background-color: black;
 }
+
+.big-preview-left-controls {
+    position: absolute;
+    left: 8vw;
+    top: 20vh;
+    height: 50%;
+    z-index: 80;
+    display: flex;
+    flex-direction: column;
+}
+
+.big-preview-show-title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 25pt;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 300;
+}
+
+.big-preview-show-title strong {
+    font-weight: bold;
+}
+
+.big-preview-show-title article{
+    display: flex;
+    align-items: center;
+    height: 20vh;
+}
+
+.big-preview-show-title h1 {
+    background-color: white;
+    color: black;
+    font-size: 40pt;
+    font-weight: bold;
+    letter-spacing: none;
+    padding: 3px;
+}
+
+.big-preview-play-mylist-btns {
+    display: flex;
+    justify-content: space-between;
+    width: 10vw;
+}
+
+.big-preview-play-mylist-btns button {
+    min-width: 200px;
+    min-height: 60px;
+    height: 20%;
+    width: 200px;
+    margin: 0 10px 20px 0;
+    border: none;
+    background: none;
+    color: white;
+    font-size: 16pt;
+    position: relative;
+    outline: none;
+}
+
+.big-preview-play-mylist-btns h4 {
+    position: absolute;
+    opacity: 1;
+    color: white;
+    z-index: 1000;
+    top: 18px;
+    left: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 55%;
+}
+
+.big-preview-play-mylist-btns span {
+    text-align: left;
+    width: 61%;
+    overflow: unset;
+}
+
+.big-preview-btn-bg {
+    background-color: white;
+    opacity: 0.1;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    min-width: 200px;
+    min-height: 60px;
+}
+
+.big-preview-play-mylist-btns button:hover span {
+    color: black;
+}
+
+.big-preview-play-mylist-btns button:hover i {
+    color: black;
+}
+
+.big-preview-play-mylist-btns button:hover .big-preview-btn-bg {
+    background-color: white;
+    opacity: 1;
+}
+
+.big-preview-show-tagline {
+    font-size: 20pt;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 300;
+    width: 700px;
+    overflow: hidden;
+    line-height: 30px;
+}
+
+.big-preview-right-content {
+    position: absolute;
+    bottom: 25vh;
+    right: 0;
+    z-index: 120;
+    height: 10vh;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 12%;
+    height: 2.5vw;
+}
+
+
+.preview-maturity-wrapper {
+    position: relative;
+    width: 80%;
+    height: 100%;
+    border-left: 3px solid white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.preview-maturity-wrapper h6 {
+    font-size: 12pt;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 20px;
+    opacity: 0.6;
+}
+
+.maturity-bg {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: 0.1;
+}
+
+.big-preview-video-controls {
+    width: 20%;
+    margin-right: 20px;
+    border: none;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.preview-current-icon {
+    background: none;
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 12pt;
+    position: absolute; 
+    top: 9px;
+    left: 5px;
+    opacity: 0.5;
+    transition: opacity 0.2s
+}
+
+.preview-icon {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    font-size: 30pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(1);
+    transition: transform 0.3;
+}
+
+
+.preview-circle {
+    color: black;
+    font-size: 28pt;
+    opacity: 0.2;
+    /* opacity: 0.4; */
+}
+
+.preview-outline {
+    position: absolute;
+    top: -2px;
+    left: -8px;
+    z-index: 125;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+    color: white;
+}
+
+.big-preview-video-controls:hover .preview-outline {
+    opacity: 0.9;
+    transition: opacity 0.2s;
+}
+
+.big-preview-video-controls:hover .preview-icon {
+    transform: scale(1.2);
+    transition: transform 0.2s
+}
+
+.big-preview-video-controls:hover .big-preview-control {
+    opacity: 0.8;
+    transition: opacity 0.2s
+}
+

@@ -31,9 +31,15 @@ class Watch extends React.Component {
         this._hideControls = this._hideControls.bind(this);
         this._tick = this._tick.bind(this);
         this.determineKeyPress = this.determineKeyPress.bind(this);
+    }
+
+    
+    componentDidMount() {
+        const { videoId, showId } = this.props.match.params;
+        this.props.fetchVideo(videoId);
+        this.props.fetchShow(showId);
         
         setInterval(this._tick, 1000); //updates the timer each half second
-
         document.addEventListener('keydown', e => this.determineKeyPress(e));
     }
 
@@ -61,12 +67,6 @@ class Watch extends React.Component {
             default:
                 break;
         }
-    }
-
-    componentDidMount() {
-        const { videoId, showId } = this.props.match.params;
-        this.props.fetchVideo(videoId);
-        this.props.fetchShow(showId);
     }
 
     componentDidUpdate() {
