@@ -4,16 +4,21 @@ import ShowPreviewPlayer from './show_preview_player_small';
 class ShowRow extends React.Component {
     constructor(props) {
         super(props);
-        this.video = null;
+        this.createShowRowItem = this.createShowRowItem.bind(this);        
+    }
+
+    createShowRowItem(show) {
+        const { rowNum, videos } = this.props;
+        const previewVideo = show.show_type === 'FEATURE' ? videos[show.movie_id] : videos[show.episode_ids[0]];
+        return (<ShowPreviewPlayer key={`${show.id}${rowNum}`} show={show} preview={previewVideo} />); 
     }
 
     render() {
         const { shows, rowNum, galleryType } = this.props;
-        
         const showList = [];
         
         shows.forEach( show => {
-            showList.push(<ShowPreviewPlayer key={`${show.id}${rowNum}`} show={show} />); 
+            showList.push(this.createShowRowItem(show));
         } );
         
         const headerText = galleryType ? `row ${rowNum + 1}` : "";

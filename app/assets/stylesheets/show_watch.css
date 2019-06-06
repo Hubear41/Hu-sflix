@@ -342,14 +342,3 @@ video::-webkit-media-controls {
     transform: scale(1.5);
     transition: transform 0.2s;
 }
-
-/* .slider::-moz-range-progress {
-    background-color: red;
-} */
-/* 
-.slider::-webkit-slider-runnable-track {
-    background-color: red;
-    border-radius: 5px;
-    width: 80%;
-} */
-

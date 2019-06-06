@@ -23,11 +23,11 @@
 #show-peek-preview-wrapper:hover {
     border: 1px solid black;
     box-sizing: border-box;
-    transform: scale(1.5);
-    margin-right: 8%;
+    transform: scale(1.8);
+    margin-right: 12%;
     transition: transform 0.3s, margin-right 0.3s;
     transition-timing-function: ease-in;
-    /* transition-delay: 1s; */
+    transition-delay: 0.8s;
 }
 
 .show-title-card {
@@ -37,18 +37,6 @@
     width: 100%;
     z-index: 50;
 }
-/* 
-.title-card-name {
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-    width: 90%;
-    z-index: 51;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12pt;
-    text-shadow: 1px 1px 3px #212020;
-    opacity: 0.6;
-} */
 
 #show-peek-preview-wrapper .show-title-card {
     opacity: 1;
@@ -133,7 +121,7 @@
     position: absolute;
     bottom: 25%;
     left: 8%;
-    font-size: 1.5vh;
+    font-size: 1vh;
     font-family: Arial, Helvetica, sans-serif;
 }
 

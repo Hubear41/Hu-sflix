@@ -284,7 +284,7 @@ var receiveErrors = function receiveErrors(errors) {
 /*!******************************************!*\
   !*** ./frontend/actions/show_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_VIDEO, RECEIVE_SHOW, RECEIVE_SHOWS, fetchVideo, fetchShows, fetchShow */
+/*! exports provided: RECEIVE_VIDEO, RECEIVE_SHOW, RECEIVE_SHOWS, RECEIVE_VIDEOS, fetchVideo, fetchShows, fetchShow, fetchPreviewVideos */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -292,14 +292,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_VIDEO", function() { return RECEIVE_VIDEO; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SHOW", function() { return RECEIVE_SHOW; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SHOWS", function() { return RECEIVE_SHOWS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_VIDEOS", function() { return RECEIVE_VIDEOS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVideo", function() { return fetchVideo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShows", function() { return fetchShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShow", function() { return fetchShow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPreviewVideos", function() { return fetchPreviewVideos; });
 /* harmony import */ var _util_show_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/show_util */ "./frontend/util/show_util.js");
 
 var RECEIVE_VIDEO = 'RECEIVE_VIDEO';
 var RECEIVE_SHOW = 'RECEIVE_SHOW';
 var RECEIVE_SHOWS = 'RECEIVE_SHOWS';
+var RECEIVE_VIDEOS = 'RECEIVE_VIDEOS';
 var fetchVideo = function fetchVideo(id) {
   return function (dispatch) {
     return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchVideo"](id).then(function (video) {
@@ -319,6 +322,20 @@ var fetchShow = function fetchShow(id) {
     return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchShow"](id).then(function (show) {
       return dispatch(receiveShow(show));
     });
+  };
+};
+var fetchPreviewVideos = function fetchPreviewVideos() {
+  return function (dispatch) {
+    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchPreviewVideos"]().then(function (videos) {
+      return dispatch(receiveVideos(videos));
+    });
+  };
+};
+
+var receiveVideos = function receiveVideos(videos) {
+  return {
+    type: RECEIVE_VIDEOS,
+    videos: videos
   };
 };
 
@@ -477,8 +494,8 @@ function (_React$Component) {
       ended: false
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
-    _this.poster = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
-    _this.videoReady = _this.videoReady.bind(_assertThisInitialized(_this));
+    _this.poster = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef(); // this.videoReady = this.videoReady.bind(this);
+
     _this.videoEnded = _this.videoEnded.bind(_assertThisInitialized(_this));
     _this.revealVideo = _this.revealVideo.bind(_assertThisInitialized(_this));
     _this.pauseVideo = _this.pauseVideo.bind(_assertThisInitialized(_this));
@@ -528,8 +545,8 @@ function (_React$Component) {
   }, {
     key: "revealVideo",
     value: function revealVideo() {
-      var videoEl = this.videoPlayer.current; // videoEl.play();
-
+      var videoEl = this.videoPlayer.current;
+      videoEl.play();
       this.setState({
         imageOpacity: 0,
         ended: false,
@@ -647,17 +664,7 @@ function (_React$Component) {
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-video-bg"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-        controls: true,
-        muted: true,
-        className: "big-video",
-        ref: this.videoPlayer,
-        onCanPlayThrough: this.videoReady,
-        onEnded: this.videoEnded
-      }, video && video.videoUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-        src: video.videoUrl,
-        type: "video/mp4"
-      }) : null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "big-preview-left-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "big-preview-show-title"
@@ -671,6 +678,12 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-play"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Play")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "big-preview-btn-bg"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "big-preview-myList"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-plus"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "My List")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "big-preview-btn-bg"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "big-preview-show-tagline",
@@ -916,7 +929,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var pathname = this.props.history.location.pathname;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
         className: "main-nav-bar-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", {
@@ -1825,6 +1837,7 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.requestAllShows();
+      this.props.requestPreviewVideos();
     }
   }, {
     key: "createRows",
@@ -1872,7 +1885,8 @@ function (_React$Component) {
     value: function render() {
       var _this$props = this.props,
           shows = _this$props.shows,
-          galleryType = _this$props.galleryType;
+          galleryType = _this$props.galleryType,
+          videos = _this$props.videos;
       var showsPerRow = null,
           previewShow = null,
           showRowsList = null;
@@ -1885,6 +1899,7 @@ function (_React$Component) {
             key: idx,
             rowNum: idx,
             shows: row,
+            videos: videos,
             galleryType: galleryType
           });
         });
@@ -1919,8 +1934,9 @@ function (_React$Component) {
 
       while (!found) {
         var randomId = Math.floor(Math.random() * 18);
+        var currShow = props.shows[randomId];
 
-        if (props.shows[randomId].director !== 'Nelicia Low' || props.shows[randomId].title !== 'Ling') {
+        if (currShow.title !== 'Ling' && currShow.director !== 'Nelicia Low') {
           found = true;
           previewId = randomId;
         }
@@ -1960,22 +1976,22 @@ __webpack_require__.r(__webpack_exports__);
 var msp = function msp(_ref) {
   var entities = _ref.entities;
   var shows = Object.values(entities.shows);
+  var videos = entities.videos;
   return {
     shows: shows,
+    videos: videos,
     galleryType: 'showsIndex'
   };
 };
 
 var mdp = function mdp(dispatch) {
   return {
-    requestGenres: function requestGenres() {
-      return dispatch(Object(_actions_genre_actions__WEBPACK_IMPORTED_MODULE_2__["fetchGenres"])());
-    },
+    // requestAllGenres: () => dispatch(fetchGenres()),
     requestAllShows: function requestAllShows() {
       return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchShows"])());
     },
-    requestVideo: function requestVideo(id) {
-      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchVideo"])(id));
+    requestPreviewVideos: function requestPreviewVideos() {
+      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchPreviewVideos"])());
     }
   };
 };
@@ -2032,10 +2048,17 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowPreviewPlayerSmall).call(this, props));
     _this.state = {
       height: 0,
-      mute: true
+      muted: true,
+      paused: true,
+      focus: true
     };
+    _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.resetTimeout;
+    _this.playTimeout;
     _this.launchWatch = _this.launchWatch.bind(_assertThisInitialized(_this));
-    _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this)); // this.openDropDown = this.openDropDown.bind(this);
+    _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
+    _this.playVideo = _this.playVideo.bind(_assertThisInitialized(_this));
+    _this.pauseVideo = _this.pauseVideo.bind(_assertThisInitialized(_this)); // this.openDropDown = this.openDropDown.bind(this);
 
     return _this;
   }
@@ -2051,7 +2074,7 @@ function (_React$Component) {
     }
   }, {
     key: "launchWatch",
-    value: function launchWatch(e) {
+    value: function launchWatch() {
       var show = this.props.show;
 
       if (show.show_type === 'FEATURE') {
@@ -2063,37 +2086,86 @@ function (_React$Component) {
   }, {
     key: "toggleMute",
     value: function toggleMute(e) {
-      var show = this.props.show;
-      var smallPlayer = document.findByElementId("show-".concat(show.id));
+      var videoEl = this.videoPlayer.current;
 
-      if (smallPlayer.muted) {
-        smallPlayer.muted = false;
+      if (videoEl.muted) {
+        videoEl.muted = false;
+        this.setState({
+          muted: false
+        });
       } else {
-        smallPlayer.muted = true;
+        videoEl.muted = true;
+        this.setState({
+          muted: true
+        });
+      }
+    }
+  }, {
+    key: "playVideo",
+    value: function playVideo() {
+      var _this2 = this;
+
+      if (this.videoPlayer.current === null) {
+        return null;
       }
 
-      this.setState({
-        mute: !this.state.mute
-      });
+      var videoEl = this.videoPlayer.current;
+
+      if (videoEl.paused) {
+        this.playTimeout = setTimeout(function () {
+          videoEl.play();
+
+          _this2.setState({
+            paused: false
+          });
+        }, 1500);
+      }
+    }
+  }, {
+    key: "pauseVideo",
+    value: function pauseVideo() {
+      if (this.videoPlayer.current === null) {
+        return null;
+      }
+
+      var videoEl = this.videoPlayer.current;
+
+      if (!videoEl.paused) {
+        videoEl.pause();
+        clearTimeout(this.playTimeout);
+        clearTimeout(this.resetTimeout);
+        this.setState({
+          paused: true
+        });
+        this.resetTimeout = setTimeout(function () {
+          videoEl.currentTime = 0;
+        }, 5000);
+      }
     } // openDropDown(e) {
     // }
 
   }, {
     key: "render",
     value: function render() {
-      var show = this.props.show;
-      var muteBtn = this.state.mute ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      var _this$props = this.props,
+          show = _this$props.show,
+          preview = _this$props.preview;
+      var muteBtn = this.state.muted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-volume-mute mute-symbol"
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-volume-up mute-symbol"
-      });
+      }); // debugger
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         id: "show-peek-preview-wrapper",
         className: "show-row-item-x item-".concat(show.id),
         style: {
           height: this.state.height
         },
-        onClick: this.launchWatch
+        onClick: this.launchWatch,
+        onMouseEnter: this.playVideo,
+        onMouseLeave: this.pauseVideo,
+        onMouseMoveOut: this.pauseVideo
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: show ? show.posterUrl : window.tempBgURL,
         alt: show.title,
@@ -2105,8 +2177,11 @@ function (_React$Component) {
         className: "preview-video-player"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         id: "show-".concat(show.id, " preview-video"),
-        poster: show ? show.posterUrl : window.tempBgURL
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        ref: this.videoPlayer
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+        src: preview.videoUrl,
+        type: "video/mp4"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.clickPlay,
         className: "preview-play-btn"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
@@ -2169,9 +2244,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -2191,23 +2266,35 @@ function (_React$Component) {
     _classCallCheck(this, ShowRow);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowRow).call(this, props));
-    _this.video = null;
+    _this.createShowRowItem = _this.createShowRowItem.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(ShowRow, [{
+    key: "createShowRowItem",
+    value: function createShowRowItem(show) {
+      var _this$props = this.props,
+          rowNum = _this$props.rowNum,
+          videos = _this$props.videos;
+      var previewVideo = show.show_type === 'FEATURE' ? videos[show.movie_id] : videos[show.episode_ids[0]];
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_preview_player_small__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        key: "".concat(show.id).concat(rowNum),
+        show: show,
+        preview: previewVideo
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          shows = _this$props.shows,
-          rowNum = _this$props.rowNum,
-          galleryType = _this$props.galleryType;
+      var _this2 = this;
+
+      var _this$props2 = this.props,
+          shows = _this$props2.shows,
+          rowNum = _this$props2.rowNum,
+          galleryType = _this$props2.galleryType;
       var showList = [];
       shows.forEach(function (show) {
-        showList.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_preview_player_small__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          key: "".concat(show.id).concat(rowNum),
-          show: show
-        }));
+        showList.push(_this2.createShowRowItem(show));
       });
       var headerText = galleryType ? "row ".concat(rowNum + 1) : "";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -3088,6 +3175,9 @@ var videosReducer = function videosReducer() {
   Object.freeze(state);
 
   switch (action.type) {
+    case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_VIDEOS"]:
+      return action.videos;
+
     case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_VIDEO"]:
       var video = action.video;
       return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, state, _defineProperty({}, video.id, video));
@@ -3228,7 +3318,7 @@ var Protected = function Protected(_ref2) {
     exact: exact,
     render: function render(props) {
       return !loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
-        to: "/signup"
+        to: "/"
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Component, props);
     }
   });
@@ -3288,7 +3378,7 @@ var logoutUser = function logoutUser() {
 /*!************************************!*\
   !*** ./frontend/util/show_util.js ***!
   \************************************/
-/*! exports provided: fetchShows, fetchShow, fetchVideo */
+/*! exports provided: fetchShows, fetchShow, fetchVideo, fetchPreviewVideos */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3296,6 +3386,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShows", function() { return fetchShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShow", function() { return fetchShow; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVideo", function() { return fetchVideo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPreviewVideos", function() { return fetchPreviewVideos; });
 var fetchShows = function fetchShows() {
   return $.ajax({
     method: 'GET',
@@ -3312,6 +3403,12 @@ var fetchVideo = function fetchVideo(id) {
   return $.ajax({
     method: "GET",
     url: "api/videos/".concat(id)
+  });
+};
+var fetchPreviewVideos = function fetchPreviewVideos() {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/videos'
   });
 };
 

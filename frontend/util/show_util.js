@@ -18,3 +18,10 @@ export const fetchVideo = id => {
         url: `api/videos/${id}`
     });
 };
+
+export const fetchPreviewVideos = () => {
+    return $.ajax({ 
+        method: 'GET',
+        url: 'api/videos'
+    });
+};

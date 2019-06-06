@@ -18,6 +18,7 @@ User.create!(email: 'guest@guest.com', password: 'go_password_go')
 
 # Shows and Videos 
 # |-------------------------------------- 1. Caroline ------------------------------------------------------ |
+
 caroline_show = Show.create!( title: 'Caroline', 
                               director: 'ELO Films', 
                               tagline: 'When plans fall through, a six-year-old is faced with a big responsibility on a hot Texas day.',
@@ -295,10 +296,10 @@ freak_video.save!
 
 ling_show = Show.create!( title: 'Ling',
                           director: 'Dennis Liu',
-                          tagline: 'something',
+                          tagline: 'A young girl discovers a magical animal that changes her life forever',
                           year: 2018,
                           maturity_rating: 'PG',
-                          show_type: 'EPISODIC',
+                          show_type: 'FEATURE',
 )
 
 ling_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/ling_husflix_poster.png')
@@ -311,8 +312,8 @@ ling_video = ling_show.videos.create!( name: 'Ling Promo',
                           video_type: 'FILM',
 )
 
-gg_ep2_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Gamers_Gen_Ep2_Husflix_720p.mp4')
-ling_video.video_file.attach(io: gg_ep2_file, filename: 'ling_show.mp4')
+ling_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Ling_1.mp4')
+ling_video.video_file.attach(io: ling_file, filename: 'ling_show.mp4')
 ling_video.save!
 
 # |-------------------------------------- 13. Max Out ------------------------------------------------------ |
@@ -513,17 +514,17 @@ gg_ep1.save!
 
 # |-------------------------------------- 16.2 GG Ep 2 ------------------------------------------------------- |
 
-# gg_ep2 = gamers_generation.videos.create!( name: 'Ladder',
-#                                            episode_num: 2,
-#                                            description: 'Our hero tries to sneak into a party, only to run into a costumed crusader',
-#                                            video_type: 'EPISODE',
-#                                            runtime: 59,
-#                                            credits_time: 59
-# )
+gg_ep2 = gamers_generation.videos.create!( name: 'Ladder',
+                                           episode_num: 2,
+                                           description: 'Our hero tries to sneak into a party, only to run into a costumed crusader',
+                                           video_type: 'EPISODE',
+                                           runtime: 59,
+                                           credits_time: 59
+)
 
-# gg_ep2_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Gamers_Gen_Ep2_Husflix_720p.mp4')
-# gg_ep2.video_file.attach(io: gg_ep2_file, filename: 'gg_ep_2.mp4')
-# gg_ep2.save!
+gg_ep2_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Gamers_Gen_Ep2_Husflix_720p.mp4')
+gg_ep2.video_file.attach(io: gg_ep2_file, filename: 'gg_ep_2.mp4')
+gg_ep2.save!
 
 # |-------------------------------------- 17. White Rabbit ------------------------------------------------------ |
 

@@ -12,7 +12,7 @@ class BigPreview extends React.Component {
         };
         this.videoPlayer = React.createRef();
         this.poster = React.createRef();
-        this.videoReady = this.videoReady.bind(this);
+        // this.videoReady = this.videoReady.bind(this);
         this.videoEnded = this.videoEnded.bind(this);
         this.revealVideo = this.revealVideo.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
@@ -47,7 +47,7 @@ class BigPreview extends React.Component {
     revealVideo() {
         const videoEl = this.videoPlayer.current;
 
-        // videoEl.play();
+        videoEl.play();
         this.setState({ imageOpacity: 0, ended: false, started: true });
     }
 
@@ -123,15 +123,15 @@ class BigPreview extends React.Component {
 
                 <section className="video-el-wrapper" style={{ opacity: videoOpacity }}>
                     <figure className="big-video-bg"></figure>
-                    <video  controls={true}
+                    {/* <video  controls={true}
                             muted
                             className="big-video"
                             ref={this.videoPlayer}
-                            onCanPlayThrough={this.videoReady}
+                            // onCanPlayThrough={this.videoReady}
                             onEnded={this.videoEnded}
                     >
                         { video && video.videoUrl ? <source src={video.videoUrl} type="video/mp4" /> : null }
-                    </video>
+                    </video> */}
                 </section>
 
                 <article className="big-preview-left-controls">
@@ -150,13 +150,13 @@ class BigPreview extends React.Component {
                             </h4>
                             <div className="big-preview-btn-bg"></div>
                         </button>
-                        {/* <button className="big-preview-myList">
+                        <button className="big-preview-myList">
                             <h4>
                                 <i className="fas fa-plus"></i>
                                 <span>My List</span> 
                             </h4>
                             <div className="big-preview-btn-bg"></div>
-                        </button> */}
+                        </button>
                     </div>
 
                     <p className="big-preview-show-tagline" style={{ opacity: imageOpacity }}>

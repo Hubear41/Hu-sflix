@@ -7,10 +7,18 @@ class ShowPreviewPlayerSmall extends React.Component {
         super(props);
         this.state = {
             height: 0,
-            mute: true,
+            muted: true,
+            paused: true,
+            focus: true,
         };
+
+        this.videoPlayer = React.createRef();
+        this.resetTimeout;
+        this.playTimeout;
         this.launchWatch = this.launchWatch.bind(this);
         this.toggleMute = this.toggleMute.bind(this);
+        this.playVideo = this.playVideo.bind(this);
+        this.pauseVideo = this.pauseVideo.bind(this);
         // this.openDropDown = this.openDropDown.bind(this);
     }
 
@@ -21,7 +29,7 @@ class ShowPreviewPlayerSmall extends React.Component {
         this.setState({ height });
     }
     
-    launchWatch(e) {
+    launchWatch() {
         const { show } = this.props;
         
         if (show.show_type === 'FEATURE') {
@@ -32,16 +40,48 @@ class ShowPreviewPlayerSmall extends React.Component {
     }
 
     toggleMute(e) {
-        const { show } = this.props;
-        const smallPlayer = document.findByElementId(`show-${show.id}`);
+        const videoEl = this.videoPlayer.current;
 
-        if ( smallPlayer.muted ) {
-            smallPlayer.muted = false;
+        if ( videoEl.muted ) {
+            videoEl.muted = false;
+            this.setState({ muted: false });
         } else {
-            smallPlayer.muted = true;
+            videoEl.muted = true;
+            this.setState({ muted: true });
+        }
+    }
+
+    playVideo() {
+        if ( this.videoPlayer.current === null ) {
+            return null;
         }
 
-        this.setState({ mute: !this.state.mute })
+        const videoEl = this.videoPlayer.current;
+        if ( videoEl.paused ) {
+            
+            this.playTimeout = setTimeout( () => {
+                videoEl.play();
+                this.setState({ paused: false });
+            }, 1500);
+        }
+    }
+
+    pauseVideo() {
+        if (this.videoPlayer.current === null) {
+            return null;
+        }
+
+        const videoEl = this.videoPlayer.current;
+        if ( !videoEl.paused ) {
+            videoEl.pause();
+            clearTimeout(this.playTimeout);
+            clearTimeout(this.resetTimeout);
+            
+            this.setState({ paused: true });
+            this.resetTimeout = setTimeout( () => {
+                videoEl.currentTime = 0;
+            }, 5000);
+        }
     }
 
     // openDropDown(e) {
@@ -49,24 +89,30 @@ class ShowPreviewPlayerSmall extends React.Component {
     // }
     
     render() {
-        const { show } = this.props;
-        const muteBtn = this.state.mute ? <i className="fas fa-volume-mute mute-symbol"></i> : <i className="fas fa-volume-up mute-symbol"></i>
-        
+        const { show, preview } = this.props;
+        const muteBtn = this.state.muted ? <i className="fas fa-volume-mute mute-symbol"></i> : <i className="fas fa-volume-up mute-symbol"></i>
+        // debugger
         return (
             <>
                 <section id="show-peek-preview-wrapper" 
                          className={`show-row-item-x item-${show.id}`} 
                          style={{height: this.state.height}} 
-                         onClick={this.launchWatch}>
+                         onClick={this.launchWatch}
+                        onMouseEnter={this.playVideo}
+                        onMouseLeave={this.pauseVideo}
+                        onMouseMoveOut={this.pauseVideo}
+                >
                                 
                     <img src={show ? show.posterUrl : window.tempBgURL} alt={show.title} className="show-title-card" />
                     {/* <span className="title-card-name">{show.title}</span> */}
 
-                    <figure className="show-peek-preview-player" onClick={this.launchWatch}>
+                    <figure className="show-peek-preview-player" 
+                            onClick={this.launchWatch}>
 
                         <figure className="preview-video-player">
-                            <video id={`show-${show.id} preview-video`} poster={show ? show.posterUrl : window.tempBgURL}>
-                                {/* <source src="" type="video/mp4"/> */}
+                            <video id={`show-${show.id} preview-video`} 
+                                   ref={this.videoPlayer}>
+                                <source src={preview.videoUrl} type="video/mp4"/> 
                             </video>
                            
                             <button onClick={this.clickPlay} className="preview-play-btn">

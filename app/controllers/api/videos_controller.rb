@@ -4,4 +4,9 @@ class Api::VideosController < ApplicationController
 
         render :show
     end
+
+    def index
+        @videos = Video.with_attached_video_file.all
+        render :index
+    end
 end

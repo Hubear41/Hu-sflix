@@ -13,6 +13,7 @@ class ShowGallery extends React.Component {
     
     componentDidMount() {
         this.props.requestAllShows();
+        this.props.requestPreviewVideos();
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -25,8 +26,9 @@ class ShowGallery extends React.Component {
 
         while (!found) {
             const randomId = Math.floor(Math.random() * 18);
+            const currShow = props.shows[randomId];
 
-            if (props.shows[randomId].director !== 'Nelicia Low' || props.shows[randomId].title !== 'Ling') {
+            if (currShow.title !== 'Ling' && currShow.director !== 'Nelicia Low' ) {
                 found = true;
                 previewId = randomId;
             }
@@ -46,7 +48,6 @@ class ShowGallery extends React.Component {
         
         while ( count < 1 ) {
             idx = 0
-
             while ( idx < shows.length) {
                 const currShow = shows[idx];
 
@@ -58,7 +59,6 @@ class ShowGallery extends React.Component {
                         row.push(currShow);
                     } else if (Math.floor(row.length % 6) === 0 ) {
                         showsPerRow.push(row);
-    
                         row = [currShow];
                     }
                     idx++;
@@ -69,14 +69,12 @@ class ShowGallery extends React.Component {
                 showsPerRow.push(row);
             }
             count++;
-        }
-        
-        
+        }        
         return showsPerRow;
     }
     
     render() {
-        const { shows, galleryType } = this.props;
+        const { shows, galleryType, videos } = this.props;
 
         let showsPerRow = null, previewShow = null, showRowsList = null;
         if ( shows.length > 0 ) {
@@ -84,7 +82,7 @@ class ShowGallery extends React.Component {
             previewShow = showsPerRow[0][0];
             
             showRowsList = showsPerRow.map( (row, idx) => {
-                return <ShowRows key={idx} rowNum={idx} shows={row} galleryType={galleryType}/>
+                return <ShowRows key={idx} rowNum={idx} shows={row} videos={videos} galleryType={galleryType}/>
             }) 
         }
         

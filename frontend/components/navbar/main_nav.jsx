@@ -20,8 +20,6 @@ class MainNav extends React.Component {
     }
 
     render() {
-        const { pathname } = this.props.history.location;
-
         return (
             <header className="main-nav-bar-wrapper">
                 <header className="main-nav-bar" ref={this.navbar}>
