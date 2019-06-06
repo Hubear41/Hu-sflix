@@ -17,7 +17,9 @@ class ShowGallery extends React.Component {
     }
 
     static getDerivedStateFromProps(props, state) {
-        if (state.previewId !== null || props.shows.length < 1) {
+        // we use <= 1 because we could leave show watch and have 1 show in state
+        // we still would need to fetch all the shows
+        if (state.previewId !== null || props.shows.length <= 1) {
             return { previewId: state.previewId };
         }
         
@@ -28,9 +30,11 @@ class ShowGallery extends React.Component {
             const randomId = Math.floor(Math.random() * 18);
             const currShow = props.shows[randomId];
 
-            if (currShow.title !== 'Ling' && currShow.director !== 'Nelicia Low' ) {
-                found = true;
-                previewId = randomId;
+            if (currShow.director !== 'Nelicia Low' ) {
+                if ( currShow.title !== 'Ling' ) {
+                    found = true;
+                    previewId = randomId;
+                }
             }
         }
 

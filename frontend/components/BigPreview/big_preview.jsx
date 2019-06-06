@@ -113,6 +113,7 @@ class BigPreview extends React.Component {
 
         return (
             <figure className="big-video-preview-wrapper">
+                <figure className="big-preview-filter"></figure>
                 <section className="big-video-poster" style={{ opacity: imageOpacity }}>
                     <img src={show && show.posterUrl ? show.posterUrl : window.tempBgURL} 
                         className="preview-poster"
@@ -122,6 +123,7 @@ class BigPreview extends React.Component {
                 </section>
 
                 <section className="video-el-wrapper" style={{ opacity: videoOpacity }}>
+                    <figure className="big-preview-filter"></figure>
                     <figure className="big-video-bg"></figure>
                     {/* <video  controls={true}
                             muted
@@ -150,13 +152,13 @@ class BigPreview extends React.Component {
                             </h4>
                             <div className="big-preview-btn-bg"></div>
                         </button>
-                        <button className="big-preview-myList">
+                        {/* <button className="big-preview-myList">
                             <h4>
                                 <i className="fas fa-plus"></i>
                                 <span>My List</span> 
                             </h4>
                             <div className="big-preview-btn-bg"></div>
-                        </button>
+                        </button> */}
                     </div>
 
                     <p className="big-preview-show-tagline" style={{ opacity: imageOpacity }}>

@@ -646,7 +646,9 @@ function (_React$Component) {
       };
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-video-preview-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "big-preview-filter"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "big-video-poster",
         style: {
           opacity: imageOpacity
@@ -663,6 +665,8 @@ function (_React$Component) {
           opacity: videoOpacity
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "big-preview-filter"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-video-bg"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "big-preview-left-controls"
@@ -678,12 +682,6 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-play"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Play")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "big-preview-btn-bg"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "big-preview-myList"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-plus"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "My List")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "big-preview-btn-bg"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "big-preview-show-tagline",
@@ -1923,7 +1921,9 @@ function (_React$Component) {
   }], [{
     key: "getDerivedStateFromProps",
     value: function getDerivedStateFromProps(props, state) {
-      if (state.previewId !== null || props.shows.length < 1) {
+      // we use <= 1 because we could leave show watch and have 1 show in state
+      // we still would need to fetch all the shows
+      if (state.previewId !== null || props.shows.length <= 1) {
         return {
           previewId: state.previewId
         };
@@ -1936,9 +1936,11 @@ function (_React$Component) {
         var randomId = Math.floor(Math.random() * 18);
         var currShow = props.shows[randomId];
 
-        if (currShow.title !== 'Ling' && currShow.director !== 'Nelicia Low') {
-          found = true;
-          previewId = randomId;
+        if (currShow.director !== 'Nelicia Low') {
+          if (currShow.title !== 'Ling') {
+            found = true;
+            previewId = randomId;
+          }
         }
       }
 
@@ -2053,8 +2055,7 @@ function (_React$Component) {
       focus: true
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
-    _this.resetTimeout;
-    _this.playTimeout;
+    _this.videoTimeout;
     _this.launchWatch = _this.launchWatch.bind(_assertThisInitialized(_this));
     _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
     _this.playVideo = _this.playVideo.bind(_assertThisInitialized(_this));
@@ -2076,6 +2077,9 @@ function (_React$Component) {
     key: "launchWatch",
     value: function launchWatch() {
       var show = this.props.show;
+      var videoEl = this.videoPlayer.current;
+      videoEl.pause();
+      clearTimeout(this.videoTimeout);
 
       if (show.show_type === 'FEATURE') {
         this.props.history.push("/watch/".concat(show.id, "/").concat(show.movie_id));
@@ -2110,16 +2114,13 @@ function (_React$Component) {
       }
 
       var videoEl = this.videoPlayer.current;
+      this.videoTimeout = setTimeout(function () {
+        videoEl.play();
 
-      if (videoEl.paused) {
-        this.playTimeout = setTimeout(function () {
-          videoEl.play();
-
-          _this2.setState({
-            paused: false
-          });
-        }, 1000);
-      }
+        _this2.setState({
+          paused: false
+        });
+      }, 2000);
     }
   }, {
     key: "pauseVideo",
@@ -2129,18 +2130,11 @@ function (_React$Component) {
       }
 
       var videoEl = this.videoPlayer.current;
-
-      if (!videoEl.paused) {
-        videoEl.pause();
-        clearTimeout(this.playTimeout);
-        clearTimeout(this.resetTimeout);
-        this.setState({
-          paused: true
-        });
-        this.resetTimeout = setTimeout(function () {
-          videoEl.currentTime = 0;
-        }, 5000);
-      }
+      videoEl.pause();
+      clearTimeout(this.videoTimeout);
+      this.setState({
+        paused: true
+      });
     } // openDropDown(e) {
     // }
 
@@ -2158,16 +2152,15 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         id: "show-peek-preview-wrapper",
-        className: "show-row-item-x item-".concat(show.id) //  style={{height: this.state.height}} 
-        ,
-        onClick: this.launchWatch,
+        className: "show-row-item-x item-".concat(show.id),
         onMouseEnter: this.playVideo,
-        onMouseLeave: this.pauseVideo,
-        onMouseOut: this.pauseVideo
+        onMouseLeave: this.pauseVideo //  onMouseOut={this.pauseVideo}
+
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: show ? show.posterUrl : window.tempBgURL,
         alt: show.title,
-        className: "show-title-card"
+        className: "show-title-card",
+        onClick: this.launchWatch
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "show-peek-preview-player",
         onClick: this.launchWatch
@@ -2175,12 +2168,12 @@ function (_React$Component) {
         className: "preview-video-player"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         id: "show-".concat(show.id, " preview-video"),
-        ref: this.videoPlayer
+        ref: this.videoPlayer,
+        onClick: this.launchWatch
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         src: preview.videoUrl,
         type: "video/mp4"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.clickPlay,
         className: "preview-play-btn"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "play-btn-icon"
@@ -2265,12 +2258,17 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowRow).call(this, props));
     _this.createShowRowItem = _this.createShowRowItem.bind(_assertThisInitialized(_this));
+    _this.playTimeout;
     return _this;
   }
 
   _createClass(ShowRow, [{
     key: "createShowRowItem",
     value: function createShowRowItem(show) {
+      if (!show) {
+        return null;
+      }
+
       var _this$props = this.props,
           rowNum = _this$props.rowNum,
           videos = _this$props.videos;
@@ -2278,7 +2276,8 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_preview_player_small__WEBPACK_IMPORTED_MODULE_1__["default"], {
         key: "".concat(show.id).concat(rowNum),
         show: show,
-        preview: previewVideo
+        preview: previewVideo,
+        Timeout: this.playTimeout
       });
     }
   }, {
@@ -2416,6 +2415,7 @@ function (_React$Component) {
     _this.showControls = _this.showControls.bind(_assertThisInitialized(_this));
     _this._hideControls = _this._hideControls.bind(_assertThisInitialized(_this));
     _this._tick = _this._tick.bind(_assertThisInitialized(_this));
+    _this.backToBrowse = _this.backToBrowse.bind(_assertThisInitialized(_this));
     _this.determineKeyPress = _this.determineKeyPress.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -2681,6 +2681,17 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "backToBrowse",
+    value: function backToBrowse() {
+      var videoEl = this.videoPlayer.current;
+
+      if (!videoEl.paused) {
+        videoEl.pause();
+      }
+
+      this.props.history.push('/browse');
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$state3 = this.state,
@@ -2759,9 +2770,9 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "full-control-area",
         style: controlStyle
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/browse",
-        className: "back-to-browse-btn"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "back-to-browse-btn",
+        onClick: this.backToBrowse
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-arrow-left"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {

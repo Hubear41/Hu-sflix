@@ -21,7 +21,10 @@ class MainNav extends React.Component {
 
     render() {
         return (
+
             <header className="main-nav-bar-wrapper">
+                {/* <figure className="main-nav-filter"></figure> */}
+
                 <header className="main-nav-bar" ref={this.navbar}>
                     <section className='left-nav'>
                         <section className="main-logo-container">

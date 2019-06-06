@@ -30,6 +30,7 @@ class Watch extends React.Component {
         this.showControls = this.showControls.bind(this);
         this._hideControls = this._hideControls.bind(this);
         this._tick = this._tick.bind(this);
+        this.backToBrowse = this.backToBrowse.bind(this);
         this.determineKeyPress = this.determineKeyPress.bind(this);
     }
 
@@ -205,6 +206,16 @@ class Watch extends React.Component {
         }
     }
 
+    backToBrowse() {
+        const videoEl = this.videoPlayer.current;
+        
+        if ( !videoEl.paused ) {
+            videoEl.pause();
+        }
+
+        this.props.history.push('/browse');
+    }
+
     render() {
         const { paused, currentPlayerTime, volume, muted, hidden, fullscreen } = this.state;
         const { video, show } = this.props;
@@ -265,10 +276,10 @@ class Watch extends React.Component {
                     ></div>
 
                     <div className="full-control-area" style={controlStyle}>
-                        <Link to="/browse" className="back-to-browse-btn">
+                        <a className="back-to-browse-btn" onClick={this.backToBrowse}>
                             <i className="fas fa-arrow-left"></i>
                             <span className="back-to-browse-message">Back to browse</span>
-                        </Link>
+                        </a>
 
                         <div className="main-video-bottom-controls">
                             <div className="progress-scrubber-wrapper">

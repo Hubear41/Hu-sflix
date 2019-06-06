@@ -4,13 +4,24 @@ import ShowPreviewPlayer from './show_preview_player_small';
 class ShowRow extends React.Component {
     constructor(props) {
         super(props);
-        this.createShowRowItem = this.createShowRowItem.bind(this);        
+        this.createShowRowItem = this.createShowRowItem.bind(this);   
+        this.playTimeout;
     }
 
     createShowRowItem(show) {
+        if ( !show ) {
+            return null;
+        }
+
         const { rowNum, videos } = this.props;
         const previewVideo = show.show_type === 'FEATURE' ? videos[show.movie_id] : videos[show.episode_ids[0]];
-        return (<ShowPreviewPlayer key={`${show.id}${rowNum}`} show={show} preview={previewVideo} />); 
+        return (
+            <ShowPreviewPlayer  key={`${show.id}${rowNum}`} 
+                                show={show} 
+                                preview={previewVideo}
+                                Timeout={this.playTimeout}
+            />
+        ); 
     }
 
     render() {

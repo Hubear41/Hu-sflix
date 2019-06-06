@@ -13,8 +13,7 @@ class ShowPreviewPlayerSmall extends React.Component {
         };
 
         this.videoPlayer = React.createRef();
-        this.resetTimeout;
-        this.playTimeout;
+        this.videoTimeout;
         this.launchWatch = this.launchWatch.bind(this);
         this.toggleMute = this.toggleMute.bind(this);
         this.playVideo = this.playVideo.bind(this);
@@ -31,6 +30,10 @@ class ShowPreviewPlayerSmall extends React.Component {
     
     launchWatch() {
         const { show } = this.props;
+        const videoEl = this.videoPlayer.current;
+
+        videoEl.pause();
+        clearTimeout(this.videoTimeout);
         
         if (show.show_type === 'FEATURE') {
             this.props.history.push(`/watch/${show.id}/${show.movie_id}`)
@@ -57,14 +60,13 @@ class ShowPreviewPlayerSmall extends React.Component {
         }
 
         const videoEl = this.videoPlayer.current;
-        if ( videoEl.paused ) {
+        
+        this.videoTimeout = setTimeout( () => {
+            videoEl.play();
             
-            this.playTimeout = setTimeout( () => {
-                videoEl.play();
-                this.setState({ paused: false });
-            }, 1000);
-        }
-    }
+            this.setState({ paused: false });
+        }, 2000)
+}
 
     pauseVideo() {
         if (this.videoPlayer.current === null) {
@@ -72,16 +74,13 @@ class ShowPreviewPlayerSmall extends React.Component {
         }
 
         const videoEl = this.videoPlayer.current;
-        if ( !videoEl.paused ) {
-            videoEl.pause();
-            clearTimeout(this.playTimeout);
-            clearTimeout(this.resetTimeout);
-            
-            this.setState({ paused: true });
-            this.resetTimeout = setTimeout( () => {
-                videoEl.currentTime = 0;
-            }, 5000);
-        }
+
+        videoEl.pause();
+        clearTimeout(this.videoTimeout);
+
+        this.setState({ paused: true });
+
+
     }
 
     // openDropDown(e) {
@@ -96,14 +95,15 @@ class ShowPreviewPlayerSmall extends React.Component {
             <>
                 <section id="show-peek-preview-wrapper" 
                          className={`show-row-item-x item-${show.id}`} 
-                        //  style={{height: this.state.height}} 
-                         onClick={this.launchWatch}
                          onMouseEnter={this.playVideo}
                          onMouseLeave={this.pauseVideo}
-                         onMouseOut={this.pauseVideo}
+                        //  onMouseOut={this.pauseVideo}
                 >
                                 
-                    <img src={show ? show.posterUrl : window.tempBgURL} alt={show.title} className="show-title-card" />
+                    <img src={show ? show.posterUrl : window.tempBgURL} 
+                         alt={show.title} 
+                         className="show-title-card" 
+                         onClick={this.launchWatch} />
                     {/* <span className="title-card-name">{show.title}</span> */}
 
                     <figure className="show-peek-preview-player" 
@@ -111,11 +111,13 @@ class ShowPreviewPlayerSmall extends React.Component {
 
                         <figure className="preview-video-player">
                             <video id={`show-${show.id} preview-video`} 
-                                   ref={this.videoPlayer}>
+                                   ref={this.videoPlayer}
+                                   onClick={this.launchWatch}
+                            >
                                 <source src={preview.videoUrl} type="video/mp4"/> 
                             </video>
                            
-                            <button onClick={this.clickPlay} className="preview-play-btn">
+                            <button className="preview-play-btn">
                                 <figure className="play-btn-icon">
                                     <i className="fas fa-play play-btn-triangle"></i>
                                     <i className="fas fa-circle play-btn-bg"></i>
