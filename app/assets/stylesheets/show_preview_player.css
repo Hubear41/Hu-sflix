@@ -12,6 +12,7 @@
 
 #show-peek-preview-wrapper {
     width: 15%; /* width for the titlecards */
+    height: 10%;
     margin-right: 0.3%;
     position: relative;
     transform: scale(1);

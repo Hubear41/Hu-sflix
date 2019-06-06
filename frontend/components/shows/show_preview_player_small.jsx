@@ -62,7 +62,7 @@ class ShowPreviewPlayerSmall extends React.Component {
             this.playTimeout = setTimeout( () => {
                 videoEl.play();
                 this.setState({ paused: false });
-            }, 1500);
+            }, 1000);
         }
     }
 
@@ -96,11 +96,11 @@ class ShowPreviewPlayerSmall extends React.Component {
             <>
                 <section id="show-peek-preview-wrapper" 
                          className={`show-row-item-x item-${show.id}`} 
-                         style={{height: this.state.height}} 
+                        //  style={{height: this.state.height}} 
                          onClick={this.launchWatch}
-                        onMouseEnter={this.playVideo}
-                        onMouseLeave={this.pauseVideo}
-                        onMouseMoveOut={this.pauseVideo}
+                         onMouseEnter={this.playVideo}
+                         onMouseLeave={this.pauseVideo}
+                         onMouseOut={this.pauseVideo}
                 >
                                 
                     <img src={show ? show.posterUrl : window.tempBgURL} alt={show.title} className="show-title-card" />

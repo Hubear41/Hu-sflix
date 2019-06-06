@@ -2118,7 +2118,7 @@ function (_React$Component) {
           _this2.setState({
             paused: false
           });
-        }, 1500);
+        }, 1000);
       }
     }
   }, {
@@ -2158,14 +2158,12 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         id: "show-peek-preview-wrapper",
-        className: "show-row-item-x item-".concat(show.id),
-        style: {
-          height: this.state.height
-        },
+        className: "show-row-item-x item-".concat(show.id) //  style={{height: this.state.height}} 
+        ,
         onClick: this.launchWatch,
         onMouseEnter: this.playVideo,
         onMouseLeave: this.pauseVideo,
-        onMouseMoveOut: this.pauseVideo
+        onMouseOut: this.pauseVideo
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: show ? show.posterUrl : window.tempBgURL,
         alt: show.title,
