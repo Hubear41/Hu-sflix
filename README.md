@@ -22,7 +22,7 @@ This webservice was built in 10 days. Bug fixes and refactors are on the way.
 
 * The Video Header in the show browse can alternate through a poster or a video player automatically.
 
-![](http://www.giphy.com/gifs/dZo6plOYdOpRNCMmOY)
+![](https://media.giphy.com/media/dZo6plOYdOpRNCMmOY/giphy.gif)
 
 * On page load, the poster is shown until the video hits the event `canPlayThrough`. The `canPlayThrough` event fires a function that plays the video as well as hides the poster. The video is muted by default but can be toggled with a button next to the maturity rating
 
