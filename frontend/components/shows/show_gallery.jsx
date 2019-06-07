@@ -19,7 +19,7 @@ class ShowGallery extends React.Component {
     static getDerivedStateFromProps(props, state) {
         // we use <= 1 because we could leave show watch and have 1 show in state
         // we still would need to fetch all the shows
-        if (state.previewId !== null || props.shows.length <= 1) {
+        if (state.previewId !== null || props.shows.length <= 2) {
             return { previewId: state.previewId };
         }
         

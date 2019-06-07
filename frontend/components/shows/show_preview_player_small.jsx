@@ -63,7 +63,7 @@ class ShowPreviewPlayerSmall extends React.Component {
         
         this.videoTimeout = setTimeout( () => {
             videoEl.play();
-            
+
             this.setState({ paused: false });
         }, 2000)
 }
@@ -114,7 +114,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                                    ref={this.videoPlayer}
                                    onClick={this.launchWatch}
                             >
-                                <source src={preview.videoUrl} type="video/mp4"/> 
+                                <source src={ preview ? preview.videoUrl : '' } type="video/mp4"/> 
                             </video>
                            
                             <button className="preview-play-btn">

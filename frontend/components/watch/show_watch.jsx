@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, Redirect } from 'react-router-dom';
 import * as DateTimeUTIL from '../../util/date_time_util';
 
 class Watch extends React.Component {
@@ -14,11 +14,15 @@ class Watch extends React.Component {
             prevVolume: 0.8,
             hidden: true,
             mouseMoving: false,
-            loaded: false,
+            ended: false,
         };
+
         this.timeout;
+        this.interval;
         this.videoPlayer = React.createRef();
         this.fullControlArea = React.createRef();
+        this.videoSource = React.createRef();
+
         this.openFullscreen = this.openFullscreen.bind(this);
         this.closeFullscreen = this.closeFullscreen.bind(this);
         this.togglePlayPause = this.togglePlayPause.bind(this);
@@ -32,16 +36,22 @@ class Watch extends React.Component {
         this._tick = this._tick.bind(this);
         this.backToBrowse = this.backToBrowse.bind(this);
         this.determineKeyPress = this.determineKeyPress.bind(this);
+        this.revealNextShow = this.revealNextShow.bind(this);
+        this.hideNextShow = this.hideNextShow.bind(this);
+        this.startPlayer = this.startPlayer.bind(this);
+        this.playNextShow = this.playNextShow.bind(this);
     }
 
     
     componentDidMount() {
         const { videoId, showId } = this.props.match.params;
+        this.props.fetchShows();
         this.props.fetchVideo(videoId);
         this.props.fetchShow(showId);
         
-        setInterval(this._tick, 1000); //updates the timer each half second
         document.addEventListener('keydown', e => this.determineKeyPress(e));
+        this.interval = setInterval(this._tick, 1000); //updates the timer each half second
+
     }
 
     determineKeyPress(e) {        
@@ -70,19 +80,32 @@ class Watch extends React.Component {
         }
     }
 
-    componentDidUpdate() {
-        if ( this.state.loaded === false ) {
-            this.videoPlayer.current.load();
-            this.setState({ loaded: true });
-        }
+    // componentDidUpdate(prevProps) {
+    //     if (prevProps.match.params.showId !== this.props.match.params.showId ) {
+    //         const { videoId, showId } = this.props.match.params;
+
+    //         this.props.fetchShows();
+    //         this.props.fetchVideo(videoId);
+    //         this.props.fetchShow(showId);
+    //     }
+    // }
+
+    startPlayer() {
+        const videoEl = this.videoPlayer.current;
+
+        videoEl.muted = false;
+        videoEl.volume = 0.8;
+        videoEl.play();
     }
 
     togglePlayPause(e) {   
         const videoEl = this.videoPlayer.current;
         
         if (videoEl.paused) {
-            videoEl.play();
-            this.setState({ paused: false });
+            videoEl.play().then(
+                () => this.setState({ paused: false }),
+                () => this.setState({ paused: true })
+            );
         } else {
             videoEl.pause();
             this.setState({ paused: true });
@@ -134,7 +157,10 @@ class Watch extends React.Component {
     
     handleTimeChange(e) {
         const videoEl = this.videoPlayer.current;
+
         videoEl.currentTime = e.target.value;
+        videoEl.play();
+
         this.setState({ currentPlayerTime: videoEl.currentTime })
     }
 
@@ -169,14 +195,16 @@ class Watch extends React.Component {
     }
 
     closeFullscreen() {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) { /* Firefox */
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { /* IE/Edge */
-            document.msExitFullscreen();
+        const controlArea = this.fullControlArea.current;
+
+        if (controlArea.exitFullscreen) {
+            controlArea.exitFullscreen();
+        } else if (controlArea.mozCancelFullScreen) { /* Firefox */
+            controlArea.mozCancelFullScreen();
+        } else if (controlArea.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+            controlArea.webkitExitFullscreen();
+        } else if (controlArea.msExitFullscreen) { /* IE/Edge */
+            controlArea.msExitFullscreen();
         }
 
         this.setState({ fullscreen: false })
@@ -207,7 +235,7 @@ class Watch extends React.Component {
     }
 
     backToBrowse() {
-        const videoEl = this.videoPlayer.current;
+        const controlArea = this.videoPlayer.current;
         
         if ( !videoEl.paused ) {
             videoEl.pause();
@@ -216,11 +244,59 @@ class Watch extends React.Component {
         this.props.history.push('/browse');
     }
 
+    revealNextShow() {
+        this.closeFullscreen();    
+        clearInterval(this.interval);
+
+        this.setState({ ended: true });
+    }
+
+    hideNextShow() {
+        if ( this.state.ended ) {
+            this.setState({ ended: false });
+        }
+    }
+
+    playNextShow() {
+        const source = this.videoSource.current;
+        const { nextShow } = this.props;
+
+        let nextVideoId = nextShow.show_type === 'FEATURE' ? nextShow.movie_id : nextShow.episode_ids[0];
+
+        source.setAttribute('src', `${nextVideoId.videoUrl}` );
+        this.videoPlayer = React.createRef();
+        this.props.history.push(`/watch/${nextShow.id}/${nextVideoId}`);
+
+        this.setState({
+            currentPlayerTime: 0,
+            paused: false,
+            fullscreen: false,
+            muted: false,
+            volume: 0.8,
+            prevVolume: 0.8,
+            hidden: true,
+            mouseMoving: false,
+            ended: false,
+        });
+
+    }
+
     render() {
-        const { paused, currentPlayerTime, volume, muted, hidden, fullscreen } = this.state;
-        const { video, show } = this.props;
+        const { paused, currentPlayerTime, volume, muted, hidden, fullscreen, ended, next} = this.state;
+        const { video, show, nextShow } = this.props;
+
+        if ( next ) {
+            return <Redirect to={`/watch/${nextShow.id}/${nextShow.show_type === "FEATURE" ? nextShow.movie_id : nextShow.episode_ids[0]}`} />;
+        }
+
         let runtime = video ? video.runtime : 0;
         let playPauseBtn = null, remainingTime = null, audioIcon = null, volumeStyle = null, timeStyle = null, controlStyle = null;
+        let smallPlayerClass =  '', disabledControls = null;
+
+        if ( ended ) {
+            smallPlayerClass = 'small-player';
+            disabledControls = { display: 'none', cursor: 'pointer' };
+        }
 
         if ( this.videoPlayer.current !== null ) {               
             playPauseBtn = paused ? <i className="fas fa-play"></i> : <i className="fas fa-pause"></i>
@@ -239,9 +315,8 @@ class Watch extends React.Component {
             }
             audioIcon = this.findAudioIcon();
         }
-
-        let fullscreenBtn, fullscreenFunc; 
         
+        let fullscreenBtn, fullscreenFunc; 
         if ( fullscreen === true ) {
             fullscreenBtn = <i className="fas fa-compress"></i>;
             fullscreenFunc = this.closeFullscreen;
@@ -249,109 +324,148 @@ class Watch extends React.Component {
             fullscreenBtn = <i className="fas fa-expand"></i>;
             fullscreenFunc = this.openFullscreen;
         }
-        
+
         return (
-            <figure className="main-video-player" ref={this.fullControlArea}> 
-                
-                <div className="Video-Container">
-                    <video  className="main-video-tag" 
-                            ref={this.videoPlayer}
-                            poster={window.tempBgURL} 
-                            autoPlay
-                            controls={false}
-                            > 
-                        <source src={video ? video.videoUrl : ''} />
-                         {/* <source src={window.videoBunny}
-                                 type="video/mp4"
-                                 /> */}
-                        Browser does not support the video tag
-                    </video>
-                </div>
+            <section className="next-show-wrapper">
+                <figure className={`main-video-player ${smallPlayerClass}`} ref={this.fullControlArea}> 
+                    <div className="Video-Container">
+                        <video  className="main-video-tag" 
+                                ref={this.videoPlayer}
+                                poster={window.tempBgURL} 
+                                onCanPlay={this.togglePlayPause}
+                                controls={false}
+                                onEnded={this.revealNextShow}
+                                > 
+                            { video ? <source src={video.videoUrl} ref={this.videoSource} /> : null }
+                            Browser does not support the video tag
+                        </video>
+                    </div>
 
-                <div className="all-player-controls">
-                    <div className="clickable-area" 
-                         onClick={this.togglePlayPause} 
-                         onKeyPress={this.togglePlayPause}
-                         onMouseMove={this.showControls} 
-                    ></div>
+                    <div className="all-player-controls" style={disabledControls}>
+                        <div className="clickable-area" 
+                            onClick={this.togglePlayPause} 
+                            onKeyPress={this.togglePlayPause}
+                            onMouseMove={this.showControls} 
+                        ></div>
 
-                    <div className="full-control-area" style={controlStyle}>
-                        <a className="back-to-browse-btn" onClick={this.backToBrowse}>
-                            <i className="fas fa-arrow-left"></i>
-                            <span className="back-to-browse-message">Back to browse</span>
-                        </a>
+                        <div className="full-control-area" style={controlStyle}>
+                            <a className="back-to-browse-btn" onClick={this.backToBrowse}>
+                                <i className="fas fa-arrow-left"></i>
+                                <span className="back-to-browse-message">Back to browse</span>
+                            </a>
 
-                        <div className="main-video-bottom-controls">
-                            <div className="progress-scrubber-wrapper">
-                                <figure className="scrubber-bar">
-                                    <input  type="range" 
-                                            className="slider time-slider"
-                                            min="0" 
-                                            max={`${runtime}`} 
-                                            step="0.1"
-                                            onChange={this.handleTimeChange} 
-                                            onInput={this.handleTimeChange}
-                                            value={`${currentPlayerTime}`} 
-                                            style={timeStyle}
-                                    />
-                                </figure>
-                                <span className="scrubber-remaining-time">{DateTimeUTIL.secondsToTime(remainingTime)}</span>
-                            </div>
+                            <div className="main-video-bottom-controls">
+                                <div className="progress-scrubber-wrapper">
+                                    <figure className="scrubber-bar">
+                                        <input  type="range" 
+                                                className="slider time-slider"
+                                                min="0" 
+                                                max={`${runtime}`} 
+                                                step="0.1"
+                                                onChange={this.handleTimeChange} 
+                                                onInput={this.handleTimeChange}
+                                                value={`${currentPlayerTime}`} 
+                                                style={timeStyle}
+                                        />
+                                    </figure>
+                                    <span className="scrubber-remaining-time">{DateTimeUTIL.secondsToTime(remainingTime)}</span>
+                                </div>
 
-                            <div className="Player-Controls-wrapper">
-                                <div className="Player-Controls">
-                                    <div className="left-controls">
-                                        <button className="play-pause-toggle-btn" onClick={this.togglePlayPause}>{playPauseBtn}</button>
+                                <div className="Player-Controls-wrapper">
+                                    <div className="Player-Controls">
+                                        <div className="left-controls">
+                                            <button className="play-pause-toggle-btn" onClick={this.togglePlayPause}>{playPauseBtn}</button>
 
-                                        <button onClick={this.jumpBack} className='forward-10-btn'>
-                                            <i className="fas fa-undo"></i>
-                                            <span>10</span>
-                                        </button>
-
-                                        <button onClick={this.jumpForward} className='back-10-btn'>
-                                            <i className="fas fa-redo"></i>
-                                            <span>10</span>
-                                        </button>
-
-                                        <div className="audio-button-wrapper">
-                                            <button className="audio-btn" onClick={this.toggleMute}>
-                                                {audioIcon}
+                                            <button onClick={this.jumpBack} className='forward-10-btn'>
+                                                <i className="fas fa-undo"></i>
+                                                <span>10</span>
                                             </button>
-                                            <figure className="audio-levels-popup">
-                                                <input  type="range" 
-                                                        className="slider volume-slider"
-                                                        min='0.0' 
-                                                        max='1.0'
-                                                        step="0.1"
-                                                        onChange={this.handleVolumeChange}
-                                                        onInput={this.handleVolumeChange}
-                                                        value={`${volume}`}
-                                                        style={volumeStyle}
-                                                />
-                                            </figure>
-                                        </div>
-                                                                    
-                                        <article className="video-title-ep-name">
-                                            <span className="show-title">{show ? show.title : null}</span>
-                                            <span className="episode-name">{show && video === "EPISODIC" ? video.name : null}</span>
-                                        </article>
-                                    </div>    
-                                    
-                                    <div className="right-controls">
-                                        {/* <button className="episode-list-btn">
-                                            <i className="fas fa-layer-group"></i>
-                                        </button> */}
 
-                                        <button className="fullscreen-toggle" onClick={fullscreenFunc}>
-                                            {fullscreenBtn}
-                                        </button>
+                                            <button onClick={this.jumpForward} className='back-10-btn'>
+                                                <i className="fas fa-redo"></i>
+                                                <span>10</span>
+                                            </button>
+
+                                            <div className="audio-button-wrapper">
+                                                <button className="audio-btn" onClick={this.toggleMute}>
+                                                    {audioIcon}
+                                                </button>
+                                                <figure className="audio-levels-popup">
+                                                    <input  type="range" 
+                                                            className="slider volume-slider"
+                                                            min='0.0' 
+                                                            max='1.0'
+                                                            step="0.1"
+                                                            onChange={this.handleVolumeChange}
+                                                            onInput={this.handleVolumeChange}
+                                                            value={`${volume}`}
+                                                            style={volumeStyle}
+                                                    />
+                                                </figure>
+                                            </div>
+                                                                        
+                                            <article className="video-title-ep-name">
+                                                <span className="show-title">{show ? show.title : null}</span>
+                                                <span className="episode-name">{show && video === "EPISODIC" ? video.name : null}</span>
+                                            </article>
+                                        </div>    
+                                        
+                                        <div className="right-controls">
+                                            {/* <button className="episode-list-btn">
+                                                <i className="fas fa-layer-group"></i>
+                                            </button> */}
+
+                                            <button className="fullscreen-toggle" onClick={fullscreenFunc}>
+                                                {fullscreenBtn}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </figure>
+                </figure>
+
+                <figure className="next-show-filter"></figure>
+                <figure className="next-show-poster">
+                    <img src={ show ? show.posterUrl : ''} />    
+                </figure>
+                
+                <button className="next-show-back-arrow" onClick={this.backToBrowse}>
+                    <figure className="back-arrow-icon">
+                        <i className="far fa-circle"></i>
+                        <i className="fas fa-arrow-left next-show-left-arrow"></i>
+                        <span>Back to Browse</span>
+                    </figure>
+                </button>               
+
+                <aside className="next-show-info-wrapper">
+
+                    <article className="next-show-details">
+                        <h5>A <strong>HU'SFLIX</strong> film</h5>
+                        <article className="next-show-title">
+                            <h1>{nextShow ? nextShow.title : ''}</h1>
+                        </article>
+                        <p>{nextShow ? nextShow.tagline : ''}</p>
+
+                    </article>
+
+                    <section className="next-show-buttons" onClick={this.playNextShow}>
+                        <button className="next-show-play-btn" >
+                            <i className="fas fa-play"></i>
+                            Play
+                        </button>
+                        <button className="next-show-back-btn" onClick={this.backToBrowse}>
+                            <span>Back To Browse</span>
+                            <figure className="back-to-browse-bg"></figure>
+                        </button>
+                    </section>
+
+                    {/* <figure className="next-show-video-img">
+                        <img src={ nextShow ? nextShow.posterUrl : '' } alt="" className="next-show-title-card"/>
+                    </figure> */}
+                </aside>                          
+            </section>
         );
     }
 }

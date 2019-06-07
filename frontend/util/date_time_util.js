@@ -16,3 +16,18 @@ export const secondsToTime = (seconds) => {
     
     return `${hoursStr}:${minutesStr}:${secondsStr}`;
 }
+
+export const displayRuntime = (runtime) => {
+    if ( runtime === 0) {
+        return 0;
+    }
+
+    let timeStr = "";
+    const hour = Math.floor(runtime / 60);
+    const minutes = Math.floor(runtime / 6000);
+
+    timeStr += hour ? `${hour}h ` : '';
+    timeStr += minutes ? `${minutes}m` : ''
+
+    return timeStr;
+}
