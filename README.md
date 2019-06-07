@@ -32,7 +32,7 @@ This webservice was built in 10 days. Bug fixes and refactors are on the way.
 
 ![](./docs/images/husflix-hovered-thumbnail-img.png)
 
-* The hover effect is created using a combination of React refs and HTML media attributes. The thumbnail listens for a `mouseover` event to have it run `playVideo()`, which creates a setTimeout that will play the video and update state after a 2 seconds.
+* The hover effect is created using a combination of React refs and HTML media attributes. The thumbnail listens for a `mouseover` event to have it run `playVideo()`, which creates a setTimeout that will play the video and update state after a 2 seconds. The 2 second timer helps prevent videos from playing when the mouse is just passing by.
 
 * The thumbnail also listens for a `mouseleave` event that will run `pauseVideo()` that clears the timer or pause the video if it had been playing.
 
