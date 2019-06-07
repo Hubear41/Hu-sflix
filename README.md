@@ -59,9 +59,9 @@ pauseVideo() {
 
 # Future Features
 
-## Genre-lists
-## Search
-## Profiles
-## Rating
-## Next Show
-## Row Dropdown Preview
+* Genre-lists
+* Search
+* Profiles
+* Rating
+* Next Show
+* Row Dropdown Preview
