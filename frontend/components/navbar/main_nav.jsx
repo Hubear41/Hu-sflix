@@ -48,7 +48,7 @@ class MainNav extends React.Component {
                         <section className="nav-dropdown-menu">
                             <i className="fas fa-caret-up"></i>
                             <section className="nav-dropdown-profiles">
-                                <span>Manage Profiles</span>
+                                {/* <span>Manage Profiles</span> */}
                             </section>
                             <section className="nav-dropdown-links">
                                 <button onClick={this.handleLogout} className="logout-btn">Sign out of Hu'sflix</button> 
