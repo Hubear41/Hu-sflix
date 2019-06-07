@@ -66,7 +66,7 @@ class ShowPreviewPlayerSmall extends React.Component {
             
             this.setState({ paused: false });
         }, 2000)
-}
+    }
 
     pauseVideo() {
         if (this.videoPlayer.current === null) {
@@ -79,8 +79,6 @@ class ShowPreviewPlayerSmall extends React.Component {
         clearTimeout(this.videoTimeout);
 
         this.setState({ paused: true });
-
-
     }
 
     // openDropDown(e) {
