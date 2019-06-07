@@ -91,9 +91,9 @@ class LoginForm extends React.Component {
                             <h3>{formName}</h3>
                                 
                             <form className="login-form" onSubmit={this.handleSubmit}>
-                                    {logininError}
                                 
                                 <div className="login-inputs">
+                                    {logininError}
                                     <label htmlFor="email">
                                         <input type="text"
                                             id="email"

@@ -48,7 +48,7 @@
     flex-direction: column;
     justify-content: space-around;
     width: 320px;
-    height: 260px;
+    height: 40vh;
     margin-top: 25px;
 }
 
@@ -63,6 +63,7 @@
     position: relative;
     height: 75px;
     width: 100%;
+    margin: 5px 0;
 }
 
 .email-login {
@@ -134,7 +135,7 @@
 .toggle-show-hide {
     position: absolute;
     right: 12px;
-    top: 11px;
+    top: 16px;
     padding: 5px;
     background-color: #333333;
     color: #767676;
@@ -236,5 +237,6 @@
     color: #fff;
     font-family: Arial, Arial, Helvetica, sans-serif;
     outline: none;
+    margin: 5px 0;
 }
 
