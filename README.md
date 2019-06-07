@@ -11,7 +11,7 @@ This webservice was built in 10 days. Bug fixes and refactors are on the way.
 # Overview
 
 * Secure frontend to backend user authentication using BCrypt.
-* On login, users is greeted with a trailer from an available show.
+* On login, users are greeted with a trailer from an available show.
 * Users can hover over movie thumbnails to watch a trailer of the movie.
 * On click of a thumbnail, User is brought to a watch page where the movie data is then played.
 * The watch page can be played in a browser window or fullscreen.
