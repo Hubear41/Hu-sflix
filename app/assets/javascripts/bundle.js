@@ -284,7 +284,7 @@ var receiveErrors = function receiveErrors(errors) {
 /*!******************************************!*\
   !*** ./frontend/actions/show_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_VIDEO, RECEIVE_SHOW, RECEIVE_SHOWS, RECEIVE_VIDEOS, fetchVideo, fetchShows, fetchShow, fetchPreviewVideos */
+/*! exports provided: RECEIVE_VIDEO, RECEIVE_SHOW, RECEIVE_SHOWS, fetchVideo, fetchShows, fetchShow */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -292,17 +292,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_VIDEO", function() { return RECEIVE_VIDEO; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SHOW", function() { return RECEIVE_SHOW; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SHOWS", function() { return RECEIVE_SHOWS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_VIDEOS", function() { return RECEIVE_VIDEOS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVideo", function() { return fetchVideo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShows", function() { return fetchShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShow", function() { return fetchShow; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPreviewVideos", function() { return fetchPreviewVideos; });
 /* harmony import */ var _util_show_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/show_util */ "./frontend/util/show_util.js");
 
 var RECEIVE_VIDEO = 'RECEIVE_VIDEO';
 var RECEIVE_SHOW = 'RECEIVE_SHOW';
 var RECEIVE_SHOWS = 'RECEIVE_SHOWS';
-var RECEIVE_VIDEOS = 'RECEIVE_VIDEOS';
 var fetchVideo = function fetchVideo(id) {
   return function (dispatch) {
     return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchVideo"](id).then(function (video) {
@@ -312,8 +309,8 @@ var fetchVideo = function fetchVideo(id) {
 };
 var fetchShows = function fetchShows() {
   return function (dispatch) {
-    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchShows"]().then(function (shows) {
-      return dispatch(receiveShows(shows));
+    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchShows"]().then(function (payload) {
+      return dispatch(receiveShows(payload));
     });
   };
 };
@@ -324,20 +321,6 @@ var fetchShow = function fetchShow(id) {
     });
   };
 };
-var fetchPreviewVideos = function fetchPreviewVideos() {
-  return function (dispatch) {
-    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchPreviewVideos"]().then(function (videos) {
-      return dispatch(receiveVideos(videos));
-    });
-  };
-};
-
-var receiveVideos = function receiveVideos(videos) {
-  return {
-    type: RECEIVE_VIDEOS,
-    videos: videos
-  };
-};
 
 var receiveVideo = function receiveVideo(video) {
   return {
@@ -346,10 +329,13 @@ var receiveVideo = function receiveVideo(video) {
   };
 };
 
-var receiveShows = function receiveShows(shows) {
+var receiveShows = function receiveShows(_ref) {
+  var shows = _ref.shows,
+      videos = _ref.videos;
   return {
     type: RECEIVE_SHOWS,
-    shows: shows
+    shows: shows,
+    videos: videos
   };
 };
 
@@ -1849,7 +1835,6 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.requestAllShows();
-      this.props.requestPreviewVideos();
     }
   }, {
     key: "createRows",
@@ -2005,9 +1990,6 @@ var mdp = function mdp(dispatch) {
     // requestAllGenres: () => dispatch(fetchGenres()),
     requestAllShows: function requestAllShows() {
       return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchShows"])());
-    },
-    requestPreviewVideos: function requestPreviewVideos() {
-      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchPreviewVideos"])());
     }
   };
 };
@@ -3194,12 +3176,12 @@ var videosReducer = function videosReducer() {
   Object.freeze(state);
 
   switch (action.type) {
-    case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_VIDEOS"]:
-      return action.videos;
-
     case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_VIDEO"]:
       var video = action.video;
       return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, state, _defineProperty({}, video.id, video));
+
+    case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SHOWS"]:
+      return action.videos;
 
     default:
       return state;

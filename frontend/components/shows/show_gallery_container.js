@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetchShows, fetchPreviewVideos } from '../../actions/show_actions';
+import { fetchShows } from '../../actions/show_actions';
 import { fetchGenres } from '../../actions/genre_actions';
 import ShowGallery from './show_gallery';
 
@@ -17,7 +17,6 @@ const msp = ({entities}) => {
 const mdp = dispatch => ({
     // requestAllGenres: () => dispatch(fetchGenres()),
     requestAllShows: () => dispatch(fetchShows()),
-    requestPreviewVideos: () => dispatch(fetchPreviewVideos()),
 });
 
 export default connect(msp, mdp)(ShowGallery);
