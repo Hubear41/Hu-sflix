@@ -1,6 +1,9 @@
 json.show do
-    json.extract! @show, :id, :title, :director, :tagline, :year, :maturity_rating, :show_type, :genre_ids, :movie_id, :preview_id, :episode_ids, :next_show_id
-    json.posterUrl url_for(@show.poster)
+    json.partial! 'api/shows/show', show: @show
+end
+
+json.next_show do 
+    json.partial! 'api/shows/show', show: @next_show
 end
 
 json.video do

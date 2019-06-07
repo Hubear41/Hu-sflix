@@ -36,8 +36,9 @@ const receiveShows = shows => ({
     shows,
 });
 
-const receiveShow = ({show, video}) => ({
+const receiveShow = ({show, video, next_show }) => ({
     type: RECEIVE_SHOW,
     show,
     video,
+    nextShow: next_show,
 })

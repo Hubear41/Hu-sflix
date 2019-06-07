@@ -52,6 +52,16 @@ class Watch extends React.Component {
         this.interval = setInterval(this._tick, 1000); //updates the timer each half second
     }
 
+    
+    componentDidUpdate(prevProps) {
+        debugger
+        if (prevProps.match.params.showId !== this.props.match.params.showId ) {
+            const { nextShow } = this.props;
+            
+            this.props.fetchShow(nextShow.id);
+        }
+    }
+    
     determineKeyPress(e) {        
         switch (e.keyCode) {
             case 32:  // spacebar
@@ -78,16 +88,6 @@ class Watch extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps) {
-        debugger
-        if (prevProps.match.params.showId !== this.props.match.params.showId ) {
-            const { videoId, showId } = this.props.match.params;
-
-            this.props.fetchShows();
-            this.props.fetchShow(showId);
-        }
-    }
-
     startPlayer() {
         const videoEl = this.videoPlayer.current;
 
@@ -99,15 +99,19 @@ class Watch extends React.Component {
     togglePlayPause(e) {   
         const videoEl = this.videoPlayer.current;
         const { paused } = this.state;
-        
-        if (paused) {
+
+        // add a conditonal based on what was clicked
+        debugger
+        if ( paused ) {
             videoEl.play().then(
                 () => this.setState({ paused: false }),
                 () => this.setState({ paused: true })
             );
         } else {
-            videoEl.pause();
-            this.setState({ paused: true });
+            videoEl.pause().then(
+                () => this.setState({ paused: true }),
+                () => this.setState({ paused: false })
+            );
         }
     }
 
@@ -286,12 +290,14 @@ class Watch extends React.Component {
         const { video, show, nextShow } = this.props;
 
         if ( next ) {
-            return <Redirect to={`/watch/${nextShow.id}/${nextShow.show_type === "FEATURE" ? nextShow.movie_id : nextShow.episode_ids[0]}`} />;
+            debugger
+            return <Redirect to={`/watch/${nextShow.id}/${nextShow.video_ids[0]}`} />;
         }
 
         let runtime = video ? video.runtime : 0;
         let playPauseBtn = null, remainingTime = null, audioIcon = null, volumeStyle = null, timeStyle = null, controlStyle = null;
         let smallPlayerClass =  '', disabledControls = null;
+        const videoUrl = video && this.props.match.params.videoId === video.id ? video.videoUrl : '';
 
         if ( ended ) {
             smallPlayerClass = 'small-player';
@@ -335,8 +341,9 @@ class Watch extends React.Component {
                                 onCanPlay={this.togglePlayPause}
                                 controls={false}
                                 onEnded={this.revealNextShow}
+                                muted='muted'
                                 > 
-                            <source src={ video ? video.videoUrl : ''} ref={this.videoSource} />
+                            <source src={videoUrl} ref={this.videoSource} />
                             Browser does not support the video tag
                         </video>
                     </div>
@@ -344,7 +351,6 @@ class Watch extends React.Component {
                     <div className="all-player-controls" style={disabledControls}>
                         <div className="clickable-area" 
                             onClick={this.togglePlayPause} 
-                            onKeyPress={this.togglePlayPause}
                             onMouseMove={this.showControls} 
                         ></div>
 

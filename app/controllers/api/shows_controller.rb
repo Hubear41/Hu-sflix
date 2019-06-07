@@ -7,6 +7,7 @@ class Api::ShowsController < ApplicationController
 
     def show
         @show = Show.find(params[:id])
+        @next_show = @show.next_show
         @video = @show.videos.first
 
         render :show

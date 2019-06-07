@@ -11,9 +11,9 @@ const showsReducer = (state = {}, action) => {
         case RECEIVE_SHOWS:
             return action.shows;
         case RECEIVE_SHOW:
-            const { show } = action;
+            const { show, nextShow } = action;
             
-            return merge({}, state, { [show.id]: show });
+            return merge({}, state, { [show.id]: show, [nextShow.id]: nextShow });
         default:
             return state;
     }
