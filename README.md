@@ -56,3 +56,33 @@ pauseVideo() {
     this.setState({ paused: true });
 } 
 ```
+
+# Future Features
+
+## Genre-lists
+
+* Thumbnails rows are categorized by genre.
+* The header has 2 buttons that sort each row by either `TV-Show` or `Movies`.
+
+## Search
+
+* Users can search for videos but text that is similar to show titles, directors, episode names, or genres.
+
+## Profiles
+
+* Users can have multiple profiles with names and a profile picture.
+* User can switch users with the dropdown menu in the top right of the browse show page.
+
+## Rating
+
+* Users can give shows a `thumbs-up` or `thumbs-down` rating
+* Users can rate videos from the thumbnails
+
+## Next Show
+
+* Once a video has ended, a screen will be revealed that either recommends another movie to watch or the next episode in a series
+
+## Row Dropdown Preview
+
+* When a thumbnail is clicked, rather than redirect to the show watch, it will cause a dropdown to appear under the current row. 
+* The dropdown will have a big preview window as well as more details such as cast and all genres
