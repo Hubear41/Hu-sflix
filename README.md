@@ -4,14 +4,14 @@
 
 # Hu'sflix 
 
-Hu'sflix is a media streaming service inspired by Netflix where movies are separated into rows. It uses Rails/Postgresql backend that interacts with a React/Redux frontend and pulls videos and images from AWS.
+Hu'sflix is a media streaming service inspired by Netflix where movies are separated into rows. It uses Rails/Postgresql backend that interacts with a React/Redux frontend. The site is hosted on Heroku and media assets are hosted on AWS.
 
 This webservice was built in 10 days. Bug fixes and refactors are on the way.
 
 # Overview
 
 * Secure frontend to backend user authentication using BCrypt.
-* On login, users is greeted with a trailer from an available show.
+* On login, users are greeted with a trailer from an available show.
 * Users can hover over movie thumbnails to watch a trailer of the movie.
 * On click of a thumbnail, User is brought to a watch page where the movie data is then played.
 * The watch page can be played in a browser window or fullscreen.
@@ -32,9 +32,9 @@ This webservice was built in 10 days. Bug fixes and refactors are on the way.
 
 ![](./docs/images/husflix-hovered-thumbnail-img.png)
 
-* The hover effect is created using a combination of React refs and HTML media attributes. The thumbnail listens for a `mouseover` event to have it run playVideo(), which creates a setTimeout that will play the video and update state after a 2 seconds.
+* The hover effect is created using a combination of React refs and HTML media attributes. The thumbnail listens for a `mouseover` event to have it run `playVideo()`, which creates a setTimeout that will play the video and update state after a 2 seconds. The 2 second timer helps prevent videos from playing when the mouse is just passing by.
 
-* The thumbnail also listens for a `mouseleave` event that will run pauseVideo() that clears the timer or pause the video if it had been playing.
+* The thumbnail also listens for a `mouseleave` event that will run `pauseVideo()` that clears the timer or pause the video if it had been playing.
 
 ```JS
 playVideo() {
