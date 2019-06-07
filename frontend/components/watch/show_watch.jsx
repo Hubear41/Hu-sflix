@@ -15,6 +15,7 @@ class Watch extends React.Component {
             hidden: true,
             mouseMoving: false,
             ended: false,
+            next: false,
         };
 
         this.timeout;
@@ -258,14 +259,14 @@ class Watch extends React.Component {
     }
 
     playNextShow() {
-        const source = this.videoSource.current;
-        const { nextShow } = this.props;
+        // const source = this.videoSource.current;
+        // const { nextShow } = this.props;
 
-        let nextVideoId = nextShow.show_type === 'FEATURE' ? nextShow.movie_id : nextShow.episode_ids[0];
+        // let nextVideoId = nextShow.show_type === 'FEATURE' ? nextShow.movie_id : nextShow.episode_ids[0];
 
-        source.setAttribute('src', `${nextVideoId.videoUrl}` );
-        this.videoPlayer = React.createRef();
-        this.props.history.push(`/watch/${nextShow.id}/${nextVideoId}`);
+        // source.setAttribute('src', `${nextVideoId.videoUrl}` );
+        // this.videoPlayer = React.createRef();
+        // this.props.history.push(`/watch/${nextShow.id}/${nextVideoId}`);
 
         this.setState({
             currentPlayerTime: 0,
@@ -277,6 +278,7 @@ class Watch extends React.Component {
             hidden: true,
             mouseMoving: false,
             ended: false,
+            next: false,
         });
 
     }
@@ -336,7 +338,7 @@ class Watch extends React.Component {
                                 controls={false}
                                 onEnded={this.revealNextShow}
                                 > 
-                            { video ? <source src={video.videoUrl} ref={this.videoSource} /> : null }
+                            <source src={ video ? video.videoUrl : ''} ref={this.videoSource} />
                             Browser does not support the video tag
                         </video>
                     </div>

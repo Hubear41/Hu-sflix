@@ -2399,7 +2399,8 @@ function (_React$Component) {
       prevVolume: 0.8,
       hidden: true,
       mouseMoving: false,
-      ended: false
+      ended: false,
+      next: false
     };
     _this.timeout;
     _this.interval;
@@ -2734,12 +2735,12 @@ function (_React$Component) {
   }, {
     key: "playNextShow",
     value: function playNextShow() {
-      var source = this.videoSource.current;
-      var nextShow = this.props.nextShow;
-      var nextVideoId = nextShow.show_type === 'FEATURE' ? nextShow.movie_id : nextShow.episode_ids[0];
-      source.setAttribute('src', "".concat(nextVideoId.videoUrl));
-      this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
-      this.props.history.push("/watch/".concat(nextShow.id, "/").concat(nextVideoId));
+      // const source = this.videoSource.current;
+      // const { nextShow } = this.props;
+      // let nextVideoId = nextShow.show_type === 'FEATURE' ? nextShow.movie_id : nextShow.episode_ids[0];
+      // source.setAttribute('src', `${nextVideoId.videoUrl}` );
+      // this.videoPlayer = React.createRef();
+      // this.props.history.push(`/watch/${nextShow.id}/${nextVideoId}`);
       this.setState({
         currentPlayerTime: 0,
         paused: false,
@@ -2749,7 +2750,8 @@ function (_React$Component) {
         prevVolume: 0.8,
         hidden: true,
         mouseMoving: false,
-        ended: false
+        ended: false,
+        next: false
       });
     }
   }, {
@@ -2842,10 +2844,10 @@ function (_React$Component) {
         onCanPlay: this.togglePlayPause,
         controls: false,
         onEnded: this.revealNextShow
-      }, video ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-        src: video.videoUrl,
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+        src: video ? video.videoUrl : '',
         ref: this.videoSource
-      }) : null, "Browser does not support the video tag")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), "Browser does not support the video tag")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-player-controls",
         style: disabledControls
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
