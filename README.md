@@ -36,24 +36,23 @@ This webservice was built in 10 days. Bug fixes and refactors are on the way.
 
 * The thumbnail also listens for a `mouseleave` event that will run pauseVideo() that clears the timer or pause the video if it had been playing.
 
-`   
-
-    playVideo() {
-        const videoEl = this.videoPlayer.current;
+```JS
+playVideo() {
+    const videoEl = this.videoPlayer.current;
+    
+    this.videoTimeout = setTimeout( () => {
+        videoEl.play();
         
-        this.videoTimeout = setTimeout( () => {
-            videoEl.play();
-            
-            this.setState({ paused: false });
-        }, 2000)
-    }
+        this.setState({ paused: false });
+    }, 2000)
+}
 
-    pauseVideo() {
-        const videoEl = this.videoPlayer.current;
+pauseVideo() {
+    const videoEl = this.videoPlayer.current;
 
-        videoEl.pause();
-        clearTimeout(this.videoTimeout);
+    videoEl.pause();
+    clearTimeout(this.videoTimeout);
 
-        this.setState({ paused: true });
-    } 
-`
+    this.setState({ paused: true });
+} 
+```
