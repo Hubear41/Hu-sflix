@@ -15,7 +15,6 @@ Show.destroy_all
 # Default user for Guest Login
 User.create!(email: 'guest@guest.com', password: 'go_password_go')
 
-
 # Shows and Videos 
 # |-------------------------------------- 1. Caroline ------------------------------------------------------ |
 
@@ -48,7 +47,7 @@ mouse_show = Show.create!( title: 'Mouse',
                            director: 'ELO Films',
                            tagline: 'Fueled by coke, a desperate couple attempts to capitalize on an unlikely opportunity.',
                            year: 2016,
-                           maturity_rating: 'R',
+                           maturity_rating: 'PG-13',
                            show_type: 'FEATURE',
 )
 
@@ -82,8 +81,8 @@ heart_show.poster.attach(io: heart_poster, filename: 'heart-husflix-poster.jpg')
 heart_video = heart_show.videos.create!( name: 'Heart',
                           description: 'Alex has given up on love completely',
                           video_type: 'FILM',
-                          runtime: 890,
-                          credits_time: 830,
+                          runtime: 67,
+                          credits_time: 67,
 )
 
 heart_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Heart_Husflix_short_720p.mp4')
@@ -134,8 +133,8 @@ stumped_show.save!
 stumped_video = stumped_show.videos.create!( name: 'Stumped',
                                             description: 'N/A',
                                             video_type: 'FILM',
-                                            runtime: 86,
-                                            credits_time: 80,
+                                            runtime: 61,
+                                            credits_time: 61,
 )
 
 stumped_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Stumped_Husflix_short_720p.mp4')
@@ -198,7 +197,7 @@ charm_city_show = Show.create( title: 'Goodbye Charm City',
                                director: 'Christian Grier',
                                year: 2015,
                                tagline: 'A mother prepares her final impact statement to the man that murdered her son.',
-                               maturity_rating: "R",
+                               maturity_rating: 'PG-13',
                                show_type: 'FEATURE',
 )
 
@@ -248,7 +247,7 @@ freeze = Show.create!( title: 'Freeze',
                        director: 'Nelicia Low',
                        tagline: 'We all do terrible things when we think that no one is watching. When her distant husband cannot give her the love she desires, the lonely and insecure Hui will do anything to feel loved. Caught in an unusual love triangle with her autistic brother, Hui has found a constant source of comfort.',
                        year: 2016,
-                       maturity_rating: 'R',
+                       maturity_rating: "TV-MA",
                        show_type: 'FEATURE'
 )    
 
@@ -273,7 +272,7 @@ freak = Show.create!( title: 'Freak',
                       director: 'Nelicia Low',
                       tagline: "When her husband mysteriously goes missing, Mrs. Wang begins to suspect that her androgynous daughter had something to do with his disappearance.",
                       year: 2014,
-                      maturity_rating: 'R',
+                      maturity_rating: 'TV-MA',
                       show_type: 'FEATURE'
 )
 
@@ -307,9 +306,9 @@ ling_show.poster.attach( io: ling_poster, filename: 'ling_poster.jpg')
 ling_show.save!
 
 ling_video = ling_show.videos.create!( name: 'Ling Promo',
-                          description: 'Ling Promo',
-                          runtime: '272',
-                          video_type: 'FILM',
+                                       escription: 'Ling Promo',
+                                       runtime: 263,
+                                       video_type: 'FILM',
 )
 
 ling_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Ling_1.mp4')
@@ -322,7 +321,7 @@ max_out_show = Show.create!( title: 'Max Out',
                              director: 'Max Talisman',
                              tagline: 'Four friends try their best to overcome living and dating in NYC',
                              year: 2016,
-                             maturity_rating: 'PG-13',
+                             maturity_rating: 'TV-14',
                              show_type: 'EPISODIC',
 )
 
@@ -364,9 +363,9 @@ max_out_ep2.save!
 
 foolish_gents_show = Show.create!( title:'The Fantastic Adventures of Foolish Gentlemen',
                                   director: 'Jake Rubin Max Pava',
-                                  tagline: 'Fools are silly and carefree. Gentlemen are honorable and chivalrous. The Foolish Gents hope to marry these attributes to create! high quality, entertaining, and original content for years to come.',
+                                  tagline: 'Fools are silly and carefree. Gentlemen are honorable and chivalrous. The Foolish Gents hope to marry these attributes to create high quality, entertaining, and original content for years to come.',
                                   year: 2014,
-                                  maturity_rating: 'PG-13',
+                                  maturity_rating: 'TV-14',
                                   show_type: 'EPISODIC', 
 )
 
@@ -490,7 +489,7 @@ gamers_generation = Show.create!( title: 'Gamers Generation',
                                   director: 'Tom Sun',
                                   tagline: 'All units, ready to fight.',
                                   year: 2017,
-                                  maturity_rating: 'PG-13',
+                                  maturity_rating: 'TV-14',
                                   show_type: 'EPISODIC'
 )
 
