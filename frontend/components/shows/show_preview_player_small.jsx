@@ -95,7 +95,6 @@ class ShowPreviewPlayerSmall extends React.Component {
                          className={`show-row-item-x item-${show.id}`} 
                          onMouseEnter={this.playVideo}
                          onMouseLeave={this.pauseVideo}
-                        //  onMouseOut={this.pauseVideo}
                 >
                                 
                     <img src={show ? show.posterUrl : window.tempBgURL} 
