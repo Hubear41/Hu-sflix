@@ -16,7 +16,7 @@
 
 
 class Show < ApplicationRecord
-    MATURITY_RATINGS = %w(G PG PG-13 R NC-17)
+    MATURITY_RATINGS = %w(G PG PG-13 R NC-17 TV-14 TV-MA)
     SHOW_TYPES = %w(FEATURE EPISODIC)
     
     validates :title, :director, :tagline, presence: true
