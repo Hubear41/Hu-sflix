@@ -30,13 +30,15 @@ This webservice was built in 10 days. Bug fixes and refactors are on the way.
 
 *  When the mouse hovers over a thumbnail, the image both dynammically grows and fires a function to play the video. The hover effects are on a delay so that a quick hover over the image doesn't start several videos. If the mouse leaves the thumbnail before it plays, it prevents the video from playing/loading.
 
-![](./docs/images/husflix-dynamic-thumbnail-img.png)
+![](./docs/images/husflix-hovered-thumbnail-img.png)
 
 * The hover effect is created using a combination of React refs and HTML media attributes. The thumbnail listens for a `mouseover` event to have it run playVideo(), which creates a setTimeout that will play the video and update state after a 2 seconds.
 
 * The thumbnail also listens for a `mouseleave` event that will run pauseVideo() that clears the timer or pause the video if it had been playing.
 
-`   playVideo() {
+`   
+
+    playVideo() {
         const videoEl = this.videoPlayer.current;
         
         this.videoTimeout = setTimeout( () => {
@@ -53,4 +55,5 @@ This webservice was built in 10 days. Bug fixes and refactors are on the way.
         clearTimeout(this.videoTimeout);
 
         this.setState({ paused: true });
-    } `
+    } 
+`
