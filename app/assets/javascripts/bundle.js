@@ -973,7 +973,7 @@ function (_React$Component) {
         className: "fas fa-caret-up"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "nav-dropdown-profiles"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Manage Profiles")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "nav-dropdown-links"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleLogout,
@@ -2168,8 +2168,7 @@ function (_React$Component) {
         id: "show-peek-preview-wrapper",
         className: "show-row-item-x item-".concat(show.id),
         onMouseEnter: this.playVideo,
-        onMouseLeave: this.pauseVideo //  onMouseOut={this.pauseVideo}
-
+        onMouseLeave: this.pauseVideo
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: show ? show.posterUrl : window.tempBgURL,
         alt: show.title,
@@ -2197,15 +2196,6 @@ function (_React$Component) {
         className: "fas fa-circle play-btn-bg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "far fa-circle play-btn-outline"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
-        className: "preview-player-right-side-btns"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.toggleMute,
-        className: "preview-mute-btn"
-      }, muteBtn, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-circle mute-btn-bg"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "far fa-circle mute-btn-outline"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
         className: "preview-video-info-desc"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
@@ -46306,7 +46296,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
