@@ -12,8 +12,9 @@ class ShowGallery extends React.Component {
     }
     
     componentDidMount() {
-        this.props.requestAllShows();
-        this.props.requestPreviewVideos();
+        this.props.requestAllShows().then( () => {
+            this.props.requestPreviewVideos();
+        });
     }
 
     static getDerivedStateFromProps(props, state) {

@@ -1848,8 +1848,11 @@ function (_React$Component) {
   _createClass(ShowGallery, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.requestAllShows();
-      this.props.requestPreviewVideos();
+      var _this2 = this;
+
+      this.props.requestAllShows().then(function () {
+        _this2.props.requestPreviewVideos();
+      });
     }
   }, {
     key: "createRows",
