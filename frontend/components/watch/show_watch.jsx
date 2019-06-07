@@ -81,11 +81,13 @@ class Watch extends React.Component {
         const videoEl = this.videoPlayer.current;
         
         if (videoEl.paused) {
-            videoEl.play();
-            this.setState({ paused: false });
+            videoEl.play().then( () => {
+                this.setState({ paused: false });
+            });
         } else {
-            videoEl.pause();
-            this.setState({ paused: true });
+            videoEl.pause().then( () => {
+                this.setState({ paused: true });
+            });
         }
     }
 
@@ -257,7 +259,7 @@ class Watch extends React.Component {
                     <video  className="main-video-tag" 
                             ref={this.videoPlayer}
                             poster={window.tempBgURL} 
-                            autoPlay
+                            onCanPlay={this.togglePlayPause}
                             controls={false}
                             > 
                         <source src={video ? video.videoUrl : ''} />

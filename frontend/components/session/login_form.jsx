@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../footer/footer'
 import { Link, withRouter } from 'react-router-dom';
 
 class LoginForm extends React.Component {
@@ -82,8 +83,10 @@ class LoginForm extends React.Component {
 
         return (
             <>
-                <img src={window.splashBg} alt="" className="welcome-image login-bg"/>
-                <section className={`login-form-wrapper`}>
+                <section className="push-footer-down">
+                    <img src={window.splashBg} alt="" className="welcome-image login-bg"/>
+                    <section className={`login-form-wrapper`}>
+
                         <section className="login-form-body">
                             <h3>{formName}</h3>
                                 
@@ -129,6 +132,8 @@ class LoginForm extends React.Component {
                             <span className="new-to-netflix-signup">New to Hu'sflix? <Link to="/signup" className="signup-link">Sign up now</Link>.</span>
                         </section>
                         <figure className="black-bg"></figure>
+                    </section>
+                <Footer />
                 </section>
             </>
         )

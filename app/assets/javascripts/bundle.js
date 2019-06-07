@@ -433,9 +433,6 @@ var App = function App() {
     exact: true,
     path: "/",
     component: _footer_footer__WEBPACK_IMPORTED_MODULE_8__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_10__["AuthRoute"], {
-    path: "/login",
-    component: _footer_footer__WEBPACK_IMPORTED_MODULE_8__["default"]
   }));
 };
 
@@ -846,24 +843,27 @@ function (_React$Component) {
         return null;
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
-        className: "husflix-footer"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "",
-        className: "website-symbol"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-ghost"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "https://github.com/Hubear41",
-        className: "github-symbol"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fab fa-github"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "https://www.linkedin.com/in/dennisdhu/",
-        className: "linkedin-symbol"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fab fa-linkedin-in"
-      })));
+      return (// <section className="footer-positioning">
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
+          className: "husflix-footer"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "",
+          className: "website-symbol"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-ghost"
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "https://github.com/Hubear41",
+          className: "github-symbol"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fab fa-github"
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "https://www.linkedin.com/in/dennisdhu/",
+          className: "linkedin-symbol"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fab fa-linkedin-in"
+        }))) // </section>
+
+      );
     }
   }]);
 
@@ -1226,7 +1226,8 @@ var Root = function Root(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _footer_footer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../footer/footer */ "./frontend/components/footer/footer.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1246,6 +1247,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1351,7 +1353,7 @@ function (_React$Component) {
       }, "Your password must contain at least 6 characters.") : null;
       var logininError = errors.includes('login') ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "login-error"
-      }, "Sorry, we can't find an account with this email address. Please try again or ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      }, "Sorry, we can't find an account with this email address. Please try again or ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/signup",
         className: "create-new-account-link"
       }, "create a new account"), ".") : null;
@@ -1365,7 +1367,9 @@ function (_React$Component) {
         passwordIptType = 'password';
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "push-footer-down"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: window.splashBg,
         alt: "",
         className: "welcome-image login-bg"
@@ -1414,19 +1418,19 @@ function (_React$Component) {
         className: "login-guest-btn"
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "new-to-netflix-signup"
-      }, "New to Hu'sflix? ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      }, "New to Hu'sflix? ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/signup",
         className: "signup-link"
       }, "Sign up now"), ".")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "black-bg"
-      })));
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_footer_footer__WEBPACK_IMPORTED_MODULE_1__["default"], null)));
     }
   }]);
 
   return LoginForm;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(LoginForm));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(LoginForm));
 
 /***/ }),
 
@@ -2499,17 +2503,21 @@ function (_React$Component) {
   }, {
     key: "togglePlayPause",
     value: function togglePlayPause(e) {
+      var _this3 = this;
+
       var videoEl = this.videoPlayer.current;
 
       if (videoEl.paused) {
-        videoEl.play();
-        this.setState({
-          paused: false
+        videoEl.play().then(function () {
+          _this3.setState({
+            paused: false
+          });
         });
       } else {
-        videoEl.pause();
-        this.setState({
-          paused: true
+        videoEl.pause().then(function () {
+          _this3.setState({
+            paused: true
+          });
         });
       }
     }
@@ -2658,12 +2666,12 @@ function (_React$Component) {
   }, {
     key: "showControls",
     value: function showControls() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.state.mouseMoving) {
         clearTimeout(this.timeout);
         this.timeout = setTimeout(function () {
-          _this3._hideControls();
+          _this4._hideControls();
         }, 3000);
       } else {
         this.setState({
@@ -2671,7 +2679,7 @@ function (_React$Component) {
           hidden: false
         });
         this.timeout = setTimeout(function () {
-          _this3._hideControls();
+          _this4._hideControls();
         }, 3000);
       }
     }
@@ -2768,7 +2776,7 @@ function (_React$Component) {
         className: "main-video-tag",
         ref: this.videoPlayer,
         poster: window.tempBgURL,
-        autoPlay: true,
+        onCanPlay: this.togglePlayPause,
         controls: false
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         src: video ? video.videoUrl : ''

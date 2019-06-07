@@ -31,7 +31,6 @@ const App = () => {
                 {/* <ProtectedRoute path="/genre/:genreId" component={GenreGallery} /> */}
             </main>
             <AuthRoute exact path="/" component={Footer} />
-            <AuthRoute path="/login" component={Footer} />
         </>
     );
 };
