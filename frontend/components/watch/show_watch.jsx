@@ -45,14 +45,11 @@ class Watch extends React.Component {
 
     
     componentDidMount() {
-        const { videoId, showId } = this.props.match.params;
-        this.props.fetchShows();
-        this.props.fetchVideo(videoId);
+        const { showId } = this.props.match.params;
         this.props.fetchShow(showId);
         
         document.addEventListener('keydown', e => this.determineKeyPress(e));
         this.interval = setInterval(this._tick, 1000); //updates the timer each half second
-
     }
 
     determineKeyPress(e) {        
@@ -81,15 +78,15 @@ class Watch extends React.Component {
         }
     }
 
-    // componentDidUpdate(prevProps) {
-    //     if (prevProps.match.params.showId !== this.props.match.params.showId ) {
-    //         const { videoId, showId } = this.props.match.params;
+    componentDidUpdate(prevProps) {
+        debugger
+        if (prevProps.match.params.showId !== this.props.match.params.showId ) {
+            const { videoId, showId } = this.props.match.params;
 
-    //         this.props.fetchShows();
-    //         this.props.fetchVideo(videoId);
-    //         this.props.fetchShow(showId);
-    //     }
-    // }
+            this.props.fetchShows();
+            this.props.fetchShow(showId);
+        }
+    }
 
     startPlayer() {
         const videoEl = this.videoPlayer.current;
@@ -101,8 +98,9 @@ class Watch extends React.Component {
 
     togglePlayPause(e) {   
         const videoEl = this.videoPlayer.current;
+        const { paused } = this.state;
         
-        if (videoEl.paused) {
+        if (paused) {
             videoEl.play().then(
                 () => this.setState({ paused: false }),
                 () => this.setState({ paused: true })
@@ -236,7 +234,7 @@ class Watch extends React.Component {
     }
 
     backToBrowse() {
-        const controlArea = this.videoPlayer.current;
+        const videoEl = this.videoPlayer.current;
         
         if ( !videoEl.paused ) {
             videoEl.pause();
@@ -269,16 +267,16 @@ class Watch extends React.Component {
         // this.props.history.push(`/watch/${nextShow.id}/${nextVideoId}`);
 
         this.setState({
-            currentPlayerTime: 0,
-            paused: false,
-            fullscreen: false,
-            muted: false,
-            volume: 0.8,
-            prevVolume: 0.8,
-            hidden: true,
-            mouseMoving: false,
-            ended: false,
-            next: false,
+            // currentPlayerTime: 0,
+            // paused: false,
+            // fullscreen: false,
+            // muted: false,
+            // volume: 0.8,
+            // prevVolume: 0.8,
+            // hidden: true,
+            // mouseMoving: false,
+            // ended: false,
+            next: true,
         });
 
     }

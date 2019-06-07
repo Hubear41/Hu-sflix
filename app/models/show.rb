@@ -34,6 +34,10 @@ class Show < ApplicationRecord
     has_many :genres,
         through: :show_genres,
         source: :genre
+
+    def next_show_id 
+        all_ids = Show.where('id != :id', id: self.id).shuffle.first.id;
+    end
  
     private
 

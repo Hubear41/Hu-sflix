@@ -319,8 +319,8 @@ var fetchShows = function fetchShows() {
 };
 var fetchShow = function fetchShow(id) {
   return function (dispatch) {
-    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchShow"](id).then(function (show) {
-      return dispatch(receiveShow(show));
+    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchShow"](id).then(function (payload) {
+      return dispatch(receiveShow(payload));
     });
   };
 };
@@ -353,10 +353,13 @@ var receiveShows = function receiveShows(shows) {
   };
 };
 
-var receiveShow = function receiveShow(show) {
+var receiveShow = function receiveShow(_ref) {
+  var show = _ref.show,
+      video = _ref.video;
   return {
     type: RECEIVE_SHOW,
-    show: show
+    show: show,
+    video: video
   };
 };
 
@@ -2432,11 +2435,7 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var _this$props$match$par = this.props.match.params,
-          videoId = _this$props$match$par.videoId,
-          showId = _this$props$match$par.showId;
-      this.props.fetchShows();
-      this.props.fetchVideo(videoId);
+      var showId = this.props.match.params.showId;
       this.props.fetchShow(showId);
       document.addEventListener('keydown', function (e) {
         return _this2.determineKeyPress(e);
@@ -2480,15 +2479,20 @@ function (_React$Component) {
         default:
           break;
       }
-    } // componentDidUpdate(prevProps) {
-    //     if (prevProps.match.params.showId !== this.props.match.params.showId ) {
-    //         const { videoId, showId } = this.props.match.params;
-    //         this.props.fetchShows();
-    //         this.props.fetchVideo(videoId);
-    //         this.props.fetchShow(showId);
-    //     }
-    // }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      debugger;
 
+      if (prevProps.match.params.showId !== this.props.match.params.showId) {
+        var _this$props$match$par = this.props.match.params,
+            videoId = _this$props$match$par.videoId,
+            showId = _this$props$match$par.showId;
+        this.props.fetchShows();
+        this.props.fetchShow(showId);
+      }
+    }
   }, {
     key: "startPlayer",
     value: function startPlayer() {
@@ -2503,8 +2507,9 @@ function (_React$Component) {
       var _this3 = this;
 
       var videoEl = this.videoPlayer.current;
+      var paused = this.state.paused;
 
-      if (videoEl.paused) {
+      if (paused) {
         videoEl.play().then(function () {
           return _this3.setState({
             paused: false
@@ -2706,7 +2711,7 @@ function (_React$Component) {
   }, {
     key: "backToBrowse",
     value: function backToBrowse() {
-      var controlArea = this.videoPlayer.current;
+      var videoEl = this.videoPlayer.current;
 
       if (!videoEl.paused) {
         videoEl.pause();
@@ -2742,16 +2747,16 @@ function (_React$Component) {
       // this.videoPlayer = React.createRef();
       // this.props.history.push(`/watch/${nextShow.id}/${nextVideoId}`);
       this.setState({
-        currentPlayerTime: 0,
-        paused: false,
-        fullscreen: false,
-        muted: false,
-        volume: 0.8,
-        prevVolume: 0.8,
-        hidden: true,
-        mouseMoving: false,
-        ended: false,
-        next: false
+        // currentPlayerTime: 0,
+        // paused: false,
+        // fullscreen: false,
+        // muted: false,
+        // volume: 0.8,
+        // prevVolume: 0.8,
+        // hidden: true,
+        // mouseMoving: false,
+        // ended: false,
+        next: true
       });
     }
   }, {
@@ -3304,37 +3309,9 @@ var usersReducer = function usersReducer() {
   !*** ./frontend/reducers/videos_reducer.js ***!
   \*********************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/show_actions */ "./frontend/actions/show_actions.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-var videosReducer = function videosReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-  Object.freeze(state);
-
-  switch (action.type) {
-    case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_VIDEOS"]:
-      return action.videos;
-
-    case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_VIDEO"]:
-      var video = action.video;
-      return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, state, _defineProperty({}, video.id, video));
-
-    default:
-      return state;
-  }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (videosReducer);
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/frontend/reducers/videos_reducer.js: Identifier 'video' has already been declared (19:20)\n\n\u001b[0m \u001b[90m 17 | \u001b[39m            \u001b[36mreturn\u001b[39m merge({}\u001b[33m,\u001b[39m state\u001b[33m,\u001b[39m { [video\u001b[33m.\u001b[39mid]\u001b[33m:\u001b[39m video })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 18 | \u001b[39m        \u001b[36mcase\u001b[39m \u001b[33mRECEIVE_VIDEO\u001b[39m\u001b[33m:\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 19 | \u001b[39m            \u001b[36mconst\u001b[39m { video } \u001b[33m=\u001b[39m action\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 20 | \u001b[39m            \u001b[0m\n\u001b[0m \u001b[90m 21 | \u001b[39m            \u001b[36mreturn\u001b[39m merge({}\u001b[33m,\u001b[39m state\u001b[33m,\u001b[39m { [video\u001b[33m.\u001b[39mid]\u001b[33m:\u001b[39m video })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 22 | \u001b[39m        \u001b[36mdefault\u001b[39m\u001b[33m:\u001b[39m \u001b[0m\n    at Object.raise (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:6344:17)\n    at ScopeHandler.checkRedeclarationInScope (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3757:12)\n    at ScopeHandler.declareName (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3723:12)\n    at Object.checkLVal (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8034:22)\n    at Object.checkLVal (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8050:16)\n    at Object.parseVarId (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:10465:10)\n    at Object.parseVar (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:10436:12)\n    at Object.parseVarStatement (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:10258:10)\n    at Object.parseStatementContent (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:9855:21)\n    at Object.parseStatement (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:9788:17)\n    at Object.parseSwitchStatement (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:10195:36)\n    at Object.parseStatementContent (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:9839:21)\n    at Object.parseStatement (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:9788:17)\n    at Object.parseBlockOrModuleBlockBody (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:10364:25)\n    at Object.parseBlockBody (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:10351:10)\n    at Object.parseBlock (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:10335:10)\n    at Object.parseFunctionBody (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:9408:24)\n    at Object.parseArrowExpression (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:9349:10)\n    at Object.parseParenAndDistinguishExpression (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8986:12)\n    at Object.parseExprAtom (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8760:21)\n    at Object.parseExprAtom (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3599:20)\n    at Object.parseExprSubscripts (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8413:23)\n    at Object.parseMaybeUnary (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8393:21)\n    at Object.parseExprOps (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8280:23)\n    at Object.parseMaybeConditional (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8253:23)\n    at Object.parseMaybeAssign (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8200:21)\n    at Object.parseVar (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:10439:26)\n    at Object.parseVarStatement (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:10258:10)\n    at Object.parseStatementContent (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:9855:21)\n    at Object.parseStatement (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:9788:17)");
 
 /***/ }),
 
