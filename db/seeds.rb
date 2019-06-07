@@ -306,7 +306,7 @@ ling_show.poster.attach( io: ling_poster, filename: 'ling_poster.jpg')
 ling_show.save!
 
 ling_video = ling_show.videos.create!( name: 'Ling Promo',
-                                       escription: 'Ling Promo',
+                                       description: 'Ling Promo',
                                        runtime: 263,
                                        video_type: 'FILM',
 )
