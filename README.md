@@ -22,7 +22,7 @@ This webservice was built in 10 days. Bug fixes and refactors are on the way.
 
 * The Video Header in the show browse can alternate through a poster or a video player automatically.
 
-![](https://media.giphy.com/media/dZo6plOYdOpRNCMmOY/giphy.gif)
+![](https://media.giphy.com/media/mBLOB5bTCqUg5SpRyY/giphy.gif)
 
 * On page load, the poster is shown until the video hits the event `canPlayThrough`. The `canPlayThrough` event fires a function that plays the video as well as hides the poster. The video is muted by default but can be toggled with a button next to the maturity rating
 
@@ -30,7 +30,7 @@ This webservice was built in 10 days. Bug fixes and refactors are on the way.
 
 *  When the mouse hovers over a thumbnail, the image both dynammically grows and fires a function to play the video. The hover effects are on a delay so that a quick hover over the image doesn't start several videos. If the mouse leaves the thumbnail before it plays, it prevents the video from playing/loading.
 
-![](./docs/images/husflix-hovered-thumbnail-img.png)
+![](https://media.giphy.com/media/h4BHTfZ59INTbK46GA/giphy.gif)
 
 * The hover effect is created using a combination of React refs and HTML media attributes. The thumbnail listens for a `mouseover` event to have it run `playVideo()`, which creates a setTimeout that will play the video and update state after a 2 seconds. The 2 second timer helps prevent videos from playing when the mouse is just passing by.
 
