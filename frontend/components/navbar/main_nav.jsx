@@ -34,7 +34,6 @@ class MainNav extends React.Component {
                         </section>
                         <nav className="nav-btns">
                             <Link to="/browse" className="home-btn">Home</Link>
-
                         </nav>
                     </section>
 
