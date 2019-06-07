@@ -12,7 +12,7 @@ class BigPreview extends React.Component {
         };
         this.videoPlayer = React.createRef();
         this.poster = React.createRef();
-        // this.videoReady = this.videoReady.bind(this);
+        this.videoReady = this.videoReady.bind(this);
         this.videoEnded = this.videoEnded.bind(this);
         this.revealVideo = this.revealVideo.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
@@ -125,15 +125,15 @@ class BigPreview extends React.Component {
                 <section className="video-el-wrapper" style={{ opacity: videoOpacity }}>
                     <figure className="big-preview-filter"></figure>
                     <figure className="big-video-bg"></figure>
-                    {/* <video  controls={true}
+                    <video  controls={true}
                             muted
                             className="big-video"
                             ref={this.videoPlayer}
-                            // onCanPlayThrough={this.videoReady}
+                            onCanPlayThrough={this.videoReady}
                             onEnded={this.videoEnded}
                     >
                         { video && video.videoUrl ? <source src={video.videoUrl} type="video/mp4" /> : null }
-                    </video> */}
+                    </video>
                 </section>
 
                 <article className="big-preview-left-controls">

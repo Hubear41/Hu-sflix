@@ -494,8 +494,8 @@ function (_React$Component) {
       ended: false
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
-    _this.poster = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef(); // this.videoReady = this.videoReady.bind(this);
-
+    _this.poster = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.videoReady = _this.videoReady.bind(_assertThisInitialized(_this));
     _this.videoEnded = _this.videoEnded.bind(_assertThisInitialized(_this));
     _this.revealVideo = _this.revealVideo.bind(_assertThisInitialized(_this));
     _this.pauseVideo = _this.pauseVideo.bind(_assertThisInitialized(_this));
@@ -668,7 +668,17 @@ function (_React$Component) {
         className: "big-preview-filter"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-video-bg"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+        controls: true,
+        muted: true,
+        className: "big-video",
+        ref: this.videoPlayer,
+        onCanPlayThrough: this.videoReady,
+        onEnded: this.videoEnded
+      }, video && video.videoUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+        src: video.videoUrl,
+        type: "video/mp4"
+      }) : null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "big-preview-left-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "big-preview-show-title"
@@ -2325,7 +2335,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Splash = function Splash(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "splash-image-wrapper"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: window.splashBg,
     className: "welcome-image"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

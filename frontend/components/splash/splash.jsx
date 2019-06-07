@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Splash = props => (
-    <>
+    <div className='splash-image-wrapper'>
         <img src={window.splashBg} className="welcome-image"/>
         <div className="splash-wrapper">
 
@@ -18,7 +18,7 @@ const Splash = props => (
                 </section>
             </div>
         </div>
-    </>
+    </div>
 );
 
 export default Splash;

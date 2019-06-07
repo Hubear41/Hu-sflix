@@ -111,7 +111,8 @@
 .big-preview-show-title article{
     display: flex;
     align-items: center;
-    height: 15vw;
+    height: 10vw;
+    width: 40vw;
     max-width: 100%;
     overflow: hidden;
 }
