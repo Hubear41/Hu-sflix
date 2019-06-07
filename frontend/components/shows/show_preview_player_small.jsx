@@ -125,14 +125,14 @@ class ShowPreviewPlayerSmall extends React.Component {
                                 </figure>
                             </button>
 
-                            <aside className="preview-player-right-side-btns">
+                            {/* <aside className="preview-player-right-side-btns">
                                 <button onClick={this.toggleMute} className="preview-mute-btn">
                                     {muteBtn}
                                     <i className="fas fa-circle mute-btn-bg"></i>
                                     <i className="far fa-circle mute-btn-outline"></i>
                                 </button>
 
-                            </aside>
+                            </aside> */}
  
                             <figcaption className="preview-video-info-desc">
                                 <h5 className="preview-show-title">{show.title}</h5>
