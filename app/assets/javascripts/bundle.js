@@ -558,11 +558,13 @@ function (_React$Component) {
       var videoEl = this.videoPlayer.current;
 
       if (videoEl.paused) {
-        videoEl.play().then(function () {
-          _this4.setState({
-            imageOpacity: 0
+        setTimeout(function () {
+          videoEl.play().then(function () {
+            _this4.setState({
+              imageOpacity: 0
+            });
           });
-        });
+        }, 1000);
       }
     }
   }, {

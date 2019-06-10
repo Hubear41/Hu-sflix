@@ -68,9 +68,11 @@ class BigPreview extends React.Component {
         const videoEl = this.videoPlayer.current;
 
         if ( videoEl.paused ) {
-            videoEl.play().then( () => {
-                this.setState({ imageOpacity: 0 });
-            });
+            setTimeout( () => {
+                videoEl.play().then( () => {
+                    this.setState({ imageOpacity: 0 });
+                });
+            }, 1000);
         }
     }
 
