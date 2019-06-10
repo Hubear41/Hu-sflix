@@ -648,8 +648,8 @@ function (_React$Component) {
           video = _this$props.video;
       var _this$state2 = this.state,
           imageOpacity = _this$state2.imageOpacity,
-          started = _this$state2.started;
-      var videoOpacity = imageOpacity === 1 ? 0 : 1;
+          started = _this$state2.started,
+          ended = _this$state2.ended;
       var buttonIcon = this.videoPlayer.current ? this.videoControllerIcon() : null;
       var buttonFunc = this.videoPlayer.current ? this.videoFunction() : null;
       var iconStyle = started ? {
@@ -657,28 +657,36 @@ function (_React$Component) {
       } : {
         opacity: 0
       };
-      debugger;
+      var imageAnimation = '';
+      var blackAnimation = '';
+
+      if (started && imageOpacity === 0) {
+        imageAnimation = 'fade-out';
+        blackAnimation = 'fade-out-black';
+      } else if (started && imageOpacity === 1) {
+        imageAnimation = 'fade-in';
+        blackAnimation = 'fade-in-black';
+      } else if (ended) {
+        imageAnimation = 'fade-in';
+        blackAnimation = 'fade-in-black';
+      } // debugger
+
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-video-preview-wrapper",
         ref: this.entirePreview
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-preview-filter"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "big-video-poster",
-        style: {
-          opacity: imageOpacity
-        }
+        className: "big-video-poster"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: show && show.posterUrl ? show.posterUrl : window.tempBgURL,
-        className: "preview-poster",
+        className: "preview-poster ".concat(imageAnimation),
         ref: this.poster
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "poster-black-bg"
+        className: "poster-black-bg ".concat(blackAnimation)
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "video-el-wrapper",
-        style: {
-          opacity: videoOpacity
-        }
+        className: "video-el-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-preview-filter"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
@@ -709,10 +717,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Play")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "big-preview-btn-bg"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "big-preview-show-tagline",
-        style: {
-          opacity: imageOpacity
-        }
+        className: "big-preview-show-tagline ".concat(imageAnimation)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, show.tagline))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-preview-right-content"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {

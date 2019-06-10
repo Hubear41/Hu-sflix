@@ -129,25 +129,38 @@ class BigPreview extends React.Component {
 
     render() {
         const { show, video } = this.props;
-        const { imageOpacity, started } = this.state;
-        const videoOpacity = imageOpacity === 1 ? 0 : 1;
+        const { imageOpacity, started, ended } = this.state;
         
         const buttonIcon = this.videoPlayer.current ? this.videoControllerIcon() : null;
         const buttonFunc = this.videoPlayer.current ? this.videoFunction() : null;
         const iconStyle = started ? { opacity: 1 } : { opacity: 0 };
-        debugger
+
+        let imageAnimation = '';
+        let blackAnimation = '';
+        if ( started && imageOpacity === 0 ) {
+            imageAnimation = 'fade-out';
+            blackAnimation = 'fade-out-black';
+        } else if ( started && imageOpacity === 1 ) {
+            imageAnimation = 'fade-in';
+            blackAnimation = 'fade-in-black';
+        } else if ( ended ) {
+            imageAnimation = 'fade-in';
+            blackAnimation = 'fade-in-black';
+        }
+
+        // debugger
         return (
             <figure className="big-video-preview-wrapper" ref={this.entirePreview}>
                 <figure className="big-preview-filter"></figure>
-                <section className="big-video-poster" style={{ opacity: imageOpacity }}>
+                <section className="big-video-poster" >
                     <img src={show && show.posterUrl ? show.posterUrl : window.tempBgURL} 
-                        className="preview-poster"
+                        className={`preview-poster ${imageAnimation}`}
                         ref={this.poster}
                     ></img>
-                    <figure className="poster-black-bg"></figure>
+                    <figure className={`poster-black-bg ${blackAnimation}`}></figure>
                 </section>
 
-                <section className="video-el-wrapper" style={{ opacity: videoOpacity }}>
+                <section className="video-el-wrapper" >
                     <figure className="big-preview-filter"></figure>
                     <figure className="big-video-bg"></figure>
                     <video  controls={true}
@@ -186,7 +199,7 @@ class BigPreview extends React.Component {
                         </button> */}
                     </div>
 
-                    <p className="big-preview-show-tagline" style={{ opacity: imageOpacity }}>
+                    <p className={`big-preview-show-tagline ${imageAnimation}`}>
                         <span>{show.tagline}</span>
                     </p>
                 </article>
