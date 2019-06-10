@@ -4,7 +4,7 @@
 
 # Hu'sflix 
 
-Hu'sflix is a media streaming service inspired by Netflix where movies are separated into rows. It uses Rails/Postgresql backend that interacts with a React/Redux frontend. The site is hosted on Heroku and media assets are hosted on AWS.
+Hu'sflix is a media streaming service inspired by Netflix where movies are categorized by rows. It uses Rails/Postgresql as it's backend that interacts with a React/Redux frontend. The site is hosted on Heroku and media assets are hosted on AWS.
 
 This webservice was built in 10 days. Bug fixes and refactors are on the way.
 
