@@ -13,7 +13,7 @@ export const fetchShows = () => dispatch => {
 };
 
 export const fetchShow = id => dispatch => {
-    return ShowUTIL.fetchShow(id).then( show => dispatch(receiveShow(show)) );
+    return ShowUTIL.fetchShow(id).then( payload => dispatch(receiveShow(payload)) );
 };
 
 const receiveVideo = video => ({
@@ -27,7 +27,9 @@ const receiveShows = ({ shows, videos }) => ({
     videos,
 });
 
-const receiveShow = show => ({
+const receiveShow = ({show, nextShow, video}) => ({
     type: RECEIVE_SHOW,
     show,
+    nextShow,
+    video,
 })

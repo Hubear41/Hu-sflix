@@ -12,9 +12,12 @@ class BigPreview extends React.Component {
         };
         this.videoPlayer = React.createRef();
         this.poster = React.createRef();
+        this.entirePreview = React.createRef();
+
         this.videoReady = this.videoReady.bind(this);
         this.videoEnded = this.videoEnded.bind(this);
         this.revealVideo = this.revealVideo.bind(this);
+        this.playVideo = this.playVideo.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
         this.launchWatch = this.launchWatch.bind(this);
         this.videoControllerIcon = this.videoControllerIcon.bind(this);
@@ -23,9 +26,19 @@ class BigPreview extends React.Component {
     
     componentDidMount() {
         const { previewId } = this.props;
+        const { ended } = this.state;
         this.props.requestVideo(previewId);
         
-        window.addEventListener('scroll', () => this.pauseVideo());
+
+        window.addEventListener('scroll', () => {
+            let bigPreview = this.entirePreview.current;
+
+            if ( !ended && window.pageYOffset > (bigPreview.scrollHeight / 2) ) {
+                this.pauseVideo();
+            } else if ( !ended && window.pageYOffset <= (bigPreview.scrollHeight / 2) ) {
+                this.playVideo();
+            }
+        });
     }
 
     toggleMute() {
@@ -51,13 +64,23 @@ class BigPreview extends React.Component {
         this.setState({ imageOpacity: 0, ended: false, started: true });
     }
 
+    playVideo() {
+        const videoEl = this.videoPlayer.current;
+
+        if ( videoEl.paused ) {
+            videoEl.play().then( () => {
+                this.setState({ imageOpacity: 0 });
+            });
+        }
+    }
+
     pauseVideo() {
         const videoEl = this.videoPlayer.current;
         
         if ( !videoEl.paused ) {
             setTimeout( () => {
-                this.videoPlayer.current.pause();
-                this.setState({ imageOpacity: 1, ended: true });
+                videoEl.pause();
+                this.setState({ imageOpacity: 1 });
             }, 1000);
         }
     }
@@ -110,9 +133,9 @@ class BigPreview extends React.Component {
         const buttonIcon = this.videoPlayer.current ? this.videoControllerIcon() : null;
         const buttonFunc = this.videoPlayer.current ? this.videoFunction() : null;
         const iconStyle = started ? { opacity: 1 } : { opacity: 0 };
-
+        debugger
         return (
-            <figure className="big-video-preview-wrapper">
+            <figure className="big-video-preview-wrapper" ref={this.entirePreview}>
                 <figure className="big-preview-filter"></figure>
                 <section className="big-video-poster" style={{ opacity: imageOpacity }}>
                     <img src={show && show.posterUrl ? show.posterUrl : window.tempBgURL} 

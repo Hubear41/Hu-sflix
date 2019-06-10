@@ -4,11 +4,11 @@
 
 .play-btn-triangle {
     position: absolute;
-    top: -1.6vh;
+    top: -1.55vh;
     left: 0.8vw;
     z-index: 21;
     transform-origin: center;
-    transform: scale(0.9);
+    transform: scale(0.8);
     color: red;
 }
 
@@ -18,7 +18,7 @@
     left: 0.7vw;
     z-index: 18;
     transform-origin: center;
-    transform: scale(2)
+    transform: scale(1.5)
 }
 
 .play-btn-outline {
@@ -28,7 +28,7 @@
     z-index: 20;
     transform-origin: center;
     color: white;
-    transform: scale(2);
+    transform: scale(1.5);
     opacity: 0.6;
 }
 

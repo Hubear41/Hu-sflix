@@ -19,6 +19,8 @@ class Watch extends React.Component {
         this.timeout;
         this.videoPlayer = React.createRef();
         this.fullControlArea = React.createRef();
+
+        // all video player methods
         this.openFullscreen = this.openFullscreen.bind(this);
         this.closeFullscreen = this.closeFullscreen.bind(this);
         this.togglePlayPause = this.togglePlayPause.bind(this);
@@ -27,6 +29,7 @@ class Watch extends React.Component {
         this.jumpForward = this.jumpForward.bind(this);
         this.handleTimeChange = this.handleTimeChange.bind(this);
         this.handleVolumeChange = this.handleVolumeChange.bind(this);
+        this.changeVolume = this.changeVolume.bind(this);
         this.showControls = this.showControls.bind(this);
         this._hideControls = this._hideControls.bind(this);
         this._tick = this._tick.bind(this);
@@ -36,8 +39,7 @@ class Watch extends React.Component {
 
     
     componentDidMount() {
-        const { videoId, showId } = this.props.match.params;
-        this.props.fetchVideo(videoId);
+        const { showId } = this.props.match.params;
         this.props.fetchShow(showId);
         
         setInterval(this._tick, 1000); //updates the timer each half second
@@ -46,17 +48,29 @@ class Watch extends React.Component {
 
     determineKeyPress(e) {        
         switch (e.keyCode) {
+            case 13:  // enter
+                this.togglePlayPause();
+                break;
             case 32:  // spacebar
                 this.togglePlayPause();
                 break;
             case 27:  // escape
                 document.fullscreen ? this.closeFullscreen() : null;
                 break;
+            case 38: // up arrow
+                this.changeVolume( 0.1 );
+                break;
+            case 40: // down arrow
+                this.changeVolume( -0.1 );
+                break;
             case 39:  // right arrow
                 this.jumpForward();
                 break;
             case 37:  // left arrow
                 this.jumpBack();
+                break;
+            case 77: // m key
+                this.toggleMute();
                 break;
             case 70:  // f key
                 if (document.fullscreen) {
@@ -70,24 +84,27 @@ class Watch extends React.Component {
         }
     }
 
-    componentDidUpdate() {
-        if ( this.state.loaded === false ) {
-            this.videoPlayer.current.load();
-            this.setState({ loaded: true });
-        }
-    }
+    // componentDidUpdate() {
+    //     if ( this.state.loaded === false ) {
+    //         this.videoPlayer.current.load();
+    //         this.setState({ loaded: true });
+    //     }
+    // }
 
-    togglePlayPause(e) {   
+    togglePlayPause() {   
+        const { paused } = this.state;
         const videoEl = this.videoPlayer.current;
         
-        if (videoEl.paused) {
+        // play() returns a promise obj
+        // the state is only changed if play works 
+        // prevents the play button from changing until it can play
+        if (paused) {
             videoEl.play().then( () => {
                 this.setState({ paused: false });
             });
         } else {
-            videoEl.pause().then( () => {
-                this.setState({ paused: true });
-            });
+            videoEl.pause();
+            this.setState({ paused: true });
         }
     }
 
@@ -108,6 +125,10 @@ class Watch extends React.Component {
         const videoEl = this.videoPlayer.current;
         const currVolume = volume === 0 ? 0.1 : volume;
 
+        // if audio has been muted, this resets the audio level back to it's 
+        // previous amount. 
+        // otherwise, this saves the current volume and set volume to 0
+        // volume is set to 0 incase the user tries to change the volume manually
         if ( muted ) {
             videoEl.muted = false;
             videoEl.volume = prevVolume;
@@ -119,6 +140,24 @@ class Watch extends React.Component {
         }
     }
 
+    // only used for the up and down arrow keys
+    changeVolume(amount) {
+        const videoEl = this.videoPlayer.current;
+        let newVolume = videoEl.volume + amount;
+
+        if ( newVolume > 1 ) {
+            newVolume = 1;
+        } else if ( newVolume < 0 ) {
+            newVolume = 0;
+        } 
+
+        videoEl.volume = newVolume;
+        this.setState({ volume: newVolume });
+    }
+
+    // this method is used whenever the user grabs the thumb of the audio input.
+    // as well as changing volume, this method also makes sure to adjust the mute
+    // variable as well.
     handleVolumeChange(e) {
         const videoEl = this.videoPlayer.current;
         videoEl.volume = e.target.value;
@@ -154,6 +193,8 @@ class Watch extends React.Component {
         this.setState({ currentPlayerTime: videoEl.currentTime })
     }
     
+    // the wrapper for the entire player runs requestFullscreen so that the 
+    // controls are fullscreened alongside the video player
     openFullscreen() {
         const entireVideoEl = this.fullControlArea.current;
 
@@ -183,7 +224,11 @@ class Watch extends React.Component {
 
         this.setState({ fullscreen: false })
     }
-    
+
+    // this method is run whenever the mouse moves anywhere over the video player
+    // on the first move, the controls will appear and it will set a timer to 
+    // hide the controls in 3 seconds if the mouse hasn't moved afterwards.
+    // if it is still moving before the timer ends, the timer is reset
     showControls() {
         if ( this.state.mouseMoving ) {
             clearTimeout(this.timeout);
@@ -210,8 +255,8 @@ class Watch extends React.Component {
 
     backToBrowse() {
         const videoEl = this.videoPlayer.current;
-        
-        if ( !videoEl.paused ) {
+
+        if ( !videoEl.paused ) { // pauses the video so that it's audio doesn't play into the next page
             videoEl.pause();
         }
 
@@ -224,26 +269,29 @@ class Watch extends React.Component {
         let runtime = video ? video.runtime : 0;
         let playPauseBtn = null, remainingTime = null, audioIcon = null, volumeStyle = null, timeStyle = null, controlStyle = null;
 
+        // once the main show and video have been loaded, these variables can  be asigned
         if ( this.videoPlayer.current !== null ) {               
             playPauseBtn = paused ? <i className="fas fa-play"></i> : <i className="fas fa-pause"></i>
             remainingTime =  Math.floor(runtime - currentPlayerTime);
-            const currProgress = (currentPlayerTime / runtime) * 100;
+            const currProgress = (currentPlayerTime / runtime) * 100; // in percent value
             const currVolume = muted ? 0 : volume;
             
-            timeStyle = {
+            // creates a progress bar look using a linear gradient in the bg. calculated using currProgress and total runtime
+            timeStyle = { 
                 background: `linear-gradient( to right, red 0%, red ${currProgress}%, #7c7c7c ${currProgress}% , #7c7c7c ${remainingTime}%)`
             }
             volumeStyle = {
                 background: `linear-gradient( to right, red 0%, red ${currVolume * 100}%, #7c7c7c ${currVolume * 100}%, #7c7c7c ${(1 - currVolume) * 100}% )`
             };
+            // determines whether or not the controll are hidden
             controlStyle = {
                 opacity: `${ hidden ? 0 : 1 }`
             }
             audioIcon = this.findAudioIcon();
         }
 
+        // decides the current button in the fullscreen slot
         let fullscreenBtn, fullscreenFunc; 
-        
         if ( fullscreen === true ) {
             fullscreenBtn = <i className="fas fa-compress"></i>;
             fullscreenFunc = this.closeFullscreen;
@@ -258,19 +306,17 @@ class Watch extends React.Component {
                 <div className="Video-Container">
                     <video  className="main-video-tag" 
                             ref={this.videoPlayer}
-                            poster={window.tempBgURL} 
-                            onCanPlay={this.togglePlayPause}
+                            poster={window.tempBgURL} // black backgroud when the video hasn't loaded
+                            onCanPlay={this.togglePlayPause} // starts playing when loaded
                             controls={false}
                             > 
                         <source src={video ? video.videoUrl : ''} />
-                         {/* <source src={window.videoBunny}
-                                 type="video/mp4"
-                                 /> */}
+
                         Browser does not support the video tag
                     </video>
                 </div>
 
-                <div className="all-player-controls">
+                <div className="all-player-controls"> 
                     <div className="clickable-area" 
                          onClick={this.togglePlayPause} 
                          onKeyPress={this.togglePlayPause}
@@ -285,8 +331,8 @@ class Watch extends React.Component {
 
                         <div className="main-video-bottom-controls">
                             <div className="progress-scrubber-wrapper">
-                                <figure className="scrubber-bar">
-                                    <input  type="range" 
+                                <figure className="scrubber-bar"> 
+                                    <input  type="range"   // progress slider
                                             className="slider time-slider"
                                             min="0" 
                                             max={`${runtime}`} 
@@ -297,13 +343,19 @@ class Watch extends React.Component {
                                             style={timeStyle}
                                     />
                                 </figure>
-                                <span className="scrubber-remaining-time">{DateTimeUTIL.secondsToTime(remainingTime)}</span>
+                                <span className="scrubber-remaining-time">
+                                    {DateTimeUTIL.secondsToTime(remainingTime)}
+                                </span>
                             </div>
 
                             <div className="Player-Controls-wrapper">
                                 <div className="Player-Controls">
                                     <div className="left-controls">
-                                        <button className="play-pause-toggle-btn" onClick={this.togglePlayPause}>{playPauseBtn}</button>
+                                        <button className="play-pause-toggle-btn" 
+                                                onClick={this.togglePlayPause}
+                                        >
+                                                    {playPauseBtn}
+                                        </button>
 
                                         <button onClick={this.jumpBack} className='forward-10-btn'>
                                             <i className="fas fa-undo"></i>

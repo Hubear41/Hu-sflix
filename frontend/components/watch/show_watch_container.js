@@ -6,10 +6,22 @@ import Watch from './show_watch';
 const msp = (state, ownProps) => {
     const video = state.entities.videos[ownProps.match.params.videoId];
     const show = state.entities.shows[ownProps.match.params.showId];
+    // let nextShow = null;
+
+    // const shows = Object.values(state.entities.shows);
+    // if ( shows.length > 1 ) {
+    //     debugger
+    //     shows.each( otherShow => {
+    //         if ( otherShow.id !== show.id ) {
+    //             nextShow = otherShow;
+    //         }
+    //     });  
+    // }
 
     return {
         video,
         show,
+        // nextShow,
     }
 }
 

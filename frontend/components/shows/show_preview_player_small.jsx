@@ -60,11 +60,11 @@ class ShowPreviewPlayerSmall extends React.Component {
         }
 
         const videoEl = this.videoPlayer.current;
-        
+        // debugger
         this.videoTimeout = setTimeout( () => {
-            videoEl.play();
-            
-            this.setState({ paused: false });
+            videoEl.play().then( () => {
+                this.setState({ paused: false });
+            });
         }, 2000)
     }
 
@@ -88,7 +88,7 @@ class ShowPreviewPlayerSmall extends React.Component {
     render() {
         const { show, preview } = this.props;
         const muteBtn = this.state.muted ? <i className="fas fa-volume-mute mute-symbol"></i> : <i className="fas fa-volume-up mute-symbol"></i>
-        // debugger
+        
         return (
             <>
                 <section id="show-peek-preview-wrapper" 
@@ -99,19 +99,16 @@ class ShowPreviewPlayerSmall extends React.Component {
                                 
                     <img src={show ? show.posterUrl : window.tempBgURL} 
                          alt={show.title} 
-                         className="show-title-card" 
-                         onClick={this.launchWatch} />
+                         className="show-title-card" />
                     {/* <span className="title-card-name">{show.title}</span> */}
 
-                    <figure className="show-peek-preview-player" 
-                            onClick={this.launchWatch}>
-
+                    <figure className="show-peek-preview-player">
                         <figure className="preview-video-player">
                             <video id={`show-${show.id} preview-video`} 
                                    ref={this.videoPlayer}
                                    onClick={this.launchWatch}
                             >
-                                <source src={preview.videoUrl} type="video/mp4"/> 
+                                <source src={preview ? preview.videoUrl : '' } type="video/mp4"/> 
                             </video>
                            
                             <button className="preview-play-btn">
@@ -122,14 +119,13 @@ class ShowPreviewPlayerSmall extends React.Component {
                                 </figure>
                             </button>
 
-                            {/* <aside className="preview-player-right-side-btns">
+                            <aside className="preview-player-right-side-btns">
                                 <button onClick={this.toggleMute} className="preview-mute-btn">
                                     {muteBtn}
                                     <i className="fas fa-circle mute-btn-bg"></i>
                                     <i className="far fa-circle mute-btn-outline"></i>
                                 </button>
-
-                            </aside> */}
+                            </aside>
  
                             <figcaption className="preview-video-info-desc">
                                 <h5 className="preview-show-title">{show.title}</h5>

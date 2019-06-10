@@ -4,16 +4,14 @@ import {
 } from '../actions/show_actions';
 import { merge } from 'lodash';
 
-const showsReducer = (state = {}, action) => {
+const showsReducer = (state = {}, { type, show, nextShow, shows }) => {
     Object.freeze(state);
     
-    switch( action.type ) {
+    switch( type ) {
         case RECEIVE_SHOWS:
-            return action.shows;
+            return shows;
         case RECEIVE_SHOW:
-            const { show } = action;
-            
-            return merge({}, state, { [show.id]: show });
+            return merge({}, state, { [show.id]: show, [nextShow.id]: nextShow });
         default:
             return state;
     }

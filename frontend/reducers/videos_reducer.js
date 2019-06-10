@@ -1,19 +1,20 @@
 import {
     RECEIVE_VIDEO,
     RECEIVE_SHOWS,
+    RECEIVE_SHOW,
 } from '../actions/show_actions';
 import { merge } from 'lodash';
 
-const videosReducer = (state = {}, action) => {
+const videosReducer = (state = {}, { type, video, videos }) => {
     Object.freeze(state);
 
-    switch( action.type ) {
-        case RECEIVE_VIDEO:
-            const { video } = action;
-            
+    switch( type ) {
+        case RECEIVE_VIDEO:            
+            return merge({}, state, { [video.id]: video });
+        case RECEIVE_SHOW: 
             return merge({}, state, { [video.id]: video });
         case RECEIVE_SHOWS:
-            return action.videos;
+            return videos;
         default: 
             return state;
     }

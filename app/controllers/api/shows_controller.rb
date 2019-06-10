@@ -4,6 +4,9 @@ class Api::ShowsController < ApplicationController
         videos = Video.with_attached_video_file.all 
         @previewVideos = Array.new
 
+        # finds each preview video with their attached video
+        # right now this grabs the first video under each show
+        # this will be refactored once genres are implemented
         @shows.each do |show|
             previewId = show.show_type == "FEATURE" ? show.movie_id : show.episode_ids[0]
 
@@ -20,8 +23,8 @@ class Api::ShowsController < ApplicationController
 
     def show
         @show = Show.find(params[:id])
-        @nextShow = Show.where('id !== :id', id: self.id).first
-        @video = @show.video
+        @nextShow = Show.where(id: @show.id).first # the video that will be recommended after
+        @video = @show.videos.first
 
         render :show
     end
