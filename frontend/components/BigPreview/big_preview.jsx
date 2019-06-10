@@ -33,10 +33,12 @@ class BigPreview extends React.Component {
         window.addEventListener('scroll', () => {
             let bigPreview = this.entirePreview.current;
 
-            if ( !ended && window.pageYOffset > (bigPreview.scrollHeight / 2) ) {
-                this.pauseVideo();
-            } else if ( !ended && window.pageYOffset <= (bigPreview.scrollHeight / 2) ) {
-                this.playVideo();
+            if ( bigPreview ) {
+                if ( !ended && window.pageYOffset > (bigPreview.scrollHeight / 2) ) {
+                    this.pauseVideo();
+                } else if ( !ended && window.pageYOffset <= (bigPreview.scrollHeight / 2) ) {
+                    this.playVideo();
+                }
             }
         });
     }
@@ -89,7 +91,6 @@ class BigPreview extends React.Component {
 
     videoControllerIcon() {
         const { muted, started, ended } = this.state;
-        
         if ( !started ) {
             return null;
         }

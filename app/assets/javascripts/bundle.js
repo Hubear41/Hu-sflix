@@ -506,10 +506,12 @@ function (_React$Component) {
       window.addEventListener('scroll', function () {
         var bigPreview = _this2.entirePreview.current;
 
-        if (!ended && window.pageYOffset > bigPreview.scrollHeight / 2) {
-          _this2.pauseVideo();
-        } else if (!ended && window.pageYOffset <= bigPreview.scrollHeight / 2) {
-          _this2.playVideo();
+        if (bigPreview) {
+          if (!ended && window.pageYOffset > bigPreview.scrollHeight / 2) {
+            _this2.pauseVideo();
+          } else if (!ended && window.pageYOffset <= bigPreview.scrollHeight / 2) {
+            _this2.playVideo();
+          }
         }
       });
     }
@@ -2425,16 +2427,19 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Watch).call(this, props));
     _this.state = {
       currentPlayerTime: 0,
-      paused: false,
+      paused: true,
       fullscreen: false,
       muted: false,
       volume: 0.8,
       prevVolume: 0.8,
       hidden: true,
       mouseMoving: false,
-      loaded: false
+      loaded: false,
+      away: false,
+      started: false
     };
     _this.timeout;
+    _this.awayTimer;
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.fullControlArea = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef(); // all video player methods
 
@@ -2450,6 +2455,8 @@ function (_React$Component) {
     _this.showControls = _this.showControls.bind(_assertThisInitialized(_this));
     _this._hideControls = _this._hideControls.bind(_assertThisInitialized(_this));
     _this._tick = _this._tick.bind(_assertThisInitialized(_this));
+    _this._revealAway = _this._revealAway.bind(_assertThisInitialized(_this));
+    _this._hideAway = _this._hideAway.bind(_assertThisInitialized(_this));
     _this.backToBrowse = _this.backToBrowse.bind(_assertThisInitialized(_this));
     _this.determineKeyPress = _this.determineKeyPress.bind(_assertThisInitialized(_this));
     return _this;
@@ -2525,27 +2532,23 @@ function (_React$Component) {
         default:
           break;
       }
-    } // componentDidUpdate() {
-    //     if ( this.state.loaded === false ) {
-    //         this.videoPlayer.current.load();
-    //         this.setState({ loaded: true });
-    //     }
-    // }
-
+    }
   }, {
     key: "togglePlayPause",
     value: function togglePlayPause() {
       var _this3 = this;
 
-      var paused = this.state.paused;
-      var videoEl = this.videoPlayer.current; // play() returns a promise obj
+      var videoEl = this.videoPlayer.current;
+      var started = this.state.started; // play() returns a promise obj
       // the state is only changed if play works 
       // prevents the play button from changing until it can play
 
-      if (paused) {
+      if (videoEl.paused) {
+        clearTimeout(this.awayTimer);
         videoEl.play().then(function () {
           _this3.setState({
-            paused: false
+            paused: false,
+            started: true
           });
         });
       } else {
@@ -2732,10 +2735,22 @@ function (_React$Component) {
     value: function showControls() {
       var _this4 = this;
 
+      var videoEl = this.videoPlayer.current;
+      var _this$state3 = this.state,
+          paused = _this$state3.paused,
+          started = _this$state3.started;
+      clearTimeout(this.awayTimer);
+
       if (this.state.mouseMoving) {
         clearTimeout(this.timeout);
         this.timeout = setTimeout(function () {
           _this4._hideControls();
+
+          if (started && paused) {
+            _this4.awayTimer = setTimeout(function () {
+              _this4._revealAway();
+            }, 3000);
+          }
         }, 3000);
       } else {
         this.setState({
@@ -2744,6 +2759,12 @@ function (_React$Component) {
         });
         this.timeout = setTimeout(function () {
           _this4._hideControls();
+
+          if (started && paused) {
+            _this4.awayTimer = setTimeout(function () {
+              _this4._revealAway();
+            }, 3000);
+          }
         }, 3000);
       }
     }
@@ -2765,6 +2786,20 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "_revealAway",
+    value: function _revealAway() {
+      this.setState({
+        away: true
+      });
+    }
+  }, {
+    key: "_hideAway",
+    value: function _hideAway() {
+      this.setState({
+        away: false
+      });
+    }
+  }, {
     key: "backToBrowse",
     value: function backToBrowse() {
       var videoEl = this.videoPlayer.current;
@@ -2779,16 +2814,19 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$state3 = this.state,
-          paused = _this$state3.paused,
-          currentPlayerTime = _this$state3.currentPlayerTime,
-          volume = _this$state3.volume,
-          muted = _this$state3.muted,
-          hidden = _this$state3.hidden,
-          fullscreen = _this$state3.fullscreen;
+      var _this$state4 = this.state,
+          paused = _this$state4.paused,
+          currentPlayerTime = _this$state4.currentPlayerTime,
+          volume = _this$state4.volume,
+          muted = _this$state4.muted,
+          hidden = _this$state4.hidden,
+          fullscreen = _this$state4.fullscreen,
+          away = _this$state4.away,
+          started = _this$state4.started;
       var _this$props = this.props,
           video = _this$props.video,
           show = _this$props.show;
+      var awayAnimation = '';
       var runtime = video ? video.runtime : 0;
       var playPauseBtn = null,
           remainingTime = null,
@@ -2818,6 +2856,13 @@ function (_React$Component) {
         controlStyle = {
           opacity: "".concat(hidden ? 0 : 1)
         };
+
+        if (started && paused && away) {
+          awayAnimation = 'reveal-away';
+        } else if (paused && !away) {
+          awayAnimation = 'hide-away';
+        }
+
         audioIcon = this.findAudioIcon();
       } // decides the current button in the fullscreen slot
 
@@ -2859,6 +2904,17 @@ function (_React$Component) {
         onKeyPress: this.togglePlayPause,
         onMouseMove: this.showControls
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "away-screen ".concat(awayAnimation)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "away-screen-content",
+        onMouseOver: this._hideAway
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "away-screen-details"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You're watching"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, show ? show.title : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "away-screen-other-details"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.year : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.maturity_rating : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](show.runtime) : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, show ? show.tagline : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "away-screen-paused"
+      }, "Paused"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "full-control-area",
         style: controlStyle
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -3349,12 +3405,13 @@ var configureStore = function configureStore() {
 /*!*****************************************!*\
   !*** ./frontend/util/date_time_util.js ***!
   \*****************************************/
-/*! exports provided: secondsToTime */
+/*! exports provided: secondsToTime, secondsToHoursMinutes */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "secondsToTime", function() { return secondsToTime; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "secondsToHoursMinutes", function() { return secondsToHoursMinutes; });
 var secondsToTime = function secondsToTime(seconds) {
   if (seconds === null || seconds <= 0) {
     return "00:00:00";
@@ -3369,6 +3426,21 @@ var secondsToTime = function secondsToTime(seconds) {
   var minutesStr = minutes < 10 ? '0' + minutes : "".concat(minutes);
   var secondsStr = secs < 10 ? '0' + secs : "".concat(secs);
   return "".concat(hoursStr, ":").concat(minutesStr, ":").concat(secondsStr);
+};
+var secondsToHoursMinutes = function secondsToHoursMinutes(seconds) {
+  if (!seconds) {
+    return '0m';
+  }
+
+  var hours = Math.floor(seconds / 6000);
+  var remainingSecs = seconds % 6000;
+  var minutes = Math.floor(remainingSecs / 60);
+
+  if (hours === 0) {
+    return "".concat(minutes, "m");
+  } else {
+    return "".concat(hours, "h ").concat(minutes, "m");
+  }
 };
 
 /***/ }),

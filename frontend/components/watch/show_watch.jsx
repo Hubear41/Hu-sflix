@@ -7,7 +7,7 @@ class Watch extends React.Component {
         super(props);
         this.state = {
             currentPlayerTime: 0,
-            paused: false,
+            paused: true,
             fullscreen: false,
             muted: false,
             volume: 0.8,
@@ -15,8 +15,11 @@ class Watch extends React.Component {
             hidden: true,
             mouseMoving: false,
             loaded: false,
+            away: false,
+            started: false,
         };
         this.timeout;
+        this.awayTimer;
         this.videoPlayer = React.createRef();
         this.fullControlArea = React.createRef();
 
@@ -33,6 +36,8 @@ class Watch extends React.Component {
         this.showControls = this.showControls.bind(this);
         this._hideControls = this._hideControls.bind(this);
         this._tick = this._tick.bind(this);
+        this._revealAway = this._revealAway.bind(this);
+        this._hideAway = this._hideAway.bind(this);
         this.backToBrowse = this.backToBrowse.bind(this);
         this.determineKeyPress = this.determineKeyPress.bind(this);
     }
@@ -84,23 +89,18 @@ class Watch extends React.Component {
         }
     }
 
-    // componentDidUpdate() {
-    //     if ( this.state.loaded === false ) {
-    //         this.videoPlayer.current.load();
-    //         this.setState({ loaded: true });
-    //     }
-    // }
-
     togglePlayPause() {   
-        const { paused } = this.state;
         const videoEl = this.videoPlayer.current;
+        const { started } = this.state;
         
         // play() returns a promise obj
         // the state is only changed if play works 
         // prevents the play button from changing until it can play
-        if (paused) {
+        if (videoEl.paused) {
+            clearTimeout(this.awayTimer);
+
             videoEl.play().then( () => {
-                this.setState({ paused: false });
+                this.setState({ paused: false, started: true });
             });
         } else {
             videoEl.pause();
@@ -230,15 +230,33 @@ class Watch extends React.Component {
     // hide the controls in 3 seconds if the mouse hasn't moved afterwards.
     // if it is still moving before the timer ends, the timer is reset
     showControls() {
+        const videoEl = this.videoPlayer.current;
+        const { paused, started } = this.state;
+        clearTimeout(this.awayTimer);
+
         if ( this.state.mouseMoving ) {
             clearTimeout(this.timeout);
+
             this.timeout = setTimeout( () => {
-                this._hideControls();
+                this._hideControls();   
+
+                if ( started && paused ) {
+                    this.awayTimer = setTimeout( () => {
+                        this._revealAway();
+                    }, 3000 );
+                }
             }, 3000);
         } else {
             this.setState({ mouseMoving: true, hidden: false });
+
             this.timeout = setTimeout( () => {
                 this._hideControls();
+
+                if ( started && paused ) {
+                    this.awayTimer = setTimeout(() => {
+                        this._revealAway();
+                    }, 3000);
+                }
             }, 3000);
         }
     }
@@ -253,6 +271,14 @@ class Watch extends React.Component {
         }
     }
 
+    _revealAway() {
+        this.setState({ away: true });
+    }
+
+    _hideAway() {
+        this.setState({ away: false });
+    }
+
     backToBrowse() {
         const videoEl = this.videoPlayer.current;
 
@@ -264,8 +290,9 @@ class Watch extends React.Component {
     }
 
     render() {
-        const { paused, currentPlayerTime, volume, muted, hidden, fullscreen } = this.state;
+        const { paused, currentPlayerTime, volume, muted, hidden, fullscreen, away, started } = this.state;
         const { video, show } = this.props;
+        let awayAnimation = '';
         let runtime = video ? video.runtime : 0;
         let playPauseBtn = null, remainingTime = null, audioIcon = null, volumeStyle = null, timeStyle = null, controlStyle = null;
 
@@ -287,6 +314,13 @@ class Watch extends React.Component {
             controlStyle = {
                 opacity: `${ hidden ? 0 : 1 }`
             }
+
+            if ( started && paused && away ) {
+                awayAnimation = 'reveal-away';
+            } else if ( paused && !away ) {
+                awayAnimation = 'hide-away';
+            }
+
             audioIcon = this.findAudioIcon();
         }
 
@@ -311,7 +345,6 @@ class Watch extends React.Component {
                             controls={false}
                             > 
                         <source src={video ? video.videoUrl : ''} />
-
                         Browser does not support the video tag
                     </video>
                 </div>
@@ -322,6 +355,25 @@ class Watch extends React.Component {
                          onKeyPress={this.togglePlayPause}
                          onMouseMove={this.showControls} 
                     ></div>
+
+                    <div className={`away-screen ${awayAnimation}`}>
+                        <div className="away-screen-content"
+                             onMouseOver={this._hideAway}
+                        >
+                            <article className="away-screen-details">
+                                <span>You're watching</span>
+                                <h2>{show ? show.title : ''}</h2>
+                                <article className="away-screen-other-details">
+                                    <h6>{show ? show.year : ''}</h6>
+                                    <h6>{show ? show.maturity_rating : ''}</h6>
+                                    <h6>{show ? DateTimeUTIL.secondsToHoursMinutes(show.runtime) : ''}</h6>
+                                </article>
+                                <p>{show ? show.tagline : ''}</p>
+                            </article>
+
+                            <span className="away-screen-paused">Paused</span>
+                        </div>
+                    </div>
 
                     <div className="full-control-area" style={controlStyle}>
                         <a className="back-to-browse-btn" onClick={this.backToBrowse}>

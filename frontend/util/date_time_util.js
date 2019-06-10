@@ -1,5 +1,4 @@
-
-export const secondsToTime = (seconds) => {
+export const secondsToTime = seconds => {
     if (seconds === null || seconds <= 0) {
         return "00:00:00";
     }
@@ -15,4 +14,20 @@ export const secondsToTime = (seconds) => {
     const secondsStr = secs < 10 ? '0' + secs : `${secs}`;
     
     return `${hoursStr}:${minutesStr}:${secondsStr}`;
+}
+
+export const secondsToHoursMinutes = seconds => {
+    if ( !seconds ) {
+        return '0m';
+    }
+
+    const hours = Math.floor( seconds / 6000 );
+    const remainingSecs = seconds % 6000;
+    const minutes = Math.floor( remainingSecs / 60 );
+
+    if ( hours === 0 ) {
+        return `${minutes}m`
+    } else {
+        return `${hours}h ${minutes}m`
+    }
 }
