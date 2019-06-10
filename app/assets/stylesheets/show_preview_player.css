@@ -210,6 +210,19 @@
     z-index: 50;
 }
 
+.fade-out {
+    animation: fade-out;
+    animation-duration: 2s;
+    /* animation-delay: 2.3s; */
+    animation-fill-mode: forwards; 
+}
+
+.fade-in {
+    animation: fade-in;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
 @keyframes dropdown {
     0% {
         padding: 3vh 0;
@@ -228,6 +241,16 @@
     }
     100% {
         opacity: 1;
+        animation-timing-function: ease-in;
+    }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
         animation-timing-function: ease-in;
     }
 }
