@@ -15,6 +15,7 @@ class ShowRow extends React.Component {
 
         const { rowNum, videos } = this.props;
         const previewVideo = show.show_type === 'FEATURE' ? videos[show.movie_id] : videos[show.episode_ids[0]];
+        
         return (
             <ShowPreviewPlayer  key={`${show.id}${rowNum}`} 
                                 show={show} 

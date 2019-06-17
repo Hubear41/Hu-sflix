@@ -26,6 +26,7 @@ class Watch extends React.Component {
         // all video player methods
         this.openFullscreen = this.openFullscreen.bind(this);
         this.closeFullscreen = this.closeFullscreen.bind(this);
+        this.videoReady = this.videoReady.bind(this);
         this.togglePlayPause = this.togglePlayPause.bind(this);
         this.toggleMute = this.toggleMute.bind(this);
         this.jumpBack = this.jumpBack.bind(this);
@@ -36,7 +37,6 @@ class Watch extends React.Component {
         this.showControls = this.showControls.bind(this);
         this._hideControls = this._hideControls.bind(this);
         this._tick = this._tick.bind(this);
-        this._revealAway = this._revealAway.bind(this);
         this._hideAway = this._hideAway.bind(this);
         this.backToBrowse = this.backToBrowse.bind(this);
         this.determineKeyPress = this.determineKeyPress.bind(this);
@@ -57,6 +57,7 @@ class Watch extends React.Component {
                 this.togglePlayPause();
                 break;
             case 32:  // spacebar
+                e.preventDefault();
                 this.togglePlayPause();
                 break;
             case 27:  // escape
@@ -89,22 +90,34 @@ class Watch extends React.Component {
         }
     }
 
+    videoReady() {
+        const videoEl = this.videoPlayer.current;
+
+        videoEl.volume = 0.8;
+        videoEl.muted = false;
+        this.togglePlayPause();
+    }
+
     togglePlayPause() {   
         const videoEl = this.videoPlayer.current;
-        const { started } = this.state;
+        const { paused } = this.state;
         
         // play() returns a promise obj
         // the state is only changed if play works 
         // prevents the play button from changing until it can play
-        if (videoEl.paused) {
+        if (paused && videoEl) {
             clearTimeout(this.awayTimer);
 
             videoEl.play().then( () => {
-                this.setState({ paused: false, started: true });
+                this.setState({ paused: false, started: true, away: false });
             });
-        } else {
+        } else if (!paused && videoEl ) {
             videoEl.pause();
             this.setState({ paused: true });
+
+            this.awayTimer = setTimeout(() => {
+                this.setState({ away: true });
+            }, 3000);
         }
     }
 
@@ -230,8 +243,7 @@ class Watch extends React.Component {
     // hide the controls in 3 seconds if the mouse hasn't moved afterwards.
     // if it is still moving before the timer ends, the timer is reset
     showControls() {
-        const videoEl = this.videoPlayer.current;
-        const { paused, started } = this.state;
+        const { started, paused } = this.state;
         clearTimeout(this.awayTimer);
 
         if ( this.state.mouseMoving ) {
@@ -242,22 +254,24 @@ class Watch extends React.Component {
 
                 if ( started && paused ) {
                     this.awayTimer = setTimeout( () => {
-                        this._revealAway();
+                        this.setState({ away: true });
                     }, 3000 );
                 }
             }, 3000);
         } else {
-            this.setState({ mouseMoving: true, hidden: false });
-
-            this.timeout = setTimeout( () => {
-                this._hideControls();
-
-                if ( started && paused ) {
-                    this.awayTimer = setTimeout(() => {
-                        this._revealAway();
-                    }, 3000);
-                }
-            }, 3000);
+            if ( started ) {
+                this.setState({ mouseMoving: true, hidden: false });
+    
+                this.timeout = setTimeout( () => {
+                    this._hideControls();
+    
+                    if ( paused ) {
+                        this.awayTimer = setTimeout(() => {
+                            this.setState({ away: true });
+                        }, 3000);
+                    }
+                }, 3000);
+            }
         }
     }
     
@@ -269,10 +283,6 @@ class Watch extends React.Component {
         if (this.videoPlayer.current) {
             this.setState({ currentPlayerTime: this.videoPlayer.current.currentTime })
         }
-    }
-
-    _revealAway() {
-        this.setState({ away: true });
     }
 
     _hideAway() {
@@ -288,13 +298,17 @@ class Watch extends React.Component {
 
         this.props.history.push('/browse');
     }
-
+    
     render() {
         const { paused, currentPlayerTime, volume, muted, hidden, fullscreen, away, started } = this.state;
         const { video, show } = this.props;
         let awayAnimation = '';
         let runtime = video ? video.runtime : 0;
         let playPauseBtn = null, remainingTime = null, audioIcon = null, volumeStyle = null, timeStyle = null, controlStyle = null;
+
+        if ( !started && this.videoPlayer.current !== null ) {
+            this.videoPlayer.current.load();
+        }
 
         // once the main show and video have been loaded, these variables can  be asigned
         if ( this.videoPlayer.current !== null ) {               
@@ -310,19 +324,22 @@ class Watch extends React.Component {
             volumeStyle = {
                 background: `linear-gradient( to right, red 0%, red ${currVolume * 100}%, #7c7c7c ${currVolume * 100}%, #7c7c7c ${(1 - currVolume) * 100}% )`
             };
-            // determines whether or not the controll are hidden
+            // determines whether or not the controls are hidden
             controlStyle = {
                 opacity: `${ hidden ? 0 : 1 }`
             }
 
             if ( started && paused && away ) {
                 awayAnimation = 'reveal-away';
-            } else if ( paused && !away ) {
+            } else if ( !away ) {
                 awayAnimation = 'hide-away';
+            } else {
+                awayAnimation = 'hidden-away';
             }
 
             audioIcon = this.findAudioIcon();
         }
+
 
         // decides the current button in the fullscreen slot
         let fullscreenBtn, fullscreenFunc; 
@@ -334,17 +351,20 @@ class Watch extends React.Component {
             fullscreenFunc = this.openFullscreen;
         }
         
+        // debugger
         return (
             <figure className="main-video-player" ref={this.fullControlArea}> 
                 
                 <div className="Video-Container">
                     <video  className="main-video-tag" 
                             ref={this.videoPlayer}
-                            poster={window.tempBgURL} // black backgroud when the video hasn't loaded
-                            onCanPlay={this.togglePlayPause} // starts playing when loaded
+                            // poster={window.tempBgURL} // black backgroud when the video hasn't loaded
+                            onCanPlay={this.videoReady} // starts playing when loaded
+                            preload='true'
                             controls={false}
+                            muted='muted'
                             > 
-                        <source src={video ? video.videoUrl : ''} />
+                        <source src={video ? video.videoUrl : ''} type="video/mp4"/>
                         Browser does not support the video tag
                     </video>
                 </div>
@@ -366,7 +386,7 @@ class Watch extends React.Component {
                                 <article className="away-screen-other-details">
                                     <h6>{show ? show.year : ''}</h6>
                                     <h6>{show ? show.maturity_rating : ''}</h6>
-                                    <h6>{show ? DateTimeUTIL.secondsToHoursMinutes(show.runtime) : ''}</h6>
+                                    <h6>{show ? DateTimeUTIL.secondsToHoursMinutes(runtime) : ''}</h6>
                                 </article>
                                 <p>{show ? show.tagline : ''}</p>
                             </article>

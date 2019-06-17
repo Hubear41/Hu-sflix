@@ -83,7 +83,7 @@ class ShowGallery extends React.Component {
         if ( shows.length > 0 ) {
             showsPerRow = this.createRows();
             previewShow = showsPerRow[0][0];
-            
+
             showRowsList = showsPerRow.map( (row, idx) => {
                 return <ShowRows key={idx} rowNum={idx} shows={row} videos={videos} galleryType={galleryType}/>
             }) 

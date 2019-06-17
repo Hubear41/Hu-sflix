@@ -6,9 +6,8 @@ const msp = (state, ownProps) => {
     const { show } = ownProps;
 
     const previewId = show.show_type === 'FEATURE' ? show.movie_id : show.episode_ids[0];
-
     const previewVideo = state.entities.videos[previewId] || null;
-    // debugger
+    
     return {
         video: previewVideo,
         previewId,

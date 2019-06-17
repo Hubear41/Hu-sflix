@@ -97,6 +97,7 @@
     width: 100vw;
     z-index: 1;
     opacity: 0;
+    background-color: rgba(0,0,0,0.5) ;
 }
 
 .away-screen-content {
@@ -423,6 +424,10 @@ video::-webkit-media-controls {
     animation: hide-away;
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
+}
+
+.hidden-away {
+    opacity: 0;
 }
 
 @keyframes reveal-away {

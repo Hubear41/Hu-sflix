@@ -8,6 +8,8 @@ end
 
 json.videos do 
     @previewVideos.each do |video| 
-        json.partial! 'api/videos/video', video: video
+        json.set! video.id do 
+            json.partial! 'api/videos/video', video: video
+        end
     end
 end

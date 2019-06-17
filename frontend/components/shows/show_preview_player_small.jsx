@@ -60,7 +60,6 @@ class ShowPreviewPlayerSmall extends React.Component {
         }
 
         const videoEl = this.videoPlayer.current;
-        // debugger
         this.videoTimeout = setTimeout( () => {
             videoEl.play().then( () => {
                 this.setState({ paused: false });
@@ -88,7 +87,6 @@ class ShowPreviewPlayerSmall extends React.Component {
     render() {
         const { show, preview } = this.props;
         const muteBtn = this.state.muted ? <i className="fas fa-volume-mute mute-symbol"></i> : <i className="fas fa-volume-up mute-symbol"></i>
-        
         return (
             <>
                 <section id="show-peek-preview-wrapper" 
@@ -107,6 +105,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                             <video id={`show-${show.id} preview-video`} 
                                    ref={this.videoPlayer}
                                    onClick={this.launchWatch}
+                                   muted='muted'
                             >
                                 <source src={preview ? preview.videoUrl : '' } type="video/mp4"/> 
                             </video>

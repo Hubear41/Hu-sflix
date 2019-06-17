@@ -10,7 +10,6 @@ const msp = (state, ownProps) => {
 
     // const shows = Object.values(state.entities.shows);
     // if ( shows.length > 1 ) {
-    //     debugger
     //     shows.each( otherShow => {
     //         if ( otherShow.id !== show.id ) {
     //             nextShow = otherShow;

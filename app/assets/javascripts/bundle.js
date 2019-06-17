@@ -507,9 +507,9 @@ function (_React$Component) {
         var bigPreview = _this2.entirePreview.current;
 
         if (bigPreview) {
-          if (!ended && window.pageYOffset > bigPreview.scrollHeight / 2) {
+          if (!ended && window.pageYOffset > bigPreview.scrollHeight / 3) {
             _this2.pauseVideo();
-          } else if (!ended && window.pageYOffset <= bigPreview.scrollHeight / 2) {
+          } else if (!ended && window.pageYOffset <= bigPreview.scrollHeight / 3) {
             _this2.playVideo();
           }
         }
@@ -559,7 +559,7 @@ function (_React$Component) {
 
       var videoEl = this.videoPlayer.current;
 
-      if (videoEl.paused) {
+      if (window.pageYOffset < bigPreview.scrollHeight / 3 && videoEl.paused) {
         setTimeout(function () {
           videoEl.play().then(function () {
             _this4.setState({
@@ -671,8 +671,7 @@ function (_React$Component) {
       } else if (ended) {
         imageAnimation = 'fade-in';
         blackAnimation = 'fade-in-black';
-      } // debugger
-
+      }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-video-preview-wrapper",
@@ -768,8 +767,7 @@ __webpack_require__.r(__webpack_exports__);
 var msp = function msp(state, ownProps) {
   var show = ownProps.show;
   var previewId = show.show_type === 'FEATURE' ? show.movie_id : show.episode_ids[0];
-  var previewVideo = state.entities.videos[previewId] || null; // debugger
-
+  var previewVideo = state.entities.videos[previewId] || null;
   return {
     video: previewVideo,
     previewId: previewId
@@ -2148,8 +2146,7 @@ function (_React$Component) {
         return null;
       }
 
-      var videoEl = this.videoPlayer.current; // debugger
-
+      var videoEl = this.videoPlayer.current;
       this.videoTimeout = setTimeout(function () {
         videoEl.play().then(function () {
           _this2.setState({
@@ -2202,7 +2199,8 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         id: "show-".concat(show.id, " preview-video"),
         ref: this.videoPlayer,
-        onClick: this.launchWatch
+        onClick: this.launchWatch,
+        muted: "muted"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         src: preview ? preview.videoUrl : '',
         type: "video/mp4"
@@ -2445,6 +2443,7 @@ function (_React$Component) {
 
     _this.openFullscreen = _this.openFullscreen.bind(_assertThisInitialized(_this));
     _this.closeFullscreen = _this.closeFullscreen.bind(_assertThisInitialized(_this));
+    _this.videoReady = _this.videoReady.bind(_assertThisInitialized(_this));
     _this.togglePlayPause = _this.togglePlayPause.bind(_assertThisInitialized(_this));
     _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
     _this.jumpBack = _this.jumpBack.bind(_assertThisInitialized(_this));
@@ -2455,7 +2454,6 @@ function (_React$Component) {
     _this.showControls = _this.showControls.bind(_assertThisInitialized(_this));
     _this._hideControls = _this._hideControls.bind(_assertThisInitialized(_this));
     _this._tick = _this._tick.bind(_assertThisInitialized(_this));
-    _this._revealAway = _this._revealAway.bind(_assertThisInitialized(_this));
     _this._hideAway = _this._hideAway.bind(_assertThisInitialized(_this));
     _this.backToBrowse = _this.backToBrowse.bind(_assertThisInitialized(_this));
     _this.determineKeyPress = _this.determineKeyPress.bind(_assertThisInitialized(_this));
@@ -2486,6 +2484,7 @@ function (_React$Component) {
 
         case 32:
           // spacebar
+          e.preventDefault();
           this.togglePlayPause();
           break;
 
@@ -2534,28 +2533,42 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "videoReady",
+    value: function videoReady() {
+      var videoEl = this.videoPlayer.current;
+      videoEl.volume = 0.8;
+      videoEl.muted = false;
+      this.togglePlayPause();
+    }
+  }, {
     key: "togglePlayPause",
     value: function togglePlayPause() {
       var _this3 = this;
 
       var videoEl = this.videoPlayer.current;
-      var started = this.state.started; // play() returns a promise obj
+      var paused = this.state.paused; // play() returns a promise obj
       // the state is only changed if play works 
       // prevents the play button from changing until it can play
 
-      if (videoEl.paused) {
+      if (paused && videoEl) {
         clearTimeout(this.awayTimer);
         videoEl.play().then(function () {
           _this3.setState({
             paused: false,
-            started: true
+            started: true,
+            away: false
           });
         });
-      } else {
+      } else if (!paused && videoEl) {
         videoEl.pause();
         this.setState({
           paused: true
         });
+        this.awayTimer = setTimeout(function () {
+          _this3.setState({
+            away: true
+          });
+        }, 3000);
       }
     }
   }, {
@@ -2735,10 +2748,9 @@ function (_React$Component) {
     value: function showControls() {
       var _this4 = this;
 
-      var videoEl = this.videoPlayer.current;
       var _this$state3 = this.state,
-          paused = _this$state3.paused,
-          started = _this$state3.started;
+          started = _this$state3.started,
+          paused = _this$state3.paused;
       clearTimeout(this.awayTimer);
 
       if (this.state.mouseMoving) {
@@ -2748,24 +2760,30 @@ function (_React$Component) {
 
           if (started && paused) {
             _this4.awayTimer = setTimeout(function () {
-              _this4._revealAway();
+              _this4.setState({
+                away: true
+              });
             }, 3000);
           }
         }, 3000);
       } else {
-        this.setState({
-          mouseMoving: true,
-          hidden: false
-        });
-        this.timeout = setTimeout(function () {
-          _this4._hideControls();
+        if (started) {
+          this.setState({
+            mouseMoving: true,
+            hidden: false
+          });
+          this.timeout = setTimeout(function () {
+            _this4._hideControls();
 
-          if (started && paused) {
-            _this4.awayTimer = setTimeout(function () {
-              _this4._revealAway();
-            }, 3000);
-          }
-        }, 3000);
+            if (paused) {
+              _this4.awayTimer = setTimeout(function () {
+                _this4.setState({
+                  away: true
+                });
+              }, 3000);
+            }
+          }, 3000);
+        }
       }
     }
   }, {
@@ -2784,13 +2802,6 @@ function (_React$Component) {
           currentPlayerTime: this.videoPlayer.current.currentTime
         });
       }
-    }
-  }, {
-    key: "_revealAway",
-    value: function _revealAway() {
-      this.setState({
-        away: true
-      });
     }
   }, {
     key: "_hideAway",
@@ -2833,7 +2844,12 @@ function (_React$Component) {
           audioIcon = null,
           volumeStyle = null,
           timeStyle = null,
-          controlStyle = null; // once the main show and video have been loaded, these variables can  be asigned
+          controlStyle = null;
+
+      if (!started && this.videoPlayer.current !== null) {
+        this.videoPlayer.current.load();
+      } // once the main show and video have been loaded, these variables can  be asigned
+
 
       if (this.videoPlayer.current !== null) {
         playPauseBtn = paused ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -2851,7 +2867,7 @@ function (_React$Component) {
         };
         volumeStyle = {
           background: "linear-gradient( to right, red 0%, red ".concat(currVolume * 100, "%, #7c7c7c ").concat(currVolume * 100, "%, #7c7c7c ").concat((1 - currVolume) * 100, "% )")
-        }; // determines whether or not the controll are hidden
+        }; // determines whether or not the controls are hidden
 
         controlStyle = {
           opacity: "".concat(hidden ? 0 : 1)
@@ -2859,8 +2875,10 @@ function (_React$Component) {
 
         if (started && paused && away) {
           awayAnimation = 'reveal-away';
-        } else if (paused && !away) {
+        } else if (!away) {
           awayAnimation = 'hide-away';
+        } else {
+          awayAnimation = 'hidden-away';
         }
 
         audioIcon = this.findAudioIcon();
@@ -2879,7 +2897,8 @@ function (_React$Component) {
           className: "fas fa-expand"
         });
         fullscreenFunc = this.openFullscreen;
-      }
+      } // debugger
+
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "main-video-player",
@@ -2888,14 +2907,16 @@ function (_React$Component) {
         className: "Video-Container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         className: "main-video-tag",
-        ref: this.videoPlayer,
-        poster: window.tempBgURL // black backgroud when the video hasn't loaded
+        ref: this.videoPlayer // poster={window.tempBgURL} // black backgroud when the video hasn't loaded
         ,
-        onCanPlay: this.togglePlayPause // starts playing when loaded
+        onCanPlay: this.videoReady // starts playing when loaded
         ,
-        controls: false
+        preload: "true",
+        controls: false,
+        muted: "muted"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-        src: video ? video.videoUrl : ''
+        src: video ? video.videoUrl : '',
+        type: "video/mp4"
       }), "Browser does not support the video tag")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-player-controls"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2912,7 +2933,7 @@ function (_React$Component) {
         className: "away-screen-details"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You're watching"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, show ? show.title : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "away-screen-other-details"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.year : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.maturity_rating : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](show.runtime) : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, show ? show.tagline : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.year : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.maturity_rating : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](runtime) : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, show ? show.tagline : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "away-screen-paused"
       }, "Paused"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "full-control-area",
@@ -3024,7 +3045,6 @@ var msp = function msp(state, ownProps) {
   var show = state.entities.shows[ownProps.match.params.showId]; // let nextShow = null;
   // const shows = Object.values(state.entities.shows);
   // if ( shows.length > 1 ) {
-  //     debugger
   //     shows.each( otherShow => {
   //         if ( otherShow.id !== show.id ) {
   //             nextShow = otherShow;
