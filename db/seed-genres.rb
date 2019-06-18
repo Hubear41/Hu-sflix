@@ -1,6 +1,6 @@
 Genre.destroy_all
 
-tv_show =           Genre.create!( name: 'TV Show')
+tv =                Genre.create!( name: 'TV Show')
 movie =             Genre.create!( name: 'Movie')
 rom_com =           Genre.create!( name: 'Rom-com')
 comedy =            Genre.create!( name: 'Comedy')
