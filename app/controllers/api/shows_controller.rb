@@ -3,6 +3,7 @@ class Api::ShowsController < ApplicationController
         @shows = Show.with_attached_poster.all.includes(:videos)
         videos = Video.with_attached_video_file.all 
         @previewVideos = Array.new
+        @genres = Genre.all
 
         # finds each preview video with their attached video
         # right now this grabs the first video under each show
