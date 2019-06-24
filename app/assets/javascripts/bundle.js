@@ -353,6 +353,34 @@ var receiveShow = function receiveShow(_ref2) {
 
 /***/ }),
 
+/***/ "./frontend/actions/ui_actions.js":
+/*!****************************************!*\
+  !*** ./frontend/actions/ui_actions.js ***!
+  \****************************************/
+/*! exports provided: PREVIEWING, NOT_PREVIEWING, receivePreview, receiveNoPreview */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PREVIEWING", function() { return PREVIEWING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NOT_PREVIEWING", function() { return NOT_PREVIEWING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receivePreview", function() { return receivePreview; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveNoPreview", function() { return receiveNoPreview; });
+var PREVIEWING = 'PREVIEWING';
+var NOT_PREVIEWING = 'NOT_PREVIEWING';
+var receivePreview = function receivePreview() {
+  return {
+    type: PREVIEWING
+  };
+};
+var receiveNoPreview = function receiveNoPreview() {
+  return {
+    type: NOT_PREVIEWING
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/components/App.jsx":
 /*!*************************************!*\
   !*** ./frontend/components/App.jsx ***!
@@ -500,13 +528,17 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var previewId = this.props.previewId;
+      var _this$props = this.props,
+          previewId = _this$props.previewId,
+          isPreviewing = _this$props.isPreviewing;
       var ended = this.state.ended;
       this.props.requestVideo(previewId);
       window.addEventListener('scroll', function () {
         var bigPreview = _this2.entirePreview.current;
 
-        if (bigPreview) {
+        if (isPreviewing) {
+          _this2.pauseVideo();
+        } else if (bigPreview) {
           if (!ended && window.pageYOffset > bigPreview.scrollHeight / 3) {
             _this2.pauseVideo();
           } else if (!ended && window.pageYOffset <= bigPreview.scrollHeight / 3) {
@@ -514,6 +546,18 @@ function (_React$Component) {
           }
         }
       });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      var isPreviewing = this.props.isPreviewing;
+      var ended = this.state.ended;
+
+      if (isPreviewing && !ended) {
+        this.playVideo();
+      } else if (!isPreviewing && !ended) {
+        this.pauseVideo();
+      }
     }
   }, {
     key: "toggleMute",
@@ -558,8 +602,9 @@ function (_React$Component) {
       var _this4 = this;
 
       var videoEl = this.videoPlayer.current;
+      var isPreviewing = this.props.isPreviewing;
 
-      if (window.pageYOffset < bigPreview.scrollHeight / 3 && videoEl.paused) {
+      if (!isPreviewing && window.pageYOffset < bigPreview.scrollHeight / 3 && videoEl.paused) {
         setTimeout(function () {
           videoEl.play().then(function () {
             _this4.setState({
@@ -645,9 +690,9 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          show = _this$props.show,
-          video = _this$props.video;
+      var _this$props2 = this.props,
+          show = _this$props2.show,
+          video = _this$props2.video;
       var _this$state2 = this.state,
           imageOpacity = _this$state2.imageOpacity,
           started = _this$state2.started,
@@ -768,9 +813,11 @@ var msp = function msp(state, ownProps) {
   var show = ownProps.show;
   var previewId = show.show_type === 'FEATURE' ? show.movie_id : show.episode_ids[0];
   var previewVideo = state.entities.videos[previewId] || null;
+  var isPreviewing = state.ui.preview;
   return {
     video: previewVideo,
-    previewId: previewId
+    previewId: previewId,
+    isPreviewing: isPreviewing
   };
 };
 
@@ -3181,6 +3228,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _session_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./session_reducer */ "./frontend/reducers/session_reducer.js");
 /* harmony import */ var _errors_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./errors_reducer */ "./frontend/reducers/errors_reducer.js");
 /* harmony import */ var _entities_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./entities_reducer */ "./frontend/reducers/entities_reducer.js");
+/* harmony import */ var _ui_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui_reducer */ "./frontend/reducers/ui_reducer.js");
+
 
 
 
@@ -3188,6 +3237,7 @@ __webpack_require__.r(__webpack_exports__);
 var RootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   entities: _entities_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
   session: _session_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  ui: _ui_reducer__WEBPACK_IMPORTED_MODULE_4__["default"],
   errors: _errors_reducer__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (RootReducer);
@@ -3314,6 +3364,45 @@ var showsReducer = function showsReducer() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (showsReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/ui_reducer.js":
+/*!*****************************************!*\
+  !*** ./frontend/reducers/ui_reducer.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/ui_actions */ "./frontend/actions/ui_actions.js");
+
+
+var uiReducer = function uiReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    preview: false
+  };
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_ui_actions__WEBPACK_IMPORTED_MODULE_0__["NOT_PREVIEWING"]:
+      return {
+        preview: false
+      };
+
+    case _actions_ui_actions__WEBPACK_IMPORTED_MODULE_0__["PREVIEWING"]:
+      return {
+        preview: true
+      };
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (uiReducer);
 
 /***/ }),
 

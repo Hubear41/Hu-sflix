@@ -25,14 +25,16 @@ class BigPreview extends React.Component {
     }
     
     componentDidMount() {
-        const { previewId } = this.props;
+        const { previewId, isPreviewing } = this.props;
         const { ended } = this.state;
         this.props.requestVideo(previewId);
         
         window.addEventListener('scroll', () => {
             let bigPreview = this.entirePreview.current;
 
-            if ( bigPreview ) {
+            if ( isPreviewing ) {
+                this.pauseVideo();
+            } else if ( bigPreview ){
                 if ( !ended && window.pageYOffset > (bigPreview.scrollHeight / 3) ) {
                     this.pauseVideo();
                 } else if ( !ended && window.pageYOffset <= (bigPreview.scrollHeight / 3) ) {
@@ -40,6 +42,17 @@ class BigPreview extends React.Component {
                 }
             }
         });
+    }
+
+    componentDidUpdate() {
+        const { isPreviewing } = this.props;
+        const { ended } = this.state;
+
+        if ( isPreviewing && !ended ) {
+            this.playVideo();
+        } else if ( !isPreviewing && !ended ) {
+            this.pauseVideo();
+        }
     }
 
     toggleMute() {
@@ -67,8 +80,9 @@ class BigPreview extends React.Component {
 
     playVideo() {
         const videoEl = this.videoPlayer.current;
+        const { isPreviewing } = this.props;
 
-        if (window.pageYOffset < bigPreview.scrollHeight / 3 && videoEl.paused ) {
+        if ( !isPreviewing && window.pageYOffset < bigPreview.scrollHeight / 3 && videoEl.paused ) {
             setTimeout( () => {
                 videoEl.play().then( () => {
                     this.setState({ imageOpacity: 0 });
