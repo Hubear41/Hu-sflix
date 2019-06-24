@@ -3556,7 +3556,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+ // const logger = createLogger({
+//     predicate: (getState, action) => !conf.production
+// });
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
