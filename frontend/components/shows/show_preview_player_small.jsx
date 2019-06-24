@@ -97,6 +97,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                     <img src={show ? show.posterUrl : window.tempBgURL} 
                          alt={show.title} 
                          className="show-title-card" 
+                         onClick={this.launchWatch}
                     />
 
                     <figure className="show-peek-preview-player">

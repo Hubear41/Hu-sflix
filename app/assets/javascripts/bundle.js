@@ -2190,7 +2190,8 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: show ? show.posterUrl : window.tempBgURL,
         alt: show.title,
-        className: "show-title-card"
+        className: "show-title-card",
+        onClick: this.launchWatch
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "show-peek-preview-player"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
