@@ -34,7 +34,7 @@ class BigPreview extends React.Component {
 
             if ( isPreviewing ) {
                 this.pauseVideo();
-            } else if ( bigPreview ){
+            } else if ( bigPreview ) {
                 if ( !ended && window.pageYOffset > (bigPreview.scrollHeight / 3) ) {
                     this.pauseVideo();
                 } else if ( !ended && window.pageYOffset <= (bigPreview.scrollHeight / 3) ) {
@@ -49,9 +49,9 @@ class BigPreview extends React.Component {
         const { ended } = this.state;
 
         if ( isPreviewing && !ended ) {
-            this.playVideo();
-        } else if ( !isPreviewing && !ended ) {
             this.pauseVideo();
+        } else if ( !isPreviewing && !ended ) {
+            this.playVideo();
         }
     }
 
@@ -80,9 +80,10 @@ class BigPreview extends React.Component {
 
     playVideo() {
         const videoEl = this.videoPlayer.current;
-        const { isPreviewing } = this.props;
+        let bigPreview = this.entirePreview.current;
+        // const { isPreviewing } = this.props;
 
-        if ( !isPreviewing && window.pageYOffset < bigPreview.scrollHeight / 3 && videoEl.paused ) {
+        if ( window.pageYOffset < bigPreview.scrollHeight / 3 && videoEl.paused ) {
             setTimeout( () => {
                 videoEl.play().then( () => {
                     this.setState({ imageOpacity: 0 });

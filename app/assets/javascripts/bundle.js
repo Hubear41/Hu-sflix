@@ -554,9 +554,9 @@ function (_React$Component) {
       var ended = this.state.ended;
 
       if (isPreviewing && !ended) {
-        this.playVideo();
-      } else if (!isPreviewing && !ended) {
         this.pauseVideo();
+      } else if (!isPreviewing && !ended) {
+        this.playVideo();
       }
     }
   }, {
@@ -602,9 +602,9 @@ function (_React$Component) {
       var _this4 = this;
 
       var videoEl = this.videoPlayer.current;
-      var isPreviewing = this.props.isPreviewing;
+      var bigPreview = this.entirePreview.current; // const { isPreviewing } = this.props;
 
-      if (!isPreviewing && window.pageYOffset < bigPreview.scrollHeight / 3 && videoEl.paused) {
+      if (window.pageYOffset < bigPreview.scrollHeight / 3 && videoEl.paused) {
         setTimeout(function () {
           videoEl.play().then(function () {
             _this4.setState({
@@ -1757,6 +1757,37 @@ var mdp = function mdp(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/components/shows/preview_player_small_container.js":
+/*!*********************************************************************!*\
+  !*** ./frontend/components/shows/preview_player_small_container.js ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/ui_actions */ "./frontend/actions/ui_actions.js");
+/* harmony import */ var _show_preview_player_small__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./show_preview_player_small */ "./frontend/components/shows/show_preview_player_small.jsx");
+
+
+
+
+var mdp = function mdp(dispatch) {
+  return {
+    startPreview: function startPreview() {
+      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_1__["receivePreview"])());
+    },
+    endPreview: function endPreview() {
+      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_1__["receiveNoPreview"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(null, mdp)(_show_preview_player_small__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
 /***/ "./frontend/components/shows/show_detail.jsx":
 /*!***************************************************!*\
   !*** ./frontend/components/shows/show_detail.jsx ***!
@@ -2201,6 +2232,7 @@ function (_React$Component) {
           });
         });
       }, 2000);
+      this.props.startPreview();
     }
   }, {
     key: "pauseVideo",
@@ -2215,6 +2247,7 @@ function (_React$Component) {
       this.setState({
         paused: true
       });
+      this.props.endPreview();
     } // openDropDown(e) {
     // }
 
@@ -2304,7 +2337,7 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _show_preview_player_small__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./show_preview_player_small */ "./frontend/components/shows/show_preview_player_small.jsx");
+/* harmony import */ var _preview_player_small_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./preview_player_small_container */ "./frontend/components/shows/preview_player_small_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2353,7 +2386,7 @@ function (_React$Component) {
           rowNum = _this$props.rowNum,
           videos = _this$props.videos;
       var previewVideo = show.show_type === 'FEATURE' ? videos[show.movie_id] : videos[show.episode_ids[0]];
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_preview_player_small__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_preview_player_small_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         key: "".concat(show.id).concat(rowNum),
         show: show,
         preview: previewVideo,

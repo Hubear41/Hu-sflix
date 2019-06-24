@@ -64,7 +64,9 @@ class ShowPreviewPlayerSmall extends React.Component {
             videoEl.play().then( () => {
                 this.setState({ paused: false });
             });
-        }, 2000)
+        }, 2000);
+        
+        this.props.startPreview();
     }
 
     pauseVideo() {
@@ -76,8 +78,8 @@ class ShowPreviewPlayerSmall extends React.Component {
 
         videoEl.pause();
         clearTimeout(this.videoTimeout);
-
         this.setState({ paused: true });
+        this.props.endPreview();
     }
 
     // openDropDown(e) {

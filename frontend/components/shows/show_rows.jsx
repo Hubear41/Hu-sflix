@@ -1,5 +1,5 @@
 import React from 'react';
-import ShowPreviewPlayer from './show_preview_player_small';
+import ShowPreviewPlayer from './preview_player_small_container';
 
 class ShowRow extends React.Component {
     constructor(props) {
