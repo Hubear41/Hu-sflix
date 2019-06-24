@@ -93,7 +93,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                          className={`show-row-item-x item-${show.id}`} 
                          onMouseEnter={this.playVideo}
                          onMouseLeave={this.pauseVideo}
-                         onClick={this.launchWatch}
+                        //  onClick={this.launchWatch}
                 >
                     <img src={show ? show.posterUrl : window.tempBgURL} 
                          alt={show.title} 
@@ -102,14 +102,13 @@ class ShowPreviewPlayerSmall extends React.Component {
 
                     <figure className="show-peek-preview-player">
                         <figure className="preview-video-player">
+                            <figure className='preview-clickable-area' onClick={this.launchWatch}></figure>
                             <video id={`show-${show.id} preview-video`} 
                                    ref={this.videoPlayer}
-                                   onClick={this.launchWatch}
                                    muted='muted'
                             >
                                 <source src={preview ? preview.videoUrl : '' } type="video/mp4"/> 
                             </video>
-                           
                             <button className="preview-play-btn">
                                 <figure className="play-btn-icon">
                                     <i className="fas fa-play play-btn-triangle"></i>

@@ -73,7 +73,6 @@ class Watch extends React.Component {
                 this.jumpForward();
                 break;
             case 37:  // left arrow
-                e.preventDefault();
                 this.jumpBack();
                 break;
             case 77: // m key
@@ -308,6 +307,7 @@ class Watch extends React.Component {
         const { video, show } = this.props;
         let awayAnimation = '';
         let runtime = video ? video.runtime : 0;
+        
         let playPauseBtn = null, remainingTime = null, audioIcon = null, volumeStyle = null, timeStyle = null, controlStyle = null;
 
         if ( !started && this.videoPlayer.current !== null ) {
@@ -390,7 +390,7 @@ class Watch extends React.Component {
                                 <article className="away-screen-other-details">
                                     <h6>{show ? show.year : ''}</h6>
                                     <h6>{show ? show.maturity_rating : ''}</h6>
-                                    <h6>{show ? DateTimeUTIL.secondsToHoursMinutes(runtime) : ''}</h6>
+                                    <h6>{video ? DateTimeUTIL.secondsToHoursMinutes(runtime) : ''}</h6>
                                 </article>
                                 <p>{show ? show.tagline : ''}</p>
                             </article>

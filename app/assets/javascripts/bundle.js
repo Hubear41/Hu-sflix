@@ -2186,8 +2186,8 @@ function (_React$Component) {
         id: "show-peek-preview-wrapper",
         className: "show-row-item-x item-".concat(show.id),
         onMouseEnter: this.playVideo,
-        onMouseLeave: this.pauseVideo,
-        onClick: this.launchWatch
+        onMouseLeave: this.pauseVideo //  onClick={this.launchWatch}
+
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: show ? show.posterUrl : window.tempBgURL,
         alt: show.title,
@@ -2196,10 +2196,12 @@ function (_React$Component) {
         className: "show-peek-preview-player"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "preview-video-player"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "preview-clickable-area",
+        onClick: this.launchWatch
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         id: "show-".concat(show.id, " preview-video"),
         ref: this.videoPlayer,
-        onClick: this.launchWatch,
         muted: "muted"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         src: preview ? preview.videoUrl : '',
@@ -2510,7 +2512,6 @@ function (_React$Component) {
 
         case 37:
           // left arrow
-          e.preventDefault();
           this.jumpBack();
           break;
 
@@ -2938,7 +2939,7 @@ function (_React$Component) {
         className: "away-screen-details"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You're watching"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, show ? show.title : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "away-screen-other-details"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.year : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.maturity_rating : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](runtime) : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, show ? show.tagline : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.year : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.maturity_rating : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, video ? _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](runtime) : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, show ? show.tagline : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "away-screen-paused"
       }, "Paused"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "full-control-area",
