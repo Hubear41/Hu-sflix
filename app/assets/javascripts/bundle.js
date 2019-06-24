@@ -2510,6 +2510,7 @@ function (_React$Component) {
 
         case 37:
           // left arrow
+          e.preventDefault();
           this.jumpBack();
           break;
 
@@ -2536,9 +2537,13 @@ function (_React$Component) {
     key: "videoReady",
     value: function videoReady() {
       var videoEl = this.videoPlayer.current;
-      videoEl.volume = 0.8;
-      videoEl.muted = false;
-      this.togglePlayPause();
+      var started = this.state.started;
+
+      if (started === false) {
+        videoEl.volume = 0.8;
+        videoEl.muted = false;
+        this.togglePlayPause();
+      }
     }
   }, {
     key: "togglePlayPause",

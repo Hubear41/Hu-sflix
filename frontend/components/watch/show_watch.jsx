@@ -73,6 +73,7 @@ class Watch extends React.Component {
                 this.jumpForward();
                 break;
             case 37:  // left arrow
+                e.preventDefault();
                 this.jumpBack();
                 break;
             case 77: // m key
@@ -92,16 +93,19 @@ class Watch extends React.Component {
 
     videoReady() {
         const videoEl = this.videoPlayer.current;
-
-        videoEl.volume = 0.8;
-        videoEl.muted = false;
-        this.togglePlayPause();
+        const { started } = this.state;
+        
+        if ( started === false ) {
+            videoEl.volume = 0.8;
+            videoEl.muted = false;
+            this.togglePlayPause();
+        }
     }
 
     togglePlayPause() {   
         const videoEl = this.videoPlayer.current;
         const { paused } = this.state;
-        
+
         // play() returns a promise obj
         // the state is only changed if play works 
         // prevents the play button from changing until it can play
