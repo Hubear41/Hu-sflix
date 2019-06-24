@@ -93,12 +93,11 @@ class ShowPreviewPlayerSmall extends React.Component {
                          className={`show-row-item-x item-${show.id}`} 
                          onMouseEnter={this.playVideo}
                          onMouseLeave={this.pauseVideo}
-                        //  onClick={this.launchWatch}
                 >
                     <img src={show ? show.posterUrl : window.tempBgURL} 
                          alt={show.title} 
-                         className="show-title-card" />
-                    {/* <span className="title-card-name">{show.title}</span> */}
+                         className="show-title-card" 
+                    />
 
                     <figure className="show-peek-preview-player">
                         <figure className="preview-video-player">

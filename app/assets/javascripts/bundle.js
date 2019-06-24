@@ -2186,8 +2186,7 @@ function (_React$Component) {
         id: "show-peek-preview-wrapper",
         className: "show-row-item-x item-".concat(show.id),
         onMouseEnter: this.playVideo,
-        onMouseLeave: this.pauseVideo //  onClick={this.launchWatch}
-
+        onMouseLeave: this.pauseVideo
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: show ? show.posterUrl : window.tempBgURL,
         alt: show.title,
