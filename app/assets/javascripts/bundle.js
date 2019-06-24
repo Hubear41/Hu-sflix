@@ -2392,6 +2392,24 @@ function (_React$Component) {
         preview: previewVideo,
         Timeout: this.playTimeout
       });
+    } // remove this once genres are add
+
+  }, {
+    key: "findHeaderName",
+    value: function findHeaderName(rowNum) {
+      switch (rowNum) {
+        case 0:
+          return 'Suspenseful Dramas';
+
+        case 1:
+          return 'Heartbreaking Movies';
+
+        case 2:
+          return 'Exciting Shows';
+
+        default:
+          return '';
+      }
     }
   }, {
     key: "render",
@@ -2406,7 +2424,7 @@ function (_React$Component) {
       shows.forEach(function (show) {
         showList.push(_this2.createShowRowItem(show));
       });
-      var headerText = galleryType ? "row ".concat(rowNum + 1) : "";
+      var headerText = galleryType ? this.findHeaderName(rowNum) : "";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "row-".concat(rowNum, "-wrapper show-rows-wrapper")
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, headerText), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {

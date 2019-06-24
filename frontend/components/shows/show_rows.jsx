@@ -25,6 +25,20 @@ class ShowRow extends React.Component {
         ); 
     }
 
+    // remove this once genres are add
+    findHeaderName(rowNum) {
+        switch(rowNum) {
+            case 0:
+                return 'Suspenseful Dramas';
+            case 1:
+                return 'Heartbreaking Movies';
+            case 2:
+                return 'Exciting Shows';
+            default:
+                return '';
+        }
+    }
+
     render() {
         const { shows, rowNum, galleryType } = this.props;
         const showList = [];
@@ -33,7 +47,7 @@ class ShowRow extends React.Component {
             showList.push(this.createShowRowItem(show));
         } );
         
-        const headerText = galleryType ? `row ${rowNum + 1}` : "";
+        const headerText = galleryType ? this.findHeaderName(rowNum) : "";
 
         return (
                 <li className={`row-${rowNum}-wrapper show-rows-wrapper`}>
