@@ -2160,9 +2160,11 @@ var msp = function msp(_ref) {
   var entities = _ref.entities;
   var shows = Object.values(entities.shows);
   var videos = entities.videos;
+  var genres = entities.genres;
   return {
     shows: shows,
     videos: videos,
+    genres: genres,
     galleryType: 'showsIndex'
   };
 };
@@ -2496,7 +2498,7 @@ function (_React$Component) {
         className: "row-".concat(rowNum, "-wrapper show-rows-wrapper")
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, headerText), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "row-".concat(rowNum, " show-row")
-      }, showList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_detail_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+      }, showList));
     }
   }]);
 

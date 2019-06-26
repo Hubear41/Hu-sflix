@@ -6,10 +6,12 @@ import ShowGallery from './show_gallery';
 const msp = ({entities}) => {
     const shows = Object.values(entities.shows);
     const videos = entities.videos;
+    const genres = entities.genres;
 
     return {
         shows,
         videos,
+        genres,
         galleryType: 'showsIndex',
     }
 };

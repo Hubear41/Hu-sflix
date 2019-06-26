@@ -57,7 +57,7 @@ class ShowRow extends React.Component {
                     <figure className={`row-${rowNum} show-row`}>
                         {showList}
                     </figure>
-                    <ShowDetail  />
+                    {/* <ShowDetail  /> */}
                 </li>
         );
     }
