@@ -9,7 +9,7 @@ class ShowDetail extends React.Component {
         const { rowNum, show } = this.props;
 
         return (
-            <figure className={`row-preview${rowNum} dropdown-preview-player`}>
+            <figure className={`row-preview${rowNum} dropdown-preview-player hidden-dropdown`}>
                 <video src=""></video>
             </figure>
         );

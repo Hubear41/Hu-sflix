@@ -917,20 +917,29 @@ function (_React$Component) {
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
           className: "husflix-footer"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: "",
+          href: "hubear41.github.io",
+          target: "new",
           className: "website-symbol"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-ghost"
+          className: "fas fa-user-circle"
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "https://github.com/Hubear41",
+          target: "new",
           className: "github-symbol"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fab fa-github"
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "https://www.linkedin.com/in/dennisdhu/",
+          target: "new",
           className: "linkedin-symbol"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fab fa-linkedin-in"
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "https://angel.co/dennis-hu-1?public_profile=1",
+          target: "new",
+          className: "angel-symbol"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fab fa-angellist"
         }))) // </section>
 
       );
@@ -1842,7 +1851,7 @@ function (_React$Component) {
           rowNum = _this$props.rowNum,
           show = _this$props.show;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "row-preview".concat(rowNum, " dropdown-preview-player")
+        className: "row-preview".concat(rowNum, " dropdown-preview-player hidden-dropdown")
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         src: ""
       }));
@@ -2125,7 +2134,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _show_detail_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./show_detail_container */ "./frontend/components/shows/show_detail_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2143,7 +2151,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 
 
 
@@ -2338,6 +2345,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _preview_player_small_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./preview_player_small_container */ "./frontend/components/shows/preview_player_small_container.js");
+/* harmony import */ var _show_detail_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./show_detail_container */ "./frontend/components/shows/show_detail_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2355,6 +2363,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2429,7 +2438,7 @@ function (_React$Component) {
         className: "row-".concat(rowNum, "-wrapper show-rows-wrapper")
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, headerText), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "row-".concat(rowNum, " show-row")
-      }, showList));
+      }, showList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_detail_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
     }
   }]);
 

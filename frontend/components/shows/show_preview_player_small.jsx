@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import ShowDetail from './show_detail_container';
 
 class ShowPreviewPlayerSmall extends React.Component {
     constructor(props) {
@@ -139,10 +138,6 @@ class ShowPreviewPlayerSmall extends React.Component {
                             <i className="fas fa-chevron-down"></i>
                         </button>
                     </figure>
-
-                    {/* <aside className={`show-row-jaw gallery-jaw-${show.id} hidden`}>
-                        <ShowDetail key={show.id} rowNum={rowNum} show={show} />
-                    </aside> */}
                 </section>
             </>
         );

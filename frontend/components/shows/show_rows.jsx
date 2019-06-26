@@ -1,5 +1,6 @@
 import React from 'react';
 import ShowPreviewPlayer from './preview_player_small_container';
+import ShowDetail from './show_detail_container';
 
 class ShowRow extends React.Component {
     constructor(props) {
@@ -56,6 +57,7 @@ class ShowRow extends React.Component {
                     <figure className={`row-${rowNum} show-row`}>
                         {showList}
                     </figure>
+                    <ShowDetail  />
                 </li>
         );
     }

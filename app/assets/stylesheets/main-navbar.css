@@ -1,7 +1,7 @@
 .main-nav-bar-wrapper {
     width: 98vw;
     height: 40px;
-    position: absolute;
+    position: fixed;
     top: 0;
     bottom: 0;
     z-index: 100;

@@ -12,15 +12,19 @@ class Footer extends React.Component {
         return (
             // <section className="footer-positioning">
                 <footer className="husflix-footer">
-                    <a href="" className="website-symbol">
-                        <i className="fas fa-ghost"></i>
+                    <a href="hubear41.github.io" target='new' className="website-symbol">
+                        <i className="fas fa-user-circle"></i>
                     </a>
-                    <a href="https://github.com/Hubear41" className="github-symbol">
+                    <a href="https://github.com/Hubear41" target='new' className="github-symbol">
                         <i className="fab fa-github"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/dennisdhu/" className='linkedin-symbol'>
+                    <a href="https://www.linkedin.com/in/dennisdhu/" target='new' className='linkedin-symbol'>
                         <i className="fab fa-linkedin-in"></i>
                     </a>
+                    <a href="https://angel.co/dennis-hu-1?public_profile=1" target='new' className='angel-symbol'>
+                        <i className="fab fa-angellist"></i>
+                    </a>
+
                 </footer>
             // </section>
         );
