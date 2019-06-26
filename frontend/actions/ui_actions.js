@@ -1,7 +1,7 @@
 export const PREVIEWING = 'PREVIEWING';
 export const NOT_PREVIEWING = 'NOT_PREVIEWING';
 
-export const receivePreview = () => ({
+export const receivePreview = id => ({
     type: PREVIEWING,
 });
 

@@ -368,7 +368,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveNoPreview", function() { return receiveNoPreview; });
 var PREVIEWING = 'PREVIEWING';
 var NOT_PREVIEWING = 'NOT_PREVIEWING';
-var receivePreview = function receivePreview() {
+var receivePreview = function receivePreview(id) {
   return {
     type: PREVIEWING
   };
@@ -1833,13 +1833,44 @@ var ShowDetail =
 function (_React$Component) {
   _inherits(ShowDetail, _React$Component);
 
-  function ShowDetail() {
+  function ShowDetail(props) {
+    var _this;
+
     _classCallCheck(this, ShowDetail);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(ShowDetail).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowDetail).call(this, props));
+    _this.dropdownPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    return _this;
   }
 
   _createClass(ShowDetail, [{
+    key: "continue_playing",
+    value: function continue_playing() {
+      var videoEl = this.dropdownPlayer.current;
+      var currentTime = this.props.currentTime;
+      videoEl.muted = false;
+      videoEl.currentTime = currentTime;
+      videoEl.play();
+    }
+  }, {
+    key: "launch_watch",
+    value: function launch_watch() {
+      var show = this.props.show;
+      var videoEl = this.dropdownPlayer.current;
+      videoEl.pause();
+
+      if (show.show_type === 'FEATURE') {
+        this.props.history.push("/watch/".concat(show.id, "/").concat(show.movie_id));
+      } else {
+        this.props.history.push("/watch/".concat(show.id, "/").concat(show.episode_ids[0]));
+      }
+    }
+  }, {
+    key: "closeDropdown",
+    value: function closeDropdown() {
+      this.props.closeDropdown();
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.getShowInfo(this.props.match.params.showId);
@@ -1850,11 +1881,38 @@ function (_React$Component) {
       var _this$props = this.props,
           rowNum = _this$props.rowNum,
           show = _this$props.show;
+      var muteBtnIcon = null;
+      var dropdownVisibility = 'hidden-dropdown';
+
+      if (this.dropdownPlayer.current !== null) {
+        var videoEl = this.dropdownPlayer.current;
+        muteBtnIcon = videoEl.muted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-mute"
+        }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-up"
+        });
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "row-preview".concat(rowNum, " dropdown-preview-player hidden-dropdown")
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-        src: ""
-      }));
+        className: "row-preview".concat(rowNum, " dropdown-preview-player ").concat(dropdownVisibility)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "dropdown-details"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, show.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "dropdown-year-ma"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, show.year), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        className: "maturity-box"
+      }, show.maturity_rating)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, show.tagline), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "dropdown-play-btn"
+      }, "Play")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Director: ", show.director)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+        id: "dropdown-player",
+        ref: this.dropdownPlayer,
+        muted: "muted",
+        onCanPlayThrough: this.continue_playing
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "dropdown-close-btn"
+      }, "X"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "dropdown-mute-btn"
+      }, muteBtnIcon));
     }
   }]);
 
