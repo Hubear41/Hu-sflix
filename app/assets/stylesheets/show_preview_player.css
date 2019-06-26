@@ -212,6 +212,11 @@
     font-size: 30px;
 }
 
+.genre-title {
+    color: white;
+    font-size: 10pt;
+}
+
 .preview-video {
     max-height: 100%;
     width: 100%;

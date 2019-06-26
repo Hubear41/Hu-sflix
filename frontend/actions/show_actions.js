@@ -21,10 +21,11 @@ const receiveVideo = video => ({
     video,
 });
 
-const receiveShows = ({ shows, videos }) => ({
+const receiveShows = ({ shows, videos, genres }) => ({
     type: RECEIVE_SHOWS,
     shows,
     videos,
+    genres,
 });
 
 const receiveShow = ({show, nextShow, video}) => ({
@@ -32,4 +33,4 @@ const receiveShow = ({show, nextShow, video}) => ({
     show,
     nextShow,
     video,
-})
+});

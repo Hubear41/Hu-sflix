@@ -331,11 +331,13 @@ var receiveVideo = function receiveVideo(video) {
 
 var receiveShows = function receiveShows(_ref) {
   var shows = _ref.shows,
-      videos = _ref.videos;
+      videos = _ref.videos,
+      genres = _ref.genres;
   return {
     type: RECEIVE_SHOWS,
     shows: shows,
-    videos: videos
+    videos: videos,
+    genres: genres
   };
 };
 
@@ -2065,7 +2067,8 @@ function (_React$Component) {
       var _this$props = this.props,
           shows = _this$props.shows,
           galleryType = _this$props.galleryType,
-          videos = _this$props.videos;
+          videos = _this$props.videos,
+          genres = _this$props.genres;
       var showsPerRow = null,
           previewShow = null,
           showRowsList = null;
@@ -2079,7 +2082,8 @@ function (_React$Component) {
             rowNum: idx,
             shows: row,
             videos: videos,
-            galleryType: galleryType
+            galleryType: galleryType,
+            genres: genres
           });
         });
       }
@@ -2324,11 +2328,24 @@ function (_React$Component) {
       var _this$props = this.props,
           show = _this$props.show,
           preview = _this$props.preview;
+      var genresToShow = [];
       var muteBtn = this.state.muted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-volume-mute mute-symbol"
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-volume-up mute-symbol"
-      });
+      }); // if ( show !== undefined ) {
+      //     show.genreList.forEach( (genre, idx) => {
+      //         if ( genre !== 'TV Show' || genre !== 'Movie' ) {
+      //             if ( idx === show.genreList.length - 1 ) {
+      //                 genresToShow.push(<span>{genre}</span>);
+      //             } else {
+      //                 genresToShow.push(<span className='genre-title'>{genre}</span>);
+      //                 genresToShow.push(<strong className='genre-bullet'>{'\u2022'}</strong>);
+      //             }
+      //         }
+      //     });
+      // }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         id: "show-peek-preview-wrapper",
         className: "show-row-item-x item-".concat(show.id),
@@ -2453,12 +2470,18 @@ function (_React$Component) {
 
       var _this$props = this.props,
           rowNum = _this$props.rowNum,
-          videos = _this$props.videos;
+          videos = _this$props.videos,
+          genres = _this$props.genres;
+      var genreList = [];
       var previewVideo = show.show_type === 'FEATURE' ? videos[show.movie_id] : videos[show.episode_ids[0]];
+      show.genre_ids.forEach(function (id) {
+        genreList.push(genres[id]);
+      });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_preview_player_small_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         key: "".concat(show.id).concat(rowNum),
         show: show,
         preview: previewVideo,
+        genres: genreList,
         Timeout: this.playTimeout
       });
     } // remove this once genres are add
@@ -3306,9 +3329,11 @@ var errorsReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_genre_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/genre_actions */ "./frontend/actions/genre_actions.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/show_actions */ "./frontend/actions/show_actions.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -3324,7 +3349,10 @@ var genreReducer = function genreReducer() {
 
     case _actions_genre_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_GENRE"]:
       var genre = action.genre;
-      return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, state, _defineProperty({}, genre.id, genre));
+      return Object(lodash__WEBPACK_IMPORTED_MODULE_2__["merge"])({}, state, _defineProperty({}, genre.id, genre));
+
+    case _actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_SHOWS"]:
+      return action.genres;
 
     default:
       return state;

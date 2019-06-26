@@ -14,13 +14,19 @@ class ShowRow extends React.Component {
             return null;
         }
 
-        const { rowNum, videos } = this.props;
+        const { rowNum, videos, genres } = this.props;
+        const genreList = [];
         const previewVideo = show.show_type === 'FEATURE' ? videos[show.movie_id] : videos[show.episode_ids[0]];
+
+        show.genre_ids.forEach( id => {
+            genreList.push(genres[id]);
+        });
         
         return (
             <ShowPreviewPlayer  key={`${show.id}${rowNum}`} 
                                 show={show} 
                                 preview={previewVideo}
+                                genres={genreList}
                                 Timeout={this.playTimeout}
             />
         ); 

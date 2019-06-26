@@ -87,7 +87,22 @@ class ShowPreviewPlayerSmall extends React.Component {
     
     render() {
         const { show, preview } = this.props;
+        const genresToShow = [];
         const muteBtn = this.state.muted ? <i className="fas fa-volume-mute mute-symbol"></i> : <i className="fas fa-volume-up mute-symbol"></i>
+        
+        // if ( show !== undefined ) {
+        //     show.genreList.forEach( (genre, idx) => {
+        //         if ( genre !== 'TV Show' || genre !== 'Movie' ) {
+        //             if ( idx === show.genreList.length - 1 ) {
+        //                 genresToShow.push(<span>{genre}</span>);
+        //             } else {
+        //                 genresToShow.push(<span className='genre-title'>{genre}</span>);
+        //                 genresToShow.push(<strong className='genre-bullet'>{'\u2022'}</strong>);
+        //             }
+        //         }
+        //     });
+        // }
+
         return (
             <>
                 <section id="show-peek-preview-wrapper" 
@@ -129,6 +144,9 @@ class ShowPreviewPlayerSmall extends React.Component {
                             <figcaption className="preview-video-info-desc">
                                 <h5 className="preview-show-title">{show.title}</h5>
                                 <span className="show-maturity-rating">{show.maturity_rating}</span>
+                                {/* <article className='preview-genres'>
+                                    {genresToShow}
+                                </article> */}
                             </figcaption>
                         </figure>
 

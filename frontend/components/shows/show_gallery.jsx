@@ -77,7 +77,7 @@ class ShowGallery extends React.Component {
     }
     
     render() {
-        const { shows, galleryType, videos } = this.props;
+        const { shows, galleryType, videos, genres } = this.props;
 
         let showsPerRow = null, previewShow = null, showRowsList = null;
         if ( shows.length > 0 ) {
@@ -85,7 +85,7 @@ class ShowGallery extends React.Component {
             previewShow = showsPerRow[0][0];
 
             showRowsList = showsPerRow.map( (row, idx) => {
-                return <ShowRows key={idx} rowNum={idx} shows={row} videos={videos} galleryType={galleryType}/>
+                return <ShowRows key={idx} rowNum={idx} shows={row} videos={videos} galleryType={galleryType} genres={genres} />
             }) 
         }
         
