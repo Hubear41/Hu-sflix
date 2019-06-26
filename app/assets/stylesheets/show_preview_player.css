@@ -10,6 +10,7 @@
     display: flex;
     align-items: center;
     width: 100%;
+    /* overflow-x: hidden; */
 }   
 
 #show-peek-preview-wrapper {
@@ -19,7 +20,7 @@
     position: relative;
     transform: scale(1);
     transform-origin: left;
-    transition: transform 0.3s;
+    transition: transform 0.3s, margin-right 0.2s;
     transition-timing-function: ease-in;
 }
 
@@ -27,7 +28,8 @@
     border: 1px solid black;
     box-sizing: border-box;
     transform: scale(1.7);
-    transition: transform 0.2s;
+    margin-right: 10vw;
+    transition: transform 0.2s, margin-right 0.2s;
     transition-timing-function: ease-in;
     transition-delay: 0.5s;
 }
@@ -42,21 +44,22 @@
 
 #show-peek-preview-wrapper:hover .show-title-card {
     opacity: 0;
-    transition: opacity 0.5s;
     z-index: 1000;
+    transition: opacity 0.5s, z-index 0.1s;
     transition-delay: 2s;
 }
 
 #show-peek-preview-wrapper:hover .show-peek-preview-player {
     opacity: 1;
-    transition: opactiy 0.1s;
     z-index: 10000;
+    transition: opactiy 0.1s, z-index 0.1s;
     transition-timing-function: ease-in;
     transition-delay: 1s;
 }
 
 #show-peek-preview-wrapper:hover video {
     z-index: 10000;
+    transition: z-index 0.1s;
     transition-timing-function: ease-in;
     transition-delay: 1s;
 }
