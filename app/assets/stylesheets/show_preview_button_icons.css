@@ -4,11 +4,11 @@
 
 .play-btn-triangle {
     position: absolute;
-    top: -1.55vh;
+    top: -1.6vh;
     left: 0.8vw;
     z-index: 21;
     transform-origin: center;
-    transform: scale(0.8);
+    transform: scale(0.6);
     color: red;
 }
 

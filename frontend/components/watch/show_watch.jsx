@@ -17,6 +17,7 @@ class Watch extends React.Component {
             loaded: false,
             away: false,
             started: false,
+            currentKey: null,
         };
         this.timeout;
         this.awayTimer;
@@ -355,7 +356,6 @@ class Watch extends React.Component {
             fullscreenFunc = this.openFullscreen;
         }
         
-        // debugger
         return (
             <figure className="main-video-player" ref={this.fullControlArea}> 
                 

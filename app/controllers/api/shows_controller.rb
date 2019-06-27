@@ -10,7 +10,7 @@ class Api::ShowsController < ApplicationController
         # this will be refactored once genres are implemented
         @shows.each do |show|
             previewId = show.show_type == "FEATURE" ? show.movie_id : show.episode_ids[0]
-
+            
             videos.each do |video|
                 if ( video.id == previewId ) 
                     @previewVideos << video
@@ -18,7 +18,8 @@ class Api::ShowsController < ApplicationController
                 end
             end
         end
-        
+        @runtime = @previewVideos[0].runtime;
+
         render :index
     end
 

@@ -17,8 +17,8 @@ export const secondsToTime = seconds => {
 }
 
 export const secondsToHoursMinutes = seconds => {
-    if ( !seconds ) {
-        return '0m';
+    if ( !seconds || seconds < 60) {
+        return '1m';
     }
 
     const hours = Math.floor( seconds / 6000 );

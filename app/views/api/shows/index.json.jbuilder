@@ -3,13 +3,16 @@ json.shows do
         json.set! show.id do 
             json.partial! 'api/shows/show', show: show   
             json.genre_ids show.genre_ids
+            json.runtime @runtime;
         end
     end
 end
 
 json.genres do 
     @genres.each do |genre|
-        json.partial! 'api/genres/genre', genre: genre
+        json.set! genre.id do
+            json.partial! 'api/genres/genre', genre: genre
+        end
     end
 end
 

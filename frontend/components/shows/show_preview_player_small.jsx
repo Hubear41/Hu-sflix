@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import * as DateTimeUTIL from '../../util/date_time_util'
 
 class ShowPreviewPlayerSmall extends React.Component {
     constructor(props) {
@@ -86,23 +87,23 @@ class ShowPreviewPlayerSmall extends React.Component {
     // }
     
     render() {
-        const { show, preview } = this.props;
+        const { show, preview, genres } = this.props;
         const genresToShow = [];
         const muteBtn = this.state.muted ? <i className="fas fa-volume-mute mute-symbol"></i> : <i className="fas fa-volume-up mute-symbol"></i>
         
-        // if ( show !== undefined ) {
-        //     show.genreList.forEach( (genre, idx) => {
-        //         if ( genre !== 'TV Show' || genre !== 'Movie' ) {
-        //             if ( idx === show.genreList.length - 1 ) {
-        //                 genresToShow.push(<span>{genre}</span>);
-        //             } else {
-        //                 genresToShow.push(<span className='genre-title'>{genre}</span>);
-        //                 genresToShow.push(<strong className='genre-bullet'>{'\u2022'}</strong>);
-        //             }
-        //         }
-        //     });
-        // }
-
+        if ( show !== undefined && genres.length >= 1) {
+            genres.forEach( (genre, idx) => {
+                if ( genre.name !== 'TV Show' && genre.name !== 'Movie' ) {
+                    if ( idx === genres.length - 1 ) {
+                        genresToShow.push(<span className='genre-title'key={genre.name + genre.id}>{genre.name}</span>);
+                    } else {
+                        genresToShow.push(<span className='genre-title' key={genre.name + genre.id}>{genre.name}</span>);
+                        genresToShow.push(<strong className='genre-bullet' key={'bullet ' + idx}>{'\u2022'}</strong>);
+                    }
+                }
+            });
+        }
+        
         return (
             <>
                 <section id="show-peek-preview-wrapper" 
@@ -143,10 +144,13 @@ class ShowPreviewPlayerSmall extends React.Component {
  
                             <figcaption className="preview-video-info-desc">
                                 <h5 className="preview-show-title">{show.title}</h5>
-                                <span className="show-maturity-rating">{show.maturity_rating}</span>
-                                {/* <article className='preview-genres'>
+                                <article className='preview-details'>
+                                    <span className="show-maturity-rating">{show.maturity_rating}</span>
+                                    <span>{DateTimeUTIL.secondsToHoursMinutes(show.runtime)}</span>
+                                </article>
+                                <article className='preview-genres'>
                                     {genresToShow}
-                                </article> */}
+                                </article>
                             </figcaption>
                         </figure>
 

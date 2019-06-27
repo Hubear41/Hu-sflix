@@ -2198,6 +2198,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/date_time_util */ "./frontend/util/date_time_util.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2215,6 +2216,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2327,24 +2329,36 @@ function (_React$Component) {
     value: function render() {
       var _this$props = this.props,
           show = _this$props.show,
-          preview = _this$props.preview;
+          preview = _this$props.preview,
+          genres = _this$props.genres;
       var genresToShow = [];
       var muteBtn = this.state.muted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-volume-mute mute-symbol"
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-volume-up mute-symbol"
-      }); // if ( show !== undefined ) {
-      //     show.genreList.forEach( (genre, idx) => {
-      //         if ( genre !== 'TV Show' || genre !== 'Movie' ) {
-      //             if ( idx === show.genreList.length - 1 ) {
-      //                 genresToShow.push(<span>{genre}</span>);
-      //             } else {
-      //                 genresToShow.push(<span className='genre-title'>{genre}</span>);
-      //                 genresToShow.push(<strong className='genre-bullet'>{'\u2022'}</strong>);
-      //             }
-      //         }
-      //     });
-      // }
+      });
+
+      if (show !== undefined && genres.length >= 1) {
+        genres.forEach(function (genre, idx) {
+          if (genre.name !== 'TV Show' && genre.name !== 'Movie') {
+            if (idx === genres.length - 1) {
+              genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+                className: "genre-title",
+                key: genre.name + genre.id
+              }, genre.name));
+            } else {
+              genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+                className: "genre-title",
+                key: genre.name + genre.id
+              }, genre.name));
+              genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+                className: "genre-bullet",
+                key: 'bullet ' + idx
+              }, "\u2022"));
+            }
+          }
+        });
+      }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         id: "show-peek-preview-wrapper",
@@ -2393,9 +2407,13 @@ function (_React$Component) {
         className: "preview-video-info-desc"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "preview-show-title"
-      }, show.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, show.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "preview-details"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "show-maturity-rating"
-      }, show.maturity_rating))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, show.maturity_rating), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](show.runtime))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "preview-genres"
+      }, genresToShow))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "toggle-show-detail-btn"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-chevron-down"
@@ -2476,7 +2494,8 @@ function (_React$Component) {
       var previewVideo = show.show_type === 'FEATURE' ? videos[show.movie_id] : videos[show.episode_ids[0]];
       show.genre_ids.forEach(function (id) {
         genreList.push(genres[id]);
-      });
+      }); // debugger
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_preview_player_small_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         key: "".concat(show.id).concat(rowNum),
         show: show,
@@ -2626,7 +2645,8 @@ function (_React$Component) {
       mouseMoving: false,
       loaded: false,
       away: false,
-      started: false
+      started: false,
+      currentKey: null
     };
     _this.timeout;
     _this.awayTimer;
@@ -3093,8 +3113,7 @@ function (_React$Component) {
           className: "fas fa-expand"
         });
         fullscreenFunc = this.openFullscreen;
-      } // debugger
-
+      }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "main-video-player",
@@ -3693,8 +3712,8 @@ var secondsToTime = function secondsToTime(seconds) {
   return "".concat(hoursStr, ":").concat(minutesStr, ":").concat(secondsStr);
 };
 var secondsToHoursMinutes = function secondsToHoursMinutes(seconds) {
-  if (!seconds) {
-    return '0m';
+  if (!seconds || seconds < 60) {
+    return '1m';
   }
 
   var hours = Math.floor(seconds / 6000);

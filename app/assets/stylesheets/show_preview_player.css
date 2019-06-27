@@ -9,9 +9,8 @@
 .show-row {
     display: flex;
     align-items: center;
-    width: 100%;
-    /* overflow-x: hidden; */
-}   
+    width: 120%;
+} 
 
 #show-peek-preview-wrapper {
     width: 15vw; /* width for the titlecards */
@@ -27,8 +26,8 @@
 #show-peek-preview-wrapper:hover {
     border: 1px solid black;
     box-sizing: border-box;
-    transform: scale(1.7);
-    margin-right: 10vw;
+    transform: scale(1.8);
+    margin-right: 12.3vw;
     transition: transform 0.2s, margin-right 0.2s;
     transition-timing-function: ease-in;
     transition-delay: 0.5s;
@@ -44,21 +43,21 @@
 
 #show-peek-preview-wrapper:hover .show-title-card {
     opacity: 0;
-    z-index: 1000;
+    z-index: 100;
     transition: opacity 0.5s, z-index 0.1s;
     transition-delay: 2s;
 }
 
 #show-peek-preview-wrapper:hover .show-peek-preview-player {
     opacity: 1;
-    z-index: 10000;
+    z-index: 500;
     transition: opactiy 0.1s, z-index 0.1s;
     transition-timing-function: ease-in;
     transition-delay: 1s;
 }
 
 #show-peek-preview-wrapper:hover video {
-    z-index: 10000;
+    z-index: 500;
     transition: z-index 0.1s;
     transition-timing-function: ease-in;
     transition-delay: 1s;
@@ -93,7 +92,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 500;
+    z-index: 400;
     background-color: black;
 }
 
@@ -103,7 +102,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 50;
+    z-index: 450;
+    background-image: linear-gradient(to top, rbga(0,0,0,0.8), rbga(0,0,0,0) );
 }
 
 .preview-player-right-side-btns {
@@ -114,7 +114,7 @@
     position: absolute;
     right: 1vw;
     top: 7vh;
-    z-index: 60;
+    z-index: 600;
     opacity: 0;
     transition: opacity 0.2s;
 }
@@ -124,19 +124,21 @@
     width: 100%;
     top: 0;
     position: absolute;
-    z-index: 100;
+    z-index: 5000;
     transform: scale(0.8)
 }
 
 .preview-play-btn {
     position: absolute;
-    top: 60%;
-    left: 6%;
+    top: 50%;
+    /* left: 5%; */
     height: 13%;
     width: 9%;
     border: none;
     background: none;
-    transform: scale(0.8);
+    outline: none;
+    z-index: 605;
+    transform: scale(1);
 }
 
 .preview-play-pause-icon {
@@ -145,10 +147,33 @@
 
 .preview-video-info-desc {
     position: absolute;
-    bottom: 25%;
-    left: 8%;
+    bottom: 15%;
+    left: 5%;
     font-size: 1vh;
-    font-family: Arial, Helvetica, sans-serif;
+    z-index: 600;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.preview-video-info-desc h5 {
+    font-weight: bold;
+    font-size: 8pt;
+    text-shadow: 1px 1px 2px black;
+}
+
+.preview-details {
+    margin-top: 5px;
+    font-size: 5pt;
+    font-weight: 300;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.show-maturity-rating {
+    border: 0.1px solid white;
+    background: none;
+    padding: 2px 3px;
+    margin-right: 2px;
 }
 
 .preview-mute-btn {
@@ -157,7 +182,7 @@
     border: none;
     position: relative;
     transform-origin: center;
-    transform: scale(0.6);
+    transform: scale(0.7);
     transition: transform 0.3s;
 }
 
@@ -212,9 +237,22 @@
     font-size: 30px;
 }
 
+.preview-genres {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 110%;
+}
+
 .genre-title {
     color: white;
-    font-size: 10pt;
+    font-size: 5pt;
+}
+
+.genre-bullet {
+    color: grey;
+    font-size: 4pt;
 }
 
 .preview-video {
