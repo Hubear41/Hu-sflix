@@ -113,7 +113,7 @@
     margin-right: 6%;
     position: absolute;
     right: 10px;
-    top: 5vh;
+    top: 8vh;
     z-index: 600;
     opacity: 0;
     transition: opacity 0.2s;
