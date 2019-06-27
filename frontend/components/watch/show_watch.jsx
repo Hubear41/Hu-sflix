@@ -56,28 +56,35 @@ class Watch extends React.Component {
         switch (e.keyCode) {
             case 13:  // enter
                 this.togglePlayPause();
+                this.setState({ currentKey: "play/pause" });
                 break;
             case 32:  // spacebar
                 e.preventDefault();
                 this.togglePlayPause();
+                this.setState({ currentKey: "play/pause" });
                 break;
             case 27:  // escape
                 document.fullscreen ? this.closeFullscreen() : null;
                 break;
             case 38: // up arrow
                 this.changeVolume( 0.1 );
+                this.setState({ currentKey: "volumeUp" });
                 break;
             case 40: // down arrow
                 this.changeVolume( -0.1 );
+                this.setState({ currentKey: "volumeDown" });
                 break;
             case 39:  // right arrow
                 this.jumpForward();
+                this.setState({ currentKey: 'jumpForward' });
                 break;
             case 37:  // left arrow
                 this.jumpBack();
+                this.setState({ currentKey: 'jumpBack' });
                 break;
             case 77: // m key
                 this.toggleMute();
+                this.setState({ currentKey: 'mute/unmute'});
                 break;
             case 70:  // f key
                 if (document.fullscreen) {
@@ -304,7 +311,7 @@ class Watch extends React.Component {
     }
     
     render() {
-        const { paused, currentPlayerTime, volume, muted, hidden, fullscreen, away, started } = this.state;
+        const { paused, currentPlayerTime, volume, muted, hidden, fullscreen, away, started, currentKey } = this.state;
         const { video, show } = this.props;
         let awayAnimation = '';
         let runtime = video ? video.runtime : 0;
@@ -336,13 +343,21 @@ class Watch extends React.Component {
 
             if ( started && paused && away ) {
                 awayAnimation = 'reveal-away';
-            } else if ( !away ) {
+            } else if ( started && !away ) {
                 awayAnimation = 'hide-away';
             } else {
                 awayAnimation = 'hidden-away';
             }
 
             audioIcon = this.findAudioIcon();
+        }
+        let keyVisual = null;
+        if ( currentKey !== null ) {
+            switch(currentKey) {
+                case "play/pause":
+                    keyVisual = paused ? <i className="fas fa-play"></i> : <i className="fas fa-pause"></i>;
+                case "volumeUp":
+            }
         }
 
 
@@ -379,7 +394,10 @@ class Watch extends React.Component {
                          onKeyPress={this.togglePlayPause}
                          onMouseMove={this.showControls} 
                     >
-                        
+                       <figure className='keypress-visual'>
+                            <i className="fas fa-circle"></i>
+                            
+                        </figure> 
                     </div>
 
                     <div className={`away-screen ${awayAnimation}`}>
@@ -432,7 +450,7 @@ class Watch extends React.Component {
                                         <button className="play-pause-toggle-btn" 
                                                 onClick={this.togglePlayPause}
                                         >
-                                                    {playPauseBtn}
+                                            {playPauseBtn}
                                         </button>
 
                                         <button onClick={this.jumpBack} className='forward-10-btn'>

@@ -208,6 +208,18 @@
     margin-left: 3%;
 }
 
+.left-controls button {
+    transform: scale(2.5);
+    transform-origin: center;
+    transition: scale 0.3s;
+}
+
+.left-controls button:hover {
+    transform: scale(3);
+    transform-origin: center;
+    transition: scale 0.3s;
+}
+
 .video-title-ep-name {
     width: 62%;
     font-size: 16pt;
@@ -230,6 +242,18 @@
     justify-content: flex-end;
     width: 30%;
     margin-left: 20px;
+}
+
+.right-controls button {
+    transform: scale(2.5);
+    transform-origin: center;
+    transition: scale 0.3s;
+}
+
+.right-controls button:hover {
+    transform: scale(3);
+    transform-origin: center;
+    transition: scale 0.3s;
 }
 
 .audio-btn {

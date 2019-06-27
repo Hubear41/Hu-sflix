@@ -2692,12 +2692,18 @@ function (_React$Component) {
         case 13:
           // enter
           this.togglePlayPause();
+          this.setState({
+            currentKey: "play/pause"
+          });
           break;
 
         case 32:
           // spacebar
           e.preventDefault();
           this.togglePlayPause();
+          this.setState({
+            currentKey: "play/pause"
+          });
           break;
 
         case 27:
@@ -2708,26 +2714,41 @@ function (_React$Component) {
         case 38:
           // up arrow
           this.changeVolume(0.1);
+          this.setState({
+            currentKey: "volumeUp"
+          });
           break;
 
         case 40:
           // down arrow
           this.changeVolume(-0.1);
+          this.setState({
+            currentKey: "volumeDown"
+          });
           break;
 
         case 39:
           // right arrow
           this.jumpForward();
+          this.setState({
+            currentKey: 'jumpForward'
+          });
           break;
 
         case 37:
           // left arrow
           this.jumpBack();
+          this.setState({
+            currentKey: 'jumpBack'
+          });
           break;
 
         case 77:
           // m key
           this.toggleMute();
+          this.setState({
+            currentKey: 'mute/unmute'
+          });
           break;
 
         case 70:
@@ -3049,7 +3070,8 @@ function (_React$Component) {
           hidden = _this$state4.hidden,
           fullscreen = _this$state4.fullscreen,
           away = _this$state4.away,
-          started = _this$state4.started;
+          started = _this$state4.started,
+          currentKey = _this$state4.currentKey;
       var _this$props = this.props,
           video = _this$props.video,
           show = _this$props.show;
@@ -3091,13 +3113,28 @@ function (_React$Component) {
 
         if (started && paused && away) {
           awayAnimation = 'reveal-away';
-        } else if (!away) {
+        } else if (started && !away) {
           awayAnimation = 'hide-away';
         } else {
           awayAnimation = 'hidden-away';
         }
 
         audioIcon = this.findAudioIcon();
+      }
+
+      var keyVisual = null;
+
+      if (currentKey !== null) {
+        switch (currentKey) {
+          case "play/pause":
+            keyVisual = paused ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "fas fa-play"
+            }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "fas fa-pause"
+            });
+
+          case "volumeUp":
+        }
       } // decides the current button in the fullscreen slot
 
 
@@ -3139,7 +3176,11 @@ function (_React$Component) {
         onClick: this.togglePlayPause,
         onKeyPress: this.togglePlayPause,
         onMouseMove: this.showControls
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "keypress-visual"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-circle"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "away-screen ".concat(awayAnimation)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "away-screen-content",
@@ -3678,7 +3719,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"], redux_logger__WEBPACK_IMPORTED_MODULE_2___default.a));
+  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"])); // return createStore(rootReducer, preloadedState, applyMiddleware(thunk, logger));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);

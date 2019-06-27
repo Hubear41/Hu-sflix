@@ -112,8 +112,8 @@
     justify-content: center;
     margin-right: 6%;
     position: absolute;
-    right: 1vw;
-    top: 7vh;
+    right: 10px;
+    top: 5vh;
     z-index: 600;
     opacity: 0;
     transition: opacity 0.2s;
@@ -130,7 +130,7 @@
 
 .preview-play-btn {
     position: absolute;
-    top: 50%;
+    top: 53%;
     /* left: 5%; */
     height: 13%;
     width: 9%;
