@@ -20,6 +20,10 @@
     overflow-x: hidden;
 }
 
+.show-gallery-index::-webkit-scrollbar {
+    width: 0;
+}
+
 .index-bg {
     position: absolute;
     top: 0;
