@@ -316,7 +316,7 @@ class Watch extends React.Component {
 
         // once the main show and video have been loaded, these variables can  be asigned
         if ( this.videoPlayer.current !== null ) {               
-            playPauseBtn = paused ? <i className="fas fa-play"></i> : <i className="fas fa-pause"></i>
+            playPauseBtn = paused ? <i className="fas fa-play"></i> : <i className="fas fa-pause"></i>;
             remainingTime =  Math.floor(runtime - currentPlayerTime);
             const currProgress = (currentPlayerTime / runtime) * 100; // in percent value
             const currVolume = muted ? 0 : volume;
@@ -324,14 +324,14 @@ class Watch extends React.Component {
             // creates a progress bar look using a linear gradient in the bg. calculated using currProgress and total runtime
             timeStyle = { 
                 background: `linear-gradient( to right, red 0%, red ${currProgress}%, #7c7c7c ${currProgress}% , #7c7c7c ${remainingTime}%)`
-            }
+            };
             volumeStyle = {
                 background: `linear-gradient( to right, red 0%, red ${currVolume * 100}%, #7c7c7c ${currVolume * 100}%, #7c7c7c ${(1 - currVolume) * 100}% )`
             };
             // determines whether or not the controls are hidden
             controlStyle = {
                 opacity: `${ hidden ? 0 : 1 }`
-            }
+            };
 
             if ( started && paused && away ) {
                 awayAnimation = 'reveal-away';
@@ -378,7 +378,9 @@ class Watch extends React.Component {
                          onClick={this.togglePlayPause} 
                          onKeyPress={this.togglePlayPause}
                          onMouseMove={this.showControls} 
-                    ></div>
+                    >
+                        
+                    </div>
 
                     <div className={`away-screen ${awayAnimation}`}>
                         <div className="away-screen-content"
