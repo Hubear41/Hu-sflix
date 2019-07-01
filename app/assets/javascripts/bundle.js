@@ -765,13 +765,15 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "big-preview-play",
         onClick: this.launchWatch
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-play"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Play")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "big-preview-btn-bg"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }), " Play"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "big-preview-myList"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-plus"
+      }), " My List")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "big-preview-show-tagline ".concat(imageAnimation)
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, show.tagline))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+      }, show.tagline)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-preview-right-content"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "preview-maturity-wrapper"

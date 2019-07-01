@@ -197,24 +197,12 @@ class BigPreview extends React.Component {
                     </article>
 
                     <div className="big-preview-play-mylist-btns">
-                        <button className="big-preview-play" onClick={this.launchWatch}>
-                            <h4>
-                                <i className="fas fa-play"></i> 
-                                <span>Play</span>
-                            </h4>
-                            <div className="big-preview-btn-bg"></div>
-                        </button>
-                        {/* <button className="big-preview-myList">
-                            <h4>
-                                <i className="fas fa-plus"></i>
-                                <span>My List</span> 
-                            </h4>
-                            <div className="big-preview-btn-bg"></div>
-                        </button> */}
+                        <button className="big-preview-play" onClick={this.launchWatch}><i className="fas fa-play"></i> Play</button>
+                        <button className="big-preview-myList"><i className="fas fa-plus"></i> My List</button>
                     </div>
 
                     <p className={`big-preview-show-tagline ${imageAnimation}`}>
-                        <span>{show.tagline}</span>
+                        {show.tagline}
                     </p>
                 </article>
                             
