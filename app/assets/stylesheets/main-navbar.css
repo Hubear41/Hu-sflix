@@ -20,13 +20,13 @@
 .fade-dark-nav {
     animation: nav-fade-dark;
     animation-fill-mode: forwards;
-    animation-duration: 0.5s;
+    animation-duration: 0.8s;
 }
 
 .fade-clear-nav {
     animation: nav-fade-clear;
     animation-fill-mode: forwards;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
 }
 
 .main-nav-bar {
