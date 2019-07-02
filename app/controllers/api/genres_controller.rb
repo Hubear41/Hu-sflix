@@ -1,7 +1,7 @@
 class GenresController < ApplicationController 
     def index 
-        @genres = Genre.all
-
+        @genres = Genre.all.includes(:shows_with_genre);
+        
         render :index
     end
     

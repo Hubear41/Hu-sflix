@@ -1882,7 +1882,7 @@ var findShowsByGenre = function findShowsByGenre(shows, genre) {
 
 var msp = function msp(state, ownProps) {
   var genre = state.entities.genres[ownProps.match.params.genreId];
-  var shows = findShowsByGenre(state.entities.shows, genre);
+  var shows = genre !== undefined ? findShowsByGenre(state.entities.shows, genre) : [];
   return {
     shows: shows,
     genres: state.entities.genres,
@@ -1895,9 +1895,7 @@ var mdp = function mdp(dispatch) {
     requestGenres: function requestGenres() {
       return dispatch(Object(_actions_genre_actions__WEBPACK_IMPORTED_MODULE_1__["fetchGenres"])());
     },
-    requestAllShows: function requestAllShows() {
-      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_2__["fetchShows"])());
-    },
+    // requestAllShows: () => dispatch(fetchShows()),
     requestVideo: function requestVideo(id) {
       return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_2__["fetchVideo"])(id));
     }
@@ -2158,7 +2156,13 @@ function (_React$Component) {
   _createClass(ShowGallery, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.requestAllShows();
+      var galleryType = this.props.galleryType;
+
+      if (galleryType === 'GenreGallery') {
+        this.props.requestGenres();
+      } else {
+        this.props.requestAllShows();
+      }
     }
   }, {
     key: "createRows",
@@ -2260,6 +2264,7 @@ function (_React$Component) {
       while (!found) {
         var randomId = Math.floor(Math.random() * 18);
         var currShow = props.shows[randomId];
+        debugger;
 
         if (currShow.director !== 'Nelicia Low') {
           if (currShow.title !== 'Ling') {

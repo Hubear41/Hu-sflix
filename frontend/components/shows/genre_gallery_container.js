@@ -16,7 +16,7 @@ const findShowsByGenre = (shows, genre) => {
 
 const msp = (state, ownProps) => {
     const genre = state.entities.genres[ownProps.match.params.genreId];
-    const shows = findShowsByGenre(state.entities.shows, genre);
+    const shows = genre !== undefined ? findShowsByGenre(state.entities.shows, genre) : [];
     
     return {
         shows,
@@ -27,7 +27,7 @@ const msp = (state, ownProps) => {
 
 const mdp = dispatch => ({
     requestGenres: () => dispatch(fetchGenres()),
-    requestAllShows: () => dispatch(fetchShows()),
+    // requestAllShows: () => dispatch(fetchShows()),
     requestVideo: id => dispatch(fetchVideo(id)),
 })
 
