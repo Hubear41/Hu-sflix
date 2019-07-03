@@ -92,7 +92,6 @@ class ShowPreviewPlayerSmall extends React.Component {
         const muteBtn = this.state.muted ? <i className="fas fa-volume-mute mute-symbol"></i> : <i className="fas fa-volume-up mute-symbol"></i>
         
         if ( show !== undefined && genres.length >= 1) {
-            debugger
             genres.forEach( (genre, idx) => {
                 if ( genre === undefined ) {
                     return;

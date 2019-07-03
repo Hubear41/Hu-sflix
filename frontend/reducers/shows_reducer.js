@@ -2,6 +2,7 @@ import {
     RECEIVE_SHOW,
     RECEIVE_SHOWS
 } from '../actions/show_actions';
+import { RECEIVE_GENRE_SHOWS } from '../actions/genre_actions';
 import { merge } from 'lodash';
 
 const showsReducer = (state = {}, { type, show, nextShow, shows }) => {
@@ -12,6 +13,8 @@ const showsReducer = (state = {}, { type, show, nextShow, shows }) => {
             return shows;
         case RECEIVE_SHOW:
             return merge({}, state, { [show.id]: show, [nextShow.id]: nextShow });
+        case RECEIVE_GENRE_SHOWS:
+            return shows;
         default:
             return state;
     }

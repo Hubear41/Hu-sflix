@@ -17,7 +17,6 @@ const msp = ({entities}) => {
 };
 
 const mdp = dispatch => ({
-    // requestAllGenres: () => dispatch(fetchGenres()),
     requestAllShows: () => dispatch(fetchShows()),
 });
 

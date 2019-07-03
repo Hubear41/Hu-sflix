@@ -5,6 +5,13 @@ export const fetchGenre = id => {
     });
 };
 
+export const fetchGenreShows = id => {
+    return $.ajax({
+        method: 'GET',
+        url: `api/genre_index/${id}`,
+    });
+}
+
 export const fetchGenres = () => {
     return $.ajax({
         method: 'GET',

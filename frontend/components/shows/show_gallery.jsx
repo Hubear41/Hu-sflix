@@ -12,13 +12,8 @@ class ShowGallery extends React.Component {
     }
     
     componentDidMount() {
-        const { galleryType } = this.props;
-
-        if ( galleryType === 'GenreGallery' ) {
-            this.props.requestGenres();
-        } else {
-            this.props.requestAllShows();
-        }
+        const { genreId } = this.props;
+        this.props.requestAllShows(genreId);
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -34,7 +29,7 @@ class ShowGallery extends React.Component {
         while (!found) {
             const randomId = Math.floor(Math.random() * 18);
             const currShow = props.shows[randomId];
-            debugger
+            
             if (currShow.director !== 'Nelicia Low' ) {
                 if ( currShow.title !== 'Ling' ) {
                     found = true;

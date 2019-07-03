@@ -10,5 +10,6 @@ Rails.application.routes.draw do
     resources :videos, only: [:show, :index]
     resources :shows, only: [:index, :show]
     resources :genres, only: [:show, :index]
+    get 'genre_index/:genre_id', to: 'genres#genre_index', as: :genre_index
   end
 end
