@@ -8,8 +8,8 @@ class Api::GenresController < ApplicationController
     def genre_index 
         genre = Genre.includes(:shows_with_genre).find(params[:genre_id])
         @genres = Genre.all
-        # @shows = genre.shows_with_genre.with_attached_poster
         @shows = genre.shows_with_genre
+        @videos = Video.all
 
         render :genre_index
     end

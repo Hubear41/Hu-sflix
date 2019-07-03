@@ -16,21 +16,27 @@ class ShowGallery extends React.Component {
         this.props.requestAllShows(genreId);
     }
 
+    componentDidUpdate(prevProps) {        
+        if (prevProps.location.pathname !== this.props.location.pathname) {
+            const { genreId } = this.props;
+            this.props.requestAllShows(genreId);
+        }
+    }
+
     static getDerivedStateFromProps(props, state) {
         // we use <= 1 because we could leave show watch and have 1 show in state
         // we still would need to fetch all the shows
         if (state.previewId !== null || props.shows.length <= 1) {
             return { previewId: state.previewId };
         }
-        
         let previewId = null;
         let found = false;
 
         while (!found) {
-            const randomId = Math.floor(Math.random() * 18);
+            const randomId = Math.floor(Math.random() * (props.shows.length - 1));
             const currShow = props.shows[randomId];
             
-            if (currShow.director !== 'Nelicia Low' ) {
+            if (currShow !== undefined && currShow.director !== 'Nelicia Low' ) {
                 if ( currShow.title !== 'Ling' ) {
                     found = true;
                     previewId = randomId;

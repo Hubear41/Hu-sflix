@@ -208,7 +208,8 @@ var receiveGenreShows = function receiveGenreShows(payload) {
   return {
     type: RECEIVE_GENRE_SHOWS,
     shows: payload.shows,
-    genres: payload.genres
+    genres: payload.genres,
+    videos: payload.videos
   };
 };
 
@@ -443,6 +444,9 @@ var App = function App() {
     className: "main-content"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["ProtectedRoute"], {
     path: "/browse",
+    component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_12__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["ProtectedRoute"], {
+    path: "/genre/:genreId",
     component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_12__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["AuthRoute"], {
     path: "/signup",
@@ -1904,6 +1908,7 @@ var msp = function msp(state, ownProps) {
     shows: shows,
     genreId: genreId,
     genres: state.entities.genres,
+    videos: state.entities.videos,
     galleryType: 'GenreGallery'
   };
 };
@@ -2174,6 +2179,14 @@ function (_React$Component) {
       this.props.requestAllShows(genreId);
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.location.pathname !== this.props.location.pathname) {
+        var genreId = this.props.genreId;
+        this.props.requestAllShows(genreId);
+      }
+    }
+  }, {
     key: "createRows",
     value: function createRows() {
       var shows = this.props.shows;
@@ -2271,10 +2284,10 @@ function (_React$Component) {
       var found = false;
 
       while (!found) {
-        var randomId = Math.floor(Math.random() * 18);
+        var randomId = Math.floor(Math.random() * (props.shows.length - 1));
         var currShow = props.shows[randomId];
 
-        if (currShow.director !== 'Nelicia Low') {
+        if (currShow !== undefined && currShow.director !== 'Nelicia Low') {
           if (currShow.title !== 'Ling') {
             found = true;
             previewId = randomId;
@@ -2650,8 +2663,7 @@ function (_React$Component) {
       var previewVideo = show.show_type === 'FEATURE' ? videos[show.movie_id] : videos[show.episode_ids[0]];
       show.genre_ids.forEach(function (id) {
         genreList.push(genres[id]);
-      }); // debugger
-
+      });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_preview_player_small_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         key: "".concat(show.id).concat(rowNum),
         show: show,
@@ -3824,9 +3836,11 @@ var usersReducer = function usersReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/show_actions */ "./frontend/actions/show_actions.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _actions_genre_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/genre_actions */ "./frontend/actions/genre_actions.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -3843,12 +3857,15 @@ var videosReducer = function videosReducer() {
 
   switch (type) {
     case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_VIDEO"]:
-      return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, state, _defineProperty({}, video.id, video));
+      return Object(lodash__WEBPACK_IMPORTED_MODULE_2__["merge"])({}, state, _defineProperty({}, video.id, video));
 
     case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SHOW"]:
-      return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, state, _defineProperty({}, video.id, video));
+      return Object(lodash__WEBPACK_IMPORTED_MODULE_2__["merge"])({}, state, _defineProperty({}, video.id, video));
 
     case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SHOWS"]:
+      return videos;
+
+    case _actions_genre_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_GENRE_SHOWS"]:
       return videos;
 
     default:

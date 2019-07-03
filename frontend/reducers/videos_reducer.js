@@ -3,6 +3,8 @@ import {
     RECEIVE_SHOWS,
     RECEIVE_SHOW,
 } from '../actions/show_actions';
+
+import { RECEIVE_GENRE_SHOWS } from '../actions/genre_actions';
 import { merge } from 'lodash';
 
 const videosReducer = (state = {}, { type, video, videos }) => {
@@ -14,6 +16,8 @@ const videosReducer = (state = {}, { type, video, videos }) => {
         case RECEIVE_SHOW: 
             return merge({}, state, { [video.id]: video });
         case RECEIVE_SHOWS:
+            return videos;
+        case RECEIVE_GENRE_SHOWS:
             return videos;
         default: 
             return state;

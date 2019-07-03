@@ -22,6 +22,7 @@ const msp = (state, ownProps) => {
         shows,
         genreId,
         genres: state.entities.genres,
+        videos: state.entities.videos,
         galleryType: 'GenreGallery',
     }
 }

@@ -21,7 +21,6 @@ class ShowRow extends React.Component {
         show.genre_ids.forEach( id => {
             genreList.push(genres[id]);
         });
-        // debugger
         return (
             <ShowPreviewPlayer  key={`${show.id}${rowNum}`} 
                                 show={show} 

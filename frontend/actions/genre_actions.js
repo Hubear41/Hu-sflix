@@ -20,6 +20,7 @@ const receiveGenreShows = payload => ({
     type: RECEIVE_GENRE_SHOWS,
     shows: payload.shows,
     genres: payload.genres,
+    videos: payload.videos,
 });
 
 const receiveGenre = genre => ({
