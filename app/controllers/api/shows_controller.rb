@@ -2,22 +2,8 @@ class Api::ShowsController < ApplicationController
     def index
         @shows = Show.with_attached_poster.all.includes(:videos)
         videos = Video.with_attached_video_file.all 
-        @previewVideos = Array.new
+        @previewVideos = self.find_videos(@shows)
         @genres = Genre.all
-
-        # finds each preview video with their attached video
-        # right now this grabs the first video under each show
-        # this will be refactored once genres are implemented
-        @shows.each do |show|
-            previewId = show.show_type == "FEATURE" ? show.movie_id : show.episode_ids[0]
-            
-            videos.each do |video|
-                if ( video.id == previewId ) 
-                    @previewVideos << video
-                    break
-                end
-            end
-        end
         @runtime = @previewVideos[0].runtime;
 
         render :index
@@ -32,10 +18,37 @@ class Api::ShowsController < ApplicationController
     end
 
     def search
-        query = params[:query_string]
+        query_string = params[:query_string]
 
-        @shows = Show.with_attached_poster.where('')
+        if query_string == "" 
+            render json: {}
+        else 
+            @shows = Show.with_attached_poster.where('shows.title LIKE %:q% OR shows.director LIKE %:q%', q: query_string).includes(:videos)
+            @genres = Genre.all
+            @previewVideos = self.find_videos(@shows)
+            @runtime = @previewVideos[0].runtime;
 
-        puts 'hello world';
+            render :index
+        end
     end
+
+    # finds each preview video with their attached video
+    # right now this grabs the first video under each show
+    # this will be refactored once genres are implemented`
+    def find_videos(shows) 
+        previewVideos = []
+        videos = Video.with_attached_video_file.all
+
+        shows.each do |show|
+            previewId = show.show_type == "FEATURE" ? show.movie_id : show.episode_ids[0]
+            
+            videos.each do |video|
+                if ( video.id == previewId ) 
+                    previewVideos << video
+                    break
+                end
+            end
+        end
+
+        previewVideos
 end

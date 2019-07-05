@@ -2433,7 +2433,8 @@ var msp = function msp(_ref) {
   return {
     shows: shows,
     videos: videos,
-    genres: genres
+    genres: genres,
+    galleryType: 'Banner-Titles'
   };
 };
 

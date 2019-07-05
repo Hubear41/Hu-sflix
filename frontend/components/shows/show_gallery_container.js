@@ -11,6 +11,7 @@ const msp = ({entities}) => {
         shows,
         videos,
         genres,
+        galleryType: 'Banner-Titles'
     }
 };
 
