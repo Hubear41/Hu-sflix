@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/session_actions';
-import { searchShows } from '../../actions/show_actions';
 import { withRouter } from 'react-router-dom';
 import MainNav from './main_nav';
 
-const msp = ({ entities, session }) => {
+const msp = ({ entities, session }, ownProps) => {
     let recentId = null, moviesId = null, tvShowsId = null;
-
+    const query = new URLSearchParams(ownProps.location.search).get('q') || "";
+    
     if ( entities.genres ) {
         Object.values(entities.genres).forEach( genre => {
             switch( genre.name ) {
@@ -30,6 +30,7 @@ const msp = ({ entities, session }) => {
         moviesId,
         tvShowsId,
         recentId,
+        query,
     }
 };
 
@@ -37,4 +38,4 @@ const mdp = dispatch => ({
     logout: () => dispatch(logoutUser()),
 });
 
-export default withRouter(connect(msp, mdp)(MainNav));x
+export default withRouter(connect(msp, mdp)(MainNav));

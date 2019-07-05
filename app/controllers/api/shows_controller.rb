@@ -32,6 +32,10 @@ class Api::ShowsController < ApplicationController
     end
 
     def search
+        query = params[:query_string]
+
+        @shows = Show.with_attached_poster.where('')
+
         puts 'hello world';
     end
 end

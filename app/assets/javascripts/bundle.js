@@ -456,6 +456,9 @@ var App = function App() {
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["ProtectedRoute"], {
     path: "/genre/:genreId",
     component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_12__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["ProtectedRoute"], {
+    path: "/search",
+    component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_12__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["AuthRoute"], {
     path: "/signup",
     component: _navbar_navbar_container__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -1040,12 +1043,20 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainNav).call(this, props));
     _this.state = {
       dropdown: false,
-      background: null
+      background: null,
+      searching: null,
+      search: _this.props.query
     };
     _this.navbar = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.searchBar = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.searchField = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.searchTimeout = null;
     _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
     _this.handleScroll = _this.handleScroll.bind(_assertThisInitialized(_this));
     _this.updateSearch = _this.updateSearch.bind(_assertThisInitialized(_this));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    _this.handleClear = _this.handleClear.bind(_assertThisInitialized(_this));
+    _this.handleSearchClick = _this.handleSearchClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1073,18 +1084,63 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "handleClick",
+    value: function handleClick() {
+      this.setState({
+        searching: false,
+        search: ""
+      });
+    }
+  }, {
+    key: "handleSearchClick",
+    value: function handleSearchClick() {
+      var _this2 = this;
+
+      var root = document.getElementById('root');
+      root.addEventListener('click', function (e) {
+        if (_this2.state.search === "" && e.target !== _this2.searchBar.current && e.target !== _this2.searchField.current) {
+          if (_this2.state.searching !== false) {
+            _this2.setState({
+              searching: false
+            });
+          }
+        }
+      });
+      this.setState({
+        searching: true
+      });
+    }
+  }, {
+    key: "handleClear",
+    value: function handleClear() {
+      this.searchField.current.value = "";
+      this.updateSearch();
+    }
+  }, {
     key: "updateSearch",
-    value: function updateSearch(e) {
+    value: function updateSearch() {
+      var _this3 = this;
+
       var _this$props = this.props,
           history = _this$props.history,
           location = _this$props.location;
+      var textInput = this.searchField.current;
 
-      if (e.target.value === "" && location.pathname !== '/browse') {
+      if (textInput.value === "" && location.pathname !== '/browse') {
         history.push('/browse');
-      } else if (e.target.value !== "") {
-        history.push({
-          pathname: '/search',
-          search: "q=".concat(e.target.value)
+        this.setState({
+          search: ""
+        });
+      } else if (textInput.value !== "") {
+        clearTimeout(this.searchTimeout);
+        this.setState({
+          search: textInput.value
+        });
+        this.searchTimeout = setTimeout(function () {
+          history.push({
+            pathname: '/search',
+            search: "q=".concat(_this3.state.search)
+          }, 500);
         });
       }
     }
@@ -1097,6 +1153,15 @@ function (_React$Component) {
           recentId = _this$props2.recentId;
       var pathname = this.props.location.pathname;
       var background = this.state.background;
+      var searchAnimation = 'search-default';
+
+      if (this.state.searching === true || this.state.search.length > 0) {
+        searchAnimation = 'visible-search-bar';
+      } else if (this.state.searching === false) {
+        searchAnimation = 'hidden-search-bar';
+      }
+
+      var xOpacity = this.state.search.length > 0 ? 'visible-x' : 'hidden-x';
       var homeBold = pathname === "/browse" ? "current-nav" : "";
       var tvBold = pathname === "/genre/".concat(tvShowsId) ? "current-nav" : "";
       var movieBold = pathname === "/genre/".concat(moviesId) ? "current-nav" : "";
@@ -1121,7 +1186,8 @@ function (_React$Component) {
         className: "main-logo-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/browse",
-        className: "main-logo-btn"
+        className: "main-logo-btn",
+        onClick: this.handleClick
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: window.logoURL,
         alt: "Hu'sflix Logo",
@@ -1130,29 +1196,39 @@ function (_React$Component) {
         className: "nav-btns-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/browse",
-        className: "nav-btn ".concat(homeBold)
+        className: "nav-btn ".concat(homeBold),
+        onClick: this.handleClick
       }, "Home"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/genre/".concat(tvShowsId),
-        className: "nav-btn ".concat(tvBold)
+        className: "nav-btn ".concat(tvBold),
+        onClick: this.handleClick
       }, "TV Shows"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/genre/".concat(moviesId),
-        className: "nav-btn ".concat(movieBold)
+        className: "nav-btn ".concat(movieBold),
+        onClick: this.handleClick
       }, "Movies"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/genre/".concat(recentId),
-        className: "nav-btn ".concat(recentBold)
+        className: "nav-btn ".concat(recentBold),
+        onClick: this.handleClick
       }, "Recently Added"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "right-nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        className: "search-bar-form"
+        className: "search-bar-form ".concat(searchAnimation),
+        ref: this.searchBar
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-search"
+        className: "fas fa-search search-icon",
+        onClick: this.handleSearchClick
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         className: "search-input",
         placeholder: "Titles, directors, genres",
-        value: "",
-        onChange: this.updateSearch
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        value: this.state.search,
+        onChange: this.updateSearch,
+        ref: this.searchField
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "search-x ".concat(xOpacity),
+        onClick: this.handleClear
+      }, "X")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "toggle-nav-dropdown-menu",
         onClick: this.toggleDropDown
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -1190,21 +1266,20 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/show_actions */ "./frontend/actions/show_actions.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _main_nav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main_nav */ "./frontend/components/navbar/main_nav.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _main_nav__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./main_nav */ "./frontend/components/navbar/main_nav.jsx");
 
 
 
 
 
-
-var msp = function msp(_ref) {
+var msp = function msp(_ref, ownProps) {
   var entities = _ref.entities,
       session = _ref.session;
   var recentId = null,
       moviesId = null,
       tvShowsId = null;
+  var query = new URLSearchParams(ownProps.location.search).get('q') || "";
 
   if (entities.genres) {
     Object.values(entities.genres).forEach(function (genre) {
@@ -1231,7 +1306,8 @@ var msp = function msp(_ref) {
     currentUser: entities.users[session.id],
     moviesId: moviesId,
     tvShowsId: tvShowsId,
-    recentId: recentId
+    recentId: recentId,
+    query: query
   };
 };
 
@@ -1243,8 +1319,7 @@ var mdp = function mdp(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_main_nav__WEBPACK_IMPORTED_MODULE_4__["default"])));
-x;
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_main_nav__WEBPACK_IMPORTED_MODULE_3__["default"])));
 
 /***/ }),
 
