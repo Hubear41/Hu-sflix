@@ -50,40 +50,49 @@ class ShowGallery extends React.Component {
     createRows() {
         const { shows, genres } = this.props;
         const { previewId } = this.state;
-        let  mainGenres = [], showRows = [];
+        let mainGenres = [];
+        let firstGenre = "";
         
         Object.values(genres).forEach( genre => {
-            if (genre.shows_with_genre_ids.length >= 6 ) {
-                if ( shows[previewId].genre_ids.includes(genre.id) ) {
-                    mainGenres = [genre].concat(mainGenres);
+            if ( genre.name !== 'Movie' && genre.name !== 'TV Show' && genre.name !== 'Recently Added' && genre.shows_with_genre_ids.length >= 6 ) {
+                if ( shows[previewId].genre_ids.includes(genre.id) && !firstGenre ) {
+                    firstGenre = genre;
+                    mainGenres = [ genre ].concat(mainGenres);
                 } else {
-                    mainGenres.push(mainGenres);
+                    mainGenres.push(genre);
                 }
             }
         });
-        
-        mainGenres.forEach( mainGenre => {
-            const genreShows = shows.filter( show => {
-                return show.genre_ids.includes(mainGenre.id);
+
+        const showsPerRow = {};
+        mainGenres.forEach( genre => {
+            const rowShows = shows.filter( show => {
+                return show.genre_ids.includes(genre.id);
             });
 
-            showRows.push(genreShows);
+            showsPerRow[genre.name] = rowShows;
         });
 
-        return showRows;
+        return showsPerRow;
     }
     
     render() {
-        const { shows, galleryType, videos, genres } = this.props;
+        const { shows, videos, genres } = this.props;
 
         let showsPerRow = null, previewShow = null, showRowsList = null;
         if ( shows.length > 0 ) {
             showsPerRow = this.createRows();
-            previewShow = showsPerRow[0][0];
+            previewShow = shows[this.state.previewId];
+            
 
-            showRowsList = showsPerRow.map( (row, idx) => {
-                return <ShowRows key={idx} rowNum={idx} shows={row} videos={videos} galleryType={galleryType} genres={genres} />
-            }) 
+            showRowsList = Object.keys(showsPerRow).map( (genreName, idx) => {
+                return <ShowRows key={"row" + idx} 
+                                 rowNum={idx} shows={showsPerRow[genreName]} 
+                                 genreName={genreName} 
+                                 videos={videos} 
+                                 genres={genres} 
+                        />
+            }); 
         }
         
         return (

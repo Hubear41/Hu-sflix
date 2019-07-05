@@ -46,18 +46,16 @@ class ShowRow extends React.Component {
     }
 
     render() {
-        const { shows, rowNum, galleryType } = this.props;
+        const { shows, rowNum, genreName } = this.props;
         const showList = [];
         
         shows.forEach( show => {
             showList.push(this.createShowRowItem(show));
         } );
         
-        const headerText = galleryType ? this.findHeaderName(rowNum) : "";
-
         return (
                 <li className={`row-${rowNum}-wrapper show-rows-wrapper`}>
-                    <h2>{headerText}</h2>
+                    <h2>{genreName}</h2>
                     
                     <figure className={`row-${rowNum} show-row`}>
                         {showList}

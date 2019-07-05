@@ -1908,8 +1908,7 @@ var msp = function msp(state, ownProps) {
     shows: shows,
     genreId: genreId,
     genres: state.entities.genres,
-    videos: state.entities.videos,
-    galleryType: 'GenreGallery'
+    videos: state.entities.videos
   };
 };
 
@@ -2193,31 +2192,32 @@ function (_React$Component) {
           shows = _this$props.shows,
           genres = _this$props.genres;
       var previewId = this.state.previewId;
-      var mainGenres = [],
-          showRows = [];
+      var mainGenres = [];
+      var firstGenre = "";
       Object.values(genres).forEach(function (genre) {
-        if (genre.shows_with_genre_ids.length >= 6) {
-          if (shows[previewId].genre_ids.includes(genre.id)) {
+        if (genre.name !== 'Movie' && genre.name !== 'TV Show' && genre.name !== 'Recently Added' && genre.shows_with_genre_ids.length >= 6) {
+          if (shows[previewId].genre_ids.includes(genre.id) && !firstGenre) {
+            firstGenre = genre;
             mainGenres = [genre].concat(mainGenres);
           } else {
-            mainGenres.push(mainGenres);
+            mainGenres.push(genre);
           }
         }
       });
-      mainGenres.forEach(function (mainGenre) {
-        var genreShows = shows.filter(function (show) {
-          return show.genre_ids.includes(mainGenre.id);
+      var showsPerRow = {};
+      mainGenres.forEach(function (genre) {
+        var rowShows = shows.filter(function (show) {
+          return show.genre_ids.includes(genre.id);
         });
-        showRows.push(genreShows);
+        showsPerRow[genre.name] = rowShows;
       });
-      return showRows;
+      return showsPerRow;
     }
   }, {
     key: "render",
     value: function render() {
       var _this$props2 = this.props,
           shows = _this$props2.shows,
-          galleryType = _this$props2.galleryType,
           videos = _this$props2.videos,
           genres = _this$props2.genres;
       var showsPerRow = null,
@@ -2226,14 +2226,14 @@ function (_React$Component) {
 
       if (shows.length > 0) {
         showsPerRow = this.createRows();
-        previewShow = showsPerRow[0][0];
-        showRowsList = showsPerRow.map(function (row, idx) {
+        previewShow = shows[this.state.previewId];
+        showRowsList = Object.keys(showsPerRow).map(function (genreName, idx) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            key: idx,
+            key: "row" + idx,
             rowNum: idx,
-            shows: row,
+            shows: showsPerRow[genreName],
+            genreName: genreName,
             videos: videos,
-            galleryType: galleryType,
             genres: genres
           });
         });
@@ -2304,9 +2304,7 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/show_actions */ "./frontend/actions/show_actions.js");
-/* harmony import */ var _actions_genre_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/genre_actions */ "./frontend/actions/genre_actions.js");
-/* harmony import */ var _show_gallery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./show_gallery */ "./frontend/components/shows/show_gallery.jsx");
-
+/* harmony import */ var _show_gallery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./show_gallery */ "./frontend/components/shows/show_gallery.jsx");
 
 
 
@@ -2319,8 +2317,7 @@ var msp = function msp(_ref) {
   return {
     shows: shows,
     videos: videos,
-    genres: genres,
-    galleryType: 'showsIndex'
+    genres: genres
   };
 };
 
@@ -2332,7 +2329,7 @@ var mdp = function mdp(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_show_gallery__WEBPACK_IMPORTED_MODULE_3__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_show_gallery__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 
@@ -2683,15 +2680,14 @@ function (_React$Component) {
       var _this$props2 = this.props,
           shows = _this$props2.shows,
           rowNum = _this$props2.rowNum,
-          galleryType = _this$props2.galleryType;
+          genreName = _this$props2.genreName;
       var showList = [];
       shows.forEach(function (show) {
         showList.push(_this2.createShowRowItem(show));
       });
-      var headerText = galleryType ? this.findHeaderName(rowNum) : "";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "row-".concat(rowNum, "-wrapper show-rows-wrapper")
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, headerText), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, genreName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "row-".concat(rowNum, " show-row")
       }, showList));
     }

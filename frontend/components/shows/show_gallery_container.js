@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { fetchShows } from '../../actions/show_actions';
-import { fetchGenres } from '../../actions/genre_actions';
 import ShowGallery from './show_gallery';
 
 const msp = ({entities}) => {
@@ -12,7 +11,6 @@ const msp = ({entities}) => {
         shows,
         videos,
         genres,
-        galleryType: 'showsIndex',
     }
 };
 
