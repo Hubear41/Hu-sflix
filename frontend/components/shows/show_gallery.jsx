@@ -50,41 +50,27 @@ class ShowGallery extends React.Component {
     createRows() {
         const { shows, genres } = this.props;
         const { previewId } = this.state;
-        let row = [];
-        let showsPerRow = [];
-        let idx = 0, count = 0;
-
-        const mainGenres = genres.filter(genre => {
-            return genre.length >= 6;
-        });
+        let  mainGenres = [], showRows = [];
         
-        row.push(shows[previewId]);
-        
-        while ( count < 1 ) {
-            idx = 0
-            while ( idx < shows.length) {
-                const currShow = shows[idx];
-
-                if ( idx === previewId ) {
-                    idx++;
-                    continue;
+        Object.values(genres).forEach( genre => {
+            if (genre.shows_with_genre_ids.length >= 6 ) {
+                if ( shows[previewId].genre_ids.includes(genre.id) ) {
+                    mainGenres = [genre].concat(mainGenres);
                 } else {
-                    if (Math.floor(row.length % 6) !== 0 || idx === 0) {
-                        row.push(currShow);
-                    } else if (Math.floor(row.length % 6) === 0 ) {
-                        showsPerRow.push(row);
-                        row = [currShow];
-                    }
-                    idx++;
+                    mainGenres.push(mainGenres);
                 }
             }
+        });
+        
+        mainGenres.forEach( mainGenre => {
+            const genreShows = shows.filter( show => {
+                return show.genre_ids.includes(mainGenre.id);
+            });
 
-            if ( row.length > 0 ) {
-                showsPerRow.push(row);
-            }
-            count++;
-        }        
-        return showsPerRow;
+            showRows.push(genreShows);
+        });
+
+        return showRows;
     }
     
     render() {

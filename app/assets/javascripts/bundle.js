@@ -2193,44 +2193,24 @@ function (_React$Component) {
           shows = _this$props.shows,
           genres = _this$props.genres;
       var previewId = this.state.previewId;
-      var row = [];
-      var showsPerRow = [];
-      var idx = 0,
-          count = 0;
-      var mainGenres = genres.filter(function (genre) {
-        return genre.length >= 6;
-      });
-      row.push(shows[previewId]);
-
-      while (count < 1) {
-        idx = 0;
-
-        while (idx < shows.length) {
-          var currShow = shows[idx];
-
-          if (idx === previewId) {
-            idx++;
-            continue;
+      var mainGenres = [],
+          showRows = [];
+      Object.values(genres).forEach(function (genre) {
+        if (genre.shows_with_genre_ids.length >= 6) {
+          if (shows[previewId].genre_ids.includes(genre.id)) {
+            mainGenres = [genre].concat(mainGenres);
           } else {
-            if (Math.floor(row.length % 6) !== 0 || idx === 0) {
-              row.push(currShow);
-            } else if (Math.floor(row.length % 6) === 0) {
-              showsPerRow.push(row);
-              row = [currShow];
-            }
-
-            idx++;
+            mainGenres.push(mainGenres);
           }
         }
-
-        if (row.length > 0) {
-          showsPerRow.push(row);
-        }
-
-        count++;
-      }
-
-      return showsPerRow;
+      });
+      mainGenres.forEach(function (mainGenre) {
+        var genreShows = shows.filter(function (show) {
+          return show.genre_ids.includes(mainGenre.id);
+        });
+        showRows.push(genreShows);
+      });
+      return showRows;
     }
   }, {
     key: "render",
