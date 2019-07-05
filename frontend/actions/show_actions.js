@@ -27,9 +27,9 @@ const receiveVideo = video => ({
 
 const receiveShows = ({ shows, videos, genres }) => ({
     type: RECEIVE_SHOWS,
-    shows,
-    videos,
-    genres,
+    shows: shows === undefined ? {} : shows,
+    videos: videos === undefined ? {} : videos,
+    genres: genres === undefined ? {} :genres
 });
 
 const receiveShow = ({show, nextShow, video}) => ({

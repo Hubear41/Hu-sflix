@@ -19,28 +19,32 @@ class Api::ShowsController < ApplicationController
 
     def search
         query_string = params[:query_string]
-
-        if query_string == "" 
+        
+        if query_string.length == 0 
             render json: {}
         else 
-            @shows = Show.with_attached_poster.where('shows.title LIKE %:q% OR shows.director LIKE %:q%', q: query_string).includes(:videos)
+            @shows = Show.with_attached_poster.where('shows.title ILIKE ? OR shows.director ILIKE ?', "#{query_string}%", "#{query_string}%").includes(:videos)
             @genres = Genre.all
             @previewVideos = self.find_videos(@shows)
-            @runtime = @previewVideos[0].runtime;
+            @runtime = @previewVideos.count > 0 ? @previewVideos[0].runtime : 0; 
 
-            render :index
+            if @shows.empty?
+                render json: {}
+            else 
+                render :index
+            end
         end
     end
 
     # finds each preview video with their attached video
     # right now this grabs the first video under each show
-    # this will be refactored once genres are implemented`
+    # this will be refactored once genres are implemented
     def find_videos(shows) 
         previewVideos = []
         videos = Video.with_attached_video_file.all
-
-        shows.each do |show|
-            previewId = show.show_type == "FEATURE" ? show.movie_id : show.episode_ids[0]
+        
+        shows.each do |curr_show|
+            previewId = curr_show.show_type == "FEATURE" ? curr_show.movie_id : curr_show.episode_ids[0]
             
             videos.each do |video|
                 if ( video.id == previewId ) 
@@ -49,6 +53,7 @@ class Api::ShowsController < ApplicationController
                 end
             end
         end
-
+        
         previewVideos
+    end
 end

@@ -76,11 +76,14 @@ class MainNav extends React.Component {
             this.setState({ search: textInput.value });
             
             this.searchTimeout = setTimeout( () => {
-                history.push( {
+                this.props.search(this.state.search)
+
+                history.push({
                     pathname: '/search',
                     search: `q=${this.state.search}`
-                }, 500);
-            });
+                });
+
+            }, 500);
         }
     }
 
@@ -128,7 +131,7 @@ class MainNav extends React.Component {
                     </section>
 
                     <section className="right-nav">
-                        <form className={`search-bar-form ${searchAnimation}`} ref={this.searchBar}>
+                        <form className={`search-bar-form ${searchAnimation}`} ref={this.searchBar} onSubmit={e => e.preventDefault()} >
                             <i className="fas fa-search search-icon" onClick={this.handleSearchClick} ></i>
                             <input type="text"
                                    className='search-input'

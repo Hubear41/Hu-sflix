@@ -362,9 +362,9 @@ var receiveShows = function receiveShows(_ref) {
       genres = _ref.genres;
   return {
     type: RECEIVE_SHOWS,
-    shows: shows,
-    videos: videos,
-    genres: genres
+    shows: shows === undefined ? {} : shows,
+    videos: videos === undefined ? {} : videos,
+    genres: genres === undefined ? {} : genres
   };
 };
 
@@ -428,11 +428,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _background_background__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./background/background */ "./frontend/components/background/background.jsx");
 /* harmony import */ var _shows_show_gallery_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shows/show_gallery_container */ "./frontend/components/shows/show_gallery_container.js");
 /* harmony import */ var _shows_genre_gallery_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./shows/genre_gallery_container */ "./frontend/components/shows/genre_gallery_container.js");
-/* harmony import */ var _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./watch/show_watch_container */ "./frontend/components/watch/show_watch_container.js");
-/* harmony import */ var _footer_footer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./footer/footer */ "./frontend/components/footer/footer.jsx");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.js");
-/* harmony import */ var _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./navbar/main_nav_container */ "./frontend/components/navbar/main_nav_container.js");
+/* harmony import */ var _shows_search_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./shows/search_container */ "./frontend/components/shows/search_container.js");
+/* harmony import */ var _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./watch/show_watch_container */ "./frontend/components/watch/show_watch_container.js");
+/* harmony import */ var _footer_footer__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./footer/footer */ "./frontend/components/footer/footer.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.js");
+/* harmony import */ var _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./navbar/main_nav_container */ "./frontend/components/navbar/main_nav_container.js");
+
 
 
 
@@ -450,48 +452,51 @@ __webpack_require__.r(__webpack_exports__);
 var App = function App() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_background_background__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
     className: "main-content"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["ProtectedRoute"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
     path: "/browse",
-    component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_12__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["ProtectedRoute"], {
+    component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_13__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
     path: "/genre/:genreId",
-    component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_12__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["ProtectedRoute"], {
+    component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_13__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
     path: "/search",
-    component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_12__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["AuthRoute"], {
+    component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_13__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["AuthRoute"], {
     path: "/signup",
     component: _navbar_navbar_container__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["AuthRoute"], {
     path: "/login",
     component: _navbar_navbar_container__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["AuthRoute"], {
     exact: true,
     path: "/",
     component: _navbar_navbar_container__WEBPACK_IMPORTED_MODULE_3__["default"]
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["AuthRoute"], {
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["AuthRoute"], {
     exact: true,
     path: "/",
     component: _splash_splash__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["AuthRoute"], {
     path: "/signup",
     component: _session_signup_form_container__WEBPACK_IMPORTED_MODULE_1__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["AuthRoute"], {
     path: "/login",
     component: _session_login_form_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
     path: "/browse",
     component: _shows_show_gallery_container__WEBPACK_IMPORTED_MODULE_6__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
+    path: "/search",
+    component: _shows_search_container__WEBPACK_IMPORTED_MODULE_8__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
     path: "/genre/:genreId",
     component: _shows_genre_gallery_container__WEBPACK_IMPORTED_MODULE_7__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
     path: "/watch/:showId/:videoId",
-    component: _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_8__["default"]
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_11__["AuthRoute"], {
+    component: _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_9__["default"]
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["AuthRoute"], {
     exact: true,
     path: "/",
-    component: _footer_footer__WEBPACK_IMPORTED_MODULE_9__["default"]
+    component: _footer_footer__WEBPACK_IMPORTED_MODULE_10__["default"]
   }));
 };
 
@@ -1137,11 +1142,13 @@ function (_React$Component) {
           search: textInput.value
         });
         this.searchTimeout = setTimeout(function () {
+          _this3.props.search(_this3.state.search);
+
           history.push({
             pathname: '/search',
             search: "q=".concat(_this3.state.search)
-          }, 500);
-        });
+          });
+        }, 500);
       }
     }
   }, {
@@ -1214,7 +1221,10 @@ function (_React$Component) {
         className: "right-nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "search-bar-form ".concat(searchAnimation),
-        ref: this.searchBar
+        ref: this.searchBar,
+        onSubmit: function onSubmit(e) {
+          return e.preventDefault();
+        }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-search search-icon",
         onClick: this.handleSearchClick
@@ -1266,8 +1276,10 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _main_nav__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./main_nav */ "./frontend/components/navbar/main_nav.jsx");
+/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/show_actions */ "./frontend/actions/show_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _main_nav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main_nav */ "./frontend/components/navbar/main_nav.jsx");
+
 
 
 
@@ -1315,11 +1327,14 @@ var mdp = function mdp(dispatch) {
   return {
     logout: function logout() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["logoutUser"])());
+    },
+    search: function search(query) {
+      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_2__["searchShows"])(query));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_main_nav__WEBPACK_IMPORTED_MODULE_3__["default"])));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_main_nav__WEBPACK_IMPORTED_MODULE_4__["default"])));
 
 /***/ }),
 
@@ -2068,6 +2083,49 @@ var mdp = function mdp(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/components/shows/search_container.js":
+/*!*******************************************************!*\
+  !*** ./frontend/components/shows/search_container.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/show_actions */ "./frontend/actions/show_actions.js");
+/* harmony import */ var _show_gallery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./show_gallery */ "./frontend/components/shows/show_gallery.jsx");
+
+
+
+
+var msp = function msp(_ref, ownProps) {
+  var entities = _ref.entities;
+  var shows = Object.values(entities.shows);
+  var videos = entities.videos;
+  var genres = entities.genres;
+  var query = new URLSearchParams(ownProps.location.search).get('q');
+  return {
+    shows: shows,
+    videos: videos,
+    genres: genres,
+    query: query,
+    galleryType: 'SEARCH'
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    search: function search(query) {
+      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["searchShows"])(query));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_show_gallery__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
 /***/ "./frontend/components/shows/show_detail.jsx":
 /*!***************************************************!*\
   !*** ./frontend/components/shows/show_detail.jsx ***!
@@ -2290,10 +2348,9 @@ function (_React$Component) {
       var _this$props = this.props,
           genreId = _this$props.genreId,
           galleryType = _this$props.galleryType,
-          location = _this$props.location;
+          query = _this$props.query;
 
       if (galleryType === 'SEARCH') {
-        var query = new URLSearchParams(location.search).get("q");
         this.props.search(query);
       } else {
         this.props.requestAllShows(genreId);
@@ -2308,9 +2365,8 @@ function (_React$Component) {
             galleryType = _this$props2.galleryType,
             location = _this$props2.location;
 
-        if (galleryType === 'SEARCH') {
-          var query = new URLSearchParams(location.search).get("q");
-          this.props.search(query);
+        if (galleryType === 'SEARCH') {// const query = new URLSearchParams(location.search).get("q");
+          // this.props.search(query);
         } else {
           this.props.requestAllShows(genreId);
         }
@@ -2378,7 +2434,17 @@ function (_React$Component) {
           shows = _this$props5.shows,
           videos = _this$props5.videos,
           genres = _this$props5.genres,
-          galleryType = _this$props5.galleryType;
+          galleryType = _this$props5.galleryType,
+          query = _this$props5.query;
+
+      if (shows.length <= 0 && galleryType === 'SEARCH') {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+          className: "show-gallery-index-wrapper no-results"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+          className: "no-results-content"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Your search for \"".concat(query, "\" did not have any matches.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Suggestions:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Try different keywords"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Looking for a movie or TV show?"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Try using a movie, TV show title, or a director"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Try a genre, like comedy, romance, or drama"))));
+      }
+
       var showsPerRow = null,
           previewShow = null,
           showRowsList = null;
@@ -2399,12 +2465,18 @@ function (_React$Component) {
         });
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
+      var galleryStyle = galleryType !== 'SEARCH' ? {
+        top: "75vh"
+      } : {
+        top: "15vh"
+      };
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "show-gallery-index-wrapper"
       }, galleryType !== 'SEARCH' && previewShow ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BigPreview_big_preview_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
         show: previewShow
       }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "gallery-index-wrapper"
+        className: "gallery-index-wrapper",
+        style: galleryStyle
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "show-gallery-index",
         id: "gallery-index-bg"
@@ -4252,7 +4324,7 @@ var fetchPreviewVideos = function fetchPreviewVideos() {
 var searchShows = function searchShows(query) {
   return $.ajax({
     method: 'GET',
-    url: 'api/shows/search',
+    url: 'api/search',
     data: {
       query_string: query
     }

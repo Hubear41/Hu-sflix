@@ -12,11 +12,9 @@ class ShowGallery extends React.Component {
     }
     
     componentDidMount() {
-        const { genreId, galleryType, location } = this.props;
+        const { genreId, galleryType, query } = this.props;
 
         if ( galleryType === 'SEARCH' ) {
-            const query = new URLSearchParams(location.search).get("q");
-
             this.props.search(query);
         } else {
             this.props.requestAllShows(genreId);
@@ -28,9 +26,9 @@ class ShowGallery extends React.Component {
             const { genreId, galleryType, location } = this.props;
 
             if (galleryType === 'SEARCH') {
-                const query = new URLSearchParams(location.search).get("q");
+                // const query = new URLSearchParams(location.search).get("q");
 
-                this.props.search(query);
+                // this.props.search(query);
             } else {
                 this.props.requestAllShows(genreId);
             }
@@ -113,7 +111,25 @@ class ShowGallery extends React.Component {
     }
     
     render() {
-        const { shows, videos, genres, galleryType } = this.props;
+        const { shows, videos, genres, galleryType, query } = this.props;
+        
+        if (shows.length <= 0 && galleryType === 'SEARCH') {
+            return (
+                <section className="show-gallery-index-wrapper no-results" >
+                    <article className='no-results-content'>
+                        <span>{`Your search for "${query}" did not have any matches.`}</span>
+                        <span>Suggestions:</span>
+                        <ul>
+                            <li>Try different keywords</li>
+                            <li>Looking for a movie or TV show?</li>
+                            <li>Try using a movie, TV show title, or a director</li>
+                            <li>Try a genre, like comedy, romance, or drama</li>
+                        </ul>
+                    </article>
+                </section>
+
+            );
+        }
 
         let showsPerRow = null, previewShow = null, showRowsList = null;
         if ( shows.length > 0 ) {
@@ -130,12 +146,14 @@ class ShowGallery extends React.Component {
                         />
             }); 
         }
+
+        const galleryStyle = galleryType !== 'SEARCH' ? { top: "75vh" } : { top: "15vh" };
         
         return (
-            <main className="show-gallery-index-wrapper">
+            <section className="show-gallery-index-wrapper" >
                 { galleryType !== 'SEARCH' && previewShow ? <BigPreviewContainer show={previewShow} /> : null }
 
-                <section className="gallery-index-wrapper">
+                <section className="gallery-index-wrapper" style={galleryStyle} >
                     
                     <ul className="show-gallery-index" id="gallery-index-bg">
                         {showRowsList}
@@ -147,7 +165,7 @@ class ShowGallery extends React.Component {
                         </footer>
                     </figure>
                 </section>
-            </main>
+            </section>
         )
     }   
 }

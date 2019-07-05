@@ -6,6 +6,7 @@ import Splash from './splash/splash';
 import Background from './background/background';
 import ShowIndexGallery from './shows/show_gallery_container';
 import GenreGallery from './shows/genre_gallery_container';
+import SearchGallery from './shows/search_container';
 import Watch from './watch/show_watch_container';
 import Footer from './footer/footer';
 import { Route, Switch } from 'react-router-dom';
@@ -30,6 +31,7 @@ const App = () => {
                 <AuthRoute path="/signup" component={SignUp} />
                 <AuthRoute path="/login" component={Login} />
                 <ProtectedRoute path="/browse" component={ShowIndexGallery} />
+                <ProtectedRoute path="/search" component={SearchGallery} />
                 <ProtectedRoute path="/genre/:genreId" component={GenreGallery} />
                 <ProtectedRoute path="/watch/:showId/:videoId" component={Watch} />
             </main>

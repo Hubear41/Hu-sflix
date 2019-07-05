@@ -29,7 +29,7 @@ export const fetchPreviewVideos = () => {
 export const searchShows = query => {
     return $.ajax({
         method: 'GET',
-        url: 'api/shows/search',
+        url: 'api/search',
         data: { query_string: query },
     });
 }
