@@ -14,6 +14,7 @@ class MainNav extends React.Component {
         this.navbar = React.createRef();
         this.handleLogout = this.handleLogout.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
+        this.updateSearch = this.updateSearch.bind(this);
     }
 
     componentDidMount() {
@@ -29,6 +30,19 @@ class MainNav extends React.Component {
             this.setState({ background: CLEAR });
         } else {
             this.setState({ background: DARK });
+        }
+    }
+
+    updateSearch(e) {
+        const { history, location } = this.props;
+
+        if ( e.target.value === "" && location.pathname !== '/browse') {
+            history.push('/browse');
+        } else if ( e.target.value !== "" ) {
+            history.push( {
+                pathname: '/search',
+                search: `q=${e.target.value}`
+            });
         }
     }
 
@@ -68,8 +82,15 @@ class MainNav extends React.Component {
                     </section>
 
                     <section className="right-nav">
-                        <section className="search-bar">
-                        </section>
+                        <form className='search-bar-form'>
+                            <i className="fas fa-search"></i>
+                            <input type="text"
+                                   className='search-input'
+                                   placeholder="Titles, directors, genres"
+                                   value=""
+                                   onChange={this.updateSearch}
+                            />
+                        </form>
 
                         <p className="toggle-nav-dropdown-menu" onClick={this.toggleDropDown}>
                             <i className="fas fa-caret-down"></i>

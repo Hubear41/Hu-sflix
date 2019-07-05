@@ -303,7 +303,7 @@ var receiveErrors = function receiveErrors(errors) {
 /*!******************************************!*\
   !*** ./frontend/actions/show_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_VIDEO, RECEIVE_SHOW, RECEIVE_SHOWS, fetchVideo, fetchShows, fetchShow */
+/*! exports provided: RECEIVE_VIDEO, RECEIVE_SHOW, RECEIVE_SHOWS, fetchVideo, fetchShows, fetchShow, searchShows */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -314,6 +314,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVideo", function() { return fetchVideo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShows", function() { return fetchShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShow", function() { return fetchShow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchShows", function() { return searchShows; });
 /* harmony import */ var _util_show_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/show_util */ "./frontend/util/show_util.js");
 
 var RECEIVE_VIDEO = 'RECEIVE_VIDEO';
@@ -337,6 +338,13 @@ var fetchShow = function fetchShow(id) {
   return function (dispatch) {
     return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchShow"](id).then(function (payload) {
       return dispatch(receiveShow(payload));
+    });
+  };
+};
+var searchShows = function searchShows(query) {
+  return function (dispatch) {
+    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["searchShows"](query).then(function (payload) {
+      return dispatch(receiveShows(payload));
     });
   };
 };
@@ -1037,6 +1045,7 @@ function (_React$Component) {
     _this.navbar = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.handleLogout = _this.handleLogout.bind(_assertThisInitialized(_this));
     _this.handleScroll = _this.handleScroll.bind(_assertThisInitialized(_this));
+    _this.updateSearch = _this.updateSearch.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -1064,12 +1073,28 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "updateSearch",
+    value: function updateSearch(e) {
+      var _this$props = this.props,
+          history = _this$props.history,
+          location = _this$props.location;
+
+      if (e.target.value === "" && location.pathname !== '/browse') {
+        history.push('/browse');
+      } else if (e.target.value !== "") {
+        history.push({
+          pathname: '/search',
+          search: "q=".concat(e.target.value)
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          tvShowsId = _this$props.tvShowsId,
-          moviesId = _this$props.moviesId,
-          recentId = _this$props.recentId;
+      var _this$props2 = this.props,
+          tvShowsId = _this$props2.tvShowsId,
+          moviesId = _this$props2.moviesId,
+          recentId = _this$props2.recentId;
       var pathname = this.props.location.pathname;
       var background = this.state.background;
       var homeBold = pathname === "/browse" ? "current-nav" : "";
@@ -1117,9 +1142,17 @@ function (_React$Component) {
         className: "nav-btn ".concat(recentBold)
       }, "Recently Added"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "right-nav"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "search-bar"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "search-bar-form"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-search"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        className: "search-input",
+        placeholder: "Titles, directors, genres",
+        value: "",
+        onChange: this.updateSearch
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "toggle-nav-dropdown-menu",
         onClick: this.toggleDropDown
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -1157,8 +1190,10 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _main_nav__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./main_nav */ "./frontend/components/navbar/main_nav.jsx");
+/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/show_actions */ "./frontend/actions/show_actions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _main_nav__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main_nav */ "./frontend/components/navbar/main_nav.jsx");
+
 
 
 
@@ -1208,7 +1243,8 @@ var mdp = function mdp(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_main_nav__WEBPACK_IMPORTED_MODULE_3__["default"])));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_main_nav__WEBPACK_IMPORTED_MODULE_4__["default"])));
+x;
 
 /***/ }),
 
@@ -4057,7 +4093,7 @@ var logoutUser = function logoutUser() {
 /*!************************************!*\
   !*** ./frontend/util/show_util.js ***!
   \************************************/
-/*! exports provided: fetchShows, fetchShow, fetchVideo, fetchPreviewVideos */
+/*! exports provided: fetchShows, fetchShow, fetchVideo, fetchPreviewVideos, searchShows */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4066,6 +4102,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShow", function() { return fetchShow; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVideo", function() { return fetchVideo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPreviewVideos", function() { return fetchPreviewVideos; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchShows", function() { return searchShows; });
 var fetchShows = function fetchShows() {
   return $.ajax({
     method: 'GET',
@@ -4088,6 +4125,15 @@ var fetchPreviewVideos = function fetchPreviewVideos() {
   return $.ajax({
     method: 'GET',
     url: 'api/videos'
+  });
+};
+var searchShows = function searchShows(query) {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/shows/search',
+    data: {
+      query_string: query
+    }
   });
 };
 

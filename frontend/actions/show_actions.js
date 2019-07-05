@@ -16,6 +16,10 @@ export const fetchShow = id => dispatch => {
     return ShowUTIL.fetchShow(id).then( payload => dispatch(receiveShow(payload)) );
 };
 
+export const searchShows = query => dispatch => {
+    return ShowUTIL.searchShows(query).then( payload => dispatch(receiveShows(payload)));
+}
+
 const receiveVideo = video => ({
     type: RECEIVE_VIDEO,
     video,

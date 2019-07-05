@@ -30,4 +30,8 @@ class Api::ShowsController < ApplicationController
 
         render :show
     end
+
+    def search
+        puts 'hello world';
+    end
 end

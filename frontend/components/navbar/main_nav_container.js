@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/session_actions';
+import { searchShows } from '../../actions/show_actions';
 import { withRouter } from 'react-router-dom';
 import MainNav from './main_nav';
 
@@ -24,7 +25,6 @@ const msp = ({ entities, session }) => {
         });
     }
 
-
     return {
         currentUser: entities.users[session.id],
         moviesId,
@@ -37,4 +37,4 @@ const mdp = dispatch => ({
     logout: () => dispatch(logoutUser()),
 });
 
-export default withRouter(connect(msp, mdp)(MainNav));
+export default withRouter(connect(msp, mdp)(MainNav));x
