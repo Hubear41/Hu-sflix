@@ -58,7 +58,7 @@ class Navbar extends React.Component {
                                 ? null 
                                 : <nav className="signin-btn">
                                     {alreadyHaveAccountMsg}
-                                    <Link to="/login" className={SigninBtnClass}>Log In</Link>
+                                    <Link to="/login" className={SigninBtnClass}>Sign In</Link>
                                 </nav>
                         }
                     </section>

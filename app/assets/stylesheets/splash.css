@@ -5,7 +5,7 @@
     width: 100%;
     max-height: 90vh;
     min-height: 100%;
-    filter: brightness(40%);
+    filter: brightness(30%);
 }
 
 .splash-image-wrapper {
@@ -15,7 +15,7 @@
 
 .splash-content-wrapper {
     position: absolute;
-    top: 195px;
+    top: 25vh;
     left: 0;
     z-index: 20;
     width: 100%;
@@ -26,21 +26,23 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    font-family: sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     height: 286px;
 }
 
 .splash-content h2 {
     font-weight: 700;
-    font-size: 78px;
+    font-size: 80px;
     letter-spacing: 1px;
+    word-spacing: 5px;
     text-shadow: 2px 2px 5px black;
 }
 
 .splash-content span {
-    font-weight: lighter;
+    font-weight: 300;
     font-size: 30px;
     text-transform: uppercase;
+    letter-spacing: 1px;
     word-spacing: 3px;
 }
 

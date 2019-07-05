@@ -220,7 +220,7 @@ midnight_girl_show = Show.create!( title: 'Midnight Girl',
 ShowGenre.create!(show_id: midnight_girl_show.id, genre_id: movie.id)
 ShowGenre.create!(show_id: midnight_girl_show.id, genre_id: dark.id)
 ShowGenre.create!(show_id: midnight_girl_show.id, genre_id: emotional.id)
-ShowGenre.create!(show_id: midnight_girl_show.id, genre_id: emotional.id)
+ShowGenre.create!(show_id: midnight_girl_show.id, genre_id: inspiring.id)
 ShowGenre.create!(show_id: midnight_girl_show.id, genre_id: drama.id)
 ShowGenre.create!(show_id: midnight_girl_show.id, genre_id: recently_added.id)
 
@@ -253,6 +253,7 @@ marina_show = Show.create!( title: 'Marina',
 ShowGenre.create!(show_id: marina_show.id, genre_id: movie.id)
 ShowGenre.create!(show_id: marina_show.id, genre_id: slice_of_life.id)
 ShowGenre.create!(show_id: marina_show.id, genre_id: emotional.id)
+ShowGenre.create!(show_id: marina_show.id, genre_id: chilling.id)
 ShowGenre.create!(show_id: marina_show.id, genre_id: recently_added.id)
 ShowGenre.create!(show_id: marina_show.id, genre_id: indie.id)
 
