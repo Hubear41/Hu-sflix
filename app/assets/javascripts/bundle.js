@@ -1895,7 +1895,9 @@ __webpack_require__.r(__webpack_exports__);
 var findShowsByGenre = function findShowsByGenre(shows, genre) {
   var showsByGenre = [];
   genre.shows_with_genre_ids.map(function (showId) {
-    showsByGenre.push(shows[showId]);
+    if (shows[showId] !== undefined) {
+      showsByGenre.push(shows[showId]);
+    }
   });
   return showsByGenre;
 };
@@ -2183,6 +2185,9 @@ function (_React$Component) {
       if (prevProps.location.pathname !== this.props.location.pathname) {
         var genreId = this.props.genreId;
         this.props.requestAllShows(genreId);
+        this.setState({
+          previewId: null
+        });
       }
     }
   }, {
@@ -2196,7 +2201,7 @@ function (_React$Component) {
       var firstGenre = "";
       Object.values(genres).forEach(function (genre) {
         if (genre.name !== 'Movie' && genre.name !== 'TV Show' && genre.name !== 'Recently Added' && genre.shows_with_genre_ids.length >= 6) {
-          if (shows[previewId].genre_ids.includes(genre.id) && !firstGenre) {
+          if (shows[previewId] !== undefined && shows[previewId].genre_ids.includes(genre.id) && !firstGenre) {
             firstGenre = genre;
             mainGenres = [genre].concat(mainGenres);
           } else {
@@ -2268,7 +2273,7 @@ function (_React$Component) {
       var previewId = null;
       var found = false;
 
-      while (!found) {
+      while (!found && props.shows.length !== 0) {
         var randomId = Math.floor(Math.random() * (props.shows.length - 1));
         var currShow = props.shows[randomId];
 
@@ -3881,7 +3886,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"])); // return createStore(rootReducer, preloadedState, applyMiddleware(thunk, logger));
+  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"], redux_logger__WEBPACK_IMPORTED_MODULE_2___default.a)); // return createStore(rootReducer, preloadedState, applyMiddleware(thunk, logger));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);

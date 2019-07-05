@@ -7,9 +7,11 @@ const findShowsByGenre = (shows, genre) => {
     const showsByGenre = [];
     
     genre.shows_with_genre_ids.map( showId => {
-        showsByGenre.push( shows[showId] );
+        if ( shows[showId] !== undefined ) {
+            showsByGenre.push( shows[showId] );
+        }
     });
-
+    
     return showsByGenre;
 }
 
@@ -17,7 +19,7 @@ const msp = (state, ownProps) => {
     const genreId = ownProps.match.params.genreId;
     const genre = state.entities.genres[genreId];
     const shows = genre !== undefined ? findShowsByGenre(state.entities.shows, genre) : [];
-
+    
     return {
         shows,
         genreId,

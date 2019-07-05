@@ -20,6 +20,7 @@ class ShowGallery extends React.Component {
         if (prevProps.location.pathname !== this.props.location.pathname) {
             const { genreId } = this.props;
             this.props.requestAllShows(genreId);
+            this.setState({ previewId: null });
         }
     }
 
@@ -32,7 +33,7 @@ class ShowGallery extends React.Component {
         let previewId = null;
         let found = false;
 
-        while (!found) {
+        while (!found && props.shows.length !== 0 ) {
             const randomId = Math.floor(Math.random() * (props.shows.length - 1));
             const currShow = props.shows[randomId];
             
@@ -55,7 +56,7 @@ class ShowGallery extends React.Component {
         
         Object.values(genres).forEach( genre => {
             if ( genre.name !== 'Movie' && genre.name !== 'TV Show' && genre.name !== 'Recently Added' && genre.shows_with_genre_ids.length >= 6 ) {
-                if ( shows[previewId].genre_ids.includes(genre.id) && !firstGenre ) {
+                if ( shows[previewId] !== undefined && shows[previewId].genre_ids.includes(genre.id) && !firstGenre ) {
                     firstGenre = genre;
                     mainGenres = [ genre ].concat(mainGenres);
                 } else {
