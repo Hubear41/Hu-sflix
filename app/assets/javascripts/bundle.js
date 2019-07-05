@@ -2496,8 +2496,8 @@ function (_React$Component) {
             return;
           }
 
-          if (genre.name !== 'TV Show' && genre.name !== 'Movie') {
-            if (idx === genres.length - 1) {
+          if (genre.name !== 'TV Show' && genre.name !== 'Movie' && genre.name !== 'Recently Added' && genresToShow.length < 3) {
+            if (genresToShow.length === 2) {
               genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
                 className: "genre-title",
                 key: genre.name + genre.id
@@ -2510,7 +2510,7 @@ function (_React$Component) {
               genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
                 className: "genre-bullet",
                 key: 'bullet ' + idx
-              }, "\u2022"));
+              }, " ", "\u2022", " "));
             }
           }
         });
@@ -2658,24 +2658,6 @@ function (_React$Component) {
         genres: genreList,
         Timeout: this.playTimeout
       });
-    } // remove this once genres are add
-
-  }, {
-    key: "findHeaderName",
-    value: function findHeaderName(rowNum) {
-      switch (rowNum) {
-        case 0:
-          return 'Suspenseful Dramas';
-
-        case 1:
-          return 'Heartbreaking Movies';
-
-        case 2:
-          return 'Exciting Shows';
-
-        default:
-          return '';
-      }
     }
   }, {
     key: "render",

@@ -31,20 +31,6 @@ class ShowRow extends React.Component {
         ); 
     }
 
-    // remove this once genres are add
-    findHeaderName(rowNum) {
-        switch(rowNum) {
-            case 0:
-                return 'Suspenseful Dramas';
-            case 1:
-                return 'Heartbreaking Movies';
-            case 2:
-                return 'Exciting Shows';
-            default:
-                return '';
-        }
-    }
-
     render() {
         const { shows, rowNum, genreName } = this.props;
         const showList = [];
