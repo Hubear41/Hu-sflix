@@ -2189,12 +2189,17 @@ function (_React$Component) {
   }, {
     key: "createRows",
     value: function createRows() {
-      var shows = this.props.shows;
+      var _this$props = this.props,
+          shows = _this$props.shows,
+          genres = _this$props.genres;
       var previewId = this.state.previewId;
       var row = [];
       var showsPerRow = [];
       var idx = 0,
           count = 0;
+      var mainGenres = genres.filter(function (genre) {
+        return genre.length >= 6;
+      });
       row.push(shows[previewId]);
 
       while (count < 1) {
@@ -2230,11 +2235,11 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          shows = _this$props.shows,
-          galleryType = _this$props.galleryType,
-          videos = _this$props.videos,
-          genres = _this$props.genres;
+      var _this$props2 = this.props,
+          shows = _this$props2.shows,
+          galleryType = _this$props2.galleryType,
+          videos = _this$props2.videos,
+          genres = _this$props2.genres;
       var showsPerRow = null,
           previewShow = null,
           showRowsList = null;

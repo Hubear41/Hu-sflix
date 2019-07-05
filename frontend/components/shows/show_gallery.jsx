@@ -48,11 +48,15 @@ class ShowGallery extends React.Component {
     }
 
     createRows() {
-        const { shows } = this.props;
+        const { shows, genres } = this.props;
         const { previewId } = this.state;
         let row = [];
         let showsPerRow = [];
         let idx = 0, count = 0;
+
+        const mainGenres = genres.filter(genre => {
+            return genre.length >= 6;
+        });
         
         row.push(shows[previewId]);
         
