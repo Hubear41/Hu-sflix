@@ -12,14 +12,29 @@ class ShowGallery extends React.Component {
     }
     
     componentDidMount() {
-        const { genreId } = this.props;
-        this.props.requestAllShows(genreId);
+        const { genreId, galleryType, location } = this.props;
+
+        if ( galleryType === 'SEARCH' ) {
+            const query = new URLSearchParams(location.search).get("q");
+
+            this.props.search(query);
+        } else {
+            this.props.requestAllShows(genreId);
+        }
     }
 
     componentDidUpdate(prevProps) {        
         if (prevProps.location.pathname !== this.props.location.pathname) {
-            const { genreId } = this.props;
-            this.props.requestAllShows(genreId);
+            const { genreId, galleryType, location } = this.props;
+
+            if (galleryType === 'SEARCH') {
+                const query = new URLSearchParams(location.search).get("q");
+
+                this.props.search(query);
+            } else {
+                this.props.requestAllShows(genreId);
+            }
+
             this.setState({ previewId: null });
         }
     }
@@ -27,7 +42,7 @@ class ShowGallery extends React.Component {
     static getDerivedStateFromProps(props, state) {
         // we use <= 1 because we could leave show watch and have 1 show in state
         // we still would need to fetch all the shows
-        if (state.previewId !== null || props.shows.length <= 1) {
+        if (props.galleryType === 'SEARCH' || state.previewId !== null || props.shows.length <= 1) {
             return { previewId: state.previewId };
         }
         let previewId = null;
@@ -76,29 +91,49 @@ class ShowGallery extends React.Component {
 
         return showsPerRow;
     }
+
+    createUnorderedRows() {
+        const { shows, genres } = this.props;
+        const showsPerRow = {};
+        let currRow = [];
+        let numRows = 0;
+
+        for (let idx1 = 0; idx1 < shows.length; idx1++) {
+            const currShow = shows[idx1];
+            currRow.push(currShow);
+
+            if (currRow.length >= 6) {
+                showsPerRow[numRows] = currRow;
+                currRow = [];
+                numRows++;
+            }
+        }
+
+        return showsPerRow;
+    }
     
     render() {
-        const { shows, videos, genres } = this.props;
+        const { shows, videos, genres, galleryType } = this.props;
 
         let showsPerRow = null, previewShow = null, showRowsList = null;
         if ( shows.length > 0 ) {
-            showsPerRow = this.createRows();
-            previewShow = shows[this.state.previewId];
+            showsPerRow = galleryType !== 'SEARCH' ? this.createRows() : this.createUnorderedRows();
+            previewShow = galleryType !== 'SEARCH' ? shows[this.state.previewId] : null;
             
-
             showRowsList = Object.keys(showsPerRow).map( (genreName, idx) => {
                 return <ShowRows key={"row" + idx} 
                                  rowNum={idx} shows={showsPerRow[genreName]} 
                                  genreName={genreName} 
                                  videos={videos} 
                                  genres={genres} 
+                                 galleryType={galleryType}
                         />
             }); 
         }
         
         return (
             <main className="show-gallery-index-wrapper">
-                { previewShow ? <BigPreviewContainer show={previewShow} /> : null }
+                { galleryType !== 'SEARCH' && previewShow ? <BigPreviewContainer show={previewShow} /> : null }
 
                 <section className="gallery-index-wrapper">
                     

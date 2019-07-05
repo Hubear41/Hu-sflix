@@ -2287,15 +2287,34 @@ function (_React$Component) {
   _createClass(ShowGallery, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var genreId = this.props.genreId;
-      this.props.requestAllShows(genreId);
+      var _this$props = this.props,
+          genreId = _this$props.genreId,
+          galleryType = _this$props.galleryType,
+          location = _this$props.location;
+
+      if (galleryType === 'SEARCH') {
+        var query = new URLSearchParams(location.search).get("q");
+        this.props.search(query);
+      } else {
+        this.props.requestAllShows(genreId);
+      }
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
       if (prevProps.location.pathname !== this.props.location.pathname) {
-        var genreId = this.props.genreId;
-        this.props.requestAllShows(genreId);
+        var _this$props2 = this.props,
+            genreId = _this$props2.genreId,
+            galleryType = _this$props2.galleryType,
+            location = _this$props2.location;
+
+        if (galleryType === 'SEARCH') {
+          var query = new URLSearchParams(location.search).get("q");
+          this.props.search(query);
+        } else {
+          this.props.requestAllShows(genreId);
+        }
+
         this.setState({
           previewId: null
         });
@@ -2304,9 +2323,9 @@ function (_React$Component) {
   }, {
     key: "createRows",
     value: function createRows() {
-      var _this$props = this.props,
-          shows = _this$props.shows,
-          genres = _this$props.genres;
+      var _this$props3 = this.props,
+          shows = _this$props3.shows,
+          genres = _this$props3.genres;
       var previewId = this.state.previewId;
       var mainGenres = [];
       var firstGenre = "";
@@ -2330,19 +2349,43 @@ function (_React$Component) {
       return showsPerRow;
     }
   }, {
+    key: "createUnorderedRows",
+    value: function createUnorderedRows() {
+      var _this$props4 = this.props,
+          shows = _this$props4.shows,
+          genres = _this$props4.genres;
+      var showsPerRow = {};
+      var currRow = [];
+      var numRows = 0;
+
+      for (var idx1 = 0; idx1 < shows.length; idx1++) {
+        var currShow = shows[idx1];
+        currRow.push(currShow);
+
+        if (currRow.length >= 6) {
+          showsPerRow[numRows] = currRow;
+          currRow = [];
+          numRows++;
+        }
+      }
+
+      return showsPerRow;
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this$props2 = this.props,
-          shows = _this$props2.shows,
-          videos = _this$props2.videos,
-          genres = _this$props2.genres;
+      var _this$props5 = this.props,
+          shows = _this$props5.shows,
+          videos = _this$props5.videos,
+          genres = _this$props5.genres,
+          galleryType = _this$props5.galleryType;
       var showsPerRow = null,
           previewShow = null,
           showRowsList = null;
 
       if (shows.length > 0) {
-        showsPerRow = this.createRows();
-        previewShow = shows[this.state.previewId];
+        showsPerRow = galleryType !== 'SEARCH' ? this.createRows() : this.createUnorderedRows();
+        previewShow = galleryType !== 'SEARCH' ? shows[this.state.previewId] : null;
         showRowsList = Object.keys(showsPerRow).map(function (genreName, idx) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
             key: "row" + idx,
@@ -2350,14 +2393,15 @@ function (_React$Component) {
             shows: showsPerRow[genreName],
             genreName: genreName,
             videos: videos,
-            genres: genres
+            genres: genres,
+            galleryType: galleryType
           });
         });
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
         className: "show-gallery-index-wrapper"
-      }, previewShow ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BigPreview_big_preview_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, galleryType !== 'SEARCH' && previewShow ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BigPreview_big_preview_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
         show: previewShow
       }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "gallery-index-wrapper"
@@ -2375,7 +2419,7 @@ function (_React$Component) {
     value: function getDerivedStateFromProps(props, state) {
       // we use <= 1 because we could leave show watch and have 1 show in state
       // we still would need to fetch all the shows
-      if (state.previewId !== null || props.shows.length <= 1) {
+      if (props.galleryType === 'SEARCH' || state.previewId !== null || props.shows.length <= 1) {
         return {
           previewId: state.previewId
         };
@@ -2779,14 +2823,16 @@ function (_React$Component) {
       var _this$props2 = this.props,
           shows = _this$props2.shows,
           rowNum = _this$props2.rowNum,
-          genreName = _this$props2.genreName;
+          genreName = _this$props2.genreName,
+          galleryType = _this$props2.galleryType;
       var showList = [];
+      var rowHeader = galleryType !== 'SEARCH' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, genreName) : null;
       shows.forEach(function (show) {
         showList.push(_this2.createShowRowItem(show));
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "row-".concat(rowNum, "-wrapper show-rows-wrapper")
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, genreName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+      }, rowHeader, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "row-".concat(rowNum, " show-row")
       }, showList));
     }

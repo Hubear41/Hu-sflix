@@ -11,7 +11,7 @@ const msp = ({ entities }, ownProps) => {
         shows,
         videos,
         genres,
-        galleryType: 'Minimal',
+        galleryType: 'SEARCH',
     }
 }
 
