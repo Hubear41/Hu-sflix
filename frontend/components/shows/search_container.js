@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { searchShows } from '../../actions/show_actions';
-import { stopLoading } from '../../actions/ui_actions';
+import { stopLoading, startLoading } from '../../actions/ui_actions';
 import ShowGallery from './show_gallery'
 
 const msp = ({ entities, ui }, ownProps) => {
@@ -23,6 +23,7 @@ const msp = ({ entities, ui }, ownProps) => {
 const mdp = dispatch => ({
     search: query => dispatch(searchShows(query)),
     stopLoading: () => dispatch(stopLoading()),
+    startLoading: () => dispatch(startLoading()),
 });
 
 export default connect(msp, mdp)(ShowGallery);

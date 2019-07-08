@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchGenreShows } from '../../actions/genre_actions';
-import { stopLoading } from '../../actions/ui_actions';
+import { stopLoading, startLoading } from '../../actions/ui_actions';
 import { withRouter } from 'react-router-dom';
 import ShowGallery from './show_gallery';
 
@@ -34,6 +34,7 @@ const msp = ({ entities, ui }, ownProps) => {
 const mdp = dispatch => ({
     requestAllShows: id => dispatch(fetchGenreShows(id)),
     stopLoading: () => dispatch(stopLoading()),
+    startLoading: () => dispatch(startLoading()),
 })
 
 export default withRouter(connect(msp, mdp)(ShowGallery));

@@ -247,11 +247,12 @@
         border: 1px solid white;
         background-color: rgba(0, 0, 0, 0.6);
     }
-    80% {
+    65% {
         border: 1px solid rgba(255,255,255,0);
     }
     100% {
         width: 0px;
+        border: 1px solid rgba(255,255,255,0);
         background-color: rgba(0, 0, 0, 0);
         animation-timing-function: ease-in;
     }

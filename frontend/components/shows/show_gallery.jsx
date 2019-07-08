@@ -15,21 +15,39 @@ class ShowGallery extends React.Component {
         const { genreId, galleryType, query } = this.props;
 
         if ( galleryType === 'SEARCH' ) {
-            this.props.search(query).then( () => this.props.stopLoading());
+            this.props.search(query).then( () => {
+                setTimeout( () => {
+                    this.props.stopLoading();
+                }, 500);
+            })
+            .fail(() => {
+                this.props.stopLoading();
+            });
         } else {
-            this.props.requestAllShows(genreId).then(() => this.props.stopLoading());
+            this.props.requestAllShows(genreId)
+            .then(() => {
+                setTimeout(() => {
+                    this.props.stopLoading();
+                }, 500);
+            })
+            .fail( () => {
+                this.props.stopLoading();
+            });
         }
     }
 
     componentDidUpdate(prevProps) {        
-        if (prevProps.location.pathname !== this.props.location.pathname) {
+        if (prevProps.location.pathname !== this.props.location.pathname || prevProps.query !== this.props.query) {
             const { genreId, galleryType, location } = this.props;
 
             if (galleryType === 'SEARCH') {
                 const query = new URLSearchParams(location.search).get("q");
-                this.props.search(query);
+
+                /// add loading start and stop
+                this.props.search(query).then( () => this.props.stopLoading() );
             } else {
-                this.props.requestAllShows(genreId);
+                /// add loading start and stop
+                this.props.requestAllShows(genreId).then( () => this.props.stopLoading() );
             }
 
             this.setState({ previewId: null });
@@ -112,8 +130,9 @@ class ShowGallery extends React.Component {
     }
     
     render() {
-        const { shows, videos, genres, galleryType, query } = this.props;
-        
+        const { shows, videos, genres, galleryType, query, loading } = this.props;
+        if ( loading === true ) return null;
+
         if (shows.length <= 0 && galleryType === 'SEARCH') {
             return (
                 <section className="show-gallery-index-wrapper no-results" >

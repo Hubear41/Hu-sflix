@@ -1,0 +1,115 @@
+.loading-screen {
+    background-color: #141414;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.loading-content {
+    position: absolute;
+    top: 30%;
+    left: 5%;
+}
+
+.loading-title {
+    width: 18vw;
+    height: 40px;
+    margin-bottom: 20px;
+}
+
+.loading-row {
+    height: 20%;
+    overflow: hidden;
+    display: flex;
+}
+
+.loading-thumb {
+    width: 18vw;
+    height: 15vh;
+    margin-right: 5px;
+}
+
+.load-animation {
+    animation: loading-thumb-animation;
+    animation-fill-mode: forwards;
+    animation-duration: 1.8s;
+    animation-iteration-count: infinite;
+}
+
+.fade-in-loading {
+    animation: fade-in-loading;
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
+}
+
+.fade-out-loading {
+    animation: fade-out-loading;
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
+}
+
+@keyframes loading-thumb-animation {
+    0% {
+        background-color: rgba(75,75,75,0);
+    }
+    10% {
+        background-color: rgba(75,75,75,0.2);
+    }
+    20% {
+        background-color: rgba(75,75,75,0.4);
+    }
+    30% {
+        background-color: rgba(75,75,75,0.6);
+    }
+    40% {
+        background-color: rgba(75,75,75,0.8);
+    }
+    50% {
+        background-color: rgba(75,75,75,1);
+    }
+    60% {
+        background-color: rgba(75,75,75,0.8);
+    }
+    70% {
+        background-color: rgba(75,75,75,0.6);
+    }
+    80% {
+        background-color: rgba(75,75,75,0.4);
+    }
+    90% {
+        background-color: rgba(75,75,75,0.2);
+    }
+    100% {
+        background-color: rgba(75,75,75,0);
+    }
+}
+
+@keyframes fade-in-loading {
+    0% {
+        opacity: 0;
+        z-index: -1;
+        display: none;
+    }
+    100% {
+        opacity: 1;
+        z-index: 1900;
+        display: inherit;
+        animation-timing-function: ease-in;
+    }
+}
+
+@keyframes fade-out-loading {
+    0% {
+        opacity: 1;
+        z-index: 1900;
+        display: inherit;
+    }
+    100% {
+        opacity: 0;
+        z-index: -1;
+        display: none;
+        animation-timing-function: ease-in;
+    }
+}

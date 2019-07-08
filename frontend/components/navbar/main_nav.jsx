@@ -12,6 +12,7 @@ class MainNav extends React.Component {
             background: null,
             searching: null,
             search: this.props.query,
+            previous: "/browse",
         };
         this.navbar = React.createRef();
         this.searchBar = React.createRef();
@@ -42,8 +43,8 @@ class MainNav extends React.Component {
     }
 
     handleClick() {
-        this.setState({ searching: false, search: "" });
         this.props.startLoading();
+        this.setState({ searching: false, search: "" });
     }
     
     handleSearchClick() {
@@ -54,6 +55,12 @@ class MainNav extends React.Component {
                 if ( this.state.searching !== false ) {
                     this.setState({ searching: false });
                 }
+            }
+        });
+
+        document.addEventListener('keydown', e => {
+            if ( e.keyCode === 13 || e.key === 'Enter') {
+                e.preventDefault();
             }
         });
 
@@ -69,15 +76,17 @@ class MainNav extends React.Component {
         const { history, location } = this.props;
         const textInput = this.searchField.current;
 
-        if ( textInput.value === "" && location.pathname !== '/browse') {
-            history.push('/browse');
+        if ( textInput.value === "" && location.pathname !== this.state.previous) {
+            history.push(this.state.previous);
+            this.props.startLoading();
             this.setState({ search: "" });
         } else if ( textInput.value !== "" ) {
             clearTimeout(this.searchTimeout);
-            this.setState({ search: textInput.value });
+            this.setState({ search: textInput.value, previous: location.pathname });
             
             this.searchTimeout = setTimeout( () => {
-                this.props.search(this.state.search).then( () => this.props.startLoading() );
+                this.props.startLoading() 
+                this.props.search(this.state.search);
 
                 history.push({
                     pathname: '/search',

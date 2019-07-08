@@ -7,7 +7,7 @@ import {
 
 const _defaultState = {
     preview: false,
-    loading: false,
+    loading: true,
 };
 
 const uiReducer = (state = _defaultState, action) => {

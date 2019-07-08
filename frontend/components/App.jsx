@@ -4,6 +4,7 @@ import Login from './session/login_form_container';
 import Navbar from './navbar/navbar_container';
 import Splash from './splash/splash';
 import Background from './background/background';
+import LoadingScreen from './loading/loading_screen';
 import ShowIndexGallery from './shows/show_gallery_container';
 import GenreGallery from './shows/genre_gallery_container';
 import SearchGallery from './shows/search_container';
@@ -19,17 +20,15 @@ const App = () => {
             <Background />
             <main className="main-content">
                 <Switch>
-                    <ProtectedRoute path="/browse" component={MainNavBar} />
-                    <ProtectedRoute path="/genre/:genreId" component={MainNavBar} />
-                    <ProtectedRoute path="/search" component={MainNavBar} />
-                    <AuthRoute path="/signup" component={Navbar} />
-                    <AuthRoute path="/login" component={Navbar} />
-                    <AuthRoute exact path="/" component={Navbar} />
+                    <AuthRoute exact path={[ "/", "/signup", "/login" ]} component={Navbar} />
+                    <ProtectedRoute path={[ "/browse", "/genre", "/search" ]} component={MainNavBar} />
                 </Switch>
 
                 <AuthRoute exact path="/" component={Splash} />
                 <AuthRoute path="/signup" component={SignUp} />
                 <AuthRoute path="/login" component={Login} />
+
+                <ProtectedRoute path={[ "/browse", "/search", "/genre" ]} component={LoadingScreen} />
                 <ProtectedRoute path="/browse" component={ShowIndexGallery} />
                 <ProtectedRoute path="/search" component={SearchGallery} />
                 <ProtectedRoute path="/genre/:genreId" component={GenreGallery} />
