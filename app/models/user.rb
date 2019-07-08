@@ -19,7 +19,7 @@ class User < ApplicationRecord
     foreign_key: :profile_id,
     class_name: 'MyListVideo'
     
-    has_many :videos_on_list,
+    has_many :list_videos,
     through: :my_list_videos,
     source: :video
     

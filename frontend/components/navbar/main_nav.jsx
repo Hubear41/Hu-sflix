@@ -154,7 +154,7 @@ class MainNav extends React.Component {
                             <button className={`search-x ${xOpacity}`} onClick={this.handleClear}>X</button> 
                         </form>
 
-                        <p className="toggle-nav-dropdown-menu" onClick={this.toggleDropDown}>
+                        <div className="toggle-nav-dropdown-menu" onClick={this.toggleDropDown}>
                             <i className="fas fa-caret-down"></i>
                             <section className="nav-dropdown-menu">
                                 <i className="fas fa-caret-up"></i>
@@ -165,7 +165,7 @@ class MainNav extends React.Component {
                                     <button onClick={this.handleLogout} className="logout-btn">Sign out of Hu'sflix</button> 
                                 </section>
                             </section>
-                        </p>
+                        </div>
                         
                     </section>
                 </header>

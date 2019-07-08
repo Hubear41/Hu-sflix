@@ -16,7 +16,7 @@ const loadingScreen = props => {
     const thumbnails = [];
     for (let i = 0; i < 7; i++) {
         const delay = (i * 0.2);
-        thumbnails.push(<div key={i} className="loading-thumb load-animation" style={{ "animation-delay": `${delay}s`}} ></div>)
+        thumbnails.push(<div key={i} className="loading-thumb load-animation" style={{ animationDelay: `${delay}s`}} ></div>)
     }
 
     return (

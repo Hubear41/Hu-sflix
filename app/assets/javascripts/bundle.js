@@ -1050,7 +1050,7 @@ var loadingScreen = function loadingScreen(props) {
       key: i,
       className: "loading-thumb load-animation",
       style: {
-        "animation-delay": "".concat(delay, "s")
+        animationDelay: "".concat(delay, "s")
       }
     }));
   }
@@ -1322,7 +1322,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "search-x ".concat(xOpacity),
         onClick: this.handleClear
-      }, "X")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, "X")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "toggle-nav-dropdown-menu",
         onClick: this.toggleDropDown
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
