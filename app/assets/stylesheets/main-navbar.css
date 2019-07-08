@@ -156,12 +156,7 @@
     margin-right: 30px;
 }
 
-.toggle-nav-dropdown-menu:hover + .nav-dropdown-menu {
-    opacity: 1;
-    transition: opacity 0.2s;
-}
-
-.nav-dropdown-menu:hover {
+.toggle-nav-dropdown-menu:hover .nav-dropdown-menu {
     opacity: 1;
     transition: opacity 0.2s;
 }

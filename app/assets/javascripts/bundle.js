@@ -1327,7 +1327,7 @@ function (_React$Component) {
         onClick: this.toggleDropDown
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-caret-down"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "nav-dropdown-menu"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-caret-up"
@@ -1338,7 +1338,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleLogout,
         className: "logout-btn"
-      }, "Sign out of Hu'sflix"))))));
+      }, "Sign out of Hu'sflix")))))));
     }
   }]);
 
