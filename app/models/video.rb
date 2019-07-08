@@ -24,6 +24,14 @@ class Video < ApplicationRecord
     validates :video_type, inclusion: { in: VIDEO_TYPES }, presence: true
 
     belongs_to :show
+    has_many :my_list_videos
+        foreign_key: :video_id,
+        class_name: "MyListVideo"
+
+    has_many :my_list_users
+        through: :my_list_videos,
+        source: :profile
+
     has_one_attached :cover_image
     has_one_attached :video_file
 

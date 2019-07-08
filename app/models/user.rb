@@ -15,6 +15,14 @@ class User < ApplicationRecord
     validates :email, presence: true, uniqueness: true
     validates :password, length: { minimum: 6 }, allow_nil: true
 
+    has_many :my_list_videos,
+    foreign_key: :profile_id,
+    class_name: 'MyListVideo'
+    
+    has_many :videos_on_list,
+    through: :my_list_videos,
+    source: :video
+    
     attr_reader :password
     after_initialize :ensure_session_token
     
