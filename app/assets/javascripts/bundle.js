@@ -504,10 +504,37 @@ var App = function App() {
 
 /***/ }),
 
-/***/ "./frontend/components/BigPreview/big_preview.jsx":
-/*!********************************************************!*\
-  !*** ./frontend/components/BigPreview/big_preview.jsx ***!
-  \********************************************************/
+/***/ "./frontend/components/background/background.jsx":
+/*!*******************************************************!*\
+  !*** ./frontend/components/background/background.jsx ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+
+
+var Background = function Background(props) {
+  var location = props.history.location;
+  var backgroundColor = location.pathname === '/signup' ? "white-bg" : "hidden-bg";
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+    className: "".concat(backgroundColor)
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Background));
+
+/***/ }),
+
+/***/ "./frontend/components/banner_video/banner_video.jsx":
+/*!***********************************************************!*\
+  !*** ./frontend/components/banner_video/banner_video.jsx ***!
+  \***********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -584,9 +611,11 @@ function (_React$Component) {
         if (isPreviewing) {
           _this2.pauseVideo();
         } else if (bigPreview) {
-          if (!ended && window.pageYOffset > bigPreview.scrollHeight / 3) {
+          var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop; // debugger
+
+          if (!ended && scrollHeight > bigPreview.scrollHeight / 4) {
             _this2.pauseVideo();
-          } else if (!ended && window.pageYOffset <= bigPreview.scrollHeight / 3) {
+          } else if (!ended && scrollHeight <= bigPreview.scrollHeight / 4) {
             _this2.playVideo();
           }
         }
@@ -840,10 +869,10 @@ function (_React$Component) {
 
 /***/ }),
 
-/***/ "./frontend/components/BigPreview/big_preview_container.js":
-/*!*****************************************************************!*\
-  !*** ./frontend/components/BigPreview/big_preview_container.js ***!
-  \*****************************************************************/
+/***/ "./frontend/components/banner_video/banner_video_container.js":
+/*!********************************************************************!*\
+  !*** ./frontend/components/banner_video/banner_video_container.js ***!
+  \********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -851,7 +880,7 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/show_actions */ "./frontend/actions/show_actions.js");
-/* harmony import */ var _big_preview__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./big_preview */ "./frontend/components/BigPreview/big_preview.jsx");
+/* harmony import */ var _banner_video__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./banner_video */ "./frontend/components/banner_video/banner_video.jsx");
 
 
 
@@ -876,34 +905,7 @@ var mdp = function mdp(dispatch) {
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_big_preview__WEBPACK_IMPORTED_MODULE_2__["default"]));
-
-/***/ }),
-
-/***/ "./frontend/components/background/background.jsx":
-/*!*******************************************************!*\
-  !*** ./frontend/components/background/background.jsx ***!
-  \*******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-
-
-
-var Background = function Background(props) {
-  var location = props.history.location;
-  var backgroundColor = location.pathname === '/signup' ? "white-bg" : "hidden-bg";
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-    className: "".concat(backgroundColor)
-  });
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Background));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_banner_video__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 
@@ -2301,7 +2303,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _show_rows__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./show_rows */ "./frontend/components/shows/show_rows.jsx");
 /* harmony import */ var _footer_footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../footer/footer */ "./frontend/components/footer/footer.jsx");
-/* harmony import */ var _BigPreview_big_preview_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../BigPreview/big_preview_container */ "./frontend/components/BigPreview/big_preview_container.js");
+/* harmony import */ var _banner_video_banner_video_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../banner_video/banner_video_container */ "./frontend/components/banner_video/banner_video_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2365,8 +2367,9 @@ function (_React$Component) {
             galleryType = _this$props2.galleryType,
             location = _this$props2.location;
 
-        if (galleryType === 'SEARCH') {// const query = new URLSearchParams(location.search).get("q");
-          // this.props.search(query);
+        if (galleryType === 'SEARCH') {
+          var query = new URLSearchParams(location.search).get("q");
+          this.props.search(query);
         } else {
           this.props.requestAllShows(genreId);
         }
@@ -2422,6 +2425,8 @@ function (_React$Component) {
           showsPerRow[numRows] = currRow;
           currRow = [];
           numRows++;
+        } else if (idx1 === shows.length - 1) {
+          showsPerRow[numRows] = currRow;
         }
       }
 
@@ -2472,7 +2477,7 @@ function (_React$Component) {
       };
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "show-gallery-index-wrapper"
-      }, galleryType !== 'SEARCH' && previewShow ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BigPreview_big_preview_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, galleryType !== 'SEARCH' && previewShow ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_banner_video_banner_video_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
         show: previewShow
       }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "gallery-index-wrapper",

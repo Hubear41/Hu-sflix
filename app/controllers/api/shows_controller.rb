@@ -23,7 +23,18 @@ class Api::ShowsController < ApplicationController
         if query_string.length == 0 
             render json: {}
         else 
-            @shows = Show.with_attached_poster.where('shows.title ILIKE ? OR shows.director ILIKE ?', "#{query_string}%", "#{query_string}%").includes(:videos)
+            @shows = Show.with_attached_poster
+                    .joins(:genres)
+                    .where('shows.title ILIKE :first OR
+                            shows.title ILIKE :middle OR
+                            shows.director ILIKE :first OR
+                            shows.director ILIKE :last OR
+                            genres.name ILIKE :first ',
+                            first: "#{query_string}%", 
+                            middle: "%#{query_string}%", 
+                            last: "%#{query_string}" 
+                    )
+                    .includes(:videos)
             @genres = Genre.all
             @previewVideos = self.find_videos(@shows)
             @runtime = @previewVideos.count > 0 ? @previewVideos[0].runtime : 0; 

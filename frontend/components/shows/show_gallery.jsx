@@ -1,7 +1,7 @@
 import React from 'react';
 import ShowRows from './show_rows';
 import Footer from '../footer/footer';
-import BigPreviewContainer from '../BigPreview/big_preview_container'
+import BigPreviewContainer from '../banner_video/banner_video_container'
 
 class ShowGallery extends React.Component {
     constructor(props) {
@@ -26,15 +26,14 @@ class ShowGallery extends React.Component {
             const { genreId, galleryType, location } = this.props;
 
             if (galleryType === 'SEARCH') {
-                // const query = new URLSearchParams(location.search).get("q");
-
-                // this.props.search(query);
+                const query = new URLSearchParams(location.search).get("q");
+                this.props.search(query);
             } else {
                 this.props.requestAllShows(genreId);
             }
 
             this.setState({ previewId: null });
-        }
+        } 
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -104,6 +103,8 @@ class ShowGallery extends React.Component {
                 showsPerRow[numRows] = currRow;
                 currRow = [];
                 numRows++;
+            } else if ( idx1 === shows.length - 1) {
+                showsPerRow[numRows] = currRow;
             }
         }
 
@@ -130,7 +131,7 @@ class ShowGallery extends React.Component {
 
             );
         }
-
+        
         let showsPerRow = null, previewShow = null, showRowsList = null;
         if ( shows.length > 0 ) {
             showsPerRow = galleryType !== 'SEARCH' ? this.createRows() : this.createUnorderedRows();

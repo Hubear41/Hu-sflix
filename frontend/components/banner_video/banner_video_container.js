@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchVideo } from '../../actions/show_actions';
-import BigPreview from './big_preview';
+import BigPreview from './banner_video';
 
 const msp = (state, ownProps) => {
     const { show } = ownProps;

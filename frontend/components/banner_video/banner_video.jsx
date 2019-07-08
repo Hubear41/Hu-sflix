@@ -35,9 +35,12 @@ class BigPreview extends React.Component {
             if ( isPreviewing ) {
                 this.pauseVideo();
             } else if ( bigPreview ) {
-                if ( !ended && window.pageYOffset > (bigPreview.scrollHeight / 3) ) {
+                const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop;
+
+                // debugger
+                if ( !ended && scrollHeight > (bigPreview.scrollHeight / 4) ) {
                     this.pauseVideo();
-                } else if ( !ended && window.pageYOffset <= (bigPreview.scrollHeight / 3) ) {
+                } else if ( !ended && scrollHeight <= (bigPreview.scrollHeight / 4) ) {
                     this.playVideo();
                 }
             }
