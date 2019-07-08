@@ -1217,13 +1217,16 @@ function (_React$Component) {
       } else if (textInput.value !== "") {
         clearTimeout(this.searchTimeout);
         this.setState({
-          search: textInput.value,
-          previous: location.pathname
+          search: textInput.value
         });
         this.searchTimeout = setTimeout(function () {
           _this3.props.startLoading();
 
           _this3.props.search(_this3.state.search);
+
+          _this3.setState({
+            previous: location.pathname.includes("/search") ? _this3.state.previous : location.pathname
+          });
 
           history.push({
             pathname: '/search',

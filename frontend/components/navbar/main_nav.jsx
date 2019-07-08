@@ -82,11 +82,12 @@ class MainNav extends React.Component {
             this.setState({ search: "" });
         } else if ( textInput.value !== "" ) {
             clearTimeout(this.searchTimeout);
-            this.setState({ search: textInput.value, previous: location.pathname });
+            this.setState({ search: textInput.value });
             
             this.searchTimeout = setTimeout( () => {
                 this.props.startLoading() 
                 this.props.search(this.state.search);
+                this.setState({ previous: location.pathname.includes("/search") ? this.state.previous : location.pathname });
 
                 history.push({
                     pathname: '/search',
