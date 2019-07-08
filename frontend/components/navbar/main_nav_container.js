@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/session_actions';
 import { searchShows } from '../../actions/show_actions';
+import { startLoading, stopLoading } from '../../actions/ui_actions';
 import { withRouter } from 'react-router-dom';
 import MainNav from './main_nav';
 
@@ -38,6 +39,8 @@ const msp = ({ entities, session }, ownProps) => {
 const mdp = dispatch => ({
     logout: () => dispatch(logoutUser()),
     search: query => dispatch(searchShows(query)),
+    startLoading: () => dispatch(startLoading()),
+    stopLoading: () => dispatch(stopLoading()),
 });
 
 export default withRouter(connect(msp, mdp)(MainNav));

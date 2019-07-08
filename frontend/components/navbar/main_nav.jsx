@@ -43,6 +43,7 @@ class MainNav extends React.Component {
 
     handleClick() {
         this.setState({ searching: false, search: "" });
+        this.props.startLoading();
     }
     
     handleSearchClick() {
@@ -76,7 +77,7 @@ class MainNav extends React.Component {
             this.setState({ search: textInput.value });
             
             this.searchTimeout = setTimeout( () => {
-                this.props.search(this.state.search)
+                this.props.search(this.state.search).then( () => this.props.startLoading() );
 
                 history.push({
                     pathname: '/search',
@@ -123,10 +124,10 @@ class MainNav extends React.Component {
                             </Link>
                         </section>
                         <nav className="nav-btns-wrapper">
-                            <Link to="/browse" className={`nav-btn ${homeBold}`} onClick={this.handleClick} >Home</Link>
-                            <Link to={`/genre/${tvShowsId}`} className={`nav-btn ${tvBold}`} onClick={this.handleClick} >TV Shows</Link>
-                            <Link to={`/genre/${moviesId}`} className={`nav-btn ${movieBold}`} onClick={this.handleClick} >Movies</Link>
-                            <Link to={`/genre/${recentId}`} className={`nav-btn ${recentBold}`} onClick={this.handleClick} >Recently Added</Link>
+                            <Link to="/browse"               className={`nav-btn ${homeBold}`}   onClick={this.handleClick} >Home</Link>
+                            <Link to={`/genre/${tvShowsId}`} className={`nav-btn ${tvBold}`}     onClick={this.handleClick} >TV Shows</Link>
+                            <Link to={`/genre/${moviesId}`}  className={`nav-btn ${movieBold}`}  onClick={this.handleClick} >Movies</Link>
+                            <Link to={`/genre/${recentId}`}  className={`nav-btn ${recentBold}`} onClick={this.handleClick} >Recently Added</Link>
                         </nav>
                     </section>
 

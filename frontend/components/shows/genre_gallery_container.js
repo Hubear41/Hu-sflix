@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchGenreShows } from '../../actions/genre_actions';
+import { stopLoading } from '../../actions/ui_actions';
 import { withRouter } from 'react-router-dom';
 import ShowGallery from './show_gallery';
 
@@ -15,21 +16,24 @@ const findShowsByGenre = (shows, genre) => {
     return showsByGenre;
 }
 
-const msp = (state, ownProps) => {
+const msp = ({ entities, ui }, ownProps) => {
     const genreId = ownProps.match.params.genreId;
-    const genre = state.entities.genres[genreId];
-    const shows = genre !== undefined ? findShowsByGenre(state.entities.shows, genre) : [];
+    const genre = entities.genres[genreId];
+    const shows = genre !== undefined ? findShowsByGenre(entities.shows, genre) : [];
+    const loading = ui.loading;
     
     return {
         shows,
+        genres: entities.genres,
+        videos: entities.videos,
         genreId,
-        genres: state.entities.genres,
-        videos: state.entities.videos,
+        loading,
     }
 }
 
 const mdp = dispatch => ({
     requestAllShows: id => dispatch(fetchGenreShows(id)),
+    stopLoading: () => dispatch(stopLoading()),
 })
 
 export default withRouter(connect(msp, mdp)(ShowGallery));

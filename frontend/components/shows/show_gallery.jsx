@@ -15,9 +15,9 @@ class ShowGallery extends React.Component {
         const { genreId, galleryType, query } = this.props;
 
         if ( galleryType === 'SEARCH' ) {
-            this.props.search(query);
+            this.props.search(query).then( () => this.props.stopLoading());
         } else {
-            this.props.requestAllShows(genreId);
+            this.props.requestAllShows(genreId).then(() => this.props.stopLoading());
         }
     }
 
@@ -90,7 +90,7 @@ class ShowGallery extends React.Component {
     }
 
     createUnorderedRows() {
-        const { shows, genres } = this.props;
+        const { shows } = this.props;
         const showsPerRow = {};
         let currRow = [];
         let numRows = 0;

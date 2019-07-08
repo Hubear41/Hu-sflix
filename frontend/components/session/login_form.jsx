@@ -15,7 +15,7 @@ class LoginForm extends React.Component {
         this.handleGuestSubmit = this.handleGuestSubmit.bind(this);
     }
 
-    componentDidMount() {
+    componentWillUnmount() {
         this.props.clearErrors();
     }
 
@@ -30,7 +30,9 @@ class LoginForm extends React.Component {
         const { email, password } = this.state;
 
         const user = { email, password };
-        this.props.loginUser(user).then( () => this.props.history.push('/browse'));
+        this.props.loginUser(user)
+            .then(() => this.props.history.push('/browse'))
+            .then(() => this.props.startLoading());
     } 
 
     handleGuestSubmit(e) {

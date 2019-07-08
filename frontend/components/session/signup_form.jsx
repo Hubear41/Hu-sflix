@@ -13,7 +13,7 @@ class SignupForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
+    componentWillUnmount() {
         this.props.clearErrors();
     }
 
@@ -25,7 +25,9 @@ class SignupForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.createUser(this.state).then( () => this.props.history.push('/browse'));
+        this.props.createUser(this.state)
+            .then(() => this.props.history.push('/browse'))
+            .then(() => this.props.startLoading());
     }
 
     // logs into the guest user's account
