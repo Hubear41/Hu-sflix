@@ -79,11 +79,13 @@ class ShowGallery extends React.Component {
     }
 
     createRows() {
-        const { shows, genres } = this.props;
+        const { shows, genres, mylistShowIds } = this.props;
         const { previewId } = this.state;
+        const showsPerRow = {};
         let mainGenres = [];
         let firstGenre = "";
         
+        // find genres that have enough shows to fill a row
         Object.values(genres).forEach( genre => {
             if ( genre.name !== 'Movie' && genre.name !== 'TV Show' && genre.name !== 'Recently Added' && genre.shows_with_genre_ids.length >= 6 ) {
                 if ( shows[previewId] !== undefined && shows[previewId].genre_ids.includes(genre.id) && !firstGenre ) {
@@ -95,7 +97,18 @@ class ShowGallery extends React.Component {
             }
         });
 
-        const showsPerRow = {};
+        // if there are any shows on MyList
+        if ( mylistShowIds.length > 0) { 
+            const myListShows = [];
+
+            mylistShowIds.forEach( showId => {
+                myListShows.push(shows[showId]);
+            });
+            debugger
+            showsPerRow["My List"] = myListShows;
+        }
+
+        // Rows for each main genre
         mainGenres.forEach( genre => {
             const rowShows = shows.filter( show => {
                 return show.genre_ids.includes(genre.id);

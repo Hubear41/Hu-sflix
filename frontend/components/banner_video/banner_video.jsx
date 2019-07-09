@@ -109,7 +109,7 @@ class BigPreview extends React.Component {
     
     toggleMyList() {
         const { show, mylistIds, currentUserId } = this.props;
-        // debugger
+        
         if ( mylistIds.includes(show.id) && this.state.mylistState === 'My List' ) {
             this.setState({ mylistState: 'Removing...'});
 

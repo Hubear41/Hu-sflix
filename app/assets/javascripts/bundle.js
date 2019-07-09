@@ -763,7 +763,7 @@ function (_React$Component) {
       var _this$props2 = this.props,
           show = _this$props2.show,
           mylistIds = _this$props2.mylistIds,
-          currentUserId = _this$props2.currentUserId; // debugger
+          currentUserId = _this$props2.currentUserId;
 
       if (mylistIds.includes(show.id) && this.state.mylistState === 'My List') {
         this.setState({
@@ -2629,10 +2629,13 @@ function (_React$Component) {
     value: function createRows() {
       var _this$props3 = this.props,
           shows = _this$props3.shows,
-          genres = _this$props3.genres;
+          genres = _this$props3.genres,
+          mylistShowIds = _this$props3.mylistShowIds;
       var previewId = this.state.previewId;
+      var showsPerRow = {};
       var mainGenres = [];
-      var firstGenre = "";
+      var firstGenre = ""; // find genres that have enough shows to fill a row
+
       Object.values(genres).forEach(function (genre) {
         if (genre.name !== 'Movie' && genre.name !== 'TV Show' && genre.name !== 'Recently Added' && genre.shows_with_genre_ids.length >= 6) {
           if (shows[previewId] !== undefined && shows[previewId].genre_ids.includes(genre.id) && !firstGenre) {
@@ -2642,8 +2645,18 @@ function (_React$Component) {
             mainGenres.push(genre);
           }
         }
-      });
-      var showsPerRow = {};
+      }); // if there are any shows on MyList
+
+      if (mylistShowIds.length > 0) {
+        var myListShows = [];
+        mylistShowIds.forEach(function (showId) {
+          myListShows.push(shows[showId]);
+        });
+        debugger;
+        showsPerRow["My List"] = myListShows;
+      } // Rows for each main genre
+
+
       mainGenres.forEach(function (genre) {
         var rowShows = shows.filter(function (show) {
           return show.genre_ids.includes(genre.id);
@@ -2803,12 +2816,14 @@ var msp = function msp(_ref) {
   var videos = entities.videos;
   var genres = entities.genres;
   var loading = ui.loading;
-  var mylistShowIds = entities.users[session.id].listShowIds;
+  var currentUserId = session.id;
+  var mylistShowIds = entities.users[currentUserId].listShowIds;
   return {
     shows: shows,
     videos: videos,
     genres: genres,
     loading: loading,
+    currentUserId: currentUserId,
     mylistShowIds: mylistShowIds,
     galleryType: 'Banner-Titles'
   };

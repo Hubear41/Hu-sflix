@@ -8,13 +8,15 @@ const msp = ({ entities, ui, session }) => {
     const videos = entities.videos;
     const genres = entities.genres;
     const loading = ui.loading;
-    const mylistShowIds = entities.users[session.id].listShowIds;
+    const currentUserId = session.id;
+    const mylistShowIds = entities.users[currentUserId].listShowIds;
 
     return {
         shows,
         videos,
         genres,
         loading,
+        currentUserId,
         mylistShowIds,
         galleryType: 'Banner-Titles'
     }
@@ -24,6 +26,7 @@ const mdp = dispatch => ({
     requestAllShows: () => dispatch(fetchShows()),
     stopLoading: () => dispatch(stopLoading()),
     startLoading: () => dispatch(startLoading()),
+    
 });
 
 export default connect(msp, mdp)(ShowGallery);
