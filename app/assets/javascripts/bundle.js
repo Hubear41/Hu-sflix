@@ -2730,7 +2730,7 @@ function (_React$Component) {
         showsPerRow = galleryType !== 'SEARCH' ? this.createRows() : this.createUnorderedRows();
         previewShow = galleryType !== 'SEARCH' ? shows[this.state.previewId] : null;
 
-        if (showsPerRow["My List"].length > 0) {
+        if (showsPerRow["My List"] !== undefined && showsPerRow["My List"].length > 0) {
           showRowsList.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
             key: "row0",
             rowNum: 0,

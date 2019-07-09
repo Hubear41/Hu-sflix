@@ -163,7 +163,7 @@ class ShowGallery extends React.Component {
             showsPerRow = galleryType !== 'SEARCH' ? this.createRows() : this.createUnorderedRows();
             previewShow = galleryType !== 'SEARCH' ? shows[this.state.previewId] : null;
             
-            if ( showsPerRow["My List"].length > 0 ) {
+            if ( showsPerRow["My List"] !== undefined && showsPerRow["My List"].length > 0 ) {
                 showRowsList.push( 
                     <ShowRows key={"row0"}
                               rowNum={0}
@@ -219,4 +219,4 @@ class ShowGallery extends React.Component {
     }   
 }
 
-export default ShowGallery
+export default ShowGallery;
