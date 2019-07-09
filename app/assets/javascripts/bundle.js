@@ -252,16 +252,16 @@ var receiveMyListInfo = function receiveMyListInfo(user) {
   };
 };
 
-var addMyListVideo = function addMyListVideo(userId, videoId) {
+var addMyListVideo = function addMyListVideo(userId, showId) {
   return function (dispatch) {
-    return _util_my_list_util__WEBPACK_IMPORTED_MODULE_0__["addMyListVideo"](userId, videoId).then(function (user) {
+    return _util_my_list_util__WEBPACK_IMPORTED_MODULE_0__["addMyListVideo"](userId, showId).then(function (user) {
       return dispatch(receiveMyListInfo(user));
     });
   };
 };
-var removeMyListVideo = function removeMyListVideo(id) {
+var removeMyListVideo = function removeMyListVideo(userId, showId) {
   return function (dispatch) {
-    return _util_my_list_util__WEBPACK_IMPORTED_MODULE_0__["removeMyListVideo"](id).then(function (user) {
+    return _util_my_list_util__WEBPACK_IMPORTED_MODULE_0__["removeMyListVideo"](userId, showId).then(function (user) {
       return dispatch(receiveMyListInfo(user));
     });
   };
@@ -628,7 +628,8 @@ function (_React$Component) {
       started: false,
       muted: true,
       imageOpacity: 1,
-      ended: false
+      ended: false,
+      mylistState: "My List"
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.poster = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
@@ -639,8 +640,8 @@ function (_React$Component) {
     _this.playVideo = _this.playVideo.bind(_assertThisInitialized(_this));
     _this.pauseVideo = _this.pauseVideo.bind(_assertThisInitialized(_this));
     _this.launchWatch = _this.launchWatch.bind(_assertThisInitialized(_this));
-    _this.videoControllerIcon = _this.videoControllerIcon.bind(_assertThisInitialized(_this));
     _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
+    _this.toggleMyList = _this.toggleMyList.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -755,6 +756,36 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "toggleMyList",
+    value: function toggleMyList() {
+      var _this6 = this;
+
+      var _this$props2 = this.props,
+          show = _this$props2.show,
+          mylistIds = _this$props2.mylistIds,
+          currentUserId = _this$props2.currentUserId; // debugger
+
+      if (mylistIds.includes(show.id) && this.state.mylistState === 'My List') {
+        this.setState({
+          mylistState: 'Removing...'
+        });
+        this.props.removeMyListVideo(currentUserId, show.id).then(function () {
+          return _this6.setState({
+            mylistState: 'My List'
+          });
+        });
+      } else if (!mylistIds.includes(show.id) && this.state.mylistState === 'My List') {
+        this.setState({
+          mylistState: 'Adding...'
+        });
+        this.props.addMyListVideo(currentUserId, show.id).then(function () {
+          return _this6.setState({
+            mylistState: 'My List'
+          });
+        });
+      }
+    }
+  }, {
     key: "videoControllerIcon",
     value: function videoControllerIcon() {
       var _this$state = this.state,
@@ -813,13 +844,15 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props2 = this.props,
-          show = _this$props2.show,
-          video = _this$props2.video;
+      var _this$props3 = this.props,
+          show = _this$props3.show,
+          video = _this$props3.video,
+          mylistIds = _this$props3.mylistIds;
       var _this$state2 = this.state,
           imageOpacity = _this$state2.imageOpacity,
           started = _this$state2.started,
-          ended = _this$state2.ended;
+          ended = _this$state2.ended,
+          mylistState = _this$state2.mylistState;
       var buttonIcon = this.videoPlayer.current ? this.videoControllerIcon() : null;
       var buttonFunc = this.videoPlayer.current ? this.videoFunction() : null;
       var iconStyle = started ? {
@@ -827,6 +860,11 @@ function (_React$Component) {
       } : {
         opacity: 0
       };
+      var myListIcon = mylistIds.includes(show.id) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-check"
+      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-plus"
+      });
       var imageAnimation = '';
       var blackAnimation = '';
 
@@ -884,10 +922,9 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-play"
       }), " Play"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "big-preview-myList"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-plus"
-      }), " My List")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "big-preview-myList",
+        onClick: this.toggleMyList
+      }, myListIcon, " ", mylistState)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "big-preview-show-tagline ".concat(imageAnimation)
       }, show.tagline)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "big-preview-right-content"
@@ -936,15 +973,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var msp = function msp(state, ownProps) {
+var msp = function msp(_ref, ownProps) {
+  var entities = _ref.entities,
+      session = _ref.session,
+      ui = _ref.ui;
   var show = ownProps.show;
   var previewId = show.show_type === 'FEATURE' ? show.movie_id : show.episode_ids[0];
-  var previewVideo = state.entities.videos[previewId] || null;
-  var isPreviewing = state.ui.preview;
+  var previewVideo = entities.videos[previewId] || null;
+  var isPreviewing = ui.preview;
+  var currentUserId = session.id;
+  var mylistIds = entities.users[currentUserId].listShowIds;
   return {
     video: previewVideo,
     previewId: previewId,
-    isPreviewing: isPreviewing
+    isPreviewing: isPreviewing,
+    mylistIds: mylistIds,
+    currentUserId: currentUserId
   };
 };
 
@@ -953,11 +997,11 @@ var mdp = function mdp(dispatch) {
     requestVideo: function requestVideo(id) {
       return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchVideo"])(id));
     },
-    addMyListVideo: function addMyListVideo(userId, videoId) {
-      return dispatch(Object(_actions_my_list_actions__WEBPACK_IMPORTED_MODULE_2__["addMyListVideo"])(userId, videoId));
+    addMyListVideo: function addMyListVideo(userId, showId) {
+      return dispatch(Object(_actions_my_list_actions__WEBPACK_IMPORTED_MODULE_2__["addMyListVideo"])(userId, showId));
     },
-    removeMyListVideo: function removeMyListVideo(id) {
-      return dispatch(Object(_actions_my_list_actions__WEBPACK_IMPORTED_MODULE_2__["removeMyListVideo"])(id));
+    removeMyListVideo: function removeMyListVideo(userId, showId) {
+      return dispatch(Object(_actions_my_list_actions__WEBPACK_IMPORTED_MODULE_2__["removeMyListVideo"])(userId, showId));
     }
   };
 };
@@ -2192,14 +2236,14 @@ var msp = function msp(_ref, ownProps) {
   var genre = entities.genres[genreId];
   var shows = genre !== undefined ? findShowsByGenre(entities.shows, genre) : [];
   var loading = ui.loading;
-  var mylistVideoIds = entities.users[session.id].list_video_ids;
+  var mylistShowIds = entities.users[session.id].listShowIds;
   return {
     shows: shows,
     genres: entities.genres,
     videos: entities.videos,
     genreId: genreId,
     loading: loading,
-    mylistVideoIds: mylistVideoIds
+    mylistShowIds: mylistShowIds
   };
 };
 
@@ -2284,7 +2328,7 @@ var msp = function msp(_ref, ownProps) {
     genres: genres,
     query: query,
     loading: loading,
-    mylistVideoIds: [],
+    mylistShowIds: [],
     galleryType: 'SEARCH'
   };
 };
@@ -2759,13 +2803,13 @@ var msp = function msp(_ref) {
   var videos = entities.videos;
   var genres = entities.genres;
   var loading = ui.loading;
-  var mylistVideoIds = entities.users[session.id].list_video_ids;
+  var mylistShowIds = entities.users[session.id].listShowIds;
   return {
     shows: shows,
     videos: videos,
     genres: genres,
     loading: loading,
-    mylistVideoIds: mylistVideoIds,
+    mylistShowIds: mylistShowIds,
     galleryType: 'Banner-Titles'
   };
 };
@@ -4251,7 +4295,10 @@ var usersReducer = function usersReducer() {
       return Object(lodash__WEBPACK_IMPORTED_MODULE_2__["merge"])({}, state, _defineProperty({}, currentUser.id, currentUser));
 
     case _actions_my_list_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_MYLIST_INFO"]:
-      return Object(lodash__WEBPACK_IMPORTED_MODULE_2__["merge"])({}, state, _defineProperty({}, user.id, user));
+      var user = action.user;
+      var dupState = Object(lodash__WEBPACK_IMPORTED_MODULE_2__["merge"])({}, state);
+      dupState[user.id] = user;
+      return dupState;
 
     default:
       return state;
@@ -4431,19 +4478,27 @@ var fetchGenres = function fetchGenres() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMyListVideo", function() { return addMyListVideo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeMyListVideo", function() { return removeMyListVideo; });
-var addMyListVideo = function addMyListVideo(userId, videoId) {
+var addMyListVideo = function addMyListVideo(userId, showId) {
+  var my_list = {
+    profile_id: userId,
+    show_id: showId
+  };
   return $.ajax({
     method: 'POST',
-    url: "api/users/".concat(userId, "/my_list_video"),
+    url: "api/users/".concat(userId, "/my_list"),
     data: {
-      video_id: videoId
+      my_list: my_list
     }
   });
 };
-var removeMyListVideo = function removeMyListVideo(id) {
+var removeMyListVideo = function removeMyListVideo(userId, showId) {
   return $.ajax({
-    method: 'DELETE',
-    url: "api/my_list_videos/".concat(id)
+    method: 'POST',
+    url: "api/my_list",
+    data: {
+      profile_id: userId,
+      show_id: showId
+    }
   });
 };
 
@@ -47463,7 +47518,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

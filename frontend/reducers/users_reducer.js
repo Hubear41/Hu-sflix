@@ -9,7 +9,11 @@ const usersReducer = (state = {}, action) => {
             const { currentUser } = action;
             return merge({}, state, { [currentUser.id]: currentUser });
         case RECEIVE_MYLIST_INFO:
-            return merge({}, state, { [user.id]: user });
+            const { user } = action;
+            const dupState = merge({}, state);
+            dupState[user.id] = user;
+
+            return dupState;
         default: 
             return state;
     }

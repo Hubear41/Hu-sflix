@@ -10,7 +10,7 @@ class Api::UsersController < ApplicationController
             if @user.save
                 login!(@user)
                 
-                render :create
+                render :show
             else
                 render json: ['signup'], status: 401
             end

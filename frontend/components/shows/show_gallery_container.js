@@ -8,14 +8,14 @@ const msp = ({ entities, ui, session }) => {
     const videos = entities.videos;
     const genres = entities.genres;
     const loading = ui.loading;
-    const mylistVideoIds = entities.users[session.id].list_video_ids;
+    const mylistShowIds = entities.users[session.id].listShowIds;
 
     return {
         shows,
         videos,
         genres,
         loading,
-        mylistVideoIds,
+        mylistShowIds,
         galleryType: 'Banner-Titles'
     }
 };

@@ -9,6 +9,7 @@ class BigPreview extends React.Component {
             muted: true,
             imageOpacity: 1,
             ended: false,
+            mylistState: "My List",
         };
         this.videoPlayer = React.createRef();
         this.poster = React.createRef();
@@ -20,8 +21,8 @@ class BigPreview extends React.Component {
         this.playVideo = this.playVideo.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
         this.launchWatch = this.launchWatch.bind(this);
-        this.videoControllerIcon = this.videoControllerIcon.bind(this);
         this.toggleMute = this.toggleMute.bind(this);
+        this.toggleMyList = this.toggleMyList.bind(this);
     }
     
     componentDidMount() {
@@ -105,6 +106,22 @@ class BigPreview extends React.Component {
             }, 1000);
         }
     }
+    
+    toggleMyList() {
+        const { show, mylistIds, currentUserId } = this.props;
+        // debugger
+        if ( mylistIds.includes(show.id) && this.state.mylistState === 'My List' ) {
+            this.setState({ mylistState: 'Removing...'});
+
+            this.props.removeMyListVideo(currentUserId, show.id)
+                .then( () => this.setState({ mylistState: 'My List' }));
+        } else if ( !mylistIds.includes(show.id) && this.state.mylistState === 'My List' ) {
+            this.setState({ mylistState: 'Adding...'});
+
+            this.props.addMyListVideo(currentUserId, show.id)
+                .then( () => this.setState({ mylistState: 'My List'}));
+        }
+    }
 
     videoControllerIcon() {
         const { muted, started, ended } = this.state;
@@ -146,12 +163,13 @@ class BigPreview extends React.Component {
     }
 
     render() {
-        const { show, video } = this.props;
-        const { imageOpacity, started, ended } = this.state;
+        const { show, video, mylistIds } = this.props;
+        const { imageOpacity, started, ended, mylistState } = this.state;
         
         const buttonIcon = this.videoPlayer.current ? this.videoControllerIcon() : null;
         const buttonFunc = this.videoPlayer.current ? this.videoFunction() : null;
         const iconStyle = started ? { opacity: 1 } : { opacity: 0 };
+        const myListIcon = mylistIds.includes(show.id) ? <i className="fas fa-check"></i> : <i className="fas fa-plus"></i>;
 
         let imageAnimation = '';
         let blackAnimation = '';
@@ -201,7 +219,7 @@ class BigPreview extends React.Component {
 
                     <div className="big-preview-play-mylist-btns">
                         <button className="big-preview-play" onClick={this.launchWatch}><i className="fas fa-play"></i> Play</button>
-                        <button className="big-preview-myList"><i className="fas fa-plus"></i> My List</button>
+                        <button className="big-preview-myList" onClick={this.toggleMyList}>{myListIcon} {mylistState}</button>
                     </div>
 
                     <p className={`big-preview-show-tagline ${imageAnimation}`}>

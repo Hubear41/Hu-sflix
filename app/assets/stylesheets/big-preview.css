@@ -151,6 +151,8 @@
 .big-preview-play-mylist-btns button:hover {
     color: black;
     background: white;
+    transform: scale(1.05);
+    transform-origin: center;
 }
 
 .big-preview-show-tagline {

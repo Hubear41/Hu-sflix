@@ -19,7 +19,7 @@ const msp = ({ entities, ui, session }, ownProps) => {
     const genre = entities.genres[genreId];
     const shows = genre !== undefined ? findShowsByGenre(entities.shows, genre) : [];
     const loading = ui.loading;
-    const mylistVideoIds = entities.users[session.id].list_video_ids;
+    const mylistShowIds = entities.users[session.id].listShowIds;
     
     return {
         shows,
@@ -27,7 +27,7 @@ const msp = ({ entities, ui, session }, ownProps) => {
         videos: entities.videos,
         genreId,
         loading,
-        mylistVideoIds,
+        mylistShowIds,
     }
 }
 

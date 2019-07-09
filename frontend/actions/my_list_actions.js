@@ -7,10 +7,10 @@ const receiveMyListInfo = user => ({
     user
 });
 
-export const addMyListVideo = (userId, videoId) => dispatch => {
-    return MyListUTIL.addMyListVideo(userId, videoId).then( user => dispatch(receiveMyListInfo(user)));
+export const addMyListVideo = (userId, showId) => dispatch => {
+    return MyListUTIL.addMyListVideo(userId, showId).then( user => dispatch(receiveMyListInfo(user)));
 };
 
-export const removeMyListVideo = id => dispatch => {
-    return MyListUTIL.removeMyListVideo(id).then( user => dispatch(receiveMyListInfo(user)));
+export const removeMyListVideo = (userId, showId) => dispatch => {
+    return MyListUTIL.removeMyListVideo(userId, showId).then( user => dispatch(receiveMyListInfo(user)));
 }

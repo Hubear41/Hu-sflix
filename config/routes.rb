@@ -6,11 +6,10 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resource :session, only: [:create, :destroy]
 
-    resources :users, only: [:create] do
-      resources :my_list_videos, only: [:create]
-    end
-    
-    resources :my_list_videos, only: [:destroy]
+    resources :users, only: [:create] 
+
+    post 'users/:user_id/my_list', to: 'my_list_shows#create', as: :create_my_list_show
+    post 'my_list', to: 'my_list_shows#destroy', as: :delete_my_list_show
 
     resources :videos, only: [:show, :index]
 

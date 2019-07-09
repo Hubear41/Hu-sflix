@@ -34,6 +34,14 @@ class Show < ApplicationRecord
     has_many :genres,
         through: :show_genres,
         source: :genre
+
+    has_many :my_list_shows,
+        foreign_key: :show_id,
+        class_name: "MyListShow"
+
+    has_many :my_list_creator,
+        through: :my_list_shows,
+        source: :profile
  
     private
 

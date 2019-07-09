@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_08_211902) do
+ActiveRecord::Schema.define(version: 2019_07_09_185628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,12 +42,12 @@ ActiveRecord::Schema.define(version: 2019_07_08_211902) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "my_list_videos", force: :cascade do |t|
+  create_table "my_list_shows", force: :cascade do |t|
     t.integer "profile_id", null: false
-    t.integer "video_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["profile_id", "video_id"], name: "index_my_list_videos_on_profile_id_and_video_id"
+    t.integer "show_id", null: false
+    t.index ["profile_id", "show_id"], name: "index_my_list_shows_on_profile_id_and_show_id"
   end
 
   create_table "show_genres", force: :cascade do |t|
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 2019_07_08_211902) do
     t.integer "genre_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["show_id", "genre_id"], name: "index_show_genres_on_show_id_and_genre_id"
   end
 
   create_table "shows", force: :cascade do |t|

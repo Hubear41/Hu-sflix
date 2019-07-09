@@ -16,7 +16,7 @@ const msp = ({ entities, ui }, ownProps) => {
         genres,
         query,
         loading,
-        mylistVideoIds: [],
+        mylistShowIds: [],
         galleryType: 'SEARCH',
     }
 }
