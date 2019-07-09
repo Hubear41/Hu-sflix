@@ -2651,8 +2651,8 @@ function (_React$Component) {
         var myListShows = [];
         mylistShowIds.forEach(function (showId) {
           myListShows.push(shows[showId]);
-        });
-        debugger;
+        }); // debugger
+
         showsPerRow["My List"] = myListShows;
       } // Rows for each main genre
 

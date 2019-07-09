@@ -104,7 +104,7 @@ class ShowGallery extends React.Component {
             mylistShowIds.forEach( showId => {
                 myListShows.push(shows[showId]);
             });
-            debugger
+            // debugger
             showsPerRow["My List"] = myListShows;
         }
 
