@@ -80,43 +80,33 @@ class ShowGallery extends React.Component {
 
     createRows() {
         const { shows, genres, mylistShowIds } = this.props;
-        const { previewId } = this.state;
         const showsPerRow = {};
         let mainGenres = [];
-        let firstGenre = "";
         
+        if ( mylistShowIds.length > 0 ) {
+            showsPerRow["My List"] = [];
+        }
+
         // find genres that have enough shows to fill a row
         Object.values(genres).forEach( genre => {
             if ( genre.name !== 'Movie' && genre.name !== 'TV Show' && genre.name !== 'Recently Added' && genre.shows_with_genre_ids.length >= 6 ) {
-                if ( shows[previewId] !== undefined && shows[previewId].genre_ids.includes(genre.id) && !firstGenre ) {
-                    firstGenre = genre;
-                    mainGenres = [ genre ].concat(mainGenres);
-                } else {
-                    mainGenres.push(genre);
-                }
+                showsPerRow[genre.name] = [];
+                mainGenres.push(genre);
             }
         });
 
-        // if there are any shows on MyList
-        if ( mylistShowIds.length > 0) { 
-            const myListShows = [];
+        shows.forEach( show => {
+            if (mylistShowIds.includes(show.id)) {
+                showsPerRow["My List"].push(show);
+            }
 
-            mylistShowIds.forEach( showId => {
-                myListShows.push(shows[showId]);
+            mainGenres.forEach( genre => {
+                if ( show.genre_ids.includes(genre.id) ) {
+                    showsPerRow[genre.name].push(show);
+                }
             });
-            // debugger
-            showsPerRow["My List"] = myListShows;
-        }
-
-        // Rows for each main genre
-        mainGenres.forEach( genre => {
-            const rowShows = shows.filter( show => {
-                return show.genre_ids.includes(genre.id);
-            });
-
-            showsPerRow[genre.name] = rowShows;
         });
-
+        
         return showsPerRow;
     }
 
@@ -168,20 +158,41 @@ class ShowGallery extends React.Component {
             );
         }
         
-        let showsPerRow = null, previewShow = null, showRowsList = null;
+        let showsPerRow = null, previewShow = null, showRowsList = [];
         if ( shows.length > 0 ) {
             showsPerRow = galleryType !== 'SEARCH' ? this.createRows() : this.createUnorderedRows();
             previewShow = galleryType !== 'SEARCH' ? shows[this.state.previewId] : null;
             
-            showRowsList = Object.keys(showsPerRow).map( (genreName, idx) => {
-                return <ShowRows key={"row" + idx} 
-                                 rowNum={idx} shows={showsPerRow[genreName]} 
-                                 genreName={genreName} 
-                                 videos={videos} 
-                                 genres={genres} 
-                                 galleryType={galleryType}
-                        />
+            if ( showsPerRow["My List"].length > 0 ) {
+                showRowsList.push( 
+                    <ShowRows key={"row0"}
+                              rowNum={0}
+                              shows={showsPerRow["My List"]}
+                              genreName={"My List"}
+                              videos={videos}
+                              genres={genres}
+                              galleryType={galleryType}
+                    />
+                )
+            } 
+
+            const otherRows = Object.keys(showsPerRow).map( (genreName, idx) => {
+                if ( genreName !== 'My List' ) {
+                    return <ShowRows key={"row" + (idx + 1)} 
+                                     rowNum={idx + 1} 
+                                     shows={showsPerRow[genreName]} 
+                                     genreName={genreName} 
+                                     videos={videos} 
+                                     genres={genres} 
+                                     galleryType={galleryType}
+                            />
+                } else {
+                    return null;
+                }
             }); 
+            // debugger
+            showRowsList = showRowsList.concat(otherRows);
+            // debugger
         }
 
         const galleryStyle = galleryType !== 'SEARCH' ? { top: "75vh" } : { top: "15vh" };
@@ -196,11 +207,12 @@ class ShowGallery extends React.Component {
                         {showRowsList}
                     </ul>
 
-                    <figure className="index-bg">
-                        <footer className="gallery-footer">
-                            <Footer />
-                        </footer>
-                    </figure>
+                    {/* <figure className="index-bg">
+                    </figure> */}
+
+                    <footer className="gallery-footer">
+                        <Footer />
+                    </footer>
                 </section>
             </section>
         )

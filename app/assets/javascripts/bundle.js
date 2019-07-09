@@ -2631,37 +2631,30 @@ function (_React$Component) {
           shows = _this$props3.shows,
           genres = _this$props3.genres,
           mylistShowIds = _this$props3.mylistShowIds;
-      var previewId = this.state.previewId;
       var showsPerRow = {};
       var mainGenres = [];
-      var firstGenre = ""; // find genres that have enough shows to fill a row
+
+      if (mylistShowIds.length > 0) {
+        showsPerRow["My List"] = [];
+      } // find genres that have enough shows to fill a row
+
 
       Object.values(genres).forEach(function (genre) {
         if (genre.name !== 'Movie' && genre.name !== 'TV Show' && genre.name !== 'Recently Added' && genre.shows_with_genre_ids.length >= 6) {
-          if (shows[previewId] !== undefined && shows[previewId].genre_ids.includes(genre.id) && !firstGenre) {
-            firstGenre = genre;
-            mainGenres = [genre].concat(mainGenres);
-          } else {
-            mainGenres.push(genre);
-          }
+          showsPerRow[genre.name] = [];
+          mainGenres.push(genre);
         }
-      }); // if there are any shows on MyList
+      });
+      shows.forEach(function (show) {
+        if (mylistShowIds.includes(show.id)) {
+          showsPerRow["My List"].push(show);
+        }
 
-      if (mylistShowIds.length > 0) {
-        var myListShows = [];
-        mylistShowIds.forEach(function (showId) {
-          myListShows.push(shows[showId]);
-        }); // debugger
-
-        showsPerRow["My List"] = myListShows;
-      } // Rows for each main genre
-
-
-      mainGenres.forEach(function (genre) {
-        var rowShows = shows.filter(function (show) {
-          return show.genre_ids.includes(genre.id);
+        mainGenres.forEach(function (genre) {
+          if (show.genre_ids.includes(genre.id)) {
+            showsPerRow[genre.name].push(show);
+          }
         });
-        showsPerRow[genre.name] = rowShows;
       });
       return showsPerRow;
     }
@@ -2712,22 +2705,41 @@ function (_React$Component) {
 
       var showsPerRow = null,
           previewShow = null,
-          showRowsList = null;
+          showRowsList = [];
 
       if (shows.length > 0) {
         showsPerRow = galleryType !== 'SEARCH' ? this.createRows() : this.createUnorderedRows();
         previewShow = galleryType !== 'SEARCH' ? shows[this.state.previewId] : null;
-        showRowsList = Object.keys(showsPerRow).map(function (genreName, idx) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
-            key: "row" + idx,
-            rowNum: idx,
-            shows: showsPerRow[genreName],
-            genreName: genreName,
+
+        if (showsPerRow["My List"].length > 0) {
+          showRowsList.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            key: "row0",
+            rowNum: 0,
+            shows: showsPerRow["My List"],
+            genreName: "My List",
             videos: videos,
             genres: genres,
             galleryType: galleryType
-          });
-        });
+          }));
+        }
+
+        var otherRows = Object.keys(showsPerRow).map(function (genreName, idx) {
+          if (genreName !== 'My List') {
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
+              key: "row" + (idx + 1),
+              rowNum: idx + 1,
+              shows: showsPerRow[genreName],
+              genreName: genreName,
+              videos: videos,
+              genres: genres,
+              galleryType: galleryType
+            });
+          } else {
+            return null;
+          }
+        }); // debugger
+
+        showRowsList = showRowsList.concat(otherRows); // debugger
       }
 
       var galleryStyle = galleryType !== 'SEARCH' ? {
@@ -2745,11 +2757,9 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "show-gallery-index",
         id: "gallery-index-bg"
-      }, showRowsList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "index-bg"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
+      }, showRowsList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
         className: "gallery-footer"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_footer_footer__WEBPACK_IMPORTED_MODULE_2__["default"], null)))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_footer_footer__WEBPACK_IMPORTED_MODULE_2__["default"], null))));
     }
   }], [{
     key: "getDerivedStateFromProps",
