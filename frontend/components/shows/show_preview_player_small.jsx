@@ -117,14 +117,12 @@ class ShowPreviewPlayerSmall extends React.Component {
                         genresToShow.push(<span className='genre-title'key={genre.name + genre.id}>{genre.name}</span>);
                     } else {
                         genresToShow.push(<span className='genre-title' key={genre.name + genre.id}>{genre.name}</span>);
-                        genresToShow.push(<strong className='genre-bullet' key={'bullet ' + idx}> {'\u2022'} </strong>);
+                        genresToShow.push(<strong className='genre-bullet' key={'bullet ' + idx}>  {'\u2022'}  </strong>);
                     }
                 }
             });
         }
 
-
-        
         return (
             <>
                 <section id="show-peek-preview-wrapper" 

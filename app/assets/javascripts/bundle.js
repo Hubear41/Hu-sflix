@@ -3084,7 +3084,7 @@ function (_React$Component) {
               genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
                 className: "genre-bullet",
                 key: 'bullet ' + idx
-              }, " ", "\u2022", " "));
+              }, "  ", "\u2022", "  "));
             }
           }
         });
