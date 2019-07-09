@@ -10,6 +10,7 @@ class ShowPreviewPlayerSmall extends React.Component {
             muted: true,
             paused: true,
             focus: true,
+            myListState: this.props.listShowIds.includes(this.props.show.id) ? "REMOVE FROM MY LIST" : "ADD TO MY LIST"
         };
 
         this.videoPlayer = React.createRef();
@@ -18,7 +19,7 @@ class ShowPreviewPlayerSmall extends React.Component {
         this.toggleMute = this.toggleMute.bind(this);
         this.playVideo = this.playVideo.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
-        // this.openDropDown = this.openDropDown.bind(this);
+        this.toggleMyList = this.toggleMyList.bind(this);
     }
 
     componentDidMount() {
@@ -82,15 +83,29 @@ class ShowPreviewPlayerSmall extends React.Component {
         this.props.endPreview();
     }
 
-    // openDropDown(e) {
+    toggleMyList() {
+        const { listShowIds, currentUserId, show } = this.props;
+        const { myListState } = this.state;
 
-    // }
+        if ( listShowIds.includes(show.id) && myListState === 'REMOVE FROM MY LIST') {
+            this.setState({ myListState: 'REMOVING...'});
+
+            this.props.removeMyListVideo(currentUserId, show.id)
+                .then( () => this.setState({ myListState: 'ADD TO MY LIST'}));
+        } else if ( !listShowIds.includes(show.id) && myListState === 'ADD TO MY LIST') {
+            this.setState({ myListState: 'ADDING...' });
+
+            this.props.addMyListVideo(currentUserId, show.id)
+                .then( () => this.setState({ myListState: 'REMOVE FROM MY LIST'}));
+        }
+    }
     
     render() {
-        const { show, preview, genres } = this.props;
+        const { show, preview, genres, listShowIds } = this.props;
         const genresToShow = [];
-        const muteBtn = this.state.muted ? <i className="fas fa-volume-mute mute-symbol"></i> : <i className="fas fa-volume-up mute-symbol"></i>
-        
+        const muteBtn = this.state.muted ? <i className="fas fa-volume-mute button-symbol"></i> : <i className="fas fa-volume-up button-symbol"></i>
+        const myListIcon = listShowIds.includes(show.id) ? <i className="fas fa-check button-symbol"></i> : <i className="fas fa-plus button-symbol"></i>;
+
         if ( show !== undefined && genres.length >= 1) {
             genres.forEach( (genre, idx) => {
                 if ( genre === undefined ) {
@@ -107,6 +122,8 @@ class ShowPreviewPlayerSmall extends React.Component {
                 }
             });
         }
+
+
         
         return (
             <>
@@ -139,10 +156,15 @@ class ShowPreviewPlayerSmall extends React.Component {
                             </button>
 
                             <aside className="preview-player-right-side-btns">
-                                <button onClick={this.toggleMute} className="preview-mute-btn">
+                                <button onClick={this.toggleMute} className="preview-mute-btn right-side-btn">
                                     {muteBtn}
-                                    <i className="fas fa-circle mute-btn-bg"></i>
-                                    <i className="far fa-circle mute-btn-outline"></i>
+                                    <i className="fas fa-circle preview-btn-bg"></i>
+                                    <i className="far fa-circle preview-btn-outline"></i>
+                                </button>
+                                <button onClick={this.toggleMyList} className='preview-mylist-btn right-side-btn'>
+                                    {myListIcon}
+                                    <i className="fas fa-circle preview-btn-bg"></i>
+                                    <i className="far fa-circle preview-btn-outline"></i>
                                 </button>
                             </aside>
  

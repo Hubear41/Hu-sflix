@@ -32,22 +32,23 @@
     opacity: 0.6;
 }
 
-.mute-symbol {
+.button-symbol {
     position: absolute;
     z-index: 25;
-    top: 0.2vh;
+    top: 4.5px;
+    left: 7.3px;
     transform-origin: center;
     color: #9b9b9b;
 }
 
-.mute-btn-bg {
+.preview-btn-bg {
     position: absolute;
     z-index: 15;
     transform-origin: center;
     transform: scale(2)
 }
 
-.mute-btn-outline {
+.preview-btn-outline {
     position: absolute;
     z-index: 20;
     transform-origin: center;
