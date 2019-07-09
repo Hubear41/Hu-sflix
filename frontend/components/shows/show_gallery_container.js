@@ -3,17 +3,19 @@ import { fetchShows } from '../../actions/show_actions';
 import { stopLoading, startLoading } from '../../actions/ui_actions'
 import ShowGallery from './show_gallery';
 
-const msp = ({ entities, ui }) => {
+const msp = ({ entities, ui, session }) => {
     const shows = Object.values(entities.shows);
     const videos = entities.videos;
     const genres = entities.genres;
     const loading = ui.loading;
+    const mylistVideoIds = entities.users[session.id].list_video_ids;
 
     return {
         shows,
         videos,
         genres,
         loading,
+        mylistVideoIds,
         galleryType: 'Banner-Titles'
     }
 };

@@ -2,7 +2,6 @@ import {
     LOGOUT_USER,
     LOGIN_USER,
 } from '../actions/session_actions';
-// import merge from 'lodash';
 
 const _nullSession = {
     id: null

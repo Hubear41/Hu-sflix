@@ -135,19 +135,23 @@ class ShowGallery extends React.Component {
 
         if (shows.length <= 0 && galleryType === 'SEARCH') {
             return (
-                <section className="show-gallery-index-wrapper no-results" >
-                    <article className='no-results-content'>
-                        <span>{`Your search for "${query}" did not have any matches.`}</span>
-                        <span>Suggestions:</span>
-                        <ul>
-                            <li>Try different keywords</li>
-                            <li>Looking for a movie or TV show?</li>
-                            <li>Try using a movie, TV show title, or a director</li>
-                            <li>Try a genre, like comedy, romance, or drama</li>
-                        </ul>
-                    </article>
-                </section>
-
+                <>
+                    <section className="show-gallery-index-wrapper no-results" >
+                        <article className='no-results-content'>
+                            <span>{`Your search for "${query}" did not have any matches.`}</span>
+                            <span>Suggestions:</span>
+                            <ul>
+                                <li>Try different keywords</li>
+                                <li>Looking for a movie or TV show?</li>
+                                <li>Try using a movie, TV show title, or a director</li>
+                                <li>Try a genre, like comedy, romance, or drama</li>
+                            </ul>
+                        </article>
+                    </section>
+                    <footer className="gallery-footer">
+                        <Footer />
+                    </footer>
+                </>
             );
         }
         

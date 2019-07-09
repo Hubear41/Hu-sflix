@@ -229,6 +229,46 @@ var receiveGenres = function receiveGenres(genres) {
 
 /***/ }),
 
+/***/ "./frontend/actions/my_list_actions.js":
+/*!*********************************************!*\
+  !*** ./frontend/actions/my_list_actions.js ***!
+  \*********************************************/
+/*! exports provided: RECEIVE_MYLIST_INFO, addMyListVideo, removeMyListVideo */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_MYLIST_INFO", function() { return RECEIVE_MYLIST_INFO; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMyListVideo", function() { return addMyListVideo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeMyListVideo", function() { return removeMyListVideo; });
+/* harmony import */ var _util_my_list_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/my_list_util */ "./frontend/util/my_list_util.js");
+
+var RECEIVE_MYLIST_INFO = 'RECEIVE_MYLIST_VIDEO';
+
+var receiveMyListInfo = function receiveMyListInfo(user) {
+  return {
+    type: RECEIVE_MYLIST_INFO,
+    user: user
+  };
+};
+
+var addMyListVideo = function addMyListVideo(userId, videoId) {
+  return function (dispatch) {
+    return _util_my_list_util__WEBPACK_IMPORTED_MODULE_0__["addMyListVideo"](userId, videoId).then(function (user) {
+      return dispatch(receiveMyListInfo(user));
+    });
+  };
+};
+var removeMyListVideo = function removeMyListVideo(id) {
+  return function (dispatch) {
+    return _util_my_list_util__WEBPACK_IMPORTED_MODULE_0__["removeMyListVideo"](id).then(function (user) {
+      return dispatch(receiveMyListInfo(user));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/session_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
@@ -889,7 +929,9 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/show_actions */ "./frontend/actions/show_actions.js");
-/* harmony import */ var _banner_video__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./banner_video */ "./frontend/components/banner_video/banner_video.jsx");
+/* harmony import */ var _actions_my_list_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/my_list_actions */ "./frontend/actions/my_list_actions.js");
+/* harmony import */ var _banner_video__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./banner_video */ "./frontend/components/banner_video/banner_video.jsx");
+
 
 
 
@@ -910,11 +952,17 @@ var mdp = function mdp(dispatch) {
   return {
     requestVideo: function requestVideo(id) {
       return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_1__["fetchVideo"])(id));
+    },
+    addMyListVideo: function addMyListVideo(userId, videoId) {
+      return dispatch(Object(_actions_my_list_actions__WEBPACK_IMPORTED_MODULE_2__["addMyListVideo"])(userId, videoId));
+    },
+    removeMyListVideo: function removeMyListVideo(id) {
+      return dispatch(Object(_actions_my_list_actions__WEBPACK_IMPORTED_MODULE_2__["removeMyListVideo"])(id));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_banner_video__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_banner_video__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -2138,17 +2186,20 @@ var findShowsByGenre = function findShowsByGenre(shows, genre) {
 
 var msp = function msp(_ref, ownProps) {
   var entities = _ref.entities,
-      ui = _ref.ui;
+      ui = _ref.ui,
+      session = _ref.session;
   var genreId = ownProps.match.params.genreId;
   var genre = entities.genres[genreId];
   var shows = genre !== undefined ? findShowsByGenre(entities.shows, genre) : [];
   var loading = ui.loading;
+  var mylistVideoIds = entities.users[session.id].list_video_ids;
   return {
     shows: shows,
     genres: entities.genres,
     videos: entities.videos,
     genreId: genreId,
-    loading: loading
+    loading: loading,
+    mylistVideoIds: mylistVideoIds
   };
 };
 
@@ -2233,6 +2284,7 @@ var msp = function msp(_ref, ownProps) {
     genres: genres,
     query: query,
     loading: loading,
+    mylistVideoIds: [],
     galleryType: 'SEARCH'
   };
 };
@@ -2592,11 +2644,13 @@ function (_React$Component) {
       if (loading === true) return null;
 
       if (shows.length <= 0 && galleryType === 'SEARCH') {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
           className: "show-gallery-index-wrapper no-results"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
           className: "no-results-content"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Your search for \"".concat(query, "\" did not have any matches.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Suggestions:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Try different keywords"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Looking for a movie or TV show?"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Try using a movie, TV show title, or a director"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Try a genre, like comedy, romance, or drama"))));
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Your search for \"".concat(query, "\" did not have any matches.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Suggestions:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Try different keywords"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Looking for a movie or TV show?"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Try using a movie, TV show title, or a director"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Try a genre, like comedy, romance, or drama")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
+          className: "gallery-footer"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_footer_footer__WEBPACK_IMPORTED_MODULE_2__["default"], null)));
       }
 
       var showsPerRow = null,
@@ -2699,16 +2753,19 @@ __webpack_require__.r(__webpack_exports__);
 
 var msp = function msp(_ref) {
   var entities = _ref.entities,
-      ui = _ref.ui;
+      ui = _ref.ui,
+      session = _ref.session;
   var shows = Object.values(entities.shows);
   var videos = entities.videos;
   var genres = entities.genres;
   var loading = ui.loading;
+  var mylistVideoIds = entities.users[session.id].list_video_ids;
   return {
     shows: shows,
     videos: videos,
     genres: genres,
     loading: loading,
+    mylistVideoIds: mylistVideoIds,
     galleryType: 'Banner-Titles'
   };
 };
@@ -4034,7 +4091,6 @@ var sessionErrorsReducer = function sessionErrorsReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
- // import merge from 'lodash';
 
 var _nullSession = {
   id: null
@@ -4175,9 +4231,11 @@ var uiReducer = function uiReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _actions_my_list_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/my_list_actions */ "./frontend/actions/my_list_actions.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -4190,7 +4248,10 @@ var usersReducer = function usersReducer() {
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGIN_USER"]:
       var currentUser = action.currentUser;
-      return Object(lodash__WEBPACK_IMPORTED_MODULE_1__["merge"])({}, state, _defineProperty({}, currentUser.id, currentUser));
+      return Object(lodash__WEBPACK_IMPORTED_MODULE_2__["merge"])({}, state, _defineProperty({}, currentUser.id, currentUser));
+
+    case _actions_my_list_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_MYLIST_INFO"]:
+      return Object(lodash__WEBPACK_IMPORTED_MODULE_2__["merge"])({}, state, _defineProperty({}, user.id, user));
 
     default:
       return state;
@@ -4354,6 +4415,35 @@ var fetchGenres = function fetchGenres() {
   return $.ajax({
     method: 'GET',
     url: 'api/genres'
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/my_list_util.js":
+/*!***************************************!*\
+  !*** ./frontend/util/my_list_util.js ***!
+  \***************************************/
+/*! exports provided: addMyListVideo, removeMyListVideo */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMyListVideo", function() { return addMyListVideo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeMyListVideo", function() { return removeMyListVideo; });
+var addMyListVideo = function addMyListVideo(userId, videoId) {
+  return $.ajax({
+    method: 'POST',
+    url: "api/users/".concat(userId, "/my_list_video"),
+    data: {
+      video_id: videoId
+    }
+  });
+};
+var removeMyListVideo = function removeMyListVideo(id) {
+  return $.ajax({
+    method: 'DELETE',
+    url: "api/my_list_videos/".concat(id)
   });
 };
 
@@ -47373,7 +47463,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

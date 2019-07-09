@@ -6,21 +6,20 @@ import ShowGallery from './show_gallery';
 
 const findShowsByGenre = (shows, genre) => {
     const showsByGenre = [];
-    
     genre.shows_with_genre_ids.map( showId => {
         if ( shows[showId] !== undefined ) {
             showsByGenre.push( shows[showId] );
         }
     });
-    
     return showsByGenre;
 }
 
-const msp = ({ entities, ui }, ownProps) => {
+const msp = ({ entities, ui, session }, ownProps) => {
     const genreId = ownProps.match.params.genreId;
     const genre = entities.genres[genreId];
     const shows = genre !== undefined ? findShowsByGenre(entities.shows, genre) : [];
     const loading = ui.loading;
+    const mylistVideoIds = entities.users[session.id].list_video_ids;
     
     return {
         shows,
@@ -28,6 +27,7 @@ const msp = ({ entities, ui }, ownProps) => {
         videos: entities.videos,
         genreId,
         loading,
+        mylistVideoIds,
     }
 }
 
