@@ -72,12 +72,11 @@ class ShowPreviewPlayerSmall extends React.Component {
         this.videoTimeout = setTimeout( () => {
             videoEl.play().then( () => {
                 if (this._isMounted) {
+                    this.props.startPreview();
                     this.setState({ paused: false });
                 }
             });
         }, 2000);
-        
-        this.props.startPreview();
     }
 
     pauseVideo() {

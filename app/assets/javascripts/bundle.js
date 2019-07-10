@@ -3105,13 +3105,14 @@ function (_React$Component) {
       this.videoTimeout = setTimeout(function () {
         videoEl.play().then(function () {
           if (_this2._isMounted) {
+            _this2.props.startPreview();
+
             _this2.setState({
               paused: false
             });
           }
         });
       }, 2000);
-      this.props.startPreview();
     }
   }, {
     key: "pauseVideo",
