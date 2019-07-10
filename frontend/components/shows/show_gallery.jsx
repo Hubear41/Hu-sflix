@@ -202,7 +202,6 @@ class ShowGallery extends React.Component {
                     return null;
                 }
             }); 
-
             showRowsList = showRowsList.concat(otherRows);
         }
 
