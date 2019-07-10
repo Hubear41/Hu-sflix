@@ -1254,7 +1254,6 @@ function (_React$Component) {
     value: function componentWillUnmount() {
       this._isMounted = false;
       window.removeEventListener('scroll', this.handleScroll);
-      if (this.currentRequest !== null && this.currentRequest !== undefined) this.currentRequest.abort();
     }
   }, {
     key: "handleScroll",
@@ -1330,9 +1329,7 @@ function (_React$Component) {
           search: textInput.value
         });
         this.searchTimeout = setTimeout(function () {
-          _this3.currentRequest = _this3.props.search(_this3.state.search).then(function () {
-            return _this3.currentRequest = null;
-          });
+          _this3.props.search(_this3.state.search);
 
           _this3.props.startLoading();
 
@@ -2603,7 +2600,6 @@ function (_React$Component) {
     _this.state = {
       previewId: null
     };
-    _this.currentRequest = null;
     return _this;
   }
 
@@ -2619,27 +2615,20 @@ function (_React$Component) {
           query = _this$props.query;
 
       if (galleryType === 'SEARCH') {
-        this.currentRequest = this.props.search(query).then(function () {
-          _this2.currentRequest = null;
+        this.props.search(query).then(function () {
           setTimeout(function () {
             _this2.props.stopLoading();
           }, 500);
         }).fail(function () {
           _this2.props.stopLoading();
-
-          _this2.currentRequest = null;
         });
       } else {
-        this.currentRequest = this.props.requestAllShows(genreId).then(function () {
+        this.props.requestAllShows(genreId).then(function () {
           setTimeout(function () {
             _this2.props.stopLoading();
-
-            _this2.currentRequest = null;
           }, 500);
         }).fail(function () {
           _this2.props.stopLoading();
-
-          _this2.currentRequest = null;
         });
       }
     }
@@ -2657,16 +2646,12 @@ function (_React$Component) {
         if (galleryType === 'SEARCH') {
           var query = new URLSearchParams(location.search).get("q"); /// add loading start and stop
 
-          this.currentRequest = this.props.search(query).then(function () {
-            _this3.currentRequest = null;
-
+          this.props.search(query).then(function () {
             _this3.props.stopLoading();
           });
         } else {
           /// add loading start and stop
-          this.currentRequest = this.props.requestAllShows(genreId).then(function () {
-            _this3.currentRequest = null;
-
+          this.props.requestAllShows(genreId).then(function () {
             _this3.props.stopLoading();
           });
         }
@@ -2680,7 +2665,6 @@ function (_React$Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this._isMounted = false;
-      if (this.currentRequest !== null) this.currentRequest.abort();
     }
   }, {
     key: "createRows",
@@ -2693,7 +2677,11 @@ function (_React$Component) {
       var mainGenres = [];
 
       if (mylistShowIds.length > 0) {
-        showsPerRow["My List"] = [];
+        showsPerRow["My List"] = Array.from({
+          length: mylistShowIds.length
+        }, function () {
+          return null;
+        });
       } // find genres that have enough shows to fill a row
 
 
@@ -2705,7 +2693,8 @@ function (_React$Component) {
       });
       shows.forEach(function (show) {
         if (mylistShowIds.includes(show.id)) {
-          showsPerRow["My List"].push(show);
+          var myListIdx = mylistShowIds.indexOf(show.id);
+          showsPerRow["My List"][myListIdx] = show;
         }
 
         mainGenres.forEach(function (genre) {
@@ -2975,7 +2964,6 @@ function (_React$Component) {
     _this.playVideo = _this.playVideo.bind(_assertThisInitialized(_this));
     _this.pauseVideo = _this.pauseVideo.bind(_assertThisInitialized(_this));
     _this.toggleMyList = _this.toggleMyList.bind(_assertThisInitialized(_this));
-    _this.currentRequest = null;
     return _this;
   }
 
@@ -2994,7 +2982,6 @@ function (_React$Component) {
     value: function componentWillUnmount() {
       this._isMounted = false;
       clearTimeout(this.videoTimeout);
-      if (this.currentRequest !== null) this.currentRequest.abort();
     }
   }, {
     key: "launchWatch",
@@ -3038,9 +3025,7 @@ function (_React$Component) {
 
       var videoEl = this.videoPlayer.current;
       this.videoTimeout = setTimeout(function () {
-        _this2.currentRequest = videoEl.play().then(function () {
-          _this2.currentRequest = null;
-
+        videoEl.play().then(function () {
           if (_this2._isMounted) {
             _this2.setState({
               paused: false
@@ -3081,8 +3066,7 @@ function (_React$Component) {
           this.setState({
             myListState: 'REMOVING...'
           });
-          this.currentRequest = this.props.removeMyListVideo(currentUserId, show.id).then(function () {
-            _this3.currentRequest = null;
+          this.props.removeMyListVideo(currentUserId, show.id).then(function () {
             if (_this3._isMounted) _this3.setState({
               myListState: 'ADD TO MY LIST'
             });
@@ -3093,8 +3077,7 @@ function (_React$Component) {
           this.setState({
             myListState: 'ADDING...'
           });
-          this.currentRequest = this.props.addMyListVideo(currentUserId, show.id).then(function () {
-            _this3.currentRequest = null;
+          this.props.addMyListVideo(currentUserId, show.id).then(function () {
             if (_this3._isMounted) _this3.setState({
               myListState: 'REMOVE FROM MY LIST'
             });
@@ -3383,8 +3366,6 @@ function (_React$Component) {
     _this.awayTimer;
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.fullControlArea = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
-    _this.currentRequest = null;
-    _this.intervale = null;
     _this.openFullscreen = _this.openFullscreen.bind(_assertThisInitialized(_this));
     _this.closeFullscreen = _this.closeFullscreen.bind(_assertThisInitialized(_this));
     _this.videoReady = _this.videoReady.bind(_assertThisInitialized(_this));
@@ -3412,9 +3393,7 @@ function (_React$Component) {
 
       this._isMounted = true;
       var showId = this.props.match.params.showId;
-      this.currentRequest = this.props.fetchShow(showId).then(function () {
-        return _this2.currentRequest = null;
-      });
+      this.props.fetchShow(showId);
       this.interval = setInterval(this._tick, 1000); //updates the timer each half second
 
       document.addEventListener('keydown', function (e) {
@@ -3427,7 +3406,6 @@ function (_React$Component) {
       var _this3 = this;
 
       this._isMounted = false;
-      if (this.currentRequest !== null) this.currentRequest.abort();
       document.removeEventListener('keydown', function (e) {
         return _this3.determineKeyPress(e);
       });
@@ -3537,9 +3515,7 @@ function (_React$Component) {
 
       if (paused && videoEl) {
         clearTimeout(this.awayTimer);
-        this.currentRequest = videoEl.play().then(function () {
-          _this4.currentRequest = null;
-
+        videoEl.play().then(function () {
           _this4.setState({
             paused: false,
             started: true,
@@ -3814,14 +3790,10 @@ function (_React$Component) {
   }, {
     key: "removeFromMyList",
     value: function removeFromMyList() {
-      var _this6 = this;
-
       var _this$props = this.props,
           currentUserId = _this$props.currentUserId,
           show = _this$props.show;
-      this.currentRequest = this.props.removeMyListVideo(currentUserId, show.id).then(function () {
-        return _this6.currentRequest = null;
-      });
+      this.props.removeMyListVideo(currentUserId, show.id);
     }
   }, {
     key: "render",

@@ -9,7 +9,6 @@ class ShowGallery extends React.Component {
         this.state = {
             previewId: null,
         }
-        this.currentRequest = null;
     }
     
     componentDidMount() {
@@ -18,28 +17,25 @@ class ShowGallery extends React.Component {
         const { genreId, galleryType, query } = this.props;
 
         if ( galleryType === 'SEARCH' ) {
-            this.currentRequest = this.props.search(query).then( () => {
-                this.currentRequest = null;
-                setTimeout( () => {
+            this.props.search(query)
+                .then( () => {
+                    setTimeout( () => {
+                        this.props.stopLoading();
+                    }, 500);
+                })
+                .fail(() => {
                     this.props.stopLoading();
-                }, 500);
-            })
-            .fail(() => {
-                this.props.stopLoading();
-                this.currentRequest = null;
-            });
+                });
         } else {
-            this.currentRequest = this.props.requestAllShows(genreId)
-            .then(() => {
-                setTimeout(() => {
+            this.props.requestAllShows(genreId)
+                .then(() => {
+                    setTimeout(() => {
+                        this.props.stopLoading();
+                    }, 500);
+                })
+                .fail( () => {
                     this.props.stopLoading();
-                    this.currentRequest = null;
-                }, 500);
-            })
-            .fail( () => {
-                this.props.stopLoading();
-                this.currentRequest = null;
-            });
+                });
         }
     }
 
@@ -51,14 +47,12 @@ class ShowGallery extends React.Component {
                 const query = new URLSearchParams(location.search).get("q");
 
                 /// add loading start and stop
-                this.currentRequest = this.props.search(query).then( () => {
-                    this.currentRequest = null;
+                this.props.search(query).then( () => {
                     this.props.stopLoading()
                 });
             } else {
                 /// add loading start and stop
-                this.currentRequest = this.props.requestAllShows(genreId).then( () => {
-                    this.currentRequest = null;
+                this.props.requestAllShows(genreId).then( () => {
                     this.props.stopLoading() 
                 });
             }
@@ -69,8 +63,6 @@ class ShowGallery extends React.Component {
 
     componentWillUnmount() {
         this._isMounted = false;
-
-        if ( this.currentRequest !== null ) this.currentRequest.abort();
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -103,7 +95,7 @@ class ShowGallery extends React.Component {
         let mainGenres = [];
         
         if ( mylistShowIds.length > 0 ) {
-            showsPerRow["My List"] = [];
+            showsPerRow["My List"] = Array.from({ length: mylistShowIds.length }, () => null);
         }
 
         // find genres that have enough shows to fill a row
@@ -116,7 +108,8 @@ class ShowGallery extends React.Component {
 
         shows.forEach( show => {
             if (mylistShowIds.includes(show.id)) {
-                showsPerRow["My List"].push(show);
+                const myListIdx = mylistShowIds.indexOf(show.id)
+                showsPerRow["My List"][myListIdx] = show;
             }
 
             mainGenres.forEach( genre => {

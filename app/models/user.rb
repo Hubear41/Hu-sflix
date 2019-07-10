@@ -15,12 +15,12 @@ class User < ApplicationRecord
     validates :email, presence: true, uniqueness: true
     validates :password, length: { minimum: 6 }, allow_nil: true
 
-    has_many :my_list_shows,
+    has_many :mylist_shows,
     foreign_key: :profile_id,
     class_name: 'MyListShow'
     
-    has_many :list_shows,
-    through: :my_list_shows,
+    has_many :shows_on_list,
+    through: :mylist_shows,
     source: :show
     
     attr_reader :password
@@ -50,6 +50,11 @@ class User < ApplicationRecord
         self.save
 
         self.session_token
+    end
+
+    def mylist_show_ids_desc
+        mylist_shows = self.mylist_shows.sort { |a, b| b.created_at <=> a.created_at }
+        mylist_shows.map { |mylist_item| mylist_item.show_id }
     end
 
     private

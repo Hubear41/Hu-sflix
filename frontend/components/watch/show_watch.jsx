@@ -23,8 +23,6 @@ class Watch extends React.Component {
         this.awayTimer;
         this.videoPlayer = React.createRef();
         this.fullControlArea = React.createRef();
-        this.currentRequest = null;
-        this.intervale = null;
 
         this.openFullscreen = this.openFullscreen.bind(this);
         this.closeFullscreen = this.closeFullscreen.bind(this);
@@ -50,7 +48,7 @@ class Watch extends React.Component {
         this._isMounted = true;
 
         const { showId } = this.props.match.params;
-        this.currentRequest = this.props.fetchShow(showId).then( () => this.currentRequest = null );
+        this.props.fetchShow(showId);
         
         this.interval = setInterval(this._tick, 1000); //updates the timer each half second
         document.addEventListener('keydown', e => this.determineKeyPress(e));
@@ -58,8 +56,6 @@ class Watch extends React.Component {
 
     componentWillUnmount() {
         this._isMounted = false;
-
-        if ( this.currentRequest !== null ) this.currentRequest.abort();
 
         document.removeEventListener('keydown', e => this.determineKeyPress(e));
         clearInterval(this.interval);
@@ -132,8 +128,7 @@ class Watch extends React.Component {
         if (paused && videoEl) {
             clearTimeout(this.awayTimer);
 
-            this.currentRequest = videoEl.play().then( () => {
-                this.currentRequest = null;
+            videoEl.play().then( () => {
                 this.setState({ paused: false, started: true, away: false });
             });
         } else if (!paused && videoEl ) {
@@ -329,7 +324,7 @@ class Watch extends React.Component {
     removeFromMyList() {
         const { currentUserId, show } = this.props;
         
-        this.currentRequest = this.props.removeMyListVideo(currentUserId, show.id).then( () => this.currentRequest = null);
+        this.props.removeMyListVideo(currentUserId, show.id);
     }
     
     render() {

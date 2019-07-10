@@ -38,7 +38,6 @@ class MainNav extends React.Component {
         this._isMounted = false;
 
         window.removeEventListener('scroll', this.handleScroll);
-        if ( this.currentRequest !== null && this.currentRequest !== undefined ) this.currentRequest.abort();
     }
 
     handleScroll() {
@@ -92,7 +91,7 @@ class MainNav extends React.Component {
             this.setState({ search: textInput.value });
             
             this.searchTimeout = setTimeout( () => {
-                this.currentRequest = this.props.search(this.state.search).then( () => this.currentRequest = null );
+                this.props.search(this.state.search);
 
                 this.props.startLoading() 
                 this.setState({ previous: location.pathname.includes("/search") ? this.state.previous : location.pathname });

@@ -20,7 +20,6 @@ class ShowPreviewPlayerSmall extends React.Component {
         this.playVideo = this.playVideo.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
         this.toggleMyList = this.toggleMyList.bind(this);
-        this.currentRequest = null;
     }
 
     componentDidMount() {
@@ -36,7 +35,6 @@ class ShowPreviewPlayerSmall extends React.Component {
         this._isMounted = false;
 
         clearTimeout(this.videoTimeout);
-        if ( this.currentRequest !== null ) this.currentRequest.abort();
     }
     
     launchWatch() {
@@ -72,9 +70,7 @@ class ShowPreviewPlayerSmall extends React.Component {
 
         const videoEl = this.videoPlayer.current;
         this.videoTimeout = setTimeout( () => {
-            this.currentRequest = videoEl.play().then( () => {
-                this.currentRequest = null;
-
+            videoEl.play().then( () => {
                 if (this._isMounted) {
                     this.setState({ paused: false });
                 }
@@ -106,9 +102,8 @@ class ShowPreviewPlayerSmall extends React.Component {
             if (this._isMounted) {
                 this.setState({ myListState: 'REMOVING...'});
     
-                this.currentRequest = this.props.removeMyListVideo(currentUserId, show.id)
+                this.props.removeMyListVideo(currentUserId, show.id)
                     .then( () => {
-                        this.currentRequest = null;
                         if (this._isMounted) this.setState({ myListState: 'ADD TO MY LIST'});
                     });
             }
@@ -116,9 +111,8 @@ class ShowPreviewPlayerSmall extends React.Component {
             if (this._isMounted) {
                 this.setState({ myListState: 'ADDING...' });
     
-                this.currentRequest = this.props.addMyListVideo(currentUserId, show.id)
+                this.props.addMyListVideo(currentUserId, show.id)
                     .then( () => {
-                        this.currentRequest = null;
                         if (this._isMounted) this.setState({ myListState: 'REMOVE FROM MY LIST'});
                     });
             }

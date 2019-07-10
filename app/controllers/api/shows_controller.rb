@@ -34,6 +34,7 @@ class Api::ShowsController < ApplicationController
                             middle: "%#{query_string}%", 
                             last: "%#{query_string}" 
                     )
+                    .order(created_at: :desc)
                     .includes(:videos)
             @genres = Genre.all
             @previewVideos = self.find_videos(@shows)
