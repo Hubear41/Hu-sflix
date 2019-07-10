@@ -17,7 +17,6 @@ class MainNav extends React.Component {
         this.navbar = React.createRef();
         this.searchBar = React.createRef();
         this.searchField = React.createRef();
-        this.searchTimeout = null;
         this.handleLogout = this.handleLogout.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
         this.updateSearch = this.updateSearch.bind(this);
@@ -27,11 +26,19 @@ class MainNav extends React.Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         window.addEventListener('scroll', this.handleScroll);
     }
     
     handleLogout() {
         this.props.logout();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+
+        window.removeEventListener('scroll', this.handleScroll);
+        if ( this.currentRequest !== null && this.currentRequest !== undefined ) this.currentRequest.abort();
     }
 
     handleScroll() {
@@ -51,7 +58,7 @@ class MainNav extends React.Component {
         const root = document.getElementById('root');
 
         root.addEventListener('click', e => {
-            if ( this.state.search === "" && e.target !== this.searchBar.current && e.target !== this.searchField.current ) {
+            if ( this._isMounted && this.state.search === "" && e.target !== this.searchBar.current && e.target !== this.searchField.current ) {
                 if ( this.state.searching !== false ) {
                     this.setState({ searching: false });
                 }
@@ -85,8 +92,9 @@ class MainNav extends React.Component {
             this.setState({ search: textInput.value });
             
             this.searchTimeout = setTimeout( () => {
+                this.currentRequest = this.props.search(this.state.search).then( () => this.currentRequest = null );
+
                 this.props.startLoading() 
-                this.props.search(this.state.search);
                 this.setState({ previous: location.pathname.includes("/search") ? this.state.previous : location.pathname });
 
                 history.push({

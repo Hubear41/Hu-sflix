@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
 import { fetchVideo, fetchShow } from '../../actions/show_actions';
-import { withRouter } from 'react-router-dom'
+import { addMyListVideo, removeMyListVideo} from '../../actions/my_list_actions';
+import { withRouter } from 'react-router-dom';
 import Watch from './show_watch';
 
-const msp = (state, ownProps) => {
-    const video = state.entities.videos[ownProps.match.params.videoId];
-    const show = state.entities.shows[ownProps.match.params.showId];
+const msp = ({ entities, session }, ownProps) => {
+    const video = entities.videos[ownProps.match.params.videoId];
+    const show = entities.shows[ownProps.match.params.showId];
+    const currentUserId = session.id;
     // let nextShow = null;
 
     // const shows = Object.values(state.entities.shows);
@@ -20,6 +22,7 @@ const msp = (state, ownProps) => {
     return {
         video,
         show,
+        currentUserId,
         // nextShow,
     }
 }
@@ -27,6 +30,7 @@ const msp = (state, ownProps) => {
 const mdp = dispatch => ({
     fetchVideo: videoId => dispatch(fetchVideo(videoId)),
     fetchShow: showId => dispatch(fetchShow(showId)),
+    removeMyListVideo: (userId, showId) => dispatch(removeMyListVideo(userId, showId))
 });
 
 

@@ -23,8 +23,9 @@ class Watch extends React.Component {
         this.awayTimer;
         this.videoPlayer = React.createRef();
         this.fullControlArea = React.createRef();
+        this.currentRequest = null;
+        this.intervale = null;
 
-        // all video player methods
         this.openFullscreen = this.openFullscreen.bind(this);
         this.closeFullscreen = this.closeFullscreen.bind(this);
         this.videoReady = this.videoReady.bind(this);
@@ -41,50 +42,62 @@ class Watch extends React.Component {
         this._hideAway = this._hideAway.bind(this);
         this.backToBrowse = this.backToBrowse.bind(this);
         this.determineKeyPress = this.determineKeyPress.bind(this);
+        this.removeFromMyList = this.removeFromMyList.bind(this);
     }
 
     
     componentDidMount() {
+        this._isMounted = true;
+
         const { showId } = this.props.match.params;
-        this.props.fetchShow(showId);
+        this.currentRequest = this.props.fetchShow(showId).then( () => this.currentRequest = null );
         
-        setInterval(this._tick, 1000); //updates the timer each half second
+        this.interval = setInterval(this._tick, 1000); //updates the timer each half second
         document.addEventListener('keydown', e => this.determineKeyPress(e));
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+
+        if ( this.currentRequest !== null ) this.currentRequest.abort();
+
+        document.removeEventListener('keydown', e => this.determineKeyPress(e));
+        clearInterval(this.interval);
     }
 
     determineKeyPress(e) {        
         switch (e.keyCode) {
             case 13:  // enter
                 this.togglePlayPause();
-                this.setState({ currentKey: "play/pause" });
+                if (this._isMounted) this.setState({ currentKey: "play/pause" });
                 break;
             case 32:  // spacebar
                 e.preventDefault();
                 this.togglePlayPause();
-                this.setState({ currentKey: "play/pause" });
+                if (this._isMounted) this.setState({ currentKey: "play/pause" });
                 break;
             case 27:  // escape
                 document.fullscreen ? this.closeFullscreen() : null;
                 break;
             case 38: // up arrow
                 this.changeVolume( 0.1 );
-                this.setState({ currentKey: "volumeUp" });
+                if (this._isMounted) this.setState({ currentKey: "volumeUp" });
                 break;
             case 40: // down arrow
                 this.changeVolume( -0.1 );
-                this.setState({ currentKey: "volumeDown" });
+                if (this._isMounted) this.setState({ currentKey: "volumeDown" });
                 break;
             case 39:  // right arrow
                 this.jumpForward();
-                this.setState({ currentKey: 'jumpForward' });
+                if (this._isMounted) this.setState({ currentKey: 'jumpForward' });
                 break;
             case 37:  // left arrow
                 this.jumpBack();
-                this.setState({ currentKey: 'jumpBack' });
+                if (this._isMounted) this.setState({ currentKey: 'jumpBack' });
                 break;
             case 77: // m key
                 this.toggleMute();
-                this.setState({ currentKey: 'mute/unmute'});
+                if (this._isMounted) this.setState({ currentKey: 'mute/unmute'});
                 break;
             case 70:  // f key
                 if (document.fullscreen) {
@@ -119,7 +132,8 @@ class Watch extends React.Component {
         if (paused && videoEl) {
             clearTimeout(this.awayTimer);
 
-            videoEl.play().then( () => {
+            this.currentRequest = videoEl.play().then( () => {
+                this.currentRequest = null;
                 this.setState({ paused: false, started: true, away: false });
             });
         } else if (!paused && videoEl ) {
@@ -231,8 +245,8 @@ class Watch extends React.Component {
         } else if (entireVideoEl.msRequestFullscreen) { /* IE/Edge */
             entireVideoEl.msRequestFullscreen();
         }
-
-        this.setState({ fullscreen: true })
+        
+        if (this._isMounted) this.setState({ fullscreen: true });
     }
 
     closeFullscreen() {
@@ -246,7 +260,7 @@ class Watch extends React.Component {
             document.msExitFullscreen();
         }
 
-        this.setState({ fullscreen: false })
+        if (this._isMounted) this.setState({ fullscreen: false });
     }
 
     // this method is run whenever the mouse moves anywhere over the video player
@@ -265,39 +279,41 @@ class Watch extends React.Component {
 
                 if ( started && paused ) {
                     this.awayTimer = setTimeout( () => {
-                        this.setState({ away: true });
+                        if (this._isMounted) this.setState({ away: true });
                     }, 3000 );
                 }
             }, 3000);
         } else {
             if ( started ) {
-                this.setState({ mouseMoving: true, hidden: false });
+                if (this._isMounted) {
+                    this.setState({ mouseMoving: true, hidden: false });
     
-                this.timeout = setTimeout( () => {
-                    this._hideControls();
-    
-                    if ( paused ) {
-                        this.awayTimer = setTimeout(() => {
-                            this.setState({ away: true });
-                        }, 3000);
-                    }
-                }, 3000);
+                    this.timeout = setTimeout( () => {
+                        this._hideControls();
+        
+                        if ( paused ) {
+                            this.awayTimer = setTimeout(() => {
+                                if (this._isMounted) this.setState({ away: true });
+                            }, 3000);
+                        }
+                    }, 3000);
+                }
             }
         }
     }
     
     _hideControls() {
-        this.setState({ hidden: true, mouseMoving: false })
+        if (this._isMounted) this.setState({ hidden: true, mouseMoving: false })
     }
     
     _tick() {
-        if (this.videoPlayer.current) {
+        if (this.videoPlayer.current && this._isMounted) {
             this.setState({ currentPlayerTime: this.videoPlayer.current.currentTime })
         }
     }
 
     _hideAway() {
-        this.setState({ away: false });
+        if (this._isMounted) this.setState({ away: false });
     }
 
     backToBrowse() {
@@ -308,6 +324,12 @@ class Watch extends React.Component {
         }
 
         this.props.history.push('/browse');
+    }
+
+    removeFromMyList() {
+        const { currentUserId, show } = this.props;
+        
+        this.currentRequest = this.props.removeMyListVideo(currentUserId, show.id).then( () => this.currentRequest = null);
     }
     
     render() {
@@ -336,6 +358,7 @@ class Watch extends React.Component {
             volumeStyle = {
                 background: `linear-gradient( to right, red 0%, red ${currVolume * 100}%, #7c7c7c ${currVolume * 100}%, #7c7c7c ${(1 - currVolume) * 100}% )`
             };
+
             // determines whether or not the controls are hidden
             controlStyle = {
                 opacity: `${ hidden ? 0 : 1 }`
@@ -379,6 +402,7 @@ class Watch extends React.Component {
                             ref={this.videoPlayer}
                             // poster={window.tempBgURL} // black backgroud when the video hasn't loaded
                             onCanPlay={this.videoReady} // starts playing when loaded
+                            onEnded={this.removeFromMyList}
                             preload='true'
                             controls={false}
                             muted='muted'

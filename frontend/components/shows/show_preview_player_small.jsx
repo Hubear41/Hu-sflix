@@ -20,13 +20,23 @@ class ShowPreviewPlayerSmall extends React.Component {
         this.playVideo = this.playVideo.bind(this);
         this.pauseVideo = this.pauseVideo.bind(this);
         this.toggleMyList = this.toggleMyList.bind(this);
+        this.currentRequest = null;
     }
 
     componentDidMount() {
+        this._isMounted = true;
+
         const width = document.getElementById("show-peek-preview-wrapper").clientWidth;
         const height = width / 1.5;
         
         this.setState({ height });
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+
+        clearTimeout(this.videoTimeout);
+        if ( this.currentRequest !== null ) this.currentRequest.abort();
     }
     
     launchWatch() {
@@ -48,10 +58,10 @@ class ShowPreviewPlayerSmall extends React.Component {
 
         if ( videoEl.muted ) {
             videoEl.muted = false;
-            this.setState({ muted: false });
+            if (this._isMounted) this.setState({ muted: false });
         } else {
             videoEl.muted = true;
-            this.setState({ muted: true });
+            if (this._isMounted) this.setState({ muted: true });
         }
     }
 
@@ -62,8 +72,12 @@ class ShowPreviewPlayerSmall extends React.Component {
 
         const videoEl = this.videoPlayer.current;
         this.videoTimeout = setTimeout( () => {
-            videoEl.play().then( () => {
-                this.setState({ paused: false });
+            this.currentRequest = videoEl.play().then( () => {
+                this.currentRequest = null;
+
+                if (this._isMounted) {
+                    this.setState({ paused: false });
+                }
             });
         }, 2000);
         
@@ -78,9 +92,10 @@ class ShowPreviewPlayerSmall extends React.Component {
         const videoEl = this.videoPlayer.current;
 
         videoEl.pause();
-        clearTimeout(this.videoTimeout);
-        this.setState({ paused: true });
         this.props.endPreview();
+        
+        clearTimeout(this.videoTimeout);
+        if (this._isMounted) this.setState({ paused: true });
     }
 
     toggleMyList() {
@@ -88,15 +103,25 @@ class ShowPreviewPlayerSmall extends React.Component {
         const { myListState } = this.state;
 
         if ( listShowIds.includes(show.id) && myListState === 'REMOVE FROM MY LIST') {
-            this.setState({ myListState: 'REMOVING...'});
-
-            this.props.removeMyListVideo(currentUserId, show.id)
-                .then( () => this.setState({ myListState: 'ADD TO MY LIST'}));
+            if (this._isMounted) {
+                this.setState({ myListState: 'REMOVING...'});
+    
+                this.currentRequest = this.props.removeMyListVideo(currentUserId, show.id)
+                    .then( () => {
+                        this.currentRequest = null;
+                        if (this._isMounted) this.setState({ myListState: 'ADD TO MY LIST'});
+                    });
+            }
         } else if ( !listShowIds.includes(show.id) && myListState === 'ADD TO MY LIST') {
-            this.setState({ myListState: 'ADDING...' });
-
-            this.props.addMyListVideo(currentUserId, show.id)
-                .then( () => this.setState({ myListState: 'REMOVE FROM MY LIST'}));
+            if (this._isMounted) {
+                this.setState({ myListState: 'ADDING...' });
+    
+                this.currentRequest = this.props.addMyListVideo(currentUserId, show.id)
+                    .then( () => {
+                        this.currentRequest = null;
+                        if (this._isMounted) this.setState({ myListState: 'REMOVE FROM MY LIST'});
+                    });
+            }
         }
     }
     
@@ -141,6 +166,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                             <figure className='preview-clickable-area' onClick={this.launchWatch}></figure>
                             <video id={`show-${show.id} preview-video`} 
                                    ref={this.videoPlayer}
+                                   onClick={this.launchWatch}
                                    muted='muted'
                             >
                                 <source src={preview ? preview.videoUrl : '' } type="video/mp4"/> 

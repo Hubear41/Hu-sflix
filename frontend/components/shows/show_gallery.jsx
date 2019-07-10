@@ -9,29 +9,36 @@ class ShowGallery extends React.Component {
         this.state = {
             previewId: null,
         }
+        this.currentRequest = null;
     }
     
     componentDidMount() {
+        this._isMounted = true;
+
         const { genreId, galleryType, query } = this.props;
 
         if ( galleryType === 'SEARCH' ) {
-            this.props.search(query).then( () => {
+            this.currentRequest = this.props.search(query).then( () => {
+                this.currentRequest = null;
                 setTimeout( () => {
                     this.props.stopLoading();
                 }, 500);
             })
             .fail(() => {
                 this.props.stopLoading();
+                this.currentRequest = null;
             });
         } else {
-            this.props.requestAllShows(genreId)
+            this.currentRequest = this.props.requestAllShows(genreId)
             .then(() => {
                 setTimeout(() => {
                     this.props.stopLoading();
+                    this.currentRequest = null;
                 }, 500);
             })
             .fail( () => {
                 this.props.stopLoading();
+                this.currentRequest = null;
             });
         }
     }
@@ -44,14 +51,26 @@ class ShowGallery extends React.Component {
                 const query = new URLSearchParams(location.search).get("q");
 
                 /// add loading start and stop
-                this.props.search(query).then( () => this.props.stopLoading() );
+                this.currentRequest = this.props.search(query).then( () => {
+                    this.currentRequest = null;
+                    this.props.stopLoading()
+                });
             } else {
                 /// add loading start and stop
-                this.props.requestAllShows(genreId).then( () => this.props.stopLoading() );
+                this.currentRequest = this.props.requestAllShows(genreId).then( () => {
+                    this.currentRequest = null;
+                    this.props.stopLoading() 
+                });
             }
 
-            this.setState({ previewId: null });
+            if (this._isMounted) this.setState({ previewId: null });
         } 
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+
+        if ( this.currentRequest !== null ) this.currentRequest.abort();
     }
 
     static getDerivedStateFromProps(props, state) {

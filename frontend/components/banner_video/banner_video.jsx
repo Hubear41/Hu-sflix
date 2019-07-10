@@ -26,9 +26,11 @@ class BigPreview extends React.Component {
     }
     
     componentDidMount() {
+        this._isMounted = true;
+
         const { previewId, isPreviewing } = this.props;
         const { ended } = this.state;
-        this.props.requestVideo(previewId);
+        this.currentRequest = this.props.requestVideo(previewId).then( () => this.currentRequest = null );
         
         window.addEventListener('scroll', () => {
             let bigPreview = this.entirePreview.current;
@@ -55,8 +57,15 @@ class BigPreview extends React.Component {
         if ( isPreviewing && !ended ) {
             this.pauseVideo();
         } else if ( !isPreviewing && !ended ) {
-            this.playVideo();
+            this.playVideo()
         }
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+
+        clearTimeout(this.timeout);
+        if ( this.currentRequest !== null ) this.currentRequest.abort();
     }
 
     toggleMute() {
@@ -64,33 +73,32 @@ class BigPreview extends React.Component {
 
         if ( videoEl.muted ) {
             videoEl.muted = false;
-            this.setState({ muted: false });
+            if (this._isMounted) this.setState({ muted: false });
         } else {
             videoEl.muted = true;
-            this.setState({ muted: true });
+            if (this._isMounted) this.setState({ muted: true });
         }
     }
 
     videoReady() {        
-        setTimeout( () => this.revealVideo(), 2000);
+        this.timeout = setTimeout( () => this.revealVideo(), 2000);
     }
 
     revealVideo() {
         const videoEl = this.videoPlayer.current;
 
         videoEl.play();
-        this.setState({ imageOpacity: 0, ended: false, started: true });
+        if (this._isMounted) this.setState({ imageOpacity: 0, ended: false, started: true });
     }
 
     playVideo() {
         const videoEl = this.videoPlayer.current;
         let bigPreview = this.entirePreview.current;
-        // const { isPreviewing } = this.props;
 
         if ( window.pageYOffset < bigPreview.scrollHeight / 3 && videoEl.paused ) {
-            setTimeout( () => {
+            this.timeout = setTimeout( () => {
                 videoEl.play().then( () => {
-                    this.setState({ imageOpacity: 0 });
+                    if (this._isMounted) this.setState({ imageOpacity: 0 });
                 });
             }, 1000);
         }
@@ -100,9 +108,9 @@ class BigPreview extends React.Component {
         const videoEl = this.videoPlayer.current;
         
         if ( !videoEl.paused ) {
-            setTimeout( () => {
+            this.timeout = setTimeout( () => {
                 videoEl.pause();
-                this.setState({ imageOpacity: 1 });
+                if (this._isMounted) this.setState({ imageOpacity: 1 });
             }, 1000);
         }
     }
@@ -111,15 +119,21 @@ class BigPreview extends React.Component {
         const { show, mylistIds, currentUserId } = this.props;
         
         if ( mylistIds.includes(show.id) && this.state.mylistState === 'My List' ) {
-            this.setState({ mylistState: 'Removing...'});
+            if (this._isMounted) this.setState({ mylistState: 'Removing...'});
 
-            this.props.removeMyListVideo(currentUserId, show.id)
-                .then( () => this.setState({ mylistState: 'My List' }));
+            this.currentRequest = this.props.removeMyListVideo(currentUserId, show.id)
+                .then( () => {
+                    this.currentRequest = null;
+                    if (this._isMounted) this.setState({ mylistState: 'My List' });
+                });
         } else if ( !mylistIds.includes(show.id) && this.state.mylistState === 'My List' ) {
-            this.setState({ mylistState: 'Adding...'});
+            if (this._isMounted) this.setState({ mylistState: 'Adding...'});
 
-            this.props.addMyListVideo(currentUserId, show.id)
-                .then( () => this.setState({ mylistState: 'My List'}));
+            this.currentRequest = this.props.addMyListVideo(currentUserId, show.id)
+                .then( () => {
+                    this.currentRequest = null;
+                    if (this._isMounted) this.setState({ mylistState: 'My List'});
+                });
         }
     }
 
@@ -149,7 +163,7 @@ class BigPreview extends React.Component {
     }
 
     videoEnded() {
-        this.setState({ imageOpacity: 1, ended: true});
+        if (this._isMounted) this.setState({ imageOpacity: 1, ended: true});
     }
 
     launchWatch() {
