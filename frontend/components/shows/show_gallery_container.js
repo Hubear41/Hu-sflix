@@ -18,7 +18,7 @@ const msp = ({ entities, ui, session }) => {
         loading,
         currentUserId,
         mylistShowIds,
-        galleryType: 'Banner-Titles'
+        galleryType: 'WITH_BANNER'
     }
 };
 

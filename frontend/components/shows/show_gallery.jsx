@@ -172,8 +172,8 @@ class ShowGallery extends React.Component {
         
         let showsPerRow = null, previewShow = null, showRowsList = [];
         if ( shows.length > 0 ) {
-            showsPerRow = galleryType !== 'SEARCH' ? this.createRows() : this.createUnorderedRows();
-            previewShow = galleryType !== 'SEARCH' ? shows[this.state.previewId] : null;
+            showsPerRow = galleryType === 'WITH_BANNER' ? this.createRows() : this.createUnorderedRows();
+            previewShow = galleryType === 'WITH_BANNER' ? shows[this.state.previewId] : null;
             
             if ( showsPerRow["My List"] !== undefined && showsPerRow["My List"].length > 0 ) {
                 showRowsList.push( 
@@ -202,18 +202,18 @@ class ShowGallery extends React.Component {
                     return null;
                 }
             }); 
-            // debugger
+
             showRowsList = showRowsList.concat(otherRows);
-            // debugger
         }
 
-        const galleryStyle = galleryType !== 'SEARCH' ? { top: "75vh" } : { top: "15vh" };
+        const galleryStyle = galleryType === 'WITH_BANNER'  ? { top: "75vh" } : { top: "12vh" };
         
         return (
             <section className="show-gallery-index-wrapper" >
-                { galleryType !== 'SEARCH' && previewShow ? <BigPreviewContainer show={previewShow} /> : null }
+                { galleryType === 'WITH_BANNER'  && previewShow ? <BigPreviewContainer show={previewShow} /> : null }
 
                 <section className="gallery-index-wrapper" style={galleryStyle} >
+                    { galleryType === 'MY_LIST' ? <h1 className='my-list-header'>My List</h1> : null }
                     
                     <ul className="show-gallery-index" id="gallery-index-bg">
                         {showRowsList}

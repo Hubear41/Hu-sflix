@@ -8,6 +8,7 @@ import LoadingScreen from './loading/loading_screen';
 import ShowIndexGallery from './shows/show_gallery_container';
 import GenreGallery from './shows/genre_gallery_container';
 import SearchGallery from './shows/search_container';
+import MyListGallery from './shows/mylist_gallery_container';
 import Watch from './watch/show_watch_container';
 import Footer from './footer/footer';
 import { Route, Switch } from 'react-router-dom';
@@ -29,7 +30,8 @@ const App = () => {
                 <AuthRoute path="/login" component={Login} />
 
                 <ProtectedRoute path={[ "/browse", "/search", "/genre" ]} component={LoadingScreen} />
-                <ProtectedRoute path="/browse" component={ShowIndexGallery} />
+                <ProtectedRoute exact path="/browse" component={ShowIndexGallery} />
+                <ProtectedRoute path="/browse/my-list" component={MyListGallery} />
                 <ProtectedRoute path="/search" component={SearchGallery} />
                 <ProtectedRoute path="/genre/:genreId" component={GenreGallery} />
                 <ProtectedRoute path="/watch/:showId/:videoId" component={Watch} />

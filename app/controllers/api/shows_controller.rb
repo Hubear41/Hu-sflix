@@ -34,7 +34,6 @@ class Api::ShowsController < ApplicationController
                             middle: "%#{query_string}%", 
                             last: "%#{query_string}" 
                     )
-                    .order(created_at: :desc)
                     .includes(:videos)
             @genres = Genre.all
             @previewVideos = self.find_videos(@shows)
@@ -45,6 +44,19 @@ class Api::ShowsController < ApplicationController
             else 
                 render :index
             end
+        end
+    end
+
+    def my_list 
+        @shows = Show.with_attached_poster.where(id: current_user.shows_on_list_ids).includes(:videos)
+        @previewVideos = self.find_videos(@shows)
+        @genres = Genre.all
+        @runtime = @previewVideos.count > 0 ? @previewVideos[0].runtime : 0; 
+
+        if @shows.empty?
+            render json: {}
+        else
+            render :index
         end
     end
 

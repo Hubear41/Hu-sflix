@@ -33,3 +33,10 @@ export const searchShows = query => {
         data: { query_string: query },
     });
 }
+
+export const fetchMyListShows = () => {
+    return $.ajax({
+        method: 'GET',
+        url: 'api/my_list/shows',
+    });
+}

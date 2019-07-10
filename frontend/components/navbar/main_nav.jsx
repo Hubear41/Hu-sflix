@@ -36,7 +36,6 @@ class MainNav extends React.Component {
 
     componentWillUnmount() {
         this._isMounted = false;
-
         window.removeEventListener('scroll', this.handleScroll);
     }
 
@@ -123,6 +122,7 @@ class MainNav extends React.Component {
         const tvBold = pathname === `/genre/${tvShowsId}` ? "current-nav" : "";
         const movieBold = pathname === `/genre/${moviesId}` ? "current-nav" : "";
         const recentBold = pathname === `/genre/${recentId}` ? "current-nav" : "";     
+        const mylistBold = pathname === '/browse/my-list' ? "current-nav" : "";     
         
         let navAnimation = "";
         if ( background === CLEAR ) {
@@ -145,6 +145,7 @@ class MainNav extends React.Component {
                             <Link to={`/genre/${tvShowsId}`} className={`nav-btn ${tvBold}`}     onClick={this.handleClick} >TV Shows</Link>
                             <Link to={`/genre/${moviesId}`}  className={`nav-btn ${movieBold}`}  onClick={this.handleClick} >Movies</Link>
                             <Link to={`/genre/${recentId}`}  className={`nav-btn ${recentBold}`} onClick={this.handleClick} >Recently Added</Link>
+                            <Link to='/browse/my-list'       className={`nav-btn ${mylistBold}`} onClick={this.handleClick} >My List</Link>
                         </nav>
                     </section>
 
@@ -166,7 +167,7 @@ class MainNav extends React.Component {
                             <section className="nav-dropdown-menu">
                                 <i className="fas fa-caret-up"></i>
                                 <section className="nav-dropdown-profiles">
-                                    {/* <span>Manage Profiles</span> */}
+                                    <span>Manage Profiles</span>
                                 </section>
                                 <section className="nav-dropdown-links">
                                     <button onClick={this.handleLogout} className="logout-btn">Sign out of Hu'sflix</button> 

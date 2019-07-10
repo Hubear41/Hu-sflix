@@ -1,4 +1,4 @@
-class Api::MyListShowsController < ApplicationController 
+class Api::MyListShowsController < ApplicationController     
     def create 
         my_list_show = MyListShow.new(my_list_params)
 

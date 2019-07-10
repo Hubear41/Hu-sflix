@@ -343,7 +343,7 @@ var receiveErrors = function receiveErrors(errors) {
 /*!******************************************!*\
   !*** ./frontend/actions/show_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_VIDEO, RECEIVE_SHOW, RECEIVE_SHOWS, fetchVideo, fetchShows, fetchShow, searchShows */
+/*! exports provided: RECEIVE_VIDEO, RECEIVE_SHOW, RECEIVE_SHOWS, fetchVideo, fetchShows, fetchShow, fetchMyListShows, searchShows */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -354,6 +354,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVideo", function() { return fetchVideo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShows", function() { return fetchShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShow", function() { return fetchShow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMyListShows", function() { return fetchMyListShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchShows", function() { return searchShows; });
 /* harmony import */ var _util_show_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/show_util */ "./frontend/util/show_util.js");
 
@@ -378,6 +379,13 @@ var fetchShow = function fetchShow(id) {
   return function (dispatch) {
     return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchShow"](id).then(function (payload) {
       return dispatch(receiveShow(payload));
+    });
+  };
+};
+var fetchMyListShows = function fetchMyListShows() {
+  return function (dispatch) {
+    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchMyListShows"]().then(function (payload) {
+      return dispatch(receiveShows(payload));
     });
   };
 };
@@ -486,11 +494,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shows_show_gallery_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./shows/show_gallery_container */ "./frontend/components/shows/show_gallery_container.js");
 /* harmony import */ var _shows_genre_gallery_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./shows/genre_gallery_container */ "./frontend/components/shows/genre_gallery_container.js");
 /* harmony import */ var _shows_search_container__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./shows/search_container */ "./frontend/components/shows/search_container.js");
-/* harmony import */ var _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./watch/show_watch_container */ "./frontend/components/watch/show_watch_container.js");
-/* harmony import */ var _footer_footer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./footer/footer */ "./frontend/components/footer/footer.jsx");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.js");
-/* harmony import */ var _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./navbar/main_nav_container */ "./frontend/components/navbar/main_nav_container.js");
+/* harmony import */ var _shows_mylist_gallery_container__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./shows/mylist_gallery_container */ "./frontend/components/shows/mylist_gallery_container.js");
+/* harmony import */ var _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./watch/show_watch_container */ "./frontend/components/watch/show_watch_container.js");
+/* harmony import */ var _footer_footer__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./footer/footer */ "./frontend/components/footer/footer.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.js");
+/* harmony import */ var _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./navbar/main_nav_container */ "./frontend/components/navbar/main_nav_container.js");
+
 
 
 
@@ -510,42 +520,46 @@ __webpack_require__.r(__webpack_exports__);
 var App = function App() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_background_background__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
     className: "main-content"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_12__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["AuthRoute"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
     exact: true,
     path: ["/", "/signup", "/login"],
     component: _navbar_navbar_container__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
     path: ["/browse", "/genre", "/search"],
-    component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_14__["default"]
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["AuthRoute"], {
+    component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_15__["default"]
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
     exact: true,
     path: "/",
     component: _splash_splash__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
     path: "/signup",
     component: _session_signup_form_container__WEBPACK_IMPORTED_MODULE_1__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
     path: "/login",
     component: _session_login_form_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
     path: ["/browse", "/search", "/genre"],
     component: _loading_loading_screen__WEBPACK_IMPORTED_MODULE_6__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
+    exact: true,
     path: "/browse",
     component: _shows_show_gallery_container__WEBPACK_IMPORTED_MODULE_7__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
+    path: "/browse/my-list",
+    component: _shows_mylist_gallery_container__WEBPACK_IMPORTED_MODULE_10__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
     path: "/search",
     component: _shows_search_container__WEBPACK_IMPORTED_MODULE_9__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
     path: "/genre/:genreId",
     component: _shows_genre_gallery_container__WEBPACK_IMPORTED_MODULE_8__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
     path: "/watch/:showId/:videoId",
-    component: _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_10__["default"]
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_13__["AuthRoute"], {
+    component: _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_11__["default"]
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
     exact: true,
     path: "/",
-    component: _footer_footer__WEBPACK_IMPORTED_MODULE_11__["default"]
+    component: _footer_footer__WEBPACK_IMPORTED_MODULE_12__["default"]
   }));
 };
 
@@ -1366,6 +1380,7 @@ function (_React$Component) {
       var tvBold = pathname === "/genre/".concat(tvShowsId) ? "current-nav" : "";
       var movieBold = pathname === "/genre/".concat(moviesId) ? "current-nav" : "";
       var recentBold = pathname === "/genre/".concat(recentId) ? "current-nav" : "";
+      var mylistBold = pathname === '/browse/my-list' ? "current-nav" : "";
       var navAnimation = "";
 
       if (background === CLEAR) {
@@ -1410,7 +1425,11 @@ function (_React$Component) {
         to: "/genre/".concat(recentId),
         className: "nav-btn ".concat(recentBold),
         onClick: this.handleClick
-      }, "Recently Added"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }, "Recently Added"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/browse/my-list",
+        className: "nav-btn ".concat(mylistBold),
+        onClick: this.handleClick
+      }, "My List"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "right-nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "search-bar-form ".concat(searchAnimation),
@@ -1442,7 +1461,7 @@ function (_React$Component) {
         className: "fas fa-caret-up"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "nav-dropdown-profiles"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Manage Profiles")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "nav-dropdown-links"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.handleLogout,
@@ -2260,7 +2279,8 @@ var msp = function msp(_ref, ownProps) {
     videos: entities.videos,
     genreId: genreId,
     loading: loading,
-    mylistShowIds: mylistShowIds
+    mylistShowIds: mylistShowIds,
+    galleryType: 'WITH_BANNER'
   };
 };
 
@@ -2279,6 +2299,63 @@ var mdp = function mdp(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_show_gallery__WEBPACK_IMPORTED_MODULE_4__["default"])));
+
+/***/ }),
+
+/***/ "./frontend/components/shows/mylist_gallery_container.js":
+/*!***************************************************************!*\
+  !*** ./frontend/components/shows/mylist_gallery_container.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/ui_actions */ "./frontend/actions/ui_actions.js");
+/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/show_actions */ "./frontend/actions/show_actions.js");
+/* harmony import */ var _show_gallery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./show_gallery */ "./frontend/components/shows/show_gallery.jsx");
+
+
+
+
+
+var msp = function msp(_ref) {
+  var entities = _ref.entities,
+      ui = _ref.ui,
+      session = _ref.session;
+  var shows = Object.values(entities.shows);
+  var videos = entities.videos;
+  var genres = entities.genres;
+  var loading = ui.loading;
+  var currentUserId = session.id;
+  var mylistShowIds = entities.users[currentUserId].listShowIds;
+  return {
+    shows: shows,
+    videos: videos,
+    genres: genres,
+    loading: loading,
+    currentUserId: currentUserId,
+    mylistShowIds: mylistShowIds,
+    galleryType: 'MY_LIST'
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    stopLoading: function stopLoading() {
+      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_1__["stopLoading"])());
+    },
+    startLoading: function startLoading() {
+      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_1__["startLoading"])());
+    },
+    requestAllShows: function requestAllShows() {
+      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_2__["fetchMyListShows"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_show_gallery__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -2755,8 +2832,8 @@ function (_React$Component) {
           showRowsList = [];
 
       if (shows.length > 0) {
-        showsPerRow = galleryType !== 'SEARCH' ? this.createRows() : this.createUnorderedRows();
-        previewShow = galleryType !== 'SEARCH' ? shows[this.state.previewId] : null;
+        showsPerRow = galleryType === 'WITH_BANNER' ? this.createRows() : this.createUnorderedRows();
+        previewShow = galleryType === 'WITH_BANNER' ? shows[this.state.previewId] : null;
 
         if (showsPerRow["My List"] !== undefined && showsPerRow["My List"].length > 0) {
           showRowsList.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_rows__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -2784,24 +2861,25 @@ function (_React$Component) {
           } else {
             return null;
           }
-        }); // debugger
-
-        showRowsList = showRowsList.concat(otherRows); // debugger
+        });
+        showRowsList = showRowsList.concat(otherRows);
       }
 
-      var galleryStyle = galleryType !== 'SEARCH' ? {
+      var galleryStyle = galleryType === 'WITH_BANNER' ? {
         top: "75vh"
       } : {
-        top: "15vh"
+        top: "12vh"
       };
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "show-gallery-index-wrapper"
-      }, galleryType !== 'SEARCH' && previewShow ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_banner_video_banner_video_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, galleryType === 'WITH_BANNER' && previewShow ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_banner_video_banner_video_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
         show: previewShow
       }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "gallery-index-wrapper",
         style: galleryStyle
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, galleryType === 'MY_LIST' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "my-list-header"
+      }, "My List") : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "show-gallery-index",
         id: "gallery-index-bg"
       }, showRowsList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
@@ -2882,7 +2960,7 @@ var msp = function msp(_ref) {
     loading: loading,
     currentUserId: currentUserId,
     mylistShowIds: mylistShowIds,
-    galleryType: 'Banner-Titles'
+    galleryType: 'WITH_BANNER'
   };
 };
 
@@ -3232,7 +3310,7 @@ var ShowRow = function ShowRow(props) {
       genres = props.genres,
       videos = props.videos;
   var showList = [];
-  var rowHeader = galleryType !== 'SEARCH' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, genreName) : null;
+  var rowHeader = galleryType === 'WITH_BANNER' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, genreName) : null;
   shows.forEach(function (show) {
     showList.push(createShowRowItem(show, rowNum, videos, genres));
   });
@@ -4608,7 +4686,7 @@ var addMyListVideo = function addMyListVideo(userId, showId) {
 var removeMyListVideo = function removeMyListVideo(userId, showId) {
   return $.ajax({
     method: 'POST',
-    url: "api/my_list",
+    url: 'api/my_list_shows',
     data: {
       profile_id: userId,
       show_id: showId
@@ -4723,7 +4801,7 @@ var logoutUser = function logoutUser() {
 /*!************************************!*\
   !*** ./frontend/util/show_util.js ***!
   \************************************/
-/*! exports provided: fetchShows, fetchShow, fetchVideo, fetchPreviewVideos, searchShows */
+/*! exports provided: fetchShows, fetchShow, fetchVideo, fetchPreviewVideos, searchShows, fetchMyListShows */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4733,6 +4811,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVideo", function() { return fetchVideo; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPreviewVideos", function() { return fetchPreviewVideos; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchShows", function() { return searchShows; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMyListShows", function() { return fetchMyListShows; });
 var fetchShows = function fetchShows() {
   return $.ajax({
     method: 'GET',
@@ -4764,6 +4843,12 @@ var searchShows = function searchShows(query) {
     data: {
       query_string: query
     }
+  });
+};
+var fetchMyListShows = function fetchMyListShows() {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/my_list/shows'
   });
 };
 

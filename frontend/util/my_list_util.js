@@ -14,7 +14,7 @@ export const addMyListVideo = (userId, showId) => {
 export const removeMyListVideo = (userId, showId) => {
     return $.ajax({
         method: 'POST',
-        url: `api/my_list`,
+        url: 'api/my_list_shows',
         data: { profile_id: userId, show_id: showId },
     });
 };

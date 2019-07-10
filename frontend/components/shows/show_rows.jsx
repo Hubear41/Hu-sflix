@@ -5,7 +5,7 @@ import ShowDetail from './show_detail_container';
 const ShowRow = props => {
     const { shows, rowNum, genreName, galleryType, genres, videos } = props;
     const showList = [];
-    const rowHeader = galleryType !== 'SEARCH' ? <h2>{genreName}</h2> : null;
+    const rowHeader = galleryType === 'WITH_BANNER' ? <h2>{genreName}</h2> : null;
     
     shows.forEach( show => {
         showList.push(createShowRowItem(show, rowNum, videos, genres));

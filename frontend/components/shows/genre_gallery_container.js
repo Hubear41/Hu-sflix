@@ -28,6 +28,7 @@ const msp = ({ entities, ui, session }, ownProps) => {
         genreId,
         loading,
         mylistShowIds,
+        galleryType: 'WITH_BANNER'
     }
 }
 
