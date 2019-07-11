@@ -404,6 +404,33 @@ class Watch extends React.Component {
             audioIcon = this.findAudioIcon();
         }
         let keypressIcon = this.findKeyPress();
+        let keypressComponent = null;
+        if ( keypressIcon !== null ) {
+            if ( currentKey === 'jumpForward' ) {
+                keypressComponent = (
+                    <figure className='keypress-visual right-align' onAnimationEnd={() => this.setState({ currentKey: null })}>
+                        <i className="fas fa-circle"></i>
+                        {keypressIcon}
+                        <span>10</span>
+                    </figure>
+                );
+            } else if ( currentKey === 'jumpBack') {
+                keypressComponent = (
+                    <figure className='keypress-visual left-align' onAnimationEnd={() => this.setState({ currentKey: null })}>
+                        <i className="fas fa-circle"></i>
+                        {keypressIcon}
+                        <span>10</span>
+                    </figure>
+                );
+            } else {
+                keypressComponent = (
+                    <figure className='keypress-visual center-align' onAnimationEnd={() => this.setState({ currentKey: null })}>
+                        <i className="fas fa-circle"></i>
+                        {keypressIcon}
+                    </figure>
+                );
+            }
+        }
 
 
         // decides the current button in the fullscreen slot
@@ -440,13 +467,7 @@ class Watch extends React.Component {
                          onKeyPress={this.togglePlayPause}
                          onMouseMove={this.showControls} 
                     >
-                       
-                        { keypressIcon !== null 
-                            ? <figure className='keypress-visual' onAnimationEnd={ () => this.setState({ currentKey: null })}>
-                                <i className="fas fa-circle"></i>
-                                {keypressIcon}
-                              </figure>
-                            : null }
+                        {keypressComponent}
                     </div>
 
                     <article className='watch-maturity-details'>

@@ -361,7 +361,6 @@
     height: 100px;
     width: 100px;
     top: calc(50vh - 100px);
-    left: calc(50vw - 100px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -369,6 +368,18 @@
     animation: keypress-expand;
     animation-fill-mode: forwards;
     animation-duration: 0.5s;
+}
+
+.center-align {
+    left: calc(50vw - 100px);
+}
+
+.left-align {
+    left: calc(30vw - 100px);
+}
+
+.right-align {
+    left: calc(70vw - 100px);
 }
 
 .keypress-visual .fa-circle {
@@ -381,6 +392,14 @@
     position: absolute;
     font-size: 18px;
     z-index: 55;
+}
+
+.keypress-visual span {
+    color: rgba(255,255,255,0.6);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 8px;
+    position: absolute;
+    z-index: 55;w
 }
 
 .progress-scrubber-wrapper {

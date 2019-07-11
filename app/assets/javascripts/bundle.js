@@ -4044,7 +4044,46 @@ function (_React$Component) {
         audioIcon = this.findAudioIcon();
       }
 
-      var keypressIcon = this.findKeyPress(); // decides the current button in the fullscreen slot
+      var keypressIcon = this.findKeyPress();
+      var keypressComponent = null;
+
+      if (keypressIcon !== null) {
+        if (currentKey === 'jumpForward') {
+          keypressComponent = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+            className: "keypress-visual right-align",
+            onAnimationEnd: function onAnimationEnd() {
+              return _this6.setState({
+                currentKey: null
+              });
+            }
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-circle"
+          }), keypressIcon, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "10"));
+        } else if (currentKey === 'jumpBack') {
+          keypressComponent = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+            className: "keypress-visual left-align",
+            onAnimationEnd: function onAnimationEnd() {
+              return _this6.setState({
+                currentKey: null
+              });
+            }
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-circle"
+          }), keypressIcon, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "10"));
+        } else {
+          keypressComponent = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+            className: "keypress-visual center-align",
+            onAnimationEnd: function onAnimationEnd() {
+              return _this6.setState({
+                currentKey: null
+              });
+            }
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-circle"
+          }), keypressIcon);
+        }
+      } // decides the current button in the fullscreen slot
+
 
       var fullscreenBtn, fullscreenFunc;
 
@@ -4085,16 +4124,7 @@ function (_React$Component) {
         onClick: this.togglePlayPause,
         onKeyPress: this.togglePlayPause,
         onMouseMove: this.showControls
-      }, keypressIcon !== null ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "keypress-visual",
-        onAnimationEnd: function onAnimationEnd() {
-          return _this6.setState({
-            currentKey: null
-          });
-        }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-circle"
-      }), keypressIcon) : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+      }, keypressComponent), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "watch-maturity-details"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "red-line"
