@@ -554,7 +554,7 @@ var App = function App() {
     path: "/genre/:genreId",
     component: _shows_genre_gallery_container__WEBPACK_IMPORTED_MODULE_8__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
-    path: "/watch/:showId/:videoId",
+    path: "/watch/:showId",
     component: _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_11__["default"]
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
     exact: true,
@@ -656,6 +656,7 @@ function (_React$Component) {
     _this.launchWatch = _this.launchWatch.bind(_assertThisInitialized(_this));
     _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
     _this.toggleMyList = _this.toggleMyList.bind(_assertThisInitialized(_this));
+    _this.handleScroll = _this.handleScroll.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -665,28 +666,11 @@ function (_React$Component) {
       var _this2 = this;
 
       this._isMounted = true;
-      var _this$props = this.props,
-          previewId = _this$props.previewId,
-          isPreviewing = _this$props.isPreviewing;
-      var ended = this.state.ended;
+      var previewId = this.props.previewId;
       this.currentRequest = this.props.requestVideo(previewId).then(function () {
         return _this2.currentRequest = null;
       });
-      window.addEventListener('scroll', function () {
-        var bigPreview = _this2.entirePreview.current;
-
-        if (isPreviewing) {
-          _this2.pauseVideo();
-        } else if (bigPreview) {
-          var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop; // debugger
-
-          if (!ended && scrollHeight > bigPreview.scrollHeight / 4) {
-            _this2.pauseVideo();
-          } else if (!ended && scrollHeight <= bigPreview.scrollHeight / 4) {
-            _this2.playVideo();
-          }
-        }
-      });
+      window.addEventListener('scroll', this.handleScroll);
     }
   }, {
     key: "componentDidUpdate",
@@ -708,6 +692,37 @@ function (_React$Component) {
       if (this.currentRequest !== null) this.currentRequest.abort();
     }
   }, {
+    key: "handleScroll",
+    value: function handleScroll() {
+      var _this3 = this;
+
+      var isPreviewing = this.props.isPreviewing;
+      var ended = this.state.ended;
+      var bigPreview = this.entirePreview.current;
+
+      if (isPreviewing) {
+        clearTimeout(this.timeout);
+        this.pauseVideo();
+      } else if (bigPreview !== null) {
+        var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop; // if the banner video can still play and the user has scrolled past 1/4 of it's height
+        // it will pause the video after a second
+        // or it will restart it once it's above 1/4
+
+        if (!ended && scrollHeight > bigPreview.scrollHeight / 4) {
+          this.timeout = setTimeout(function () {
+            _this3.pauseVideo();
+          }, 1500);
+        } else if (!ended && scrollHeight <= bigPreview.scrollHeight / 4) {
+          // debugger
+          clearTimeout(this.timeout);
+
+          if (this.videoPlayer.current.paused) {
+            this.playVideo();
+          }
+        }
+      }
+    }
+  }, {
     key: "toggleMute",
     value: function toggleMute() {
       var videoEl = this.videoPlayer.current;
@@ -727,10 +742,10 @@ function (_React$Component) {
   }, {
     key: "videoReady",
     value: function videoReady() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.timeout = setTimeout(function () {
-        return _this3.revealVideo();
+        return _this4.revealVideo();
       }, 2000);
     }
   }, {
@@ -747,7 +762,7 @@ function (_React$Component) {
   }, {
     key: "playVideo",
     value: function playVideo() {
-      var _this4 = this;
+      var _this5 = this;
 
       var videoEl = this.videoPlayer.current;
       var bigPreview = this.entirePreview.current;
@@ -755,7 +770,7 @@ function (_React$Component) {
       if (window.pageYOffset < bigPreview.scrollHeight / 3 && videoEl.paused) {
         this.timeout = setTimeout(function () {
           videoEl.play().then(function () {
-            if (_this4._isMounted) _this4.setState({
+            if (_this5._isMounted) _this5.setState({
               imageOpacity: 0
             });
           });
@@ -765,14 +780,14 @@ function (_React$Component) {
   }, {
     key: "pauseVideo",
     value: function pauseVideo() {
-      var _this5 = this;
+      var _this6 = this;
 
       var videoEl = this.videoPlayer.current;
 
       if (!videoEl.paused) {
         this.timeout = setTimeout(function () {
           videoEl.pause();
-          if (_this5._isMounted) _this5.setState({
+          if (_this6._isMounted) _this6.setState({
             imageOpacity: 1
           });
         }, 1000);
@@ -781,20 +796,20 @@ function (_React$Component) {
   }, {
     key: "toggleMyList",
     value: function toggleMyList() {
-      var _this6 = this;
+      var _this7 = this;
 
-      var _this$props2 = this.props,
-          show = _this$props2.show,
-          mylistIds = _this$props2.mylistIds,
-          currentUserId = _this$props2.currentUserId;
+      var _this$props = this.props,
+          show = _this$props.show,
+          mylistIds = _this$props.mylistIds,
+          currentUserId = _this$props.currentUserId;
 
       if (mylistIds.includes(show.id) && this.state.mylistState === 'My List') {
         if (this._isMounted) this.setState({
           mylistState: 'Removing...'
         });
         this.currentRequest = this.props.removeMyListVideo(currentUserId, show.id).then(function () {
-          _this6.currentRequest = null;
-          if (_this6._isMounted) _this6.setState({
+          _this7.currentRequest = null;
+          if (_this7._isMounted) _this7.setState({
             mylistState: 'My List'
           });
         });
@@ -803,8 +818,8 @@ function (_React$Component) {
           mylistState: 'Adding...'
         });
         this.currentRequest = this.props.addMyListVideo(currentUserId, show.id).then(function () {
-          _this6.currentRequest = null;
-          if (_this6._isMounted) _this6.setState({
+          _this7.currentRequest = null;
+          if (_this7._isMounted) _this7.setState({
             mylistState: 'My List'
           });
         });
@@ -861,18 +876,24 @@ function (_React$Component) {
       var show = this.props.show;
 
       if (show.show_type === 'FEATURE') {
-        this.props.history.push("/watch/".concat(show.id, "/").concat(show.movie_id));
+        this.props.history.push({
+          pathname: "/watch/".concat(show.id),
+          search: "trackId=".concat(show.movie_id)
+        });
       } else {
-        this.props.history.push("/watch/".concat(show.id, "/").concat(show.episode_ids[0]));
+        this.props.history.push({
+          pathname: "/watch/".concat(show.id),
+          search: "trackId=".concat(show.episode_ids[0])
+        });
       }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props3 = this.props,
-          show = _this$props3.show,
-          video = _this$props3.video,
-          mylistIds = _this$props3.mylistIds;
+      var _this$props2 = this.props,
+          show = _this$props2.show,
+          video = _this$props2.video,
+          mylistIds = _this$props2.mylistIds;
       var _this$state2 = this.state,
           imageOpacity = _this$state2.imageOpacity,
           started = _this$state2.started,
@@ -2866,10 +2887,13 @@ function (_React$Component) {
       }
 
       var galleryStyle = galleryType === 'WITH_BANNER' ? {
-        top: "75vh"
+        top: "75vmin"
       } : {
         top: "12vh"
       };
+      var marginStyle = galleryType === 'MY_LIST' ? {
+        paddingTop: "5vh"
+      } : null;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "show-gallery-index-wrapper"
       }, galleryType === 'WITH_BANNER' && previewShow ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_banner_video_banner_video_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -2881,7 +2905,8 @@ function (_React$Component) {
         className: "my-list-header"
       }, "My List") : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "show-gallery-index",
-        id: "gallery-index-bg"
+        id: "gallery-index-bg",
+        style: marginStyle
       }, showRowsList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("footer", {
         className: "gallery-footer"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_footer_footer__WEBPACK_IMPORTED_MODULE_2__["default"], null))));
@@ -3060,6 +3085,7 @@ function (_React$Component) {
     value: function componentWillUnmount() {
       this._isMounted = false;
       clearTimeout(this.videoTimeout);
+      clearTimeout(this.timeout);
     }
   }, {
     key: "launchWatch",
@@ -3070,9 +3096,15 @@ function (_React$Component) {
       clearTimeout(this.videoTimeout);
 
       if (show.show_type === 'FEATURE') {
-        this.props.history.push("/watch/".concat(show.id, "/").concat(show.movie_id));
+        this.props.history.push({
+          pathname: "/watch/".concat(show.id),
+          search: "trackId=".concat(show.movie_id)
+        });
       } else {
-        this.props.history.push("/watch/".concat(show.id, "/").concat(show.episode_ids[0]));
+        this.props.history.push({
+          pathname: "/watch/".concat(show.id),
+          search: "trackId=".concat(show.episode_ids[0])
+        });
       }
     }
   }, {
@@ -3113,6 +3145,9 @@ function (_React$Component) {
           }
         });
       }, 2000);
+      this.timeout = setTimeout(function () {
+        _this2.props.startPreview();
+      }, 500);
     }
   }, {
     key: "pauseVideo",
@@ -3125,6 +3160,7 @@ function (_React$Component) {
       videoEl.pause();
       this.props.endPreview();
       clearTimeout(this.videoTimeout);
+      clearTimeout(this.timeout);
       if (this._isMounted) this.setState({
         paused: true
       });
@@ -3262,7 +3298,8 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "far fa-circle preview-btn-outline"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
-        className: "preview-video-info-desc"
+        className: "preview-video-info-desc",
+        onClick: this.launchWatch
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "preview-show-title"
       }, show.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
@@ -4117,23 +4154,14 @@ __webpack_require__.r(__webpack_exports__);
 var msp = function msp(_ref, ownProps) {
   var entities = _ref.entities,
       session = _ref.session;
-  var video = entities.videos[ownProps.match.params.videoId];
+  var videoId = new URLSearchParams(ownProps.location.search).get("trackId");
+  var video = entities.videos[videoId];
   var show = entities.shows[ownProps.match.params.showId];
-  var currentUserId = session.id; // let nextShow = null;
-  // const shows = Object.values(state.entities.shows);
-  // if ( shows.length > 1 ) {
-  //     shows.each( otherShow => {
-  //         if ( otherShow.id !== show.id ) {
-  //             nextShow = otherShow;
-  //         }
-  //     });  
-  // }
-
+  var currentUserId = session.id;
   return {
     video: video,
     show: show,
-    currentUserId: currentUserId // nextShow,
-
+    currentUserId: currentUserId
   };
 };
 

@@ -36,8 +36,7 @@
 
 .gallery-index-wrapper {
     position: absolute;
-    top: 0;
-    left: 0;
+    /* top: 75vmin; */
     width: 100%;
     z-index: 500;
     min-height: 100vh;
@@ -48,7 +47,8 @@
     flex-direction: column;
     width: 100%;
     overflow-x: hidden;
-    padding: 5vh 0;
+    /* padding: 5vh 0; */
+    padding-bottom: 5vh;
     margin-bottom: 10vh;
     background: linear-gradient( to top, rgba(20,20,20,1) 95%, rgba(20,20,20,0) 100%);
 }

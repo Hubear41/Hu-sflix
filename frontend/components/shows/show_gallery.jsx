@@ -205,8 +205,9 @@ class ShowGallery extends React.Component {
             showRowsList = showRowsList.concat(otherRows);
         }
 
-        const galleryStyle = galleryType === 'WITH_BANNER'  ? { top: "75vh" } : { top: "12vh" };
-        
+        const galleryStyle = galleryType === 'WITH_BANNER'  ? { top: "75vmin" } : { top: "12vh" };
+        const marginStyle = galleryType === 'MY_LIST' ? { paddingTop: "5vh" } : null;
+
         return (
             <section className="show-gallery-index-wrapper" >
                 { galleryType === 'WITH_BANNER'  && previewShow ? <BigPreviewContainer show={previewShow} /> : null }
@@ -214,7 +215,7 @@ class ShowGallery extends React.Component {
                 <section className="gallery-index-wrapper" style={galleryStyle} >
                     { galleryType === 'MY_LIST' ? <h1 className='my-list-header'>My List</h1> : null }
                     
-                    <ul className="show-gallery-index" id="gallery-index-bg">
+                    <ul className="show-gallery-index" id="gallery-index-bg" style={marginStyle} >
                         {showRowsList}
                     </ul>
 

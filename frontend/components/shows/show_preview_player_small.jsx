@@ -35,6 +35,7 @@ class ShowPreviewPlayerSmall extends React.Component {
         this._isMounted = false;
 
         clearTimeout(this.videoTimeout);
+        clearTimeout(this.timeout);
     }
     
     launchWatch() {
@@ -45,9 +46,15 @@ class ShowPreviewPlayerSmall extends React.Component {
         clearTimeout(this.videoTimeout);
         
         if (show.show_type === 'FEATURE') {
-            this.props.history.push(`/watch/${show.id}/${show.movie_id}`)
+            this.props.history.push({
+                pathname: `/watch/${show.id}`,
+                search: `trackId=${show.movie_id}`
+            });
         } else {    
-            this.props.history.push(`/watch/${show.id}/${show.episode_ids[0]}`)    
+            this.props.history.push({
+                pathname: `/watch/${show.id}`, 
+                search: `trackId=${show.episode_ids[0]}`
+            });    
         }
     }
 
@@ -77,6 +84,10 @@ class ShowPreviewPlayerSmall extends React.Component {
                 }
             });
         }, 2000);
+
+        this.timeout = setTimeout( () => {
+            this.props.startPreview();
+        }, 500);
     }
 
     pauseVideo() {
@@ -90,6 +101,7 @@ class ShowPreviewPlayerSmall extends React.Component {
         this.props.endPreview();
         
         clearTimeout(this.videoTimeout);
+        clearTimeout(this.timeout);
         if (this._isMounted) this.setState({ paused: true });
     }
 
@@ -185,7 +197,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                                 </button>
                             </aside>
  
-                            <figcaption className="preview-video-info-desc">
+                            <figcaption className="preview-video-info-desc" onClick={this.launchWatch}>
                                 <h5 className="preview-show-title">{show.title}</h5>
                                 <article className='preview-details'>
                                     <span className="show-maturity-rating">{show.maturity_rating}</span>

@@ -34,7 +34,7 @@ const App = () => {
                 <ProtectedRoute path="/browse/my-list" component={MyListGallery} />
                 <ProtectedRoute path="/search" component={SearchGallery} />
                 <ProtectedRoute path="/genre/:genreId" component={GenreGallery} />
-                <ProtectedRoute path="/watch/:showId/:videoId" component={Watch} />
+                <ProtectedRoute path="/watch/:showId" component={Watch} />
             </main>
             <AuthRoute exact path="/" component={Footer} />
         </>

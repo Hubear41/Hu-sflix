@@ -23,31 +23,16 @@ class BigPreview extends React.Component {
         this.launchWatch = this.launchWatch.bind(this);
         this.toggleMute = this.toggleMute.bind(this);
         this.toggleMyList = this.toggleMyList.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
     }
     
     componentDidMount() {
         this._isMounted = true;
+        const { previewId } = this.props;
 
-        const { previewId, isPreviewing } = this.props;
-        const { ended } = this.state;
         this.currentRequest = this.props.requestVideo(previewId).then( () => this.currentRequest = null );
         
-        window.addEventListener('scroll', () => {
-            let bigPreview = this.entirePreview.current;
-
-            if ( isPreviewing ) {
-                this.pauseVideo();
-            } else if ( bigPreview ) {
-                const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop;
-
-                // debugger
-                if ( !ended && scrollHeight > (bigPreview.scrollHeight / 4) ) {
-                    this.pauseVideo();
-                } else if ( !ended && scrollHeight <= (bigPreview.scrollHeight / 4) ) {
-                    this.playVideo();
-                }
-            }
-        });
+        window.addEventListener('scroll', this.handleScroll);
     }
 
     componentDidUpdate() {
@@ -66,6 +51,35 @@ class BigPreview extends React.Component {
 
         clearTimeout(this.timeout);
         if ( this.currentRequest !== null ) this.currentRequest.abort();
+    }
+
+    handleScroll() {
+        const { isPreviewing } = this.props;
+        const { ended } = this.state;
+        let bigPreview = this.entirePreview.current;
+
+        if (isPreviewing) {
+            clearTimeout(this.timeout);
+            this.pauseVideo();
+        } else if (bigPreview !== null) {
+            const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop;
+
+            // if the banner video can still play and the user has scrolled past 1/4 of it's height
+            // it will pause the video after a second
+            // or it will restart it once it's above 1/4
+            if (!ended && scrollHeight > (bigPreview.scrollHeight / 4)) {
+                this.timeout = setTimeout(() => {
+                    this.pauseVideo();
+                }, 1500);
+            } else if (!ended && scrollHeight <= (bigPreview.scrollHeight / 4)) {
+                // debugger
+                clearTimeout(this.timeout);
+
+                if (this.videoPlayer.current.paused) {
+                    this.playVideo();
+                }
+            }
+        }
     }
 
     toggleMute() {
@@ -169,10 +183,16 @@ class BigPreview extends React.Component {
     launchWatch() {
         const { show } = this.props;
 
-        if ( show.show_type === 'FEATURE') {
-            this.props.history.push(`/watch/${show.id}/${show.movie_id}`);
+        if (show.show_type === 'FEATURE') {
+            this.props.history.push({
+                pathname: `/watch/${show.id}`,
+                search: `trackId=${show.movie_id}`
+            });
         } else {
-            this.props.history.push(`/watch/${show.id}/${show.episode_ids[0]}`);
+            this.props.history.push({
+                pathname: `/watch/${show.id}`,
+                search: `trackId=${show.episode_ids[0]}`
+            });
         }
     }
 
