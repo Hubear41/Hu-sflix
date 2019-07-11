@@ -134,7 +134,7 @@
     width: 100vw;
     z-index: 1;
     opacity: 0;
-    background-color: rgba(0,0,0,0.5) ;
+    background-color: rgba(0,0,0,0.5);
 }
 
 .away-screen-content {
@@ -399,7 +399,7 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 8px;
     position: absolute;
-    z-index: 55;w
+    z-index: 55;
 }
 
 .progress-scrubber-wrapper {
