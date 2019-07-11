@@ -3534,81 +3534,83 @@ function (_React$Component) {
   }, {
     key: "determineKeyPress",
     value: function determineKeyPress(e) {
-      switch (e.keyCode) {
-        case 13:
-          // enter
-          this.togglePlayPause();
-          if (this._isMounted) this.setState({
-            currentKey: "play/pause"
-          });
-          break;
+      if (this._isMounted) {
+        switch (e.keyCode) {
+          case 13:
+            // enter
+            this.togglePlayPause();
+            this.setState({
+              currentKey: "play/pause"
+            });
+            break;
 
-        case 32:
-          // spacebar
-          e.preventDefault();
-          this.togglePlayPause();
-          if (this._isMounted) this.setState({
-            currentKey: "play/pause"
-          });
-          break;
+          case 32:
+            // spacebar
+            e.preventDefault();
+            this.togglePlayPause();
+            this.setState({
+              currentKey: "play/pause"
+            });
+            break;
 
-        case 27:
-          // escape
-          document.fullscreen ? this.closeFullscreen() : null;
-          break;
+          case 27:
+            // escape
+            document.fullscreen ? this.closeFullscreen() : null;
+            break;
 
-        case 38:
-          // up arrow
-          this.changeVolume(0.1);
-          if (this._isMounted) this.setState({
-            currentKey: "volumeUp"
-          });
-          break;
+          case 38:
+            // up arrow
+            this.changeVolume(0.1);
+            this.setState({
+              currentKey: "volumeUp"
+            });
+            break;
 
-        case 40:
-          // down arrow
-          this.changeVolume(-0.1);
-          if (this._isMounted) this.setState({
-            currentKey: "volumeDown"
-          });
-          break;
+          case 40:
+            // down arrow
+            this.changeVolume(-0.1);
+            this.setState({
+              currentKey: "volumeDown"
+            });
+            break;
 
-        case 39:
-          // right arrow
-          this.jumpForward();
-          if (this._isMounted) this.setState({
-            currentKey: 'jumpForward'
-          });
-          break;
+          case 39:
+            // right arrow
+            this.jumpForward();
+            this.setState({
+              currentKey: 'jumpForward'
+            });
+            break;
 
-        case 37:
-          // left arrow
-          this.jumpBack();
-          if (this._isMounted) this.setState({
-            currentKey: 'jumpBack'
-          });
-          break;
+          case 37:
+            // left arrow
+            this.jumpBack();
+            this.setState({
+              currentKey: 'jumpBack'
+            });
+            break;
 
-        case 77:
-          // m key
-          this.toggleMute();
-          if (this._isMounted) this.setState({
-            currentKey: 'mute/unmute'
-          });
-          break;
+          case 77:
+            // m key
+            this.toggleMute();
+            this.setState({
+              currentKey: 'mute/unmute'
+            });
+            break;
 
-        case 70:
-          // f key
-          if (document.fullscreen) {
-            this.closeFullscreen();
-          } else {
-            this.openFullscreen();
-          }
+          case 70:
+            // f key
+            if (document.fullscreen) {
+              this.closeFullscreen();
+            } else {
+              this.openFullscreen();
+            }
 
-          break;
+            break;
 
-        default:
-          break;
+          default:
+            break;
+        }
       }
     }
   }, {
@@ -3658,33 +3660,12 @@ function (_React$Component) {
       }
     }
   }, {
-    key: "findAudioIcon",
-    value: function findAudioIcon() {
-      var _this$state2 = this.state,
-          muted = _this$state2.muted,
-          volume = _this$state2.volume;
-
-      if (muted || volume === 0) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-volume-mute"
-        });
-      } else if (volume > 0.5) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-volume-up"
-        });
-      } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-volume-down"
-        });
-      }
-    }
-  }, {
     key: "toggleMute",
     value: function toggleMute() {
-      var _this$state3 = this.state,
-          muted = _this$state3.muted,
-          volume = _this$state3.volume,
-          prevVolume = _this$state3.prevVolume;
+      var _this$state2 = this.state,
+          muted = _this$state2.muted,
+          volume = _this$state2.volume,
+          prevVolume = _this$state2.prevVolume;
       var videoEl = this.videoPlayer.current;
       var currVolume = volume === 0 ? 0.1 : volume; // if audio has been muted, this resets the audio level back to it's 
       // previous amount. 
@@ -3834,10 +3815,10 @@ function (_React$Component) {
     value: function showControls() {
       var _this5 = this;
 
-      var _this$state4 = this.state,
-          started = _this$state4.started,
-          paused = _this$state4.paused,
-          mouseMoving = _this$state4.mouseMoving;
+      var _this$state3 = this.state,
+          started = _this$state3.started,
+          paused = _this$state3.paused,
+          mouseMoving = _this$state3.mouseMoving;
       clearTimeout(this.awayTimer);
 
       if (mouseMoving) {
@@ -3896,6 +3877,89 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "findAudioIcon",
+    value: function findAudioIcon() {
+      var keypress = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var _this$state4 = this.state,
+          muted = _this$state4.muted,
+          volume = _this$state4.volume;
+
+      if (muted || volume === 0) {
+        return keypress ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-mute keypress"
+        }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-mute"
+        });
+      } else if (volume > 0.5) {
+        return keypress ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-up keypress"
+        }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-up"
+        });
+      } else {
+        return keypress ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-down keypress"
+        }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fas fa-volume-down"
+        });
+      }
+    }
+  }, {
+    key: "findKeyPress",
+    value: function findKeyPress() {
+      var _this$state5 = this.state,
+          currentKey = _this$state5.currentKey,
+          paused = _this$state5.paused,
+          muted = _this$state5.muted;
+      var keyVisual = null;
+
+      if (currentKey !== null) {
+        switch (currentKey) {
+          case "play/pause":
+            keyVisual = paused ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "fas fa-pause keypress"
+            }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "fas fa-play keypress"
+            });
+            break;
+
+          case "volumeUp":
+            keyVisual = this.findAudioIcon(true);
+            break;
+
+          case "volumeDown":
+            keyVisual = this.findAudioIcon(true);
+            break;
+
+          case "mute/unmute":
+            keyVisual = muted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "fas fa-volume-mute keypress"
+            }) : this.findAudioIcon(true);
+            break;
+
+          case "jumpForward":
+            keyVisual = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "fas fa-redo keypress"
+            });
+            break;
+
+          case "jumpBack":
+            keyVisual = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "fas fa-undo keypress"
+            });
+            break;
+
+          default:
+            break;
+        }
+      } // if ( keyVisual !== null ) {
+      //     keyVisual.className += "keypress";
+      // }
+
+
+      return keyVisual;
+    }
+  }, {
     key: "backToBrowse",
     value: function backToBrowse() {
       var videoEl = this.videoPlayer.current;
@@ -3920,16 +3984,16 @@ function (_React$Component) {
     value: function render() {
       var _this6 = this;
 
-      var _this$state5 = this.state,
-          paused = _this$state5.paused,
-          currentPlayerTime = _this$state5.currentPlayerTime,
-          volume = _this$state5.volume,
-          muted = _this$state5.muted,
-          hidden = _this$state5.hidden,
-          fullscreen = _this$state5.fullscreen,
-          away = _this$state5.away,
-          started = _this$state5.started,
-          currentKey = _this$state5.currentKey;
+      var _this$state6 = this.state,
+          paused = _this$state6.paused,
+          currentPlayerTime = _this$state6.currentPlayerTime,
+          volume = _this$state6.volume,
+          muted = _this$state6.muted,
+          hidden = _this$state6.hidden,
+          fullscreen = _this$state6.fullscreen,
+          away = _this$state6.away,
+          started = _this$state6.started,
+          currentKey = _this$state6.currentKey;
       var _this$props2 = this.props,
           video = _this$props2.video,
           show = _this$props2.show;
@@ -3980,21 +4044,7 @@ function (_React$Component) {
         audioIcon = this.findAudioIcon();
       }
 
-      var keyVisual = null;
-
-      if (currentKey !== null) {
-        switch (currentKey) {
-          case "play/pause":
-            keyVisual = paused ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-              className: "fas fa-play"
-            }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-              className: "fas fa-pause"
-            });
-
-          case "volumeUp":
-        }
-      } // decides the current button in the fullscreen slot
-
+      var keypressIcon = this.findKeyPress(); // decides the current button in the fullscreen slot
 
       var fullscreenBtn, fullscreenFunc;
 
@@ -4035,7 +4085,16 @@ function (_React$Component) {
         onClick: this.togglePlayPause,
         onKeyPress: this.togglePlayPause,
         onMouseMove: this.showControls
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+      }, keypressIcon !== null ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "keypress-visual",
+        onAnimationEnd: function onAnimationEnd() {
+          return _this6.setState({
+            currentKey: null
+          });
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-circle"
+      }), keypressIcon) : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "watch-maturity-details"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "red-line"

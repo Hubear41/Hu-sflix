@@ -76,6 +76,7 @@
     height: 100%;
     width: 100%;
     position: relative;
+    top: -10px;
     opacity: 0;
     transition: opacity 0.5s;
     background-image: linear-gradient(to bottom, rgba(0,0,0,0.5)0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.5)100% );
@@ -101,14 +102,14 @@
 }
 
 .red-line {
-    position: relative;
+    position: absolute;
     border-left: 1px solid red;
     height: 0;
     width: 5px;
     animation: red-line-animation;
     animation-duration: 8s;
     animation-fill-mode: forwards;
-    animation-delay: 2s;
+    animation-delay: 4s;
 }
 
 .watch-maturity-details h3 {
@@ -122,53 +123,7 @@
     animation: maturity-animation;
     animation-duration: 8s;
     animation-fill-mode: forwards;
-    animation-delay: 2s;
-}
-
-@keyframes red-line-animation {
-    0% {
-        height: 0;
-        top: 22px;
-    }
-    12% {
-        height: 22px;
-        top: 0;
-        animation-timing-function: ease-in;
-    }
-    88% {
-        height: 22px;
-        top: 0;
-    }
-    97% {
-        opacity: 1;
-    }
-    98% {
-        height: 0;
-        top: -10px;
-        opacity: 0;
-        /* animation-timing-function: ease-in; */
-    }
-}
-
-@keyframes maturity-animation {
-    2% {
-        opacity: 0;
-        top: 22px;
-    }
-    12% {
-        opacity: 1;
-        top: 10px;
-        animation-timing-function: ease-in;
-    }
-    88% {
-        opacity: 1;
-        top: 10px;
-    }
-    100% {
-        opacity: 0;
-        top: 0;
-        animation-timing-function: ease-out;
-    }
+    animation-delay: 4s;
 }
 
 .away-screen {
@@ -401,6 +356,33 @@
     font-size: 3pt;
 }
 
+.keypress-visual {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    top: calc(50vh - 100px);
+    left: calc(50vw - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    animation: keypress-expand;
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
+}
+
+.keypress-visual .fa-circle {
+    color: rgba(0,0,0,0.6);
+    font-size: 50px;
+}
+
+.keypress-visual .keypress {
+    color: rgba(255,255,255,0.6);
+    position: absolute;
+    font-size: 18px;
+    z-index: 55;
+}
+
 .progress-scrubber-wrapper {
     display: flex;
     justify-content: center;
@@ -583,5 +565,65 @@ video::-webkit-media-controls {
         opacity: 0;
         transform: scale(10);
         transform-origin: center;
+    }
+}
+
+@keyframes red-line-animation {
+    0% {
+        height: 0;
+        top: 22px;
+    }
+    12% {
+        height: 22px;
+        top: 0;
+        animation-timing-function: ease-in;
+    }
+    88% {
+        height: 22px;
+        top: 0;
+    }
+    97% {
+        opacity: 1;
+    }
+    98% {
+        height: 0;
+        top: -10px;
+        opacity: 0;
+    }
+}
+
+@keyframes maturity-animation {
+    2% {
+        opacity: 0;
+        top: 22px;
+    }
+    12% {
+        opacity: 1;
+        top: 5px;
+        animation-timing-function: ease-in;
+    }
+    88% {
+        opacity: 1;
+        top: 5px;
+    }
+    100% {
+        opacity: 0;
+        top: -5px;
+        animation-timing-function: ease-out;
+    }
+}
+
+@keyframes keypress-expand {
+    0% {
+        transform: scale(1);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(3);
+        opacity: 0;
+        animation-timing-function: ease-in;
     }
 }

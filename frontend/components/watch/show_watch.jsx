@@ -62,48 +62,50 @@ class Watch extends React.Component {
     }
 
     determineKeyPress(e) {        
-        switch (e.keyCode) {
-            case 13:  // enter
-                this.togglePlayPause();
-                if (this._isMounted) this.setState({ currentKey: "play/pause" });
-                break;
-            case 32:  // spacebar
-                e.preventDefault();
-                this.togglePlayPause();
-                if (this._isMounted) this.setState({ currentKey: "play/pause" });
-                break;
-            case 27:  // escape
-                document.fullscreen ? this.closeFullscreen() : null;
-                break;
-            case 38: // up arrow
-                this.changeVolume( 0.1 );
-                if (this._isMounted) this.setState({ currentKey: "volumeUp" });
-                break;
-            case 40: // down arrow
-                this.changeVolume( -0.1 );
-                if (this._isMounted) this.setState({ currentKey: "volumeDown" });
-                break;
-            case 39:  // right arrow
-                this.jumpForward();
-                if (this._isMounted) this.setState({ currentKey: 'jumpForward' });
-                break;
-            case 37:  // left arrow
-                this.jumpBack();
-                if (this._isMounted) this.setState({ currentKey: 'jumpBack' });
-                break;
-            case 77: // m key
-                this.toggleMute();
-                if (this._isMounted) this.setState({ currentKey: 'mute/unmute'});
-                break;
-            case 70:  // f key
-                if (document.fullscreen) {
-                    this.closeFullscreen();
-                } else {
-                    this.openFullscreen();
-                }
-                break;
-            default:
-                break;
+        if ( this._isMounted ) {
+            switch (e.keyCode) {
+                case 13:  // enter
+                    this.togglePlayPause();
+                    this.setState({ currentKey: "play/pause" });
+                    break;
+                case 32:  // spacebar
+                    e.preventDefault();
+                    this.togglePlayPause();
+                    this.setState({ currentKey: "play/pause" });
+                    break;
+                case 27:  // escape
+                    document.fullscreen ? this.closeFullscreen() : null;
+                    break;
+                case 38: // up arrow
+                    this.changeVolume( 0.1 );
+                    this.setState({ currentKey: "volumeUp" });
+                    break;
+                case 40: // down arrow
+                    this.changeVolume( -0.1 );
+                    this.setState({ currentKey: "volumeDown" });
+                    break;
+                case 39:  // right arrow
+                    this.jumpForward();
+                    this.setState({ currentKey: 'jumpForward' });
+                    break;
+                case 37:  // left arrow
+                    this.jumpBack();
+                    this.setState({ currentKey: 'jumpBack' });
+                    break;
+                case 77: // m key
+                    this.toggleMute();
+                    this.setState({ currentKey: 'mute/unmute'});
+                    break;
+                case 70:  // f key
+                    if (document.fullscreen) {
+                        this.closeFullscreen();
+                    } else {
+                        this.openFullscreen();
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -138,18 +140,6 @@ class Watch extends React.Component {
             this.awayTimer = setTimeout(() => {
                 if ( this._isMounted && started === true ) this.setState({ away: true });
             }, 3000);
-        }
-    }
-
-    findAudioIcon() {
-        const { muted, volume } = this.state;
-        
-        if ( muted || volume === 0 ) {
-            return <i className="fas fa-volume-mute"></i>;
-        } else if ( volume > 0.5 ) {
-            return <i className="fas fa-volume-up"></i>;
-        } else {
-            return <i className="fas fa-volume-down"></i>;
         }
     }
 
@@ -307,6 +297,54 @@ class Watch extends React.Component {
         if (this._isMounted) this.setState({ away: false });
     }
 
+    findAudioIcon(keypress = false) {
+        const { muted, volume } = this.state;
+
+        if (muted || volume === 0) {
+            return keypress ? <i className="fas fa-volume-mute keypress"></i> : <i className="fas fa-volume-mute"></i>;
+        } else if (volume > 0.5) {
+            return keypress ? <i className="fas fa-volume-up keypress"></i> : <i className="fas fa-volume-up"></i>;
+        } else {
+            return keypress ? <i className="fas fa-volume-down keypress"></i> : <i className="fas fa-volume-down"></i>;
+        }
+    }
+
+    findKeyPress() {
+        const { currentKey, paused, muted } = this.state;
+
+        let keyVisual = null;
+        if (currentKey !== null) {
+            switch (currentKey) {
+                case "play/pause":
+                    keyVisual = paused ? <i className="fas fa-pause keypress"></i> : <i className="fas fa-play keypress"></i>;
+                    break;
+                case "volumeUp":
+                    keyVisual = this.findAudioIcon(true);
+                    break;
+                case "volumeDown":
+                    keyVisual = this.findAudioIcon(true);
+                    break;
+                case "mute/unmute":
+                    keyVisual = muted ? <i className="fas fa-volume-mute keypress"></i> : this.findAudioIcon(true);
+                    break;
+                case "jumpForward":
+                    keyVisual = <i className="fas fa-redo keypress"></i>;
+                    break;
+                case "jumpBack":
+                    keyVisual = <i className="fas fa-undo keypress"></i>;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // if ( keyVisual !== null ) {
+        //     keyVisual.className += "keypress";
+        // }
+
+        return keyVisual;
+    }
+
     backToBrowse() {
         const videoEl = this.videoPlayer.current;
 
@@ -365,14 +403,7 @@ class Watch extends React.Component {
 
             audioIcon = this.findAudioIcon();
         }
-        let keyVisual = null;
-        if ( currentKey !== null ) {
-            switch(currentKey) {
-                case "play/pause":
-                    keyVisual = paused ? <i className="fas fa-play"></i> : <i className="fas fa-pause"></i>;
-                case "volumeUp":
-            }
-        }
+        let keypressIcon = this.findKeyPress();
 
 
         // decides the current button in the fullscreen slot
@@ -409,10 +440,13 @@ class Watch extends React.Component {
                          onKeyPress={this.togglePlayPause}
                          onMouseMove={this.showControls} 
                     >
-                       {/* <figure className='keypress-visual'>
-                            <i className="fas fa-circle"></i>
-                            
-                        </figure>  */}
+                       
+                        { keypressIcon !== null 
+                            ? <figure className='keypress-visual' onAnimationEnd={ () => this.setState({ currentKey: null })}>
+                                <i className="fas fa-circle"></i>
+                                {keypressIcon}
+                              </figure>
+                            : null }
                     </div>
 
                     <article className='watch-maturity-details'>
