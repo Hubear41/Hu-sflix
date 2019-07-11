@@ -3914,6 +3914,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this6 = this;
+
       var _this$state5 = this.state,
           paused = _this$state5.paused,
           currentPlayerTime = _this$state5.currentPlayerTime,
@@ -4039,7 +4041,10 @@ function (_React$Component) {
         className: "away-screen-content",
         onMouseOver: this._hideAway
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
-        className: "away-screen-details"
+        className: "away-screen-details",
+        onMouseOver: function onMouseOver() {
+          if (away) _this6.showControls();
+        }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You're watching"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, show ? show.title : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "away-screen-other-details"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.year : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.maturity_rating : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, video ? _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](runtime) : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, show ? show.tagline : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {

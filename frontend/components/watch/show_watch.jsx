@@ -419,7 +419,7 @@ class Watch extends React.Component {
                         <div className="away-screen-content"
                              onMouseOver={this._hideAway}
                         >
-                            <article className="away-screen-details">
+                            <article className="away-screen-details" onMouseOver={() => { if ( away ) this.showControls() }} >
                                 <span>You're watching</span>
                                 <h2>{show ? show.title : ''}</h2>
                                 <article className="away-screen-other-details">
