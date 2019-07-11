@@ -1305,12 +1305,16 @@ function (_React$Component) {
     }
   }, {
     key: "handleClick",
-    value: function handleClick() {
-      this.props.startLoading();
-      this.setState({
-        search: "",
-        searching: this.state.searching === null ? null : false
-      });
+    value: function handleClick(e) {
+      var location = this.props.location;
+
+      if (!e.target.hash.includes(location.pathname)) {
+        this.props.startLoading();
+        this.setState({
+          search: "",
+          searching: this.state.searching === null ? null : false
+        });
+      }
     }
   }, {
     key: "handleSearchClick",
@@ -4031,11 +4035,11 @@ function (_React$Component) {
         onClick: this.togglePlayPause,
         onKeyPress: this.togglePlayPause,
         onMouseMove: this.showControls
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "watch-maturity-details"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "keypress-visual"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-circle"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "red-line"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Rated ", show ? show.maturity_rating : "")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "away-screen ".concat(awayAnimation)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "away-screen-content",

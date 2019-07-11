@@ -409,11 +409,16 @@ class Watch extends React.Component {
                          onKeyPress={this.togglePlayPause}
                          onMouseMove={this.showControls} 
                     >
-                       <figure className='keypress-visual'>
+                       {/* <figure className='keypress-visual'>
                             <i className="fas fa-circle"></i>
                             
-                        </figure> 
+                        </figure>  */}
                     </div>
+
+                    <article className='watch-maturity-details'>
+                        <figure className='red-line'></figure>
+                        <h3>Rated {show ? show.maturity_rating : ""}</h3>
+                    </article>
 
                     <div className={`away-screen ${awayAnimation}`}>
                         <div className="away-screen-content"

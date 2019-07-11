@@ -47,12 +47,16 @@ class MainNav extends React.Component {
         }
     }
 
-    handleClick() {
-        this.props.startLoading();
-        this.setState({ 
-            search: "", 
-            searching: this.state.searching === null ? null : false  
-        });
+    handleClick(e) {
+        const { location } = this.props;
+        
+        if ( !e.target.hash.includes(location.pathname) ) {
+            this.props.startLoading();
+            this.setState({ 
+                search: "", 
+                searching: this.state.searching === null ? null : false  
+            });
+        }
     }
     
     handleSearchClick() {
