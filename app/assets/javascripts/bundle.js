@@ -1308,8 +1308,8 @@ function (_React$Component) {
     value: function handleClick() {
       this.props.startLoading();
       this.setState({
-        searching: false,
-        search: ""
+        search: "",
+        searching: this.state.searching === null ? null : false
       });
     }
   }, {
@@ -3472,9 +3472,9 @@ function (_React$Component) {
       volume: 0.8,
       prevVolume: 0.8,
       hidden: true,
-      mouseMoving: false,
+      mouseMoving: null,
       loaded: false,
-      away: false,
+      away: null,
       started: false,
       currentKey: null
     };
@@ -3625,7 +3625,10 @@ function (_React$Component) {
       var _this4 = this;
 
       var videoEl = this.videoPlayer.current;
-      var paused = this.state.paused; // play() returns a promise obj
+      var _this$state = this.state,
+          paused = _this$state.paused,
+          started = _this$state.started,
+          away = _this$state.away; // play() returns a promise obj
       // the state is only changed if play works 
       // prevents the play button from changing until it can play
 
@@ -3635,7 +3638,7 @@ function (_React$Component) {
           _this4.setState({
             paused: false,
             started: true,
-            away: false
+            away: away === null ? null : false
           });
         });
       } else if (!paused && videoEl) {
@@ -3644,7 +3647,7 @@ function (_React$Component) {
           paused: true
         });
         this.awayTimer = setTimeout(function () {
-          _this4.setState({
+          if (_this4._isMounted && started === true) _this4.setState({
             away: true
           });
         }, 3000);
@@ -3653,9 +3656,9 @@ function (_React$Component) {
   }, {
     key: "findAudioIcon",
     value: function findAudioIcon() {
-      var _this$state = this.state,
-          muted = _this$state.muted,
-          volume = _this$state.volume;
+      var _this$state2 = this.state,
+          muted = _this$state2.muted,
+          volume = _this$state2.volume;
 
       if (muted || volume === 0) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -3674,10 +3677,10 @@ function (_React$Component) {
   }, {
     key: "toggleMute",
     value: function toggleMute() {
-      var _this$state2 = this.state,
-          muted = _this$state2.muted,
-          volume = _this$state2.volume,
-          prevVolume = _this$state2.prevVolume;
+      var _this$state3 = this.state,
+          muted = _this$state3.muted,
+          volume = _this$state3.volume,
+          prevVolume = _this$state3.prevVolume;
       var videoEl = this.videoPlayer.current;
       var currVolume = volume === 0 ? 0.1 : volume; // if audio has been muted, this resets the audio level back to it's 
       // previous amount. 
@@ -3827,17 +3830,34 @@ function (_React$Component) {
     value: function showControls() {
       var _this5 = this;
 
-      var _this$state3 = this.state,
-          started = _this$state3.started,
-          paused = _this$state3.paused;
+      var _this$state4 = this.state,
+          started = _this$state4.started,
+          paused = _this$state4.paused,
+          mouseMoving = _this$state4.mouseMoving;
       clearTimeout(this.awayTimer);
 
-      if (this.state.mouseMoving) {
+      if (mouseMoving) {
         clearTimeout(this.timeout);
         this.timeout = setTimeout(function () {
           _this5._hideControls();
 
           if (started && paused) {
+            _this5.awayTimer = setTimeout(function () {
+              if (_this5._isMounted && started) _this5.setState({
+                away: true
+              });
+            }, 3000);
+          }
+        }, 3000);
+      } else if (started && this._isMounted) {
+        this.setState({
+          mouseMoving: true,
+          hidden: false
+        });
+        this.timeout = setTimeout(function () {
+          _this5._hideControls();
+
+          if (paused) {
             _this5.awayTimer = setTimeout(function () {
               if (_this5._isMounted) _this5.setState({
                 away: true
@@ -3845,26 +3865,6 @@ function (_React$Component) {
             }, 3000);
           }
         }, 3000);
-      } else {
-        if (started) {
-          if (this._isMounted) {
-            this.setState({
-              mouseMoving: true,
-              hidden: false
-            });
-            this.timeout = setTimeout(function () {
-              _this5._hideControls();
-
-              if (paused) {
-                _this5.awayTimer = setTimeout(function () {
-                  if (_this5._isMounted) _this5.setState({
-                    away: true
-                  });
-                }, 3000);
-              }
-            }, 3000);
-          }
-        }
       }
     }
   }, {
@@ -3914,16 +3914,16 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$state4 = this.state,
-          paused = _this$state4.paused,
-          currentPlayerTime = _this$state4.currentPlayerTime,
-          volume = _this$state4.volume,
-          muted = _this$state4.muted,
-          hidden = _this$state4.hidden,
-          fullscreen = _this$state4.fullscreen,
-          away = _this$state4.away,
-          started = _this$state4.started,
-          currentKey = _this$state4.currentKey;
+      var _this$state5 = this.state,
+          paused = _this$state5.paused,
+          currentPlayerTime = _this$state5.currentPlayerTime,
+          volume = _this$state5.volume,
+          muted = _this$state5.muted,
+          hidden = _this$state5.hidden,
+          fullscreen = _this$state5.fullscreen,
+          away = _this$state5.away,
+          started = _this$state5.started,
+          currentKey = _this$state5.currentKey;
       var _this$props2 = this.props,
           video = _this$props2.video,
           show = _this$props2.show;
@@ -3963,9 +3963,9 @@ function (_React$Component) {
           opacity: "".concat(hidden ? 0 : 1)
         };
 
-        if (started && paused && away) {
+        if (started && away === true) {
           awayAnimation = 'reveal-away';
-        } else if (started && !away) {
+        } else if (started && away === false) {
           awayAnimation = 'hide-away';
         } else {
           awayAnimation = 'hidden-away';

@@ -13,9 +13,9 @@ class Watch extends React.Component {
             volume: 0.8,
             prevVolume: 0.8,
             hidden: true,
-            mouseMoving: false,
+            mouseMoving: null,
             loaded: false,
-            away: false,
+            away: null,
             started: false,
             currentKey: null,
         };
@@ -120,7 +120,7 @@ class Watch extends React.Component {
 
     togglePlayPause() {   
         const videoEl = this.videoPlayer.current;
-        const { paused } = this.state;
+        const { paused, started, away } = this.state;
 
         // play() returns a promise obj
         // the state is only changed if play works 
@@ -129,14 +129,14 @@ class Watch extends React.Component {
             clearTimeout(this.awayTimer);
 
             videoEl.play().then( () => {
-                this.setState({ paused: false, started: true, away: false });
+                this.setState({ paused: false, started: true, away: away === null ? null : false });
             });
         } else if (!paused && videoEl ) {
             videoEl.pause();
             this.setState({ paused: true });
 
             this.awayTimer = setTimeout(() => {
-                this.setState({ away: true });
+                if ( this._isMounted && started === true ) this.setState({ away: true });
             }, 3000);
         }
     }
@@ -263,10 +263,10 @@ class Watch extends React.Component {
     // hide the controls in 3 seconds if the mouse hasn't moved afterwards.
     // if it is still moving before the timer ends, the timer is reset
     showControls() {
-        const { started, paused } = this.state;
+        const { started, paused, mouseMoving } = this.state;
         clearTimeout(this.awayTimer);
 
-        if ( this.state.mouseMoving ) {
+        if ( mouseMoving ) {
             clearTimeout(this.timeout);
 
             this.timeout = setTimeout( () => {
@@ -274,26 +274,22 @@ class Watch extends React.Component {
 
                 if ( started && paused ) {
                     this.awayTimer = setTimeout( () => {
-                        if (this._isMounted) this.setState({ away: true });
+                        if (this._isMounted && started ) this.setState({ away: true });
                     }, 3000 );
                 }
             }, 3000);
-        } else {
-            if ( started ) {
-                if (this._isMounted) {
-                    this.setState({ mouseMoving: true, hidden: false });
-    
-                    this.timeout = setTimeout( () => {
-                        this._hideControls();
-        
-                        if ( paused ) {
-                            this.awayTimer = setTimeout(() => {
-                                if (this._isMounted) this.setState({ away: true });
-                            }, 3000);
-                        }
+        } else if ( started && this._isMounted ) {
+            this.setState({ mouseMoving: true, hidden: false });
+
+            this.timeout = setTimeout( () => {
+                this._hideControls();
+
+                if ( paused ) {
+                    this.awayTimer = setTimeout(() => {
+                        if (this._isMounted) this.setState({ away: true });
                     }, 3000);
                 }
-            }
+            }, 3000);
         }
     }
     
@@ -359,9 +355,9 @@ class Watch extends React.Component {
                 opacity: `${ hidden ? 0 : 1 }`
             };
 
-            if ( started && paused && away ) {
+            if ( started && away === true ) {
                 awayAnimation = 'reveal-away';
-            } else if ( started && !away ) {
+            } else if ( started && away === false ) {
                 awayAnimation = 'hide-away';
             } else {
                 awayAnimation = 'hidden-away';

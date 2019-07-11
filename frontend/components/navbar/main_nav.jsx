@@ -49,7 +49,10 @@ class MainNav extends React.Component {
 
     handleClick() {
         this.props.startLoading();
-        this.setState({ searching: false, search: "" });
+        this.setState({ 
+            search: "", 
+            searching: this.state.searching === null ? null : false  
+        });
     }
     
     handleSearchClick() {
