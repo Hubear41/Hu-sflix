@@ -131,7 +131,7 @@ class ShowPreviewPlayerSmall extends React.Component {
     }
     
     render() {
-        const { show, preview, genres, listShowIds } = this.props;
+        const { show, preview, genres, listShowIds, myListState } = this.props;
         const genresToShow = [];
         const muteBtn = this.state.muted ? <i className="fas fa-volume-mute button-symbol"></i> : <i className="fas fa-volume-up button-symbol"></i>
         const myListIcon = listShowIds.includes(show.id) ? <i className="fas fa-check button-symbol"></i> : <i className="fas fa-plus button-symbol"></i>;
@@ -189,6 +189,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                                     {myListIcon}
                                     <i className="fas fa-circle preview-btn-bg"></i>
                                     <i className="far fa-circle preview-btn-outline"></i>
+                                    <span className='mylist-popup-desc'>{myListState}</span>
                                 </button>
                             </aside>
  

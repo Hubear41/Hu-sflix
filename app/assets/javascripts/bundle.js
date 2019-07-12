@@ -2777,10 +2777,8 @@ function (_React$Component) {
           mylistShowIds = _this$props3.mylistShowIds;
       var showsPerRow = {};
       var mainGenres = [];
-      debugger;
 
       if (mylistShowIds.length > 0) {
-        debugger;
         showsPerRow["My List"] = Array.from({
           length: mylistShowIds.length
         }, function () {
@@ -3213,7 +3211,8 @@ function (_React$Component) {
           show = _this$props2.show,
           preview = _this$props2.preview,
           genres = _this$props2.genres,
-          listShowIds = _this$props2.listShowIds;
+          listShowIds = _this$props2.listShowIds,
+          myListState = _this$props2.myListState;
       var genresToShow = [];
       var muteBtn = this.state.muted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-volume-mute button-symbol"
@@ -3297,7 +3296,9 @@ function (_React$Component) {
         className: "fas fa-circle preview-btn-bg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "far fa-circle preview-btn-outline"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "mylist-popup-desc"
+      }, myListState))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
         className: "preview-video-info-desc",
         onClick: this.launchWatch
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
