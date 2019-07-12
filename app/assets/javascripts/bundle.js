@@ -1028,7 +1028,7 @@ var msp = function msp(_ref, ownProps) {
   var previewVideo = entities.videos[previewId] || null;
   var isPreviewing = ui.preview;
   var currentUserId = session.id;
-  var mylistIds = entities.users[currentUserId].listShowIds;
+  var mylistIds = entities.users[currentUserId].listShowIds || [];
   return {
     video: previewVideo,
     previewId: previewId,
@@ -2406,7 +2406,7 @@ var msp = function msp(_ref) {
   var entities = _ref.entities,
       session = _ref.session;
   var currentUserId = session.id;
-  var listShowIds = entities.users[currentUserId].listShowIds;
+  var listShowIds = entities.users[currentUserId].listShowIds || [];
   return {
     currentUserId: currentUserId,
     listShowIds: listShowIds
@@ -2777,8 +2777,10 @@ function (_React$Component) {
           mylistShowIds = _this$props3.mylistShowIds;
       var showsPerRow = {};
       var mainGenres = [];
+      debugger;
 
       if (mylistShowIds.length > 0) {
+        debugger;
         showsPerRow["My List"] = Array.from({
           length: mylistShowIds.length
         }, function () {
@@ -2981,7 +2983,7 @@ var msp = function msp(_ref) {
   var genres = entities.genres;
   var loading = ui.loading;
   var currentUserId = session.id;
-  var mylistShowIds = entities.users[currentUserId].listShowIds;
+  var mylistShowIds = entities.users[currentUserId].listShowIds || [];
   return {
     shows: shows,
     videos: videos,

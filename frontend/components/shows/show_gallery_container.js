@@ -9,7 +9,7 @@ const msp = ({ entities, ui, session }) => {
     const genres = entities.genres;
     const loading = ui.loading;
     const currentUserId = session.id;
-    const mylistShowIds = entities.users[currentUserId].listShowIds;
+    const mylistShowIds = entities.users[currentUserId].listShowIds || [];
 
     return {
         shows,

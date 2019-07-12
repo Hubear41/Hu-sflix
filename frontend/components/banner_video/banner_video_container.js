@@ -10,7 +10,7 @@ const msp = ({ entities, session, ui }, ownProps) => {
     const previewVideo = entities.videos[previewId] || null;
     const isPreviewing = ui.preview; 
     const currentUserId = session.id;
-    const mylistIds = entities.users[currentUserId].listShowIds;
+    const mylistIds = entities.users[currentUserId].listShowIds || [];
     
     return {
         video: previewVideo,

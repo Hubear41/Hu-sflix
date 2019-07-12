@@ -5,7 +5,7 @@ import PreviewPlayerSmall from './show_preview_player_small';
 
 const msp = ({ entities, session}) => {
     const currentUserId = session.id;
-    const listShowIds = entities.users[currentUserId].listShowIds
+    const listShowIds = entities.users[currentUserId].listShowIds || [];
 
     return {
         currentUserId,

@@ -93,8 +93,9 @@ class ShowGallery extends React.Component {
         const { shows, genres, mylistShowIds } = this.props;
         const showsPerRow = {};
         let mainGenres = [];
-        
+        debugger
         if ( mylistShowIds.length > 0 ) {
+            debugger
             showsPerRow["My List"] = Array.from({ length: mylistShowIds.length }, () => null);
         }
 
