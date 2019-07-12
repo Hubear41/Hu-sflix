@@ -176,13 +176,6 @@ class ShowPreviewPlayerSmall extends React.Component {
                             >
                                 <source src={preview ? preview.videoUrl : '' } type="video/mp4"/> 
                             </video>
-                            <button className="preview-play-btn">
-                                <figure className="play-btn-icon">
-                                    <i className="fas fa-play play-btn-triangle"></i>
-                                    <i className="fas fa-circle play-btn-bg"></i>
-                                    <i className="far fa-circle play-btn-outline"></i>
-                                </figure>
-                            </button>
 
                             <aside className="preview-player-right-side-btns">
                                 <button onClick={this.toggleMute} className="preview-mute-btn right-side-btn">
@@ -190,6 +183,8 @@ class ShowPreviewPlayerSmall extends React.Component {
                                     <i className="fas fa-circle preview-btn-bg"></i>
                                     <i className="far fa-circle preview-btn-outline"></i>
                                 </button>
+                                <div className='right-side-placeholders right-side-btn'></div>
+                                <div className='right-side-placeholders right-side-btn'></div>
                                 <button onClick={this.toggleMyList} className='preview-mylist-btn right-side-btn'>
                                     {myListIcon}
                                     <i className="fas fa-circle preview-btn-bg"></i>
@@ -198,11 +193,19 @@ class ShowPreviewPlayerSmall extends React.Component {
                             </aside>
  
                             <figcaption className="preview-video-info-desc" onClick={this.launchWatch}>
+                                <button className="preview-play-btn">
+                                    <i className="fas fa-play play-btn-triangle"></i>
+                                    <i className="fas fa-circle play-btn-bg"></i>
+                                    <i className="far fa-circle play-btn-outline"></i>
+                                </button>
+
                                 <h5 className="preview-show-title">{show.title}</h5>
+
                                 <article className='preview-details'>
                                     <span className="show-maturity-rating">{show.maturity_rating}</span>
                                     <span>{DateTimeUTIL.secondsToHoursMinutes(show.runtime)}</span>
                                 </article>
+
                                 <article className='preview-genres'>
                                     {genresToShow}
                                 </article>

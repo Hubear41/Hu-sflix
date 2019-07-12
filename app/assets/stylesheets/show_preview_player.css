@@ -26,8 +26,8 @@
 #show-peek-preview-wrapper:hover {
     border: 1px solid black;
     box-sizing: border-box;
-    transform: scale(1.3);
-    margin-right: 5vw;
+    transform: scale(1.8);
+    margin-right: 12vw;
     transition: transform 0.2s, margin-right 0.2s;
     transition-timing-function: ease-in;
     transition-delay: 0.5s;
@@ -97,6 +97,7 @@
 }
 
 .preview-clickable-area {
+    cursor: pointer;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -109,36 +110,59 @@
 .preview-player-right-side-btns {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    margin-right: 6%;
     position: absolute;
-    right: 10px;
-    top: 2vh;
+    right: 5px;
+    bottom: 1vmax;
     z-index: 700;
     opacity: 0;
-    height: 70%;
     transition: opacity 0.2s;
 }
-/* 
-.preview-player-btns {
-    height: 100%;
-    width: 100%;
-    top: 0;
-    position: absolute;
-    z-index: 5000;
-    transform: scale(0.8)
-} */
+
+.right-side-btn {
+    background: none;
+    outline: none;
+    border: none;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-origin: center;
+    height: 16px;
+    width: 16px;
+    padding: 6px;
+}
+
+/* get rid of this later */
+.right-side-placeholders {
+    height: 12px;
+} /* get rid of this later */
+
+.right-side-btn:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s;
+}
+
+.right-side-btn:hover .button-symbol {
+    color: white;
+}
+
+.right-side-btn:hover .preview-btn-outline {
+    opacity: 1;
+}
 
 .preview-play-btn {
-    position: absolute;
-    top: 53%;
-    height: 13%;
-    width: 9%;
+    position: relative;
+    top: 0;
+    height: 20px;
+    width: 20px;
     border: none;
     background: none;
     outline: none;
     z-index: 605;
-    transform: scale(1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
 .preview-play-pause-icon {
@@ -149,10 +173,12 @@
     position: absolute;
     bottom: 15%;
     left: 5%;
-    font-size: 1vh;
     z-index: 690;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .preview-video-info-desc h5 {
@@ -175,32 +201,6 @@
     background: none;
     padding: 2px 3px;
     margin-right: 2px;
-}
-
-.right-side-btn {
-    background: none;
-    outline: none;
-    border: none;
-    position: relative;
-    transform-origin: center;
-    transform: scale(1.1);
-    transition: transform 0.3s;
-    height: 1vh;
-    width: 1vh;
-    /* z-index: 700; */
-}
-
-.right-side-btn:hover {
-    transform: scale(1.2);
-    transition: transform 0.3s;
-}
-
-.right-side-btn:hover .button-symbol {
-    color: white;
-}
-
-.right-side-btn:hover .preview-btn-outline {
-    opacity: 1;
 }
 
 #show-peek-preview-wrapper .preview-video-player {
@@ -244,14 +244,12 @@
 .preview-genres {
     margin-top: 10px;
     display: flex;
-    /* justify-content: space-between; */
     align-items: center;
-    /* width: 110%; */
 }
 
 .genre-title {
     color: white;
-    font-size: 7pt;
+    font-size: 5pt;
 }
 
 .genre-bullet {

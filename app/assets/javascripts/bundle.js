@@ -3277,17 +3277,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         src: preview ? preview.videoUrl : '',
         type: "video/mp4"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "preview-play-btn"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "play-btn-icon"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-play play-btn-triangle"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-circle play-btn-bg"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "far fa-circle play-btn-outline"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
         className: "preview-player-right-side-btns"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.toggleMute,
@@ -3296,7 +3286,11 @@ function (_React$Component) {
         className: "fas fa-circle preview-btn-bg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "far fa-circle preview-btn-outline"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "right-side-placeholders right-side-btn"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "right-side-placeholders right-side-btn"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.toggleMyList,
         className: "preview-mylist-btn right-side-btn"
       }, myListIcon, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -3306,7 +3300,15 @@ function (_React$Component) {
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
         className: "preview-video-info-desc",
         onClick: this.launchWatch
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "preview-play-btn"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-play play-btn-triangle"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-circle play-btn-bg"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "far fa-circle play-btn-outline"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
         className: "preview-show-title"
       }, show.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "preview-details"

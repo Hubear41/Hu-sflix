@@ -4,39 +4,32 @@
 
 .play-btn-triangle {
     position: absolute;
-    top: -1.6vh;
-    left: 0.8vw;
-    z-index: 21;
+    z-index: 22;
     transform-origin: center;
-    transform: scale(0.6);
+    font-size: 8px;
     color: red;
 }
 
 .play-btn-bg {
     position: absolute;
-    top: -1.7vh;
-    left: 0.7vw;
     z-index: 18;
     transform-origin: center;
-    transform: scale(1.5)
+    font-size: 18px;
 }
 
 .play-btn-outline {
     position: absolute;
-    top: -1.7vh;
-    left: 0.7vw;
-    z-index: 20;
+    z-index: 21;
     transform-origin: center;
     color: white;
-    transform: scale(1.5);
+    font-size: 18px;
     opacity: 0.6;
 }
 
 .button-symbol {
     position: absolute;
     z-index: 25;
-    top: 4.5px;
-    left: 7.3px;
+    font-size: 6px;
     transform-origin: center;
     color: #9b9b9b;
 }
@@ -45,14 +38,14 @@
     position: absolute;
     z-index: 15;
     transform-origin: center;
-    transform: scale(2)
+    font-size: 14px;
 }
 
 .preview-btn-outline {
     position: absolute;
     z-index: 20;
     transform-origin: center;
-    transform: scale(2);
+    font-size: 14px;
     color: white;
     opacity: 0.6;
 }
