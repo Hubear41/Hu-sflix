@@ -3149,7 +3149,7 @@ function (_React$Component) {
             });
           }
         });
-      }, 2000);
+      }, 1000);
       this.timeout = setTimeout(function () {
         _this2.props.startPreview();
       }, 500);

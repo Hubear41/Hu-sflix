@@ -83,7 +83,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                     this.setState({ paused: false });
                 }
             });
-        }, 2000);
+        }, 1000);
 
         this.timeout = setTimeout( () => {
             this.props.startPreview();
