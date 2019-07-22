@@ -1336,6 +1336,7 @@ function (_React$Component) {
           e.preventDefault();
         }
       });
+      this.searchField.current.focus();
       this.setState({
         searching: true
       });

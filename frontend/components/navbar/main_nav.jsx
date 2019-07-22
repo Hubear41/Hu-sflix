@@ -76,6 +76,8 @@ class MainNav extends React.Component {
             }
         });
 
+        this.searchField.current.focus();
+
         this.setState({ searching: true });
     }
 
