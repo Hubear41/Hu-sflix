@@ -25,7 +25,7 @@ class Show < ApplicationRecord
     validates :view_count, presence: true
 
     attr_reader :movie_id, :episode_ids, :preview_id
-    after_initialize :default_values
+    # after_initialize :default_values
     
     has_one_attached :poster
     has_many :videos
@@ -43,22 +43,31 @@ class Show < ApplicationRecord
         through: :my_list_shows,
         source: :profile
  
-    private
+    # def default_values 
+    #     self.view_count ||= 0
+    #     @episode_ids = []
 
-    def default_values 
-        self.view_count ||= 0
+    #     self.videos.each do |video|
+    #         case video.video_type
+    #         when 'PREVIEW'
+    #             @preview_id = video.id
+    #         when 'FILM'
+    #             @movie_id = video.id
+    #         when 'EPISODE'
+    #             @episode_ids << video.id 
+    #         end
+    #     end
+    # end
 
-        @episode_ids = []
-
-        self.videos.each do |video|
-            case video.video_type
-            when 'PREVIEW'
-                @preview_id = video.id
-            when 'FILM'
-                @movie_id = video.id
-            when 'EPISODE'
-                @episode_ids << video.id 
-            end
-        end
+    def preview_id 
+        self.videos.each { |video| return video.id if video.video_type == "PREVIEW"}
     end
+
+    def movie_id
+        self.videos.each { |video| return video.id if video.video_type == "FILM"}
+    end
+
+    def episode_ids
+        self.videos.map  { |video| video.id if video.video_type == "EPISODE" }
+    end 
 end
