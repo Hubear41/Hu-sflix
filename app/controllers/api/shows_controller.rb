@@ -1,9 +1,9 @@
 class Api::ShowsController < ApplicationController 
     def index
-        @shows = Show.with_attached_poster.all.includes(:videos)
+        @shows = Show.with_attached_poster.all.includes(:videos, :genres)
         videos = Video.with_attached_video_file.all 
         @previewVideos = self.find_videos(@shows)
-        @genres = Genre.all
+        @genres = Genre.all.includes(:shows_with_genre, :show_genres, :associated_genres)
         @runtime = @previewVideos[0].runtime;
 
         render :index
@@ -29,13 +29,13 @@ class Api::ShowsController < ApplicationController
                             shows.title ILIKE :middle OR
                             shows.director ILIKE :first OR
                             shows.director ILIKE :last OR
-                            genres.name ILIKE :first ',
+                            genres.name ILIKE :first',
                             first: "#{query_string}%", 
                             middle: "%#{query_string}%", 
                             last: "%#{query_string}" 
                     )
-                    .includes(:videos)
-            @genres = Genre.all
+                    .includes(:videos, :genres)
+            @genres = Genre.all.includes(:shows_with_genre, :show_genres, :associated_genres)
             @previewVideos = self.find_videos(@shows)
             @runtime = @previewVideos.count > 0 ? @previewVideos[0].runtime : 0; 
 
@@ -48,9 +48,9 @@ class Api::ShowsController < ApplicationController
     end
 
     def my_list 
-        @shows = Show.with_attached_poster.where(id: current_user.shows_on_list_ids).includes(:videos)
+        @shows = Show.with_attached_poster.where(id: current_user.shows_on_list_ids).includes(:videos, :genres)
         @previewVideos = self.find_videos(@shows)
-        @genres = Genre.all
+        @genres = Genre.all.includes(:shows_with_genre, :show_genres, :associated_genres)
         @runtime = @previewVideos.count > 0 ? @previewVideos[0].runtime : 0; 
 
         if @shows.empty?
