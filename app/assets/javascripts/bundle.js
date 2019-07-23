@@ -3481,9 +3481,6 @@ function (_React$Component) {
       var rowHeader = galleryType === 'WITH_BANNER' ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, genreName) : null;
       var numShowsPerRow = Math.round(rowWidth / 300);
       var numPages = Math.ceil(shows.length / numShowsPerRow);
-      console.log("row width:" + rowWidth);
-      console.log("num show: " + numShowsPerRow);
-      console.log("num pages: " + numPages);
       var startingIdx = numShowsPerRow * currentPage;
 
       for (var idx = startingIdx; showList.length <= numShowsPerRow; idx++) {
@@ -3494,9 +3491,9 @@ function (_React$Component) {
       var pageIndicators = rowWidth > 0 ? this.createPageIndicators(numPages) : null;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "row-".concat(rowNum, "-wrapper show-rows-wrapper")
-      }, rowHeader, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, rowHeader, numPages > 1 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "slider-page-indicator"
-      }, pageIndicators), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+      }, pageIndicators) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "row-".concat(rowNum, " show-row")
       }, showList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "next-page-button",

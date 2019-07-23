@@ -86,10 +86,6 @@ class ShowRow extends React.Component {
         
         const numShowsPerRow = Math.round(rowWidth / 300);
         const numPages = Math.ceil(shows.length / numShowsPerRow);
-        
-        console.log("row width:" + rowWidth);
-        console.log("num show: " + numShowsPerRow);
-        console.log("num pages: " + numPages);
 
         const startingIdx = numShowsPerRow * currentPage;
         for (let idx = startingIdx; showList.length <= numShowsPerRow; idx++) {
@@ -102,9 +98,14 @@ class ShowRow extends React.Component {
         return (
             <li className={`row-${rowNum}-wrapper show-rows-wrapper`}>
                 {rowHeader}
-                <ul className="slider-page-indicator">
-                    {pageIndicators}
-                </ul>
+                
+                {numPages > 1 ? 
+                    <ul className="slider-page-indicator">
+                        {pageIndicators}
+                    </ul>
+                    : null
+                }
+                
                 <figure className={`row-${rowNum} show-row`}>
                     {showList}
                 </figure>
