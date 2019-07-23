@@ -25,9 +25,7 @@ class ShowPreviewPlayerSmall extends React.Component {
     componentDidMount() {
         this._isMounted = true;
 
-        const width = document.getElementById("show-peek-preview-wrapper").clientWidth;
-        const height = width / 1.5;
-        
+        const height = 160;
         this.setState({ height });
     }
 

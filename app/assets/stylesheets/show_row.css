@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: space-between;
     overflow-y: visible;
+    position: relative;
     /* padding: 20px 0; */
 }
 
@@ -15,3 +16,28 @@
     padding: 15px 0;
     letter-spacing: 1px;
 }
+
+.slider-page-indicator {
+    position: absolute;
+    right: 10px;
+    top: 2px;
+    display: flex;
+}
+
+.page-indicator {
+    height: 1px;
+    width: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.selected-page {
+    background-color: white;
+}
+
+.next-page-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+}
+

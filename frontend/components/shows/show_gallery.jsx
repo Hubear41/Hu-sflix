@@ -186,7 +186,7 @@ class ShowGallery extends React.Component {
                               galleryType={galleryType}
                     />
                 )
-            } 
+            }
 
             const otherRows = Object.keys(showsPerRow).map( (genreName, idx) => {
                 if ( genreName !== 'My List' ) {

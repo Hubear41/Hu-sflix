@@ -9,12 +9,16 @@
 .show-row {
     display: flex;
     align-items: center;
-    width: 120%;
+    width: 100%;
 } 
 
 #show-peek-preview-wrapper {
-    width: 15vw; /* width for the titlecards */
+    width: 15vw; 
     height: 10vw;
+    max-width: 300px;
+    max-height: 190px;
+    min-width: 250px;
+    min-height: 155px;
     margin-right: 0.3%;
     position: relative;
     transform: scale(1);
