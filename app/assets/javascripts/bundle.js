@@ -3260,7 +3260,9 @@ function (_React$Component) {
         src: show ? show.posterUrl : window.tempBgURL,
         alt: show.title,
         className: "show-title-card",
-        onClick: this.launchWatch
+        onClick: this.launchWatch,
+        onMouseEnter: this.playVideo,
+        onMouseLeave: this.pauseVideo
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "show-peek-preview-player"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {

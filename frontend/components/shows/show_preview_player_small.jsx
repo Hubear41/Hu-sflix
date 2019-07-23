@@ -162,6 +162,8 @@ class ShowPreviewPlayerSmall extends React.Component {
                          alt={show.title} 
                          className="show-title-card" 
                          onClick={this.launchWatch}
+                         onMouseEnter={this.playVideo}
+                         onMouseLeave={this.pauseVideo}
                     />
 
                     <figure className="show-peek-preview-player">
