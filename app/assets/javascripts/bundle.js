@@ -3278,7 +3278,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         src: preview ? preview.videoUrl : '',
         type: "video/mp4"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
         className: "preview-player-right-side-btns"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: this.toggleMute,
@@ -3319,7 +3319,7 @@ function (_React$Component) {
         className: "show-maturity-rating"
       }, show.maturity_rating), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](show.runtime))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "preview-genres"
-      }, genresToShow))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, genresToShow)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "toggle-show-detail-btn"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-chevron-down"
