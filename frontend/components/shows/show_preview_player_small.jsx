@@ -189,7 +189,7 @@ class ShowPreviewPlayerSmall extends React.Component {
                                     {myListIcon}
                                     <i className="fas fa-circle preview-btn-bg"></i>
                                     <i className="far fa-circle preview-btn-outline"></i>
-                                    <span className='mylist-popup-desc'>{myListState}</span>
+                                    {/* <span className='mylist-popup-desc'>{myListState}</span> */}
                                 </button>
                             </aside>
  

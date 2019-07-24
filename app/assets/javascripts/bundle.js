@@ -3297,9 +3297,7 @@ function (_React$Component) {
         className: "fas fa-circle preview-btn-bg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "far fa-circle preview-btn-outline"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "mylist-popup-desc"
-      }, myListState))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
         className: "preview-video-info-desc",
         onClick: this.launchWatch
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
