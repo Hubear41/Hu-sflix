@@ -3017,9 +3017,318 @@ var mdp = function mdp(dispatch) {
   !*** ./frontend/components/shows/show_preview_player_small.jsx ***!
   \*****************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/frontend/components/shows/show_preview_player_small.jsx: Unexpected token (179:1)\n\n\u001b[0m \u001b[90m 177 | \u001b[39m                                \u001b[33m<\u001b[39m\u001b[33msource\u001b[39m src\u001b[33m=\u001b[39m{preview \u001b[33m?\u001b[39m preview\u001b[33m.\u001b[39mvideoUrl \u001b[33m:\u001b[39m \u001b[32m''\u001b[39m } type\u001b[33m=\u001b[39m\u001b[32m\"video/mp4\"\u001b[39m\u001b[33m/\u001b[39m\u001b[33m>\u001b[39m \u001b[0m\n\u001b[0m \u001b[90m 178 | \u001b[39m                            \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mvideo\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 179 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 180 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 181 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 182 | \u001b[39m                            \u001b[33m<\u001b[39m\u001b[33maside\u001b[39m className\u001b[33m=\u001b[39m\u001b[32m\"preview-player-right-side-btns\"\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n    at Object.raise (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:6344:17)\n    at Object.unexpected (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:7659:16)\n    at Object.jsxParseIdentifier (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3377:12)\n    at Object.jsxParseNamespacedName (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3387:23)\n    at Object.jsxParseElementName (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3398:21)\n    at Object.jsxParseOpeningElementAt (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3480:22)\n    at Object.jsxParseElementAt (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3513:33)\n    at Object.jsxParseElementAt (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3529:32)\n    at Object.jsxParseElementAt (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3529:32)\n    at Object.jsxParseElementAt (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3529:32)\n    at Object.jsxParseElementAt (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3529:32)\n    at Object.jsxParseElement (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3587:17)\n    at Object.parseExprAtom (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3594:19)\n    at Object.parseExprSubscripts (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8413:23)\n    at Object.parseMaybeUnary (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8393:21)\n    at Object.parseExprOps (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8280:23)\n    at Object.parseMaybeConditional (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8253:23)\n    at Object.parseMaybeAssign (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8200:21)\n    at Object.parseParenAndDistinguishExpression (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8963:28)\n    at Object.parseExprAtom (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8760:21)\n    at Object.parseExprAtom (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:3599:20)\n    at Object.parseExprSubscripts (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8413:23)\n    at Object.parseMaybeUnary (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8393:21)\n    at Object.parseExprOps (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8280:23)\n    at Object.parseMaybeConditional (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8253:23)\n    at Object.parseMaybeAssign (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8200:21)\n    at Object.parseExpression (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:8148:23)\n    at Object.parseReturnStatement (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:10157:28)\n    at Object.parseStatementContent (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:9836:21)\n    at Object.parseStatement (/Users/dennishu/Documents/Bootcamp Work/Fullstack Project/Hu-sflix/node_modules/@babel/parser/lib/index.js:9788:17)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/date_time_util */ "./frontend/util/date_time_util.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var ShowPreviewPlayerSmall =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ShowPreviewPlayerSmall, _React$Component);
+
+  function ShowPreviewPlayerSmall(props) {
+    var _this;
+
+    _classCallCheck(this, ShowPreviewPlayerSmall);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowPreviewPlayerSmall).call(this, props));
+    _this.state = {
+      height: 0,
+      muted: true,
+      paused: true,
+      focus: true,
+      myListState: _this.props.listShowIds.includes(_this.props.show.id) ? "REMOVE FROM MY LIST" : "ADD TO MY LIST"
+    };
+    _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.videoTimeout;
+    _this.launchWatch = _this.launchWatch.bind(_assertThisInitialized(_this));
+    _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
+    _this.playVideo = _this.playVideo.bind(_assertThisInitialized(_this));
+    _this.pauseVideo = _this.pauseVideo.bind(_assertThisInitialized(_this));
+    _this.toggleMyList = _this.toggleMyList.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(ShowPreviewPlayerSmall, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this._isMounted = true;
+      var height = 160;
+      this.setState({
+        height: height
+      });
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this._isMounted = false;
+      clearTimeout(this.videoTimeout);
+      clearTimeout(this.timeout);
+    }
+  }, {
+    key: "launchWatch",
+    value: function launchWatch() {
+      var show = this.props.show;
+      var videoEl = this.videoPlayer.current;
+      videoEl.pause();
+      clearTimeout(this.videoTimeout);
+
+      if (show.show_type === 'FEATURE') {
+        this.props.history.push({
+          pathname: "/watch/".concat(show.id),
+          search: "trackId=".concat(show.movie_id)
+        });
+      } else {
+        this.props.history.push({
+          pathname: "/watch/".concat(show.id),
+          search: "trackId=".concat(show.episode_ids[0])
+        });
+      }
+    }
+  }, {
+    key: "toggleMute",
+    value: function toggleMute(e) {
+      var videoEl = this.videoPlayer.current;
+
+      if (videoEl.muted) {
+        videoEl.muted = false;
+        if (this._isMounted) this.setState({
+          muted: false
+        });
+      } else {
+        videoEl.muted = true;
+        if (this._isMounted) this.setState({
+          muted: true
+        });
+      }
+    }
+  }, {
+    key: "playVideo",
+    value: function playVideo() {
+      var _this2 = this;
+
+      if (this.videoPlayer.current === null) {
+        return null;
+      }
+
+      var videoEl = this.videoPlayer.current;
+      this.videoTimeout = setTimeout(function () {
+        videoEl.play().then(function () {
+          if (_this2._isMounted) {
+            _this2.props.startPreview();
+
+            _this2.setState({
+              paused: false
+            });
+          }
+        });
+      }, 1000);
+      this.timeout = setTimeout(function () {
+        _this2.props.startPreview();
+      }, 500);
+    }
+  }, {
+    key: "pauseVideo",
+    value: function pauseVideo() {
+      if (this.videoPlayer.current === null) {
+        return null;
+      }
+
+      var videoEl = this.videoPlayer.current;
+      videoEl.pause();
+      this.props.endPreview();
+      clearTimeout(this.videoTimeout);
+      clearTimeout(this.timeout);
+      if (this._isMounted) this.setState({
+        paused: true
+      });
+    }
+  }, {
+    key: "toggleMyList",
+    value: function toggleMyList() {
+      var _this3 = this;
+
+      var _this$props = this.props,
+          listShowIds = _this$props.listShowIds,
+          currentUserId = _this$props.currentUserId,
+          show = _this$props.show;
+      var myListState = this.state.myListState;
+
+      if (listShowIds.includes(show.id) && myListState === 'REMOVE FROM MY LIST') {
+        if (this._isMounted) {
+          this.setState({
+            myListState: 'REMOVING...'
+          });
+          this.props.removeMyListVideo(currentUserId, show.id).then(function () {
+            if (_this3._isMounted) _this3.setState({
+              myListState: 'ADD TO MY LIST'
+            });
+          });
+        }
+      } else if (!listShowIds.includes(show.id) && myListState === 'ADD TO MY LIST') {
+        if (this._isMounted) {
+          this.setState({
+            myListState: 'ADDING...'
+          });
+          this.props.addMyListVideo(currentUserId, show.id).then(function () {
+            if (_this3._isMounted) _this3.setState({
+              myListState: 'REMOVE FROM MY LIST'
+            });
+          });
+        }
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props2 = this.props,
+          show = _this$props2.show,
+          preview = _this$props2.preview,
+          genres = _this$props2.genres,
+          listShowIds = _this$props2.listShowIds,
+          myListState = _this$props2.myListState;
+      var genresToShow = [];
+      var muteBtn = this.state.muted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-volume-mute button-symbol"
+      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-volume-up button-symbol"
+      });
+      var myListIcon = listShowIds.includes(show.id) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-check button-symbol"
+      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-plus button-symbol"
+      });
+
+      if (show !== undefined && genres.length >= 1) {
+        genres.forEach(function (genre, idx) {
+          if (genre === undefined) {
+            return;
+          }
+
+          if (genre.name !== 'TV Show' && genre.name !== 'Movie' && genre.name !== 'Recently Added' && genresToShow.length < 3) {
+            if (genresToShow.length === 2) {
+              genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+                className: "genre-title",
+                key: genre.name + genre.id
+              }, genre.name));
+            } else {
+              genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+                className: "genre-title",
+                key: genre.name + genre.id
+              }, genre.name));
+              genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+                className: "genre-bullet",
+                key: 'bullet ' + idx
+              }, "  ", "\u2022", "  "));
+            }
+          }
+        });
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        id: "show-peek-preview-wrapper",
+        className: "show-row-item-x item-".concat(show.id),
+        onMouseEnter: this.playVideo,
+        onMouseLeave: this.pauseVideo
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: show ? show.posterUrl : window.tempBgURL,
+        alt: show.title,
+        className: "show-title-card",
+        onClick: this.launchWatch,
+        onMouseEnter: this.playVideo,
+        onMouseLeave: this.pauseVideo
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "show-peek-preview-player preview-fade-in"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "preview-video-player preview-fade-in"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "preview-clickable-area",
+        onClick: this.launchWatch
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+        id: "show-".concat(show.id, " preview-video"),
+        ref: this.videoPlayer,
+        onClick: this.launchWatch,
+        muted: "muted"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
+        src: preview ? preview.videoUrl : '',
+        type: "video/mp4"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
+        className: "preview-player-right-side-btns preview-fade-in"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.toggleMute,
+        className: "preview-mute-btn right-side-btn preview-fade-in"
+      }, muteBtn, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-circle preview-btn-bg"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "far fa-circle preview-btn-outline"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "right-side-placeholders right-side-btn"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "right-side-placeholders right-side-btn"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.toggleMyList,
+        className: "preview-mylist-btn right-side-btn preview-fade-in"
+      }, myListIcon, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-circle preview-btn-bg"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "far fa-circle preview-btn-outline"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
+        className: "preview-video-info-desc preview-fade-in",
+        onClick: this.launchWatch
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "preview-play-btn preview-fade-in"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-play play-btn-triangle"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-circle play-btn-bg"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "far fa-circle play-btn-outline"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+        className: "preview-show-title preview-fade-in"
+      }, show.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "preview-details preview-fade-in"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "show-maturity-rating"
+      }, show.maturity_rating), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](show.runtime))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "preview-genres preview-fade-in"
+      }, genresToShow)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "toggle-show-detail-btn"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-chevron-down"
+      })))));
+    }
+  }]);
+
+  return ShowPreviewPlayerSmall;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(ShowPreviewPlayerSmall));
 
 /***/ }),
 
@@ -47659,7 +47968,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

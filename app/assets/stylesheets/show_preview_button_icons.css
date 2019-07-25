@@ -15,6 +15,7 @@
 .play-btn-bg {
     transform-origin: center;
     font-size: 25px;
+    opacity: 0.5;
 }
 
 .play-btn-outline {
@@ -39,6 +40,7 @@
     z-index: 15;
     transform-origin: center;
     font-size: 14px;
+    opacity: 0.5;
 }
 
 .preview-btn-outline {

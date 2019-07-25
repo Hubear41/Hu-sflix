@@ -166,8 +166,8 @@ class ShowPreviewPlayerSmall extends React.Component {
                          onMouseLeave={this.pauseVideo}
                     />
 
-                    <figure className="show-peek-preview-player">
-                        <figure className="preview-video-player">
+                    <figure className="show-peek-preview-player preview-fade-in">
+                        <figure className="preview-video-player preview-fade-in">
                             <figure className='preview-clickable-area' onClick={this.launchWatch}></figure>
                             <video id={`show-${show.id} preview-video`} 
                                    ref={this.videoPlayer}
@@ -176,77 +176,39 @@ class ShowPreviewPlayerSmall extends React.Component {
                             >
                                 <source src={preview ? preview.videoUrl : '' } type="video/mp4"/> 
                             </video>
-<<<<<<< HEAD
-=======
-
-                            <aside className="preview-player-right-side-btns">
-                                <button onClick={this.toggleMute} className="preview-mute-btn right-side-btn">
-                                    {muteBtn}
-                                    <i className="fas fa-circle preview-btn-bg"></i>
-                                    <i className="far fa-circle preview-btn-outline"></i>
-                                </button>
-                                <div className='right-side-placeholders right-side-btn'></div>
-                                <div className='right-side-placeholders right-side-btn'></div>
-                                <button onClick={this.toggleMyList} className='preview-mylist-btn right-side-btn'>
-                                    {myListIcon}
-                                    <i className="fas fa-circle preview-btn-bg"></i>
-                                    <i className="far fa-circle preview-btn-outline"></i>
-                                    {/* <span className='mylist-popup-desc'>{myListState}</span> */}
-                                </button>
-                            </aside>
- 
-                            <figcaption className="preview-video-info-desc" onClick={this.launchWatch}>
-                                <button className="preview-play-btn">
-                                    <i className="fas fa-play play-btn-triangle"></i>
-                                    <i className="fas fa-circle play-btn-bg"></i>
-                                    <i className="far fa-circle play-btn-outline"></i>
-                                </button>
-
-                                <h5 className="preview-show-title">{show.title}</h5>
-
-                                <article className='preview-details'>
-                                    <span className="show-maturity-rating">{show.maturity_rating}</span>
-                                    <span>{DateTimeUTIL.secondsToHoursMinutes(show.runtime)}</span>
-                                </article>
-
-                                <article className='preview-genres'>
-                                    {genresToShow}
-                                </article>
-                            </figcaption>
->>>>>>> master
                         </figure>
                         
-                        <aside className="preview-player-right-side-btns">
-                            <button onClick={this.toggleMute} className="preview-mute-btn right-side-btn">
+                        <aside className="preview-player-right-side-btns preview-fade-in">
+                            <button onClick={this.toggleMute} className="preview-mute-btn right-side-btn preview-fade-in">
                                 {muteBtn}
                                 <i className="fas fa-circle preview-btn-bg"></i>
                                 <i className="far fa-circle preview-btn-outline"></i>
                             </button>
                             <div className='right-side-placeholders right-side-btn'></div>
                             <div className='right-side-placeholders right-side-btn'></div>
-                            <button onClick={this.toggleMyList} className='preview-mylist-btn right-side-btn'>
+                            <button onClick={this.toggleMyList} className='preview-mylist-btn right-side-btn preview-fade-in'>
                                 {myListIcon}
                                 <i className="fas fa-circle preview-btn-bg"></i>
                                 <i className="far fa-circle preview-btn-outline"></i>
-                                <span className='mylist-popup-desc'>{myListState}</span>
+                                {/* <span className='mylist-popup-desc preview-fade-in'>{myListState}</span> */}
                             </button>
                         </aside>
 
-                        <figcaption className="preview-video-info-desc" onClick={this.launchWatch}>
-                            <button className="preview-play-btn">
+                        <figcaption className="preview-video-info-desc preview-fade-in" onClick={this.launchWatch}>
+                            <button className="preview-play-btn preview-fade-in">
                                 <i className="fas fa-play play-btn-triangle"></i>
                                 <i className="fas fa-circle play-btn-bg"></i>
                                 <i className="far fa-circle play-btn-outline"></i>
                             </button>
 
-                            <h5 className="preview-show-title">{show.title}</h5>
+                            <h5 className="preview-show-title preview-fade-in">{show.title}</h5>
 
-                            <article className='preview-details'>
+                            <article className='preview-details preview-fade-in'>
                                 <span className="show-maturity-rating">{show.maturity_rating}</span>
                                 <span>{DateTimeUTIL.secondsToHoursMinutes(show.runtime)}</span>
                             </article>
 
-                            <article className='preview-genres'>
+                            <article className='preview-genres preview-fade-in'>
                                 {genresToShow}
                             </article>
                         </figcaption>
