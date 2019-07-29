@@ -3133,8 +3133,8 @@ function (_React$Component) {
     value: function playVideo() {
       var _this2 = this;
 
-      if (this.videoPlayer.current === null) {
-        return null;
+      if (this.videoPlayer.current === null || this.state.paused === false) {
+        return;
       }
 
       var videoEl = this.videoPlayer.current;
@@ -3157,7 +3157,7 @@ function (_React$Component) {
     key: "pauseVideo",
     value: function pauseVideo() {
       if (this.videoPlayer.current === null) {
-        return null;
+        return;
       }
 
       var videoEl = this.videoPlayer.current;
@@ -3261,13 +3261,16 @@ function (_React$Component) {
         alt: show.title,
         className: "show-title-card",
         onClick: this.launchWatch,
-        onMouseEnter: this.playVideo,
-        onMouseLeave: this.pauseVideo
+        onMouseEnter: this.playVideo
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "show-peek-preview-player preview-fade-in"
+        className: "show-peek-preview-player preview-fade-in",
+        onMouseLeave: this.pauseVideo
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "preview-video-player preview-fade-in"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "preview-clickable-area",
+        onClick: this.launchWatch
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         id: "show-".concat(show.id, " preview-video"),
         ref: this.videoPlayer,
         onClick: this.launchWatch,
@@ -3275,10 +3278,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         src: preview ? preview.videoUrl : '',
         type: "video/mp4"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "preview-clickable-area",
-        onClick: this.launchWatch
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
         className: "preview-player-right-side-btns preview-fade-in"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "preview-mute-btn right-side-btn preview-fade-in",

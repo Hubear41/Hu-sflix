@@ -69,8 +69,8 @@ class ShowPreviewPlayerSmall extends React.Component {
     }
 
     playVideo() {
-        if ( this.videoPlayer.current === null ) {
-            return null;
+        if ( this.videoPlayer.current === null || this.state.paused === false ) {
+            return;
         }
 
         const videoEl = this.videoPlayer.current;
@@ -90,9 +90,8 @@ class ShowPreviewPlayerSmall extends React.Component {
 
     pauseVideo() {
         if (this.videoPlayer.current === null) {
-            return null;
+            return;
         }
-
         const videoEl = this.videoPlayer.current;
 
         videoEl.pause();
@@ -163,11 +162,11 @@ class ShowPreviewPlayerSmall extends React.Component {
                          className="show-title-card" 
                          onClick={this.launchWatch}
                          onMouseEnter={this.playVideo}
-                         onMouseLeave={this.pauseVideo} 
                     />
 
-                    <figure className="show-peek-preview-player preview-fade-in">
+                    <figure className="show-peek-preview-player preview-fade-in" onMouseLeave={this.pauseVideo}>
                         <figure className="preview-video-player preview-fade-in">
+                            <figure className='preview-clickable-area' onClick={this.launchWatch}></figure>
                             <video id={`show-${show.id} preview-video`} 
                                    ref={this.videoPlayer}
                                    onClick={this.launchWatch}
@@ -177,8 +176,6 @@ class ShowPreviewPlayerSmall extends React.Component {
                             </video>
                         </figure>
 
-                        <figure className='preview-clickable-area' onClick={this.launchWatch}></figure>
-                        
                         <aside className="preview-player-right-side-btns preview-fade-in">
                             <button className="preview-mute-btn right-side-btn preview-fade-in" onClick={this.toggleMute} >
                                 {muteBtn}
