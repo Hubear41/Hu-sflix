@@ -168,7 +168,6 @@ class ShowPreviewPlayerSmall extends React.Component {
 
                     <figure className="show-peek-preview-player preview-fade-in">
                         <figure className="preview-video-player preview-fade-in">
-                            <figure className='preview-clickable-area' onClick={this.launchWatch}></figure>
                             <video id={`show-${show.id} preview-video`} 
                                    ref={this.videoPlayer}
                                    onClick={this.launchWatch}
@@ -177,9 +176,11 @@ class ShowPreviewPlayerSmall extends React.Component {
                                 <source src={preview ? preview.videoUrl : '' } type="video/mp4"/> 
                             </video>
                         </figure>
+
+                        <figure className='preview-clickable-area' onClick={this.launchWatch}></figure>
                         
                         <aside className="preview-player-right-side-btns preview-fade-in">
-                            <button onClick={this.toggleMute} className="preview-mute-btn right-side-btn preview-fade-in">
+                            <button className="preview-mute-btn right-side-btn preview-fade-in" onClick={this.toggleMute} >
                                 {muteBtn}
                                 <i className="fas fa-circle preview-btn-bg"></i>
                                 <i className="far fa-circle preview-btn-outline"></i>

@@ -3267,10 +3267,7 @@ function (_React$Component) {
         className: "show-peek-preview-player preview-fade-in"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "preview-video-player preview-fade-in"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "preview-clickable-area",
-        onClick: this.launchWatch
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         id: "show-".concat(show.id, " preview-video"),
         ref: this.videoPlayer,
         onClick: this.launchWatch,
@@ -3278,11 +3275,14 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         src: preview ? preview.videoUrl : '',
         type: "video/mp4"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "preview-clickable-area",
+        onClick: this.launchWatch
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
         className: "preview-player-right-side-btns preview-fade-in"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.toggleMute,
-        className: "preview-mute-btn right-side-btn preview-fade-in"
+        className: "preview-mute-btn right-side-btn preview-fade-in",
+        onClick: this.toggleMute
       }, muteBtn, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-circle preview-btn-bg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -47968,7 +47968,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
