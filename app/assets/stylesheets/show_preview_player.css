@@ -85,6 +85,17 @@
     transition-delay: 3s;
 }
 
+.preview-video-info-desc {
+    opacity: 0;
+}
+
+#show-peek-preview-wrapper:hover .preview-video-info-desc {
+    opacity:  1;
+    transition: opacity 0.2s;
+    transition-delay: 1s;
+    transition-timing-function: ease-in;
+}
+
 .show-peek-preview-player {
     position: absolute;
     z-index: 300;
