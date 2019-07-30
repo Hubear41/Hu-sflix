@@ -89,7 +89,7 @@ class ShowPreviewPlayerSmall extends React.Component {
     }
 
     pauseVideo() {
-        if (this.videoPlayer.current === null) {
+        if (this.videoPlayer.current === null || this.state.paused ) {
             return;
         }
         const videoEl = this.videoPlayer.current;
@@ -157,12 +157,12 @@ class ShowPreviewPlayerSmall extends React.Component {
                          onMouseEnter={this.playVideo}
                          onMouseLeave={this.pauseVideo}
                 >
-                    <img src={show ? show.posterUrl : window.tempBgURL} 
+                    <img className="show-title-card" 
+                         src={show ? show.posterUrl : window.tempBgURL} 
                          alt={show.title} 
-                         className="show-title-card" 
                          onClick={this.launchWatch}
                          onMouseEnter={this.playVideo}
-                    />
+                    ></img>
 
                     <figure className="show-peek-preview-player preview-fade-in" onMouseLeave={this.pauseVideo}>
                         <figure className="preview-video-player preview-fade-in">

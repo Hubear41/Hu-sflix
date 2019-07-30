@@ -1,30 +1,11 @@
-.show-rows-wrapper {
-    display: flex;
-    flex-direction: column;
-    padding-left: 50px;
-    padding-bottom: 3vh;
-    overflow: visible;
-    max-height: calc(240px + 1vh);
-}
-
-.show-row {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 10vmax;
-    max-height: 190px;
-} 
-
 #show-peek-preview-wrapper {
+    position: relative;
     width: 15vmax; 
     height: 10vmax;
-    /* max-width: 300px;
-    max-height: 190px; */
     min-width: 250px;
     min-height: 155px;
     margin-right: 0.3%;
-    position: relative;
-    transition: height 0.3s, width 0.3s, min-width 0.3s;
+    transition: height 0.2s, width 0.2s, min-width 0.2s;
     transition-timing-function: ease-in;
 }
 
@@ -44,6 +25,7 @@
     top: 0;
     left: 0;
     height: 100%;
+    min-height: 155px;
     width: 100%;
     z-index: 400;
 }
@@ -51,8 +33,11 @@
 #show-peek-preview-wrapper:hover .show-title-card {
     opacity: 0;
     z-index: 100;
-    transition: opacity 0.5s, z-index 0.5s;
-    transition-delay: 1.5s;
+    height: calc(10vmax * 1.8);
+    /* min-height: calc(10vmax * 1.8); */
+    transition: opacity 0.5s linear 1.5s, 
+                z-index 0.5s linear 1.5s,
+                height 0.2s ease-in 0.6s;
 }
 
 #show-peek-preview-wrapper:hover .show-peek-preview-player {
@@ -69,23 +54,25 @@
     transition-timing-function: ease-in;
 }
 
+/* for anything that needs to be transparent  */
+.preview-fade-in {
+    opacity: 0;
+    z-index: 100;
+    transition: opacity 0.4s, z-index 0.2s;
+}
+
 #show-peek-preview-wrapper:hover .preview-fade-in {
     opacity: 1.0;
     z-index: 400;
-    transition: opactiy 2s ease-in 3s, z-index 0.5s ease-in 2s;
-    transition-delay: 3s;
+    transition: opactiy 2s, z-index 0.5s;
+    transition-delay: 2s;
+    transition-timing-function: ease-in;
 }
 
 #show-peek-preview-wrapper:hover .right-side-btn {
     opacity: 1.0;
     transition: opactiy 0.4s ease-in 3s;
     transition-delay: 3s;
-}
-
-.preview-fade-in {
-    opacity: 0;
-    z-index: 100;
-    transition: opacity 0.4s, z-index 0.2s;
 }
 
 .show-peek-preview-player {
@@ -131,13 +118,12 @@
     flex-direction: column;
     position: absolute;
     right: 1vmax;
-    z-index: 700;
     bottom: 3vmax;
-    transition: opacity 0.2s;
-    cursor: pointer;
+    z-index: 700;
     opacity: 0;
     transition: opactiy 0.4s;
     transition-timing-function: ease-in;
+    cursor: pointer;
 }
 
 .right-side-btn {
@@ -150,20 +136,20 @@
     align-items: center;
     transform-origin: center;
     cursor: pointer;
-    height: 32px;
-    width: 32px;
+    height: 22px;
+    width: 22px;
     padding: 5px;
-    transform: scale(2.5);
+    transform: scale(1.9);
     opacity: 0;
 }
 
 /* get rid of this later */
 .right-side-placeholders {
-    height: 12px;
+    height: 22px;
 } /* get rid of this later */
 
 .right-side-btn:hover {
-    transform: scale(2.6);
+    transform: scale(2);
     transition: transform 0.3s;
 }
 
@@ -191,8 +177,7 @@
 
 .preview-play-btn {
     position: relative;
-    top: -25px;
-    left: 5%;
+    top: -15px;
     height: 20px;
     width: 20px;
     border: none;
@@ -203,7 +188,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transform: scale(1.7);
+    transform: scale(1.2);
 }
 
 .preview-play-pause-icon {

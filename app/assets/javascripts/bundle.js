@@ -3156,7 +3156,7 @@ function (_React$Component) {
   }, {
     key: "pauseVideo",
     value: function pauseVideo() {
-      if (this.videoPlayer.current === null) {
+      if (this.videoPlayer.current === null || this.state.paused) {
         return;
       }
 
@@ -3257,9 +3257,9 @@ function (_React$Component) {
         onMouseEnter: this.playVideo,
         onMouseLeave: this.pauseVideo
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "show-title-card",
         src: show ? show.posterUrl : window.tempBgURL,
         alt: show.title,
-        className: "show-title-card",
         onClick: this.launchWatch,
         onMouseEnter: this.playVideo
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
