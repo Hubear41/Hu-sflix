@@ -129,14 +129,16 @@
 }
 
 .big-preview-play-mylist-btns button {
-    width: 13vw;
+    /* width: 10.5vmax; */
+    min-width: 100px;
+    outline: none;
     border: none;
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 3% 0;
-    outline: none;
+    background-color: rgba(70, 70, 70, 0.5);
+    padding: 2.1% 2vmax;
     color: white;
-    font-size: 3vmin;
+    font-size: 1.1vmax;
+    font-weight: 700;
     display: flex;
     justify-content: center;
     align-items: center;
