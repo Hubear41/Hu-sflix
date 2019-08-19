@@ -28,7 +28,10 @@ class Show < ApplicationRecord
     # after_initialize :default_values
     
     has_one_attached :poster
-    has_many :videos
+    # has_many :videos
+    has_many :episodes
+    has_one :preview
+    has_one :film
     has_many :show_genres
 
     has_many :genres,
