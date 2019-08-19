@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_09_185628) do
+ActiveRecord::Schema.define(version: 2019_08_19_205244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2019_07_09_185628) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "view_count", null: false
-    t.string "show_type", null: false
+    t.string "type", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -87,8 +87,8 @@ ActiveRecord::Schema.define(version: 2019_07_09_185628) do
     t.integer "credits_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "video_type", null: false
     t.integer "episode_num"
+    t.string "type", null: false
     t.index ["show_id"], name: "index_videos_on_show_id"
   end
 

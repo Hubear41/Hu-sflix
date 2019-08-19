@@ -11,7 +11,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  view_count      :integer          not null
-#  show_type       :string           not null
+#  type            :string           not null
 #
 
 
@@ -42,32 +42,12 @@ class Show < ApplicationRecord
     has_many :my_list_creator,
         through: :my_list_shows,
         source: :profile
- 
-    # def default_values 
-    #     self.view_count ||= 0
-    #     @episode_ids = []
-
-    #     self.videos.each do |video|
-    #         case video.video_type
-    #         when 'PREVIEW'
-    #             @preview_id = video.id
-    #         when 'FILM'
-    #             @movie_id = video.id
-    #         when 'EPISODE'
-    #             @episode_ids << video.id 
-    #         end
-    #     end
-    # end
 
     def preview_id 
-        self.videos.each { |video| return video.id if video.video_type == "PREVIEW"}
+        self.videos.each { |video| return video.id if video.video_type == "PREVIEW" }
     end
 
-    def movie_id
-        self.videos.each { |video| return video.id if video.video_type == "FILM"}
+    def get_video_ids 
+        self.videos.each { |video| return video.id if video.video_type != "PREVIEW" }
     end
-
-    def episode_ids
-        self.videos.map  { |video| video.id if video.video_type == "EPISODE" }
-    end 
 end

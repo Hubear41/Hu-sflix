@@ -10,8 +10,8 @@
 #  credits_time :integer
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  video_type   :string           not null
 #  episode_num  :integer
+#  type         :string           not null
 #
 
 

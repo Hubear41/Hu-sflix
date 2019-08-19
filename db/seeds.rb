@@ -18,8 +18,6 @@ ShowGenre.destroy_all
 User.create!(email: 'guest@guest.com', password: 'go_password_go')
 
 # Genres
-tv =                Genre.create!( name: 'TV Show')
-movie =             Genre.create!( name: 'Movie')
 rom_com =           Genre.create!( name: 'Rom-com')
 comedy =            Genre.create!( name: 'Comedy')
 romance =           Genre.create!( name: 'Romance' )
@@ -52,12 +50,11 @@ indie =             Genre.create!( name: 'Indie Film')
 # Shows and Videos 
 # |-------------------------------------- 1. Caroline ------------------------------------------------------ |
 
-caroline_show = Show.create!( title: 'Caroline', 
-                              director: 'ELO Films', 
-                              tagline: 'When plans fall through, a six-year-old is faced with a big responsibility on a hot Texas day.',
-                              year: 2018,
-                              maturity_rating: 'PG-13',
-                              show_type: 'FEATURE',
+caroline_show = Movie.create!( title: 'Caroline', 
+                               director: 'ELO Films', 
+                               tagline: 'When plans fall through, a six-year-old is faced with a big responsibility on a hot Texas day.',
+                               year: 2018,
+                               maturity_rating: 'PG-13',
 )
 
 ShowGenre.create!(show_id: caroline_show.id, genre_id: movie.id)
