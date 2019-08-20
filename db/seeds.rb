@@ -57,7 +57,6 @@ caroline_show = Movie.create!( title: 'Caroline',
                                maturity_rating: 'PG-13',
 )
 
-ShowGenre.create!(show_id: caroline_show.id, genre_id: movie.id)
 ShowGenre.create!(show_id: caroline_show.id, genre_id: slice_of_life.id)
 ShowGenre.create!(show_id: caroline_show.id, genre_id: emotional.id)
 ShowGenre.create!(show_id: caroline_show.id, genre_id: suspense.id)
@@ -68,8 +67,8 @@ caroline_poster_file = open('https://hu-sflix-seed.s3.amazonaws.com/posters/caro
 caroline_show.poster.attach(io: caroline_poster_file, filename: 'caroline-husflix-poster.jpg')
 caroline_show.save!
 
-caroline_video = caroline_show.film.create!( name: 'Caroline',
-                             runtime: 61,
+caroline_video = caroline_show.create_film!( name: 'Caroline',
+                                             runtime: 61,
 )
 
 caroline_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Caroline_Husflix_short_720p.mp4')
@@ -85,7 +84,6 @@ mouse_show = Movie.create!( title: 'Mouse',
                            maturity_rating: 'PG-13',
 )
 
-ShowGenre.create!(show_id: mouse_show.id, genre_id: movie.id)
 ShowGenre.create!(show_id: mouse_show.id, genre_id: suspense.id)
 ShowGenre.create!(show_id: mouse_show.id, genre_id: dark.id)
 ShowGenre.create!(show_id: mouse_show.id, genre_id: chilling.id)
@@ -94,7 +92,7 @@ ShowGenre.create!(show_id: mouse_show.id, genre_id: award_wining.id)
 mouse_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/mouse_husflix_poster.jpg')
 mouse_show.poster.attach(io: mouse_poster, filename:'mouse_poster.jpg')
 
-mouse_video = mouse_show.film.create!( name: 'Mouse',
+mouse_video = mouse_show.create_film!( name: 'Mouse',
                                        runtime: 153,
 )
 
@@ -111,7 +109,6 @@ heart_show = Movie.create!( title: 'Heart',
                           maturity_rating: 'PG',
 )
 
-ShowGenre.create!(show_id: heart_show.id, genre_id: movie.id)
 ShowGenre.create!(show_id: heart_show.id, genre_id: romance.id)
 ShowGenre.create!(show_id: heart_show.id, genre_id: happy.id)
 ShowGenre.create!(show_id: heart_show.id, genre_id: coming_of_age.id)
@@ -120,7 +117,7 @@ ShowGenre.create!(show_id: heart_show.id, genre_id: indie.id)
 heart_poster = open ('https://hu-sflix-seed.s3.amazonaws.com/posters/heart_husflix_poster.png')
 heart_show.poster.attach(io: heart_poster, filename: 'heart-husflix-poster.jpg')
 
-heart_video = heart_show.film.create!( name: 'Heart',
+heart_video = heart_show.create_film!( name: 'Heart',
                                        runtime: 67,
 )
 
@@ -141,14 +138,13 @@ ramona_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/Ramona_post
 ramona_show.poster.attach(io: ramona_poster, filename: 'ramona_poster.png')
 ramona_show.save!
 
-ShowGenre.create!(show_id: ramona_show.id, genre_id: movie.id)
 ShowGenre.create!(show_id: ramona_show.id, genre_id: quirky.id)
 ShowGenre.create!(show_id: ramona_show.id, genre_id: comedy.id)
 ShowGenre.create!(show_id: ramona_show.id, genre_id: fantasy.id)
 ShowGenre.create!(show_id: ramona_show.id, genre_id: indie.id)
 ShowGenre.create!(show_id: ramona_show.id, genre_id: recently_added.id)
 
-ramona_video = ramona_show.film.create!( name: 'Ramona',
+ramona_video = ramona_show.create_film!( name: 'Ramona',
                                          runtime: 43,
 )
 
@@ -165,7 +161,6 @@ stumped_show = Movie.create!( title: 'Stumped',
                              maturity_rating: 'PG',
 ) 
 
-ShowGenre.create!(show_id: stumped_show.id, genre_id: movie.id)
 ShowGenre.create!(show_id: stumped_show.id, genre_id: coming_of_age.id)
 ShowGenre.create!(show_id: stumped_show.id, genre_id: heartfelt.id)
 ShowGenre.create!(show_id: stumped_show.id, genre_id: inspiring.id)
@@ -175,7 +170,7 @@ stumped_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/Stumped_Po
 stumped_show.poster.attach(io: stumped_poster, filename: 'stumped_poster.png')
 stumped_show.save!
 
-stumped_video = stumped_show.film.create!( name: 'Stumped',
+stumped_video = stumped_show.create_film!( name: 'Stumped',
                                            runtime: 61,
 )
 
@@ -192,19 +187,17 @@ midnight_girl_show = Movie.create!( title: 'Midnight Girl',
                                   maturity_rating: 'R',
 )
 
-ShowGenre.create!(show_id: midnight_girl_show.id, genre_id: movie.id)
 ShowGenre.create!(show_id: midnight_girl_show.id, genre_id: dark.id)
 ShowGenre.create!(show_id: midnight_girl_show.id, genre_id: emotional.id)
 ShowGenre.create!(show_id: midnight_girl_show.id, genre_id: inspiring.id)
 ShowGenre.create!(show_id: midnight_girl_show.id, genre_id: drama.id)
 ShowGenre.create!(show_id: midnight_girl_show.id, genre_id: recently_added.id)
 
-
 midnight_girl_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/midnight_girl_husflix_poster.jpg')
 midnight_girl_show.poster.attach(io: midnight_girl_poster, filename: 'midnight-girl-poster.jpg')
 midnight_girl_show.save!
 
-midnight_girl_video = midnight_girl_show.film.create!( name: 'Midnight Girl',
+midnight_girl_video = midnight_girl_show.create_film!( name: 'Midnight Girl',
                                                        runtime: 96,
 )
 
@@ -221,7 +214,6 @@ marina_show = Movie.create!( title: 'Marina',
                             maturity_rating: 'PG-13',
 )
 
-ShowGenre.create!(show_id: marina_show.id, genre_id: movie.id)
 ShowGenre.create!(show_id: marina_show.id, genre_id: slice_of_life.id)
 ShowGenre.create!(show_id: marina_show.id, genre_id: emotional.id)
 ShowGenre.create!(show_id: marina_show.id, genre_id: chilling.id)
@@ -233,7 +225,7 @@ marina_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/Marina_post
 marina_show.poster.attach(io: marina_poster, filename: 'marina_poster.jpg')
 marina_show.save!
 
-marina_video = marina_show.film.create!( name: 'Marina',
+marina_video = marina_show.create_film!( name: 'Marina',
                                          runtime: 46,
 )
 
@@ -250,7 +242,6 @@ charm_city_show = Movie.create( title: 'Goodbye Charm City',
                                maturity_rating: 'PG-13',
 )
 
-ShowGenre.create!(show_id: charm_city_show.id, genre_id: movie.id)
 ShowGenre.create!(show_id: charm_city_show.id, genre_id: real_life.id)
 ShowGenre.create!(show_id: charm_city_show.id, genre_id: emotional.id)
 ShowGenre.create!(show_id: charm_city_show.id, genre_id: chilling.id)
@@ -261,7 +252,7 @@ charm_city_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/GCC_pos
 charm_city_show.poster.attach(io: charm_city_poster, filename: 'charm_city_poster.png')
 charm_city_show.save!
 
-charm_city_video = charm_city_show.film.create!( name: 'Goodbye Charm City',
+charm_city_video = charm_city_show.create_film!( name: 'Goodbye Charm City',
                                                  runtime: 99,
 )
 
@@ -278,7 +269,6 @@ malis_tribute = Movie.create( title: "Mali's Tribute",
                              maturity_rating: 'PG-13',
 )
 
-ShowGenre.create!(show_id: malis_tribute.id, genre_id: movie.id)
 ShowGenre.create!(show_id: malis_tribute.id, genre_id: coming_of_age.id)
 ShowGenre.create!(show_id: malis_tribute.id, genre_id: rom_com.id)
 ShowGenre.create!(show_id: malis_tribute.id, genre_id: real_life.id)
@@ -289,7 +279,7 @@ malis_tribute_poster = open("https://hu-sflix-seed.s3.amazonaws.com/posters/Mali
 malis_tribute.poster.attach(io: malis_tribute_poster, filename: 'malis_tribute_poster.png')
 malis_tribute.save!
 
-malis_tribute_video = malis_tribute.film.create!( name: "Mali's Tribute",
+malis_tribute_video = malis_tribute.create_film!( name: "Mali's Tribute",
                                                   runtime: 106,
 )
 
@@ -306,7 +296,6 @@ freeze = Movie.create!( title: 'Freeze',
                        maturity_rating: "TV-MA",
 )    
 
-ShowGenre.create!(show_id: freeze.id, genre_id: movie.id)
 ShowGenre.create!(show_id: freeze.id, genre_id: chilling.id)
 ShowGenre.create!(show_id: freeze.id, genre_id: dark.id)
 ShowGenre.create!(show_id: freeze.id, genre_id: chinese_language.id)
@@ -317,7 +306,7 @@ freeze_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/Freeze_post
 freeze.poster.attach(io: freeze_poster, filename: 'freeze_poster.jpg')
 freeze.save!
 
-freeze_video = freeze.film.create!( name: 'Freeze',
+freeze_video = freeze.create_film!( name: 'Freeze',
                                       runtime: 51,
 )
 
@@ -334,7 +323,6 @@ freak = Movie.create!( title: 'Freak',
                       maturity_rating: 'TV-MA',
 )
 
-ShowGenre.create!(show_id: freak.id, genre_id: movie.id)
 ShowGenre.create!(show_id: freak.id, genre_id: dark.id)
 ShowGenre.create!(show_id: freak.id, genre_id: chinese_language.id)
 ShowGenre.create!(show_id: freak.id, genre_id: chilling.id)
@@ -345,7 +333,7 @@ freak_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/freak_poster
 freak.poster.attach(io: freak_poster, filename: 'freak_poster.png')
 freak.save!
 
-freak_video = freak.film.create!( name: 'Freak',
+freak_video = freak.create_film!( name: 'Freak',
                                   runtime: 85,
 )
 
@@ -362,7 +350,6 @@ ling_show = Movie.create!( title: 'Ling',
                           maturity_rating: 'PG',
 )
 
-ShowGenre.create!(show_id: ling_show.id, genre_id: movie.id)
 ShowGenre.create!(show_id: ling_show.id, genre_id: adventureous.id)
 ShowGenre.create!(show_id: ling_show.id, genre_id: coming_of_age.id)
 ShowGenre.create!(show_id: ling_show.id, genre_id: fantasy.id)
@@ -372,7 +359,7 @@ ling_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/ling_husflix_
 ling_show.poster.attach( io: ling_poster, filename: 'ling_poster.jpg')
 ling_show.save!
 
-ling_video = ling_show.film.create!( name: 'Ling Promo',
+ling_video = ling_show.create_film!( name: 'Ling Promo',
                                      runtime: 263,
 )
 
@@ -389,7 +376,6 @@ max_out_show = Series.create!( title: 'Max Out',
                              maturity_rating: 'TV-14',
 )
 
-ShowGenre.create!(show_id: max_out_show.id, genre_id: tv.id)
 ShowGenre.create!(show_id: max_out_show.id, genre_id: webseries.id)
 ShowGenre.create!(show_id: max_out_show.id, genre_id: comedy.id)
 ShowGenre.create!(show_id: max_out_show.id, genre_id: happy.id)
@@ -434,7 +420,6 @@ foolish_gents_show = Series.create!( title:'The Fantastic Adventures of Foolish 
                                   maturity_rating: 'TV-14',
 )
 
-ShowGenre.create!(show_id: foolish_gents_show.id, genre_id: tv.id)
 ShowGenre.create!(show_id: foolish_gents_show.id, genre_id: webseries.id)
 ShowGenre.create!(show_id: foolish_gents_show.id, genre_id: slice_of_life.id)
 ShowGenre.create!(show_id: foolish_gents_show.id, genre_id: rom_com.id)
@@ -532,13 +517,12 @@ valencia_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/Valencia_
 valencia_show.poster.attach(io: valencia_poster, filename: 'valencia_poster.jpg')
 valencia_show.save!
 
-ShowGenre.create!(show_id: valencia_show.id, genre_id: movie.id)
 ShowGenre.create!(show_id: valencia_show.id, genre_id: emotional.id)
 ShowGenre.create!(show_id: valencia_show.id, genre_id: suspense.id)
 ShowGenre.create!(show_id: valencia_show.id, genre_id: inspiring.id)
 ShowGenre.create!(show_id: valencia_show.id, genre_id: award_wining.id)
 
-valencia_video = valencia_show.film.create!( name: 'Valencia Road',
+valencia_video = valencia_show.create_film!( name: 'Valencia Road',
                                              runtime: 65,
 )
 
@@ -555,7 +539,6 @@ gamers_generation = Series.create!( title: 'Gamers Generation',
                                   maturity_rating: 'TV-14',
 )
 
-ShowGenre.create!(show_id: gamers_generation.id, genre_id: tv.id)
 ShowGenre.create!(show_id: gamers_generation.id, genre_id: adventureous.id)
 ShowGenre.create!(show_id: gamers_generation.id, genre_id: slice_of_life.id)
 ShowGenre.create!(show_id: gamers_generation.id, genre_id: happy.id)
@@ -602,13 +585,12 @@ white_rabbit_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/White
 white_rabbit.poster.attach(io: white_rabbit_poster , filename: 'white_rabbit_poster.png')
 white_rabbit.save!
 
-ShowGenre.create!(show_id: white_rabbit.id, genre_id: movie.id)
 ShowGenre.create!(show_id: white_rabbit.id, genre_id: quirky.id)
 ShowGenre.create!(show_id: white_rabbit.id, genre_id: coming_of_age.id)
 ShowGenre.create!(show_id: white_rabbit.id, genre_id: romance.id)
 ShowGenre.create!(show_id: white_rabbit.id, genre_id: award_wining.id)
 
-white_rabbit_video = white_rabbit.film.create!( name: 'White Rabbit',
+white_rabbit_video = white_rabbit.create_film!( name: 'White Rabbit',
                                                   runtime: 94,
 )
 
@@ -625,7 +607,6 @@ ADGB = Movie.create!( title: 'Another Day Gone By',
                      maturity_rating: 'PG-13',
 )
 
-ShowGenre.create!(show_id: ADGB.id, genre_id: movie.id)
 ShowGenre.create!(show_id: ADGB.id, genre_id: slice_of_life.id)
 ShowGenre.create!(show_id: ADGB.id, genre_id: witty.id)
 ShowGenre.create!(show_id: ADGB.id, genre_id: rom_com.id)
@@ -636,7 +617,7 @@ ADGB_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/Another_Day_G
 ADGB.poster.attach(io: ADGB_poster , filename: 'ADGB_poster.png')
 ADGB.save!
 
-ADGB_video = ADGB.film.create!( name: 'ADGB',
+ADGB_video = ADGB.create_film!( name: 'ADGB',
                                   runtime: 98,
 )
 
