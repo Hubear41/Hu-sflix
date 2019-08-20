@@ -6,7 +6,7 @@ import BigPreview from './banner_video';
 const msp = ({ entities, session, ui }, ownProps) => {
     const { show } = ownProps;
 
-    const previewId = show.show_type === 'FEATURE' ? show.movie_id : show.episode_ids[0];
+    const previewId = show.preview_id;
     const previewVideo = entities.videos[previewId] || null;
     const isPreviewing = ui.preview; 
     const currentUserId = session.id;

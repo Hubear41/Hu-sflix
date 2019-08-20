@@ -1,9 +1,6 @@
 json.show do
     json.partial! 'api/shows/show', show: @show
-end
-
-json.nextShow do
-    json.partial! 'api/shows/show', show: @nextShow    
+    json.film_id @show.type == "Movie" ? @show.film.id : @show.episodes.first.id
 end
 
 json.video do 

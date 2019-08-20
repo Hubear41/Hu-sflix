@@ -32,6 +32,8 @@ const App = () => {
                 <ProtectedRoute path={[ "/browse", "/search", "/genre" ]} component={LoadingScreen} />
                 <ProtectedRoute exact path="/browse" component={ShowIndexGallery} />
                 <ProtectedRoute path="/browse/my-list" component={MyListGallery} />
+                <ProtectedRoute path="/browse/movies" component={MyListGallery} />
+                <ProtectedRoute path="/browse/tvshows" component={MyListGallery} />
                 <ProtectedRoute path="/search" component={SearchGallery} />
                 <ProtectedRoute path="/genre/:genreId" component={GenreGallery} />
                 <ProtectedRoute path="/watch/:showId" component={Watch} />

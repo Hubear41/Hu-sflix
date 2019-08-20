@@ -3,7 +3,8 @@ json.shows do
         json.set! show.id do 
             json.partial! 'api/shows/show', show: show   
             json.genre_ids show.genre_ids
-            json.runtime @runtime;
+            json.film_id show.type == "Movie" ? show.film.id : nil
+            json.runtime show.type == "Movie" ? show.film.runtime : show.episodes.first.runtime
         end
     end
 end
@@ -17,10 +18,10 @@ json.genres do
 end
 
 json.videos do 
-    if @previewVideos.count <= 0
+    if @preview_videos.count <= 0
         {}
     else
-        @previewVideos.each do |video| 
+        @preview_videos.each do |video| 
             json.set! video.id do 
                 json.partial! 'api/videos/video', video: video
             end

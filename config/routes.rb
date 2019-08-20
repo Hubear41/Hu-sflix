@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     resources :shows, only: [:index, :show]
     get 'search', to: 'shows#search', as: :shows_search
     get 'my_list/shows', to: 'shows#my_list', as: :shows_my_list
+    get 'shows/movies', to: "shows#movies", as: :shows_movies
+    get 'shows/tv', to: "shows#tv", as: :shows_tv
 
     resources :genres, only: [:show, :index]
     get 'genre_index/:genre_id', to: 'genres#genre_index', as: :genre_index

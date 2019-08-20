@@ -152,9 +152,9 @@ class MainNav extends React.Component {
                         <nav className="nav-btns-wrapper">
                             <Link to="/browse"               className={`nav-btn ${homeBold}`}   onClick={this.handleClick} >Home</Link>
                             <Link to={`/genre/${tvShowsId}`} className={`nav-btn ${tvBold}`}     onClick={this.handleClick} >TV Shows</Link>
-                            <Link to={`/genre/${moviesId}`}  className={`nav-btn ${movieBold}`}  onClick={this.handleClick} >Movies</Link>
-                            <Link to={`/genre/${recentId}`}  className={`nav-btn ${recentBold}`} onClick={this.handleClick} >Recently Added</Link>
-                            <Link to='/browse/my-list'       className={`nav-btn ${mylistBold}`} onClick={this.handleClick} >My List</Link>
+                            <Link to="/browse/movies"        className={`nav-btn ${movieBold}`}  onClick={this.handleClick} >Movies</Link>
+                            <Link to="/browse/tvshows"       className={`nav-btn ${recentBold}`} onClick={this.handleClick} >Recently Added</Link>
+                            <Link to="/browse/my-list"       className={`nav-btn ${mylistBold}`} onClick={this.handleClick} >My List</Link>
                         </nav>
                     </section>
 

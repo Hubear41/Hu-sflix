@@ -12,14 +12,8 @@
 #  updated_at      :datetime         not null
 #  view_count      :integer          not null
 #  type            :string           not null
+#  preview_id      :integer
 #
 
 class Series < Show
-    def _episode_ids
-        self.videos.map  { |video| video.id if video.video_type == "EPISODE" }
-    end 
-
-    def get_video_ids
-        self._episode_ids
-    end
 end

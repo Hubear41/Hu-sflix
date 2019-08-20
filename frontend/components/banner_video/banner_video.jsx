@@ -186,7 +186,7 @@ class BigPreview extends React.Component {
         if (show.show_type === 'FEATURE') {
             this.props.history.push({
                 pathname: `/watch/${show.id}`,
-                search: `trackId=${show.movie_id}`
+                search: `trackId=${show.film_id}`
             });
         } else {
             this.props.history.push({

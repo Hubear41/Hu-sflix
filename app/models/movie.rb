@@ -12,15 +12,8 @@
 #  updated_at      :datetime         not null
 #  view_count      :integer          not null
 #  type            :string           not null
+#  preview_id      :integer
 #
 
 class Movie < Show
-    def _movie_id
-        self.videos.each { |video| return video.id if video.video_type == "FILM"}
-    end
-
-
-    def get_video_ids
-        [ self._movie_id ]
-    end
 end

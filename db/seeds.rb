@@ -75,6 +75,9 @@ caroline_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Caroline_Hus
 caroline_video.video_file.attach(io: caroline_file, filename: 'Caroline.mp4')
 caroline_video.save!
 
+caroline_show.preview = caroline_video
+caroline_show.save!
+
 # |-------------------------------------- 2. Mouse ------------------------------------------------------ |
 
 mouse_show = Movie.create!( title: 'Mouse',
@@ -100,6 +103,9 @@ mouse_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Mouse_Husflix_s
 mouse_video.video_file.attach(io: mouse_file, filename: 'Mouse.mp4')
 mouse_video.save!
 
+mouse_show.preview = mouse_video
+mouse_show.save!
+
 # |-------------------------------------- 3. Heart ------------------------------------------------------ |
 
 heart_show = Movie.create!( title: 'Heart',
@@ -124,6 +130,9 @@ heart_video = heart_show.create_film!( name: 'Heart',
 heart_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Heart_Husflix_short_720p.mp4')
 heart_video.video_file.attach(io: heart_file, filename: 'Heart.mp4')
 heart_video.save!
+
+heart_show.preview = heart_video
+heart_show.save!
 
 # |-------------------------------------- 4. Ramona ------------------------------------------------------ |
 
@@ -152,6 +161,9 @@ ramona_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Ramona_Husflix
 ramona_video.video_file.attach(io: ramona_file, filename: 'Ramona.mp4')
 ramona_video.save!
 
+ramona_show.preview = ramona_video
+ramona_show.save!
+
 # |-------------------------------------- 5. Stumped ------------------------------------------------------ |
 
 stumped_show = Movie.create!( title: 'Stumped',
@@ -177,6 +189,9 @@ stumped_video = stumped_show.create_film!( name: 'Stumped',
 stumped_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Stumped_Husflix_short_720p.mp4')
 stumped_video.video_file.attach(io: stumped_file, filename: 'Stumped.mp4')
 stumped_video.save!
+
+stumped_show.preview = stumped_video
+stumped_show.save!
 
 # |-------------------------------------- 6. Midnight Girl ------------------------------------------------------ |
 
@@ -204,6 +219,9 @@ midnight_girl_video = midnight_girl_show.create_film!( name: 'Midnight Girl',
 midnight_girl_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Midnight+Girl_Husflix_short_720p.mp4')
 midnight_girl_video.video_file.attach(io: midnight_girl_file, filename: 'Midnight_Girl.mp4')
 midnight_girl_video.save!
+
+midnight_girl_show.preview = midnight_girl_video
+midnight_girl_show.save!
 
 # |-------------------------------------- 7. Marina ------------------------------------------------------ |
 
@@ -233,6 +251,9 @@ marina_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Marina_Husflix
 marina_video.video_file.attach(io: marina_file, filename: 'Marina.mp4')
 marina_video.save!
 
+marina_show.preview = marina_video
+marina_show.save!
+
 # |-------------------------------------- 8. Goodbye Charm City ------------------------------------------------------ |
 
 charm_city_show = Movie.create( title: 'Goodbye Charm City',
@@ -259,6 +280,9 @@ charm_city_video = charm_city_show.create_film!( name: 'Goodbye Charm City',
 charm_city_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Goodbye_Charm_City_Husflix_short_720p.mp4')
 charm_city_video.video_file.attach(io: charm_city_file, filename: 'charm-city.mp4')
 charm_city_video.save!
+
+charm_city_show.preview = charm_city_video
+charm_city_show.save!
 
 # |-------------------------------------- 9. Mali's Tribute ------------------------------------------------------ |
 
@@ -287,6 +311,9 @@ malis_tribute_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Malis_T
 malis_tribute_video.video_file.attach(io: malis_tribute_file, filename: 'tribute.mp4')
 malis_tribute_video.save!
 
+malis_tribute.preview = malis_tribute_video
+malis_tribute.save!
+
 # |-------------------------------------- 10. Freeze ------------------------------------------------------ |
 
 freeze = Movie.create!( title: 'Freeze',
@@ -313,6 +340,9 @@ freeze_video = freeze.create_film!( name: 'Freeze',
 freeze_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Freeze_Husflix_short_720p.mp4')
 freeze_video.video_file.attach(io: freeze_file, filename: 'freeze.mp4')
 freeze_video.save!
+
+freeze.preview = freeze_video
+freeze.save!
 
 # |-------------------------------------- 11. Freak ------------------------------------------------------ |
 
@@ -341,6 +371,9 @@ freak_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Freak_Husflix_s
 freak_video.video_file.attach(io: freak_file, filename: 'freak.mp4')
 freak_video.save!
 
+freak.preview = freak_video
+freak.save!
+
 # |-------------------------------------- 12. Ling ------------------------------------------------------ |
 
 ling_show = Movie.create!( title: 'Ling',
@@ -366,6 +399,9 @@ ling_video = ling_show.create_film!( name: 'Ling Promo',
 ling_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Ling_1.mp4')
 ling_video.video_file.attach(io: ling_file, filename: 'ling_show.mp4')
 ling_video.save!
+
+ling_show.preview = ling_video
+ling_show.save!
 
 # |-------------------------------------- 13. Max Out ------------------------------------------------------ |
 
@@ -409,6 +445,9 @@ max_out_ep2 = max_out_show.episodes.create!( name: 'Audition Animal',
 max_ep2_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Max_Out_Ep2_Husflix_short_720p.mp4')
 max_out_ep2.video_file.attach(io: max_ep2_file, filename: 'maxout2.mp4')
 max_out_ep2.save!
+
+max_out_show.preview = max_out_ep2
+max_out_show.save!
 
 # |-------------------------------------- 14. The Fantastic Adventures of Foolish Gentlemen ----------------------------------------------- |
 
@@ -504,6 +543,11 @@ gents_ep6 = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Foolish_Gents_Ep
 foolish_gents_ep6.video_file.attach(io: gents_ep6, filename: 'gents6.mp4')
 foolish_gents_ep6.save!
 
+# |-------------------------------------- 14 Foolish Gents Preview ------------------------------------------------------- |
+
+foolish_gents_show.preview = foolish_gents_ep3
+foolish_gents_show.save!
+
 # |-------------------------------------- 15. Valencia ------------------------------------------------------ |
 
 valencia_show = Movie.create!( title:'Valencia Road',
@@ -529,6 +573,9 @@ valencia_video = valencia_show.create_film!( name: 'Valencia Road',
 valencia_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Valencia_Husflix_720p.mp4')
 valencia_video.video_file.attach(io: valencia_file, filename: 'Valencia.mp4')
 valencia_video.save!
+
+valencia_show.preview = valencia_video
+valencia_show.save!
 
 # |-------------------------------------- 16. Gamers Generation ------------------------------------------------------ |
 
@@ -572,6 +619,12 @@ gg_ep2_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Gamers_Gen_Ep2
 gg_ep2.video_file.attach(io: gg_ep2_file, filename: 'gg_ep_2.mp4')
 gg_ep2.save!
 
+# |-------------------------------------- 16. GG Preview ------------------------------------------------------ |
+
+gamers_generation.preview = gg_ep1
+gamers_generation.save!
+
+
 # |-------------------------------------- 17. White Rabbit ------------------------------------------------------ |
 
 white_rabbit = Movie.create!( title: 'White Rabbit',
@@ -597,6 +650,9 @@ white_rabbit_video = white_rabbit.create_film!( name: 'White Rabbit',
 white_rabbit_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/White_Rabbit_Husflix_720p.mp4')
 white_rabbit_video.video_file.attach(io: white_rabbit_file, filename: 'white_rabbit.mp4')
 white_rabbit_video.save!
+
+white_rabbit.preview = white_rabbit_video
+white_rabbit.save!
 
 # |-------------------------------------- 18. Another Day Gone By ------------------------------------------------------ |
 
@@ -624,3 +680,6 @@ ADGB_video = ADGB.create_film!( name: 'ADGB',
 ADGB_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/ADGB_Husflix_720p.mp4')
 ADGB_video.video_file.attach(io: ADGB_file, filename: 'ADGB.mp4')
 ADGB_video.save!
+
+ADGB.preview = ADGB_video
+ADGB.save!

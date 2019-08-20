@@ -34,6 +34,7 @@ const msp = ({ entities, ui, session }, ownProps) => {
 
 const mdp = dispatch => ({
     requestAllShows: id => dispatch(fetchGenreShows(id)),
+    
     stopLoading: () => dispatch(stopLoading()),
     startLoading: () => dispatch(startLoading()),
 })

@@ -343,7 +343,7 @@ var receiveErrors = function receiveErrors(errors) {
 /*!******************************************!*\
   !*** ./frontend/actions/show_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_VIDEO, RECEIVE_SHOW, RECEIVE_SHOWS, fetchVideo, fetchShows, fetchShow, fetchMyListShows, searchShows */
+/*! exports provided: RECEIVE_VIDEO, RECEIVE_SHOW, RECEIVE_SHOWS, fetchVideo, fetchShows, fetchShow, fetchMyListShows, searchShows, fetchMovies, fetchTVShows */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -356,6 +356,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShow", function() { return fetchShow; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMyListShows", function() { return fetchMyListShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchShows", function() { return searchShows; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMovies", function() { return fetchMovies; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTVShows", function() { return fetchTVShows; });
 /* harmony import */ var _util_show_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/show_util */ "./frontend/util/show_util.js");
 
 var RECEIVE_VIDEO = 'RECEIVE_VIDEO';
@@ -396,6 +398,20 @@ var searchShows = function searchShows(query) {
     });
   };
 };
+var fetchMovies = function fetchMovies() {
+  return function (dispatch) {
+    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchMovies"]().then(function (payload) {
+      return dispatch(receiveShows(payload));
+    });
+  };
+};
+var fetchTVShows = function fetchTVShows() {
+  return function (dispatch) {
+    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchTVShows"]().then(function (payload) {
+      return dispatch(receiveShows(payload));
+    });
+  };
+};
 
 var receiveVideo = function receiveVideo(video) {
   return {
@@ -418,12 +434,10 @@ var receiveShows = function receiveShows(_ref) {
 
 var receiveShow = function receiveShow(_ref2) {
   var show = _ref2.show,
-      nextShow = _ref2.nextShow,
       video = _ref2.video;
   return {
     type: RECEIVE_SHOW,
     show: show,
-    nextShow: nextShow,
     video: video
   };
 };
@@ -546,6 +560,12 @@ var App = function App() {
     component: _shows_show_gallery_container__WEBPACK_IMPORTED_MODULE_7__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
     path: "/browse/my-list",
+    component: _shows_mylist_gallery_container__WEBPACK_IMPORTED_MODULE_10__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
+    path: "/browse/movies",
+    component: _shows_mylist_gallery_container__WEBPACK_IMPORTED_MODULE_10__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
+    path: "/browse/tvshows",
     component: _shows_mylist_gallery_container__WEBPACK_IMPORTED_MODULE_10__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
     path: "/search",
@@ -878,7 +898,7 @@ function (_React$Component) {
       if (show.show_type === 'FEATURE') {
         this.props.history.push({
           pathname: "/watch/".concat(show.id),
-          search: "trackId=".concat(show.movie_id)
+          search: "trackId=".concat(show.film_id)
         });
       } else {
         this.props.history.push({
@@ -1024,7 +1044,7 @@ var msp = function msp(_ref, ownProps) {
       session = _ref.session,
       ui = _ref.ui;
   var show = ownProps.show;
-  var previewId = show.show_type === 'FEATURE' ? show.movie_id : show.episode_ids[0];
+  var previewId = show.preview_id;
   var previewVideo = entities.videos[previewId] || null;
   var isPreviewing = ui.preview;
   var currentUserId = session.id;
@@ -1444,11 +1464,11 @@ function (_React$Component) {
         className: "nav-btn ".concat(tvBold),
         onClick: this.handleClick
       }, "TV Shows"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/genre/".concat(moviesId),
+        to: "/browse/movies",
         className: "nav-btn ".concat(movieBold),
         onClick: this.handleClick
       }, "Movies"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/genre/".concat(recentId),
+        to: "/browse/tvshows",
         className: "nav-btn ".concat(recentBold),
         onClick: this.handleClick
       }, "Recently Added"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -3407,7 +3427,7 @@ function (_React$Component) {
       }
 
       var genreList = [];
-      var previewVideo = show.show_type === 'FEATURE' ? videos[show.movie_id] : videos[show.episode_ids[0]];
+      var previewVideo = videos[show.preview_id];
       show.genre_ids.forEach(function (id) {
         genreList.push(genres[id]);
       });
@@ -4626,14 +4646,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var showsReducer = function showsReducer() {
-  var _merge;
-
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   var _ref = arguments.length > 1 ? arguments[1] : undefined,
       type = _ref.type,
       show = _ref.show,
-      nextShow = _ref.nextShow,
       shows = _ref.shows;
 
   Object.freeze(state);
@@ -4643,7 +4660,7 @@ var showsReducer = function showsReducer() {
       return shows;
 
     case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SHOW"]:
-      return Object(lodash__WEBPACK_IMPORTED_MODULE_2__["merge"])({}, state, (_merge = {}, _defineProperty(_merge, show.id, show), _defineProperty(_merge, nextShow.id, nextShow), _merge));
+      return Object(lodash__WEBPACK_IMPORTED_MODULE_2__["merge"])({}, state, _defineProperty({}, show.id, show));
 
     case _actions_genre_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_GENRE_SHOWS"]:
       return shows;
@@ -4826,7 +4843,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"])); // return createStore(rootReducer, preloadedState, applyMiddleware(thunk, logger));
+  // return createStore(rootReducer, preloadedState, applyMiddleware(thunk));
+  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"], redux_logger__WEBPACK_IMPORTED_MODULE_2___default.a));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
@@ -5052,7 +5070,7 @@ var logoutUser = function logoutUser() {
 /*!************************************!*\
   !*** ./frontend/util/show_util.js ***!
   \************************************/
-/*! exports provided: fetchShows, fetchShow, fetchVideo, fetchPreviewVideos, searchShows, fetchMyListShows */
+/*! exports provided: fetchShows, fetchShow, fetchVideo, fetchMovies, fetchTVShows, searchShows, fetchMyListShows */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5060,7 +5078,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShows", function() { return fetchShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShow", function() { return fetchShow; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVideo", function() { return fetchVideo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPreviewVideos", function() { return fetchPreviewVideos; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMovies", function() { return fetchMovies; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTVShows", function() { return fetchTVShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchShows", function() { return searchShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMyListShows", function() { return fetchMyListShows; });
 var fetchShows = function fetchShows() {
@@ -5081,10 +5100,16 @@ var fetchVideo = function fetchVideo(id) {
     url: "api/videos/".concat(id)
   });
 };
-var fetchPreviewVideos = function fetchPreviewVideos() {
+var fetchMovies = function fetchMovies() {
   return $.ajax({
-    method: 'GET',
-    url: 'api/videos'
+    method: "GET",
+    url: "/api/shows/movies"
+  });
+};
+var fetchTVShows = function fetchTVShows() {
+  return $.ajax({
+    method: "GET",
+    url: "/api/shows/tv"
   });
 };
 var searchShows = function searchShows(query) {
@@ -47968,7 +47993,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
