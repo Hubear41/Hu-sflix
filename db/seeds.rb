@@ -67,9 +67,8 @@ caroline_poster_file = open('https://hu-sflix-seed.s3.amazonaws.com/posters/caro
 caroline_show.poster.attach(io: caroline_poster_file, filename: 'caroline-husflix-poster.jpg')
 caroline_show.save!
 
-caroline_video = caroline_show.create_film!( name: 'Caroline',
-                                             runtime: 61,
-)
+caroline_video = Film.new(name: 'Caroline', runtime: 61)
+caroline_show.film = caroline_video
 
 caroline_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Caroline_Husflix_short_720p.mp4')
 caroline_video.video_file.attach(io: caroline_file, filename: 'Caroline.mp4')
@@ -95,9 +94,8 @@ ShowGenre.create!(show_id: mouse_show.id, genre_id: award_wining.id)
 mouse_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/mouse_husflix_poster.jpg')
 mouse_show.poster.attach(io: mouse_poster, filename:'mouse_poster.jpg')
 
-mouse_video = mouse_show.create_film!( name: 'Mouse',
-                                       runtime: 153,
-)
+mouse_video = Film.new( name: "Mouse", runtime: 153)
+mouse_show.film = mouse_video
 
 mouse_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Mouse_Husflix_short_720p.mp4')
 mouse_video.video_file.attach(io: mouse_file, filename: 'Mouse.mp4')
@@ -123,9 +121,8 @@ ShowGenre.create!(show_id: heart_show.id, genre_id: indie.id)
 heart_poster = open ('https://hu-sflix-seed.s3.amazonaws.com/posters/heart_husflix_poster.png')
 heart_show.poster.attach(io: heart_poster, filename: 'heart-husflix-poster.jpg')
 
-heart_video = heart_show.create_film!( name: 'Heart',
-                                       runtime: 67,
-)
+heart_video = Film.new( name: 'Heart', runtime: 67)
+heart_show.film = heart_video
 
 heart_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Heart_Husflix_short_720p.mp4')
 heart_video.video_file.attach(io: heart_file, filename: 'Heart.mp4')
@@ -153,9 +150,10 @@ ShowGenre.create!(show_id: ramona_show.id, genre_id: fantasy.id)
 ShowGenre.create!(show_id: ramona_show.id, genre_id: indie.id)
 ShowGenre.create!(show_id: ramona_show.id, genre_id: recently_added.id)
 
-ramona_video = ramona_show.create_film!( name: 'Ramona',
+ramona_video = Film.new( name: 'Ramona',
                                          runtime: 43,
 )
+ramona_show.film = ramona_video
 
 ramona_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Ramona_Husflix_short_720p.mp4')
 ramona_video.video_file.attach(io: ramona_file, filename: 'Ramona.mp4')
@@ -182,9 +180,10 @@ stumped_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/Stumped_Po
 stumped_show.poster.attach(io: stumped_poster, filename: 'stumped_poster.png')
 stumped_show.save!
 
-stumped_video = stumped_show.create_film!( name: 'Stumped',
+stumped_video = Film.new( name: 'Stumped',
                                            runtime: 61,
 )
+stumped_show.film = stumped_video
 
 stumped_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Stumped_Husflix_short_720p.mp4')
 stumped_video.video_file.attach(io: stumped_file, filename: 'Stumped.mp4')
@@ -212,9 +211,10 @@ midnight_girl_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/midn
 midnight_girl_show.poster.attach(io: midnight_girl_poster, filename: 'midnight-girl-poster.jpg')
 midnight_girl_show.save!
 
-midnight_girl_video = midnight_girl_show.create_film!( name: 'Midnight Girl',
+midnight_girl_video = Film.new( name: 'Midnight Girl',
                                                        runtime: 96,
 )
+midnight_girl_show.film = midnight_girl_video
 
 midnight_girl_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Midnight+Girl_Husflix_short_720p.mp4')
 midnight_girl_video.video_file.attach(io: midnight_girl_file, filename: 'Midnight_Girl.mp4')
@@ -243,9 +243,8 @@ marina_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/Marina_post
 marina_show.poster.attach(io: marina_poster, filename: 'marina_poster.jpg')
 marina_show.save!
 
-marina_video = marina_show.create_film!( name: 'Marina',
-                                         runtime: 46,
-)
+marina_video = Film.new( name: 'Marina', runtime: 46)
+marina_show.film = marina_video
 
 marina_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Marina_Husflix_short_720p.mp4')
 marina_video.video_file.attach(io: marina_file, filename: 'Marina.mp4')
@@ -273,9 +272,8 @@ charm_city_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/GCC_pos
 charm_city_show.poster.attach(io: charm_city_poster, filename: 'charm_city_poster.png')
 charm_city_show.save!
 
-charm_city_video = charm_city_show.create_film!( name: 'Goodbye Charm City',
-                                                 runtime: 99,
-)
+charm_city_video = Film.new( name: 'Goodbye Charm City',runtime: 99)
+charm_city_show.film = charm_city_video
 
 charm_city_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Goodbye_Charm_City_Husflix_short_720p.mp4')
 charm_city_video.video_file.attach(io: charm_city_file, filename: 'charm-city.mp4')
@@ -303,9 +301,8 @@ malis_tribute_poster = open("https://hu-sflix-seed.s3.amazonaws.com/posters/Mali
 malis_tribute.poster.attach(io: malis_tribute_poster, filename: 'malis_tribute_poster.png')
 malis_tribute.save!
 
-malis_tribute_video = malis_tribute.create_film!( name: "Mali's Tribute",
-                                                  runtime: 106,
-)
+malis_tribute_video = Film.new( name: "Mali's Tribute", runtime: 106)
+malis_tribute.film = malis_tribute_video
 
 malis_tribute_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Malis_Tribute_Husflix_short_720p.mp4')
 malis_tribute_video.video_file.attach(io: malis_tribute_file, filename: 'tribute.mp4')
@@ -333,9 +330,10 @@ freeze_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/Freeze_post
 freeze.poster.attach(io: freeze_poster, filename: 'freeze_poster.jpg')
 freeze.save!
 
-freeze_video = freeze.create_film!( name: 'Freeze',
+freeze_video = Film.new( name: 'Freeze',
                                       runtime: 51,
 )
+freeze.film = freeze_video
 
 freeze_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Freeze_Husflix_short_720p.mp4')
 freeze_video.video_file.attach(io: freeze_file, filename: 'freeze.mp4')
@@ -363,9 +361,8 @@ freak_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/freak_poster
 freak.poster.attach(io: freak_poster, filename: 'freak_poster.png')
 freak.save!
 
-freak_video = freak.create_film!( name: 'Freak',
-                                  runtime: 85,
-)
+freak_video = Film.new( name: 'Freak', runtime: 85)
+freak.film = freak_video
 
 freak_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Freak_Husflix_short_720p.mp4')
 freak_video.video_file.attach(io: freak_file, filename: 'freak.mp4')
@@ -392,9 +389,8 @@ ling_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/ling_husflix_
 ling_show.poster.attach( io: ling_poster, filename: 'ling_poster.jpg')
 ling_show.save!
 
-ling_video = ling_show.create_film!( name: 'Ling Promo',
-                                     runtime: 263,
-)
+ling_video = Film.new( name: 'Ling Promo', runtime: 263)
+ling_show.film = ling_video
 
 ling_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Ling_1.mp4')
 ling_video.video_file.attach(io: ling_file, filename: 'ling_show.mp4')
@@ -566,9 +562,8 @@ ShowGenre.create!(show_id: valencia_show.id, genre_id: suspense.id)
 ShowGenre.create!(show_id: valencia_show.id, genre_id: inspiring.id)
 ShowGenre.create!(show_id: valencia_show.id, genre_id: award_wining.id)
 
-valencia_video = valencia_show.create_film!( name: 'Valencia Road',
-                                             runtime: 65,
-)
+valencia_video = Film.new( name: 'Valencia Road', runtime: 65)
+valencia_show.film = valencia_video
 
 valencia_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/Valencia_Husflix_720p.mp4')
 valencia_video.video_file.attach(io: valencia_file, filename: 'Valencia.mp4')
@@ -643,9 +638,8 @@ ShowGenre.create!(show_id: white_rabbit.id, genre_id: coming_of_age.id)
 ShowGenre.create!(show_id: white_rabbit.id, genre_id: romance.id)
 ShowGenre.create!(show_id: white_rabbit.id, genre_id: award_wining.id)
 
-white_rabbit_video = white_rabbit.create_film!( name: 'White Rabbit',
-                                                  runtime: 94,
-)
+white_rabbit_video = Film.new( name: 'White Rabbit', runtime: 94)
+white_rabbit.film = white_rabbit_video
 
 white_rabbit_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/White_Rabbit_Husflix_720p.mp4')
 white_rabbit_video.video_file.attach(io: white_rabbit_file, filename: 'white_rabbit.mp4')
@@ -673,9 +667,8 @@ ADGB_poster = open('https://hu-sflix-seed.s3.amazonaws.com/posters/Another_Day_G
 ADGB.poster.attach(io: ADGB_poster , filename: 'ADGB_poster.png')
 ADGB.save!
 
-ADGB_video = ADGB.create_film!( name: 'ADGB',
-                                  runtime: 98,
-)
+ADGB_video = Film.new( name: 'ADGB', runtime: 98)
+ADGB.film = ADGB_video
 
 ADGB_file = open('https://hu-sflix-seed.s3.amazonaws.com/videos/ADGB_Husflix_720p.mp4')
 ADGB_video.video_file.attach(io: ADGB_file, filename: 'ADGB.mp4')
