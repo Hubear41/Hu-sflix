@@ -895,7 +895,7 @@ function (_React$Component) {
     value: function launchWatch() {
       var show = this.props.show;
 
-      if (show.show_type === 'FEATURE') {
+      if (show.show_type === 'Movie') {
         this.props.history.push({
           pathname: "/watch/".concat(show.id),
           search: "trackId=".concat(show.film_id)
@@ -1407,10 +1407,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props2 = this.props,
-          tvShowsId = _this$props2.tvShowsId,
-          moviesId = _this$props2.moviesId,
-          recentId = _this$props2.recentId;
+      var recentId = this.props.recentId;
       var pathname = this.props.location.pathname;
       var background = this.state.background;
       var searchAnimation = 'search-default';
@@ -1423,8 +1420,8 @@ function (_React$Component) {
 
       var xOpacity = this.state.search.length > 0 ? 'visible-x' : 'hidden-x';
       var homeBold = pathname === "/browse" ? "current-nav" : "";
-      var tvBold = pathname === "/genre/".concat(tvShowsId) ? "current-nav" : "";
-      var movieBold = pathname === "/genre/".concat(moviesId) ? "current-nav" : "";
+      var tvBold = pathname === "/genre/tvshows" ? "current-nav" : "";
+      var movieBold = pathname === "/genre/movies" ? "current-nav" : "";
       var recentBold = pathname === "/genre/".concat(recentId) ? "current-nav" : "";
       var mylistBold = pathname === '/browse/my-list' ? "current-nav" : "";
       var navAnimation = "";
@@ -1460,16 +1457,16 @@ function (_React$Component) {
         className: "nav-btn ".concat(homeBold),
         onClick: this.handleClick
       }, "Home"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/genre/".concat(tvShowsId),
-        className: "nav-btn ".concat(tvBold),
-        onClick: this.handleClick
-      }, "TV Shows"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/browse/movies",
         className: "nav-btn ".concat(movieBold),
         onClick: this.handleClick
       }, "Movies"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/browse/tvshows",
         className: "nav-btn ".concat(recentBold),
+        onClick: this.handleClick
+      }, "TV Shows"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/genre/".concat(recentId),
+        className: "nav-btn ".concat(tvBold),
         onClick: this.handleClick
       }, "Recently Added"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/browse/my-list",
@@ -1548,22 +1545,12 @@ __webpack_require__.r(__webpack_exports__);
 var msp = function msp(_ref, ownProps) {
   var entities = _ref.entities,
       session = _ref.session;
-  var recentId = null,
-      moviesId = null,
-      tvShowsId = null;
+  var recentId = null;
   var query = new URLSearchParams(ownProps.location.search).get('q') || "";
 
   if (entities.genres) {
     Object.values(entities.genres).forEach(function (genre) {
       switch (genre.name) {
-        case "TV Show":
-          tvShowsId = genre.id;
-          break;
-
-        case "Movie":
-          moviesId = genre.id;
-          break;
-
         case "Recently Added":
           recentId = genre.id;
           break;
@@ -1576,8 +1563,6 @@ var msp = function msp(_ref, ownProps) {
 
   return {
     currentUser: entities.users[session.id],
-    moviesId: moviesId,
-    tvShowsId: tvShowsId,
     recentId: recentId,
     query: query
   };
@@ -2572,7 +2557,7 @@ function (_React$Component) {
       var videoEl = this.dropdownPlayer.current;
       videoEl.pause();
 
-      if (show.show_type === 'FEATURE') {
+      if (show.show_type === 'Movie') {
         this.props.history.push("/watch/".concat(show.id, "/").concat(show.movie_id));
       } else {
         this.props.history.push("/watch/".concat(show.id, "/").concat(show.episode_ids[0]));
@@ -3119,10 +3104,10 @@ function (_React$Component) {
       videoEl.pause();
       clearTimeout(this.videoTimeout);
 
-      if (show.show_type === 'FEATURE') {
+      if (show.type === 'Movie') {
         this.props.history.push({
           pathname: "/watch/".concat(show.id),
-          search: "trackId=".concat(show.movie_id)
+          search: "trackId=".concat(show.film_id)
         });
       } else {
         this.props.history.push({
@@ -47993,7 +47978,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

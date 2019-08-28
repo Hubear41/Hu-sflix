@@ -43,10 +43,10 @@ class ShowPreviewPlayerSmall extends React.Component {
         videoEl.pause();
         clearTimeout(this.videoTimeout);
         
-        if (show.show_type === 'FEATURE') {
+        if (show.type === 'Movie') {
             this.props.history.push({
                 pathname: `/watch/${show.id}`,
-                search: `trackId=${show.movie_id}`
+                search: `trackId=${show.film_id}`
             });
         } else {    
             this.props.history.push({

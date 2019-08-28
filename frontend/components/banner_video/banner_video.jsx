@@ -183,7 +183,7 @@ class BigPreview extends React.Component {
     launchWatch() {
         const { show } = this.props;
 
-        if (show.show_type === 'FEATURE') {
+        if (show.show_type === 'Movie') {
             this.props.history.push({
                 pathname: `/watch/${show.id}`,
                 search: `trackId=${show.film_id}`
