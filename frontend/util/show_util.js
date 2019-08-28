@@ -19,10 +19,17 @@ export const fetchVideo = id => {
     });
 };
 
-export const fetchPreviewVideos = () => {
-    return $.ajax({ 
-        method: 'GET',
-        url: 'api/videos'
+export const fetchMovies = () => {
+    return $.ajax({
+        method: "GET",
+        url: "/api/movies/shows"
+    });
+};
+
+export const fetchTVShows = () => {
+    return $.ajax({
+        method: "GET",
+        url: "/api/tv/shows"
     });
 };
 

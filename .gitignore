@@ -29,4 +29,5 @@
 /app/assets/videos/*
 
 DS_store
+bundle.js
 bundle.js*

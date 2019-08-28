@@ -1,20 +1,17 @@
 class Api::ShowsController < ApplicationController 
     def index
-        @shows = Show.with_attached_poster.all.includes(:videos, :genres)
-        videos = Video.with_attached_video_file.all 
-        @previewVideos = self.find_videos(@shows)
+        @shows = Show.with_attached_poster.all.includes(:videos, :genres, :episodes, :film)
+        @preview_videos = self.find_videos(@shows)
         @genres = Genre.all.includes(:shows_with_genre, :show_genres, :associated_genres)
-        @runtime = @previewVideos[0].runtime;
-
+        
         render :index
     end
 
     def show
         @show = Show.find(params[:id])
-        @nextShow = Show.where(id: @show.id).first # the video that will be recommended after
-        @video = @show.videos.first
-
-        render :show
+        @video = @show.type == "Movie" ? @show.film : @show.episodes.first
+        
+        render :show    
     end
 
     def search
@@ -48,11 +45,10 @@ class Api::ShowsController < ApplicationController
     end
 
     def my_list 
-        @shows = Show.with_attached_poster.where(id: current_user.shows_on_list_ids).includes(:videos, :genres)
-        @previewVideos = self.find_videos(@shows)
+        @shows = Show.with_attached_poster.where(id: current_user.shows_on_list_ids ).includes(:videos, :genres)
+        @preview_videos = self.find_videos(@shows)
         @genres = Genre.all.includes(:shows_with_genre, :show_genres, :associated_genres)
-        @runtime = @previewVideos.count > 0 ? @previewVideos[0].runtime : 0; 
-
+        
         if @shows.empty?
             render json: {}
         else
@@ -60,24 +56,27 @@ class Api::ShowsController < ApplicationController
         end
     end
 
+    def movies
+        @shows = Movie.with_attached_poster.all.includes(:videos, :genres, :film)
+        @preview_videos = self.find_videos(@shows)
+        @genres = Genre.all.includes(:shows_with_genre, :show_genres, :associated_genres)
+
+        render :index
+    end
+
+    def tv
+        @shows = Series.with_attached_poster.all.includes(:videos, :genres, :episodes)
+        @preview_videos = self.find_videos(@shows)
+        @genres = Genre.all.includes(:shows_with_genre, :show_genres, :associated_genres)
+
+        render :index
+    end
+
     # finds each preview video with their attached video
     # right now this grabs the first video under each show
     # this will be refactored once genres are implemented
     def find_videos(shows) 
-        previewVideos = []
-        videos = Video.with_attached_video_file.all
-        
-        shows.each do |curr_show|
-            previewId = curr_show.show_type == "FEATURE" ? curr_show.movie_id : curr_show.episode_ids[0]
-            
-            videos.each do |video|
-                if ( video.id == previewId ) 
-                    previewVideos << video
-                    break
-                end
-            end
-        end
-        
-        previewVideos
+        preview_video_ids = shows.map(&:id)
+        preview_ids = Video.with_attached_video_file.where(id: preview_video_ids)
     end
 end

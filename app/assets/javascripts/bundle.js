@@ -343,7 +343,7 @@ var receiveErrors = function receiveErrors(errors) {
 /*!******************************************!*\
   !*** ./frontend/actions/show_actions.js ***!
   \******************************************/
-/*! exports provided: RECEIVE_VIDEO, RECEIVE_SHOW, RECEIVE_SHOWS, fetchVideo, fetchShows, fetchShow, fetchMyListShows, searchShows */
+/*! exports provided: RECEIVE_VIDEO, RECEIVE_SHOW, RECEIVE_SHOWS, fetchVideo, fetchShows, fetchShow, fetchMyListShows, searchShows, fetchMovies, fetchTVShows */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -356,6 +356,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShow", function() { return fetchShow; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMyListShows", function() { return fetchMyListShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchShows", function() { return searchShows; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMovies", function() { return fetchMovies; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTVShows", function() { return fetchTVShows; });
 /* harmony import */ var _util_show_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/show_util */ "./frontend/util/show_util.js");
 
 var RECEIVE_VIDEO = 'RECEIVE_VIDEO';
@@ -396,6 +398,20 @@ var searchShows = function searchShows(query) {
     });
   };
 };
+var fetchMovies = function fetchMovies() {
+  return function (dispatch) {
+    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchMovies"]().then(function (payload) {
+      return dispatch(receiveShows(payload));
+    });
+  };
+};
+var fetchTVShows = function fetchTVShows() {
+  return function (dispatch) {
+    return _util_show_util__WEBPACK_IMPORTED_MODULE_0__["fetchTVShows"]().then(function (payload) {
+      return dispatch(receiveShows(payload));
+    });
+  };
+};
 
 var receiveVideo = function receiveVideo(video) {
   return {
@@ -418,12 +434,10 @@ var receiveShows = function receiveShows(_ref) {
 
 var receiveShow = function receiveShow(_ref2) {
   var show = _ref2.show,
-      nextShow = _ref2.nextShow,
       video = _ref2.video;
   return {
     type: RECEIVE_SHOW,
     show: show,
-    nextShow: nextShow,
     video: video
   };
 };
@@ -495,11 +509,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shows_genre_gallery_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./shows/genre_gallery_container */ "./frontend/components/shows/genre_gallery_container.js");
 /* harmony import */ var _shows_search_container__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./shows/search_container */ "./frontend/components/shows/search_container.js");
 /* harmony import */ var _shows_mylist_gallery_container__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./shows/mylist_gallery_container */ "./frontend/components/shows/mylist_gallery_container.js");
-/* harmony import */ var _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./watch/show_watch_container */ "./frontend/components/watch/show_watch_container.js");
-/* harmony import */ var _footer_footer__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./footer/footer */ "./frontend/components/footer/footer.jsx");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.js");
-/* harmony import */ var _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./navbar/main_nav_container */ "./frontend/components/navbar/main_nav_container.js");
+/* harmony import */ var _shows_tv_shows_gallery_container__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./shows/tv_shows_gallery_container */ "./frontend/components/shows/tv_shows_gallery_container.js");
+/* harmony import */ var _shows_movies_gallery_container__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./shows/movies_gallery_container */ "./frontend/components/shows/movies_gallery_container.js");
+/* harmony import */ var _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./watch/show_watch_container */ "./frontend/components/watch/show_watch_container.js");
+/* harmony import */ var _footer_footer__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./footer/footer */ "./frontend/components/footer/footer.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.js");
+/* harmony import */ var _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./navbar/main_nav_container */ "./frontend/components/navbar/main_nav_container.js");
+
+
 
 
 
@@ -520,46 +538,52 @@ __webpack_require__.r(__webpack_exports__);
 var App = function App() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_background_background__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
     className: "main-content"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_13__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["AuthRoute"], {
     exact: true,
     path: ["/", "/signup", "/login"],
     component: _navbar_navbar_container__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
     path: ["/browse", "/genre", "/search"],
-    component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_15__["default"]
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
+    component: _navbar_main_nav_container__WEBPACK_IMPORTED_MODULE_17__["default"]
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["AuthRoute"], {
     exact: true,
     path: "/",
     component: _splash_splash__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["AuthRoute"], {
     path: "/signup",
     component: _session_signup_form_container__WEBPACK_IMPORTED_MODULE_1__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["AuthRoute"], {
     path: "/login",
     component: _session_login_form_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
     path: ["/browse", "/search", "/genre"],
     component: _loading_loading_screen__WEBPACK_IMPORTED_MODULE_6__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
     exact: true,
     path: "/browse",
     component: _shows_show_gallery_container__WEBPACK_IMPORTED_MODULE_7__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
     path: "/browse/my-list",
     component: _shows_mylist_gallery_container__WEBPACK_IMPORTED_MODULE_10__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
+    path: "/browse/movies",
+    component: _shows_movies_gallery_container__WEBPACK_IMPORTED_MODULE_12__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
+    path: "/browse/tvshows",
+    component: _shows_tv_shows_gallery_container__WEBPACK_IMPORTED_MODULE_11__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
     path: "/search",
     component: _shows_search_container__WEBPACK_IMPORTED_MODULE_9__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
     path: "/genre/:genreId",
     component: _shows_genre_gallery_container__WEBPACK_IMPORTED_MODULE_8__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["ProtectedRoute"], {
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
     path: "/watch/:showId",
-    component: _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_11__["default"]
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_14__["AuthRoute"], {
+    component: _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_13__["default"]
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["AuthRoute"], {
     exact: true,
     path: "/",
-    component: _footer_footer__WEBPACK_IMPORTED_MODULE_12__["default"]
+    component: _footer_footer__WEBPACK_IMPORTED_MODULE_14__["default"]
   }));
 };
 
@@ -875,10 +899,10 @@ function (_React$Component) {
     value: function launchWatch() {
       var show = this.props.show;
 
-      if (show.show_type === 'FEATURE') {
+      if (show.show_type === 'Movie') {
         this.props.history.push({
           pathname: "/watch/".concat(show.id),
-          search: "trackId=".concat(show.movie_id)
+          search: "trackId=".concat(show.film_id)
         });
       } else {
         this.props.history.push({
@@ -1024,7 +1048,7 @@ var msp = function msp(_ref, ownProps) {
       session = _ref.session,
       ui = _ref.ui;
   var show = ownProps.show;
-  var previewId = show.show_type === 'FEATURE' ? show.movie_id : show.episode_ids[0];
+  var previewId = show.preview_id;
   var previewVideo = entities.videos[previewId] || null;
   var isPreviewing = ui.preview;
   var currentUserId = session.id;
@@ -1387,10 +1411,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props2 = this.props,
-          tvShowsId = _this$props2.tvShowsId,
-          moviesId = _this$props2.moviesId,
-          recentId = _this$props2.recentId;
+      var recentId = this.props.recentId;
       var pathname = this.props.location.pathname;
       var background = this.state.background;
       var searchAnimation = 'search-default';
@@ -1403,8 +1424,8 @@ function (_React$Component) {
 
       var xOpacity = this.state.search.length > 0 ? 'visible-x' : 'hidden-x';
       var homeBold = pathname === "/browse" ? "current-nav" : "";
-      var tvBold = pathname === "/genre/".concat(tvShowsId) ? "current-nav" : "";
-      var movieBold = pathname === "/genre/".concat(moviesId) ? "current-nav" : "";
+      var tvBold = pathname === "/browse/tvshows" ? "current-nav" : "";
+      var movieBold = pathname === "/browse/movies" ? "current-nav" : "";
       var recentBold = pathname === "/genre/".concat(recentId) ? "current-nav" : "";
       var mylistBold = pathname === '/browse/my-list' ? "current-nav" : "";
       var navAnimation = "";
@@ -1440,14 +1461,14 @@ function (_React$Component) {
         className: "nav-btn ".concat(homeBold),
         onClick: this.handleClick
       }, "Home"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/genre/".concat(tvShowsId),
-        className: "nav-btn ".concat(tvBold),
-        onClick: this.handleClick
-      }, "TV Shows"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/genre/".concat(moviesId),
+        to: "/browse/movies",
         className: "nav-btn ".concat(movieBold),
         onClick: this.handleClick
       }, "Movies"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/browse/tvshows",
+        className: "nav-btn ".concat(tvBold),
+        onClick: this.handleClick
+      }, "TV Shows"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/genre/".concat(recentId),
         className: "nav-btn ".concat(recentBold),
         onClick: this.handleClick
@@ -1528,22 +1549,12 @@ __webpack_require__.r(__webpack_exports__);
 var msp = function msp(_ref, ownProps) {
   var entities = _ref.entities,
       session = _ref.session;
-  var recentId = null,
-      moviesId = null,
-      tvShowsId = null;
+  var recentId = null;
   var query = new URLSearchParams(ownProps.location.search).get('q') || "";
 
   if (entities.genres) {
     Object.values(entities.genres).forEach(function (genre) {
       switch (genre.name) {
-        case "TV Show":
-          tvShowsId = genre.id;
-          break;
-
-        case "Movie":
-          moviesId = genre.id;
-          break;
-
         case "Recently Added":
           recentId = genre.id;
           break;
@@ -1556,8 +1567,6 @@ var msp = function msp(_ref, ownProps) {
 
   return {
     currentUser: entities.users[session.id],
-    moviesId: moviesId,
-    tvShowsId: tvShowsId,
     recentId: recentId,
     query: query
   };
@@ -2328,6 +2337,63 @@ var mdp = function mdp(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/components/shows/movies_gallery_container.js":
+/*!***************************************************************!*\
+  !*** ./frontend/components/shows/movies_gallery_container.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/ui_actions */ "./frontend/actions/ui_actions.js");
+/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/show_actions */ "./frontend/actions/show_actions.js");
+/* harmony import */ var _show_gallery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./show_gallery */ "./frontend/components/shows/show_gallery.jsx");
+
+
+
+
+
+var msp = function msp(_ref) {
+  var entities = _ref.entities,
+      ui = _ref.ui,
+      session = _ref.session;
+  var shows = Object.values(entities.shows);
+  var videos = entities.videos;
+  var genres = entities.genres;
+  var loading = ui.loading;
+  var currentUserId = session.id;
+  var mylistShowIds = entities.users[currentUserId].listShowIds;
+  return {
+    shows: shows,
+    videos: videos,
+    genres: genres,
+    loading: loading,
+    currentUserId: currentUserId,
+    mylistShowIds: mylistShowIds,
+    galleryType: 'WITH_BANNER'
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    stopLoading: function stopLoading() {
+      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_1__["stopLoading"])());
+    },
+    startLoading: function startLoading() {
+      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_1__["startLoading"])());
+    },
+    requestAllShows: function requestAllShows() {
+      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_2__["fetchMovies"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_show_gallery__WEBPACK_IMPORTED_MODULE_3__["default"]));
+
+/***/ }),
+
 /***/ "./frontend/components/shows/mylist_gallery_container.js":
 /*!***************************************************************!*\
   !*** ./frontend/components/shows/mylist_gallery_container.js ***!
@@ -2552,7 +2618,7 @@ function (_React$Component) {
       var videoEl = this.dropdownPlayer.current;
       videoEl.pause();
 
-      if (show.show_type === 'FEATURE') {
+      if (show.show_type === 'Movie') {
         this.props.history.push("/watch/".concat(show.id, "/").concat(show.movie_id));
       } else {
         this.props.history.push("/watch/".concat(show.id, "/").concat(show.episode_ids[0]));
@@ -3099,10 +3165,10 @@ function (_React$Component) {
       videoEl.pause();
       clearTimeout(this.videoTimeout);
 
-      if (show.show_type === 'FEATURE') {
+      if (show.type === 'Movie') {
         this.props.history.push({
           pathname: "/watch/".concat(show.id),
-          search: "trackId=".concat(show.movie_id)
+          search: "trackId=".concat(show.film_id)
         });
       } else {
         this.props.history.push({
@@ -3407,7 +3473,7 @@ function (_React$Component) {
       }
 
       var genreList = [];
-      var previewVideo = show.show_type === 'FEATURE' ? videos[show.movie_id] : videos[show.episode_ids[0]];
+      var previewVideo = videos[show.preview_id];
       show.genre_ids.forEach(function (id) {
         genreList.push(genres[id]);
       });
@@ -3506,6 +3572,63 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (ShowRow);
+
+/***/ }),
+
+/***/ "./frontend/components/shows/tv_shows_gallery_container.js":
+/*!*****************************************************************!*\
+  !*** ./frontend/components/shows/tv_shows_gallery_container.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/ui_actions */ "./frontend/actions/ui_actions.js");
+/* harmony import */ var _actions_show_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/show_actions */ "./frontend/actions/show_actions.js");
+/* harmony import */ var _show_gallery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./show_gallery */ "./frontend/components/shows/show_gallery.jsx");
+
+
+
+
+
+var msp = function msp(_ref) {
+  var entities = _ref.entities,
+      ui = _ref.ui,
+      session = _ref.session;
+  var shows = Object.values(entities.shows);
+  var videos = entities.videos;
+  var genres = entities.genres;
+  var loading = ui.loading;
+  var currentUserId = session.id;
+  var mylistShowIds = entities.users[currentUserId].listShowIds;
+  return {
+    shows: shows,
+    videos: videos,
+    genres: genres,
+    loading: loading,
+    currentUserId: currentUserId,
+    mylistShowIds: mylistShowIds,
+    galleryType: 'WITH_BANNER'
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    stopLoading: function stopLoading() {
+      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_1__["stopLoading"])());
+    },
+    startLoading: function startLoading() {
+      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_1__["startLoading"])());
+    },
+    requestAllShows: function requestAllShows() {
+      return dispatch(Object(_actions_show_actions__WEBPACK_IMPORTED_MODULE_2__["fetchTVShows"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_show_gallery__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -4626,14 +4749,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var showsReducer = function showsReducer() {
-  var _merge;
-
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   var _ref = arguments.length > 1 ? arguments[1] : undefined,
       type = _ref.type,
       show = _ref.show,
-      nextShow = _ref.nextShow,
       shows = _ref.shows;
 
   Object.freeze(state);
@@ -4643,7 +4763,7 @@ var showsReducer = function showsReducer() {
       return shows;
 
     case _actions_show_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SHOW"]:
-      return Object(lodash__WEBPACK_IMPORTED_MODULE_2__["merge"])({}, state, (_merge = {}, _defineProperty(_merge, show.id, show), _defineProperty(_merge, nextShow.id, nextShow), _merge));
+      return Object(lodash__WEBPACK_IMPORTED_MODULE_2__["merge"])({}, state, _defineProperty({}, show.id, show));
 
     case _actions_genre_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_GENRE_SHOWS"]:
       return shows;
@@ -4826,7 +4946,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"])); // return createStore(rootReducer, preloadedState, applyMiddleware(thunk, logger));
+  // return createStore(rootReducer, preloadedState, applyMiddleware(thunk));
+  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_3__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"], redux_logger__WEBPACK_IMPORTED_MODULE_2___default.a));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);
@@ -5052,7 +5173,7 @@ var logoutUser = function logoutUser() {
 /*!************************************!*\
   !*** ./frontend/util/show_util.js ***!
   \************************************/
-/*! exports provided: fetchShows, fetchShow, fetchVideo, fetchPreviewVideos, searchShows, fetchMyListShows */
+/*! exports provided: fetchShows, fetchShow, fetchVideo, fetchMovies, fetchTVShows, searchShows, fetchMyListShows */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5060,7 +5181,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShows", function() { return fetchShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchShow", function() { return fetchShow; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchVideo", function() { return fetchVideo; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPreviewVideos", function() { return fetchPreviewVideos; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMovies", function() { return fetchMovies; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTVShows", function() { return fetchTVShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchShows", function() { return searchShows; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchMyListShows", function() { return fetchMyListShows; });
 var fetchShows = function fetchShows() {
@@ -5081,10 +5203,16 @@ var fetchVideo = function fetchVideo(id) {
     url: "api/videos/".concat(id)
   });
 };
-var fetchPreviewVideos = function fetchPreviewVideos() {
+var fetchMovies = function fetchMovies() {
   return $.ajax({
-    method: 'GET',
-    url: 'api/videos'
+    method: "GET",
+    url: "/api/movies/shows"
+  });
+};
+var fetchTVShows = function fetchTVShows() {
+  return $.ajax({
+    method: "GET",
+    url: "/api/tv/shows"
   });
 };
 var searchShows = function searchShows(query) {

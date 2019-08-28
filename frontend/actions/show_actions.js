@@ -21,7 +21,15 @@ export const fetchMyListShows = () => dispatch => {
 }
 
 export const searchShows = query => dispatch => {
-    return ShowUTIL.searchShows(query).then( payload => dispatch(receiveShows(payload)));
+    return ShowUTIL.searchShows(query).then( payload => dispatch(receiveShows(payload)) );
+}
+
+export const fetchMovies = () => dispatch => {
+    return ShowUTIL.fetchMovies().then(payload => dispatch(receiveShows(payload)) );
+}
+
+export const fetchTVShows = () => dispatch => {
+    return ShowUTIL.fetchTVShows().then(payload => dispatch(receiveShows(payload)) );
 }
 
 const receiveVideo = video => ({
@@ -36,9 +44,8 @@ const receiveShows = ({ shows, videos, genres }) => ({
     genres: genres === undefined ? {} : genres,
 });
 
-const receiveShow = ({show, nextShow, video}) => ({
+const receiveShow = ({show, video}) => ({
     type: RECEIVE_SHOW,
     show,
-    nextShow,
     video,
 });

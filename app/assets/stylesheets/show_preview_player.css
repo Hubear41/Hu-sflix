@@ -7,6 +7,9 @@
     margin-right: 0.3%;
     transition: height 0.2s, width 0.2s, min-width 0.2s;
     transition-timing-function: ease-in;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #show-peek-preview-wrapper:hover {

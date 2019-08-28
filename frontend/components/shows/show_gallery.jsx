@@ -209,7 +209,7 @@ class ShowGallery extends React.Component {
         const marginStyle = galleryType === 'MY_LIST' ? { paddingTop: "5vh" } : null;
 
         return (
-            <section className="show-gallery-index-wrapper" >
+            <section className="show-gallery-index-wrapper">
                 { galleryType === 'WITH_BANNER'  && previewShow ? <BigPreviewContainer show={previewShow} /> : null }
 
                 <section className="gallery-index-wrapper" style={galleryStyle} >
@@ -219,8 +219,7 @@ class ShowGallery extends React.Component {
                         {showRowsList}
                     </ul>
 
-                    {/* <figure className="index-bg">
-                    </figure> */}
+                    {/* <figure className="index-bg"></figure> */}
 
                     <footer className="gallery-footer">
                         <Footer />
