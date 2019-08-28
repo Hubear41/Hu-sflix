@@ -14,6 +14,7 @@ class ShowPreviewPlayerSmall extends React.Component {
         };
 
         this.videoPlayer = React.createRef();
+        this.wrapper = React.createRef();
         this.videoTimeout;
         this.launchWatch = this.launchWatch.bind(this);
         this.toggleMute = this.toggleMute.bind(this);
@@ -92,7 +93,10 @@ class ShowPreviewPlayerSmall extends React.Component {
         if (this.videoPlayer.current === null || this.state.paused ) {
             return;
         }
+
         const videoEl = this.videoPlayer.current;
+        const wrapperEl = this.wrapper.current;
+        wrapperEl.classList.add("out");     
 
         videoEl.pause();
         this.props.endPreview();
@@ -153,7 +157,8 @@ class ShowPreviewPlayerSmall extends React.Component {
         return (
             <>
                 <section id="show-peek-preview-wrapper" 
-                         className={`show-row-item-x item-${show.id}`} 
+                         className={`show-row-item-${show.id}`} 
+                         ref={this.wrapper}
                          onMouseEnter={this.playVideo}
                          onMouseLeave={this.pauseVideo}
                 >

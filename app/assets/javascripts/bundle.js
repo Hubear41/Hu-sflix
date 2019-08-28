@@ -3132,6 +3132,7 @@ function (_React$Component) {
       myListState: _this.props.listShowIds.includes(_this.props.show.id) ? "REMOVE FROM MY LIST" : "ADD TO MY LIST"
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.wrapper = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.videoTimeout;
     _this.launchWatch = _this.launchWatch.bind(_assertThisInitialized(_this));
     _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
@@ -3227,6 +3228,8 @@ function (_React$Component) {
       }
 
       var videoEl = this.videoPlayer.current;
+      var wrapperEl = this.wrapper.current;
+      wrapperEl.classList.add("out");
       videoEl.pause();
       this.props.endPreview();
       clearTimeout(this.videoTimeout);
@@ -3319,7 +3322,8 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         id: "show-peek-preview-wrapper",
-        className: "show-row-item-x item-".concat(show.id),
+        className: "show-row-item-".concat(show.id),
+        ref: this.wrapper,
         onMouseEnter: this.playVideo,
         onMouseLeave: this.pauseVideo
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
