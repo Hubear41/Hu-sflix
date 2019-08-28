@@ -3,13 +3,14 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import rootReducer from '../reducers/root_reducer';
 
-// const logger = createLogger({
-//     predicate: (getState, action) => !conf.production
-// });
-
 const configureStore = (preloadedState = {}) => {
-    // return createStore(rootReducer, preloadedState, applyMiddleware(thunk));
-    return createStore(rootReducer, preloadedState, applyMiddleware(thunk, logger));
+    const RAILS_ENV = document.getElementById("RAILS_ENV_CONSTANT").textContent;
+
+    if (RAILS_ENV === "development") {
+        return createStore(rootReducer, preloadedState, applyMiddleware(thunk, logger));
+    } else {
+        return createStore(rootReducer, preloadedState, applyMiddleware(thunk));
+    }
 };
 
 export default configureStore;

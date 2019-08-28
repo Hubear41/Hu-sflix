@@ -12,7 +12,7 @@
 
       gtag('config', 'UA-143622963-1');
     </script>
-    
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -30,6 +30,8 @@
   </head>
 
   <body>
+    <div id="RAILS_ENV_CONSTANT" style="display:none"><%= Rails.env %></div>
+
     <%= yield %>
   </body>
 </html>
