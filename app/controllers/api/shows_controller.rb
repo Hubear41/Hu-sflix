@@ -45,10 +45,10 @@ class Api::ShowsController < ApplicationController
     end
 
     def my_list 
-        @shows = Show.with_attached_poster.where(id: current_user.shows_on_list_ids).includes(:videos, :genres)
+        @shows = Show.with_attached_poster.where(id: current_user.shows_on_list_ids ).includes(:videos, :genres)
         @preview_videos = self.find_videos(@shows)
         @genres = Genre.all.includes(:shows_with_genre, :show_genres, :associated_genres)
-
+        
         if @shows.empty?
             render json: {}
         else
@@ -67,7 +67,7 @@ class Api::ShowsController < ApplicationController
     def tv
         @shows = Series.with_attached_poster.all.includes(:videos, :genres, :episodes)
         @preview_videos = self.find_videos(@shows)
-        @genres = Gener.all.includes(:shows_with_genre, :show_genres, :associated_genres)
+        @genres = Genre.all.includes(:shows_with_genre, :show_genres, :associated_genres)
 
         render :index
     end

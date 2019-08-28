@@ -128,8 +128,8 @@ class MainNav extends React.Component {
         const xOpacity = this.state.search.length > 0 ? 'visible-x' : 'hidden-x';
 
         const homeBold = pathname === "/browse" ? "current-nav" : "";
-        const tvBold = pathname === "/genre/tvshows" ? "current-nav" : "";
-        const movieBold = pathname === "/genre/movies" ? "current-nav" : "";
+        const tvBold = pathname === "/browse/tvshows" ? "current-nav" : "";
+        const movieBold = pathname === "/browse/movies" ? "current-nav" : "";
         const recentBold = pathname === `/genre/${recentId}` ? "current-nav" : "";     
         const mylistBold = pathname === '/browse/my-list' ? "current-nav" : "";     
         
@@ -152,8 +152,8 @@ class MainNav extends React.Component {
                         <nav className="nav-btns-wrapper">
                             <Link to="/browse"               className={`nav-btn ${homeBold}`}   onClick={this.handleClick} >Home</Link>
                             <Link to="/browse/movies"        className={`nav-btn ${movieBold}`}  onClick={this.handleClick} >Movies</Link>
-                            <Link to="/browse/tvshows"       className={`nav-btn ${recentBold}`} onClick={this.handleClick} >TV Shows</Link>
-                            <Link to={`/genre/${recentId}`}  className={`nav-btn ${tvBold}`}     onClick={this.handleClick} >Recently Added</Link>
+                            <Link to="/browse/tvshows"       className={`nav-btn ${tvBold}`}     onClick={this.handleClick} >TV Shows</Link>
+                            <Link to={`/genre/${recentId}`}  className={`nav-btn ${recentBold}`} onClick={this.handleClick} >Recently Added</Link>
                             <Link to="/browse/my-list"       className={`nav-btn ${mylistBold}`} onClick={this.handleClick} >My List</Link>
                         </nav>
                     </section>

@@ -22,14 +22,14 @@ export const fetchVideo = id => {
 export const fetchMovies = () => {
     return $.ajax({
         method: "GET",
-        url: "/api/shows/movies"
+        url: "/api/movies/shows"
     });
 };
 
 export const fetchTVShows = () => {
     return $.ajax({
         method: "GET",
-        url: "/api/shows/tv"
+        url: "/api/tv/shows"
     });
 };
 
