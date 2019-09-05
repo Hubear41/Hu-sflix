@@ -899,7 +899,7 @@ function (_React$Component) {
     value: function launchWatch() {
       var show = this.props.show;
 
-      if (show.show_type === 'Movie') {
+      if (show.type === 'Movie') {
         this.props.history.push({
           pathname: "/watch/".concat(show.id),
           search: "trackId=".concat(show.film_id)
@@ -2618,7 +2618,7 @@ function (_React$Component) {
       var videoEl = this.dropdownPlayer.current;
       videoEl.pause();
 
-      if (show.show_type === 'Movie') {
+      if (show.type === 'Movie') {
         this.props.history.push("/watch/".concat(show.id, "/").concat(show.movie_id));
       } else {
         this.props.history.push("/watch/".concat(show.id, "/").concat(show.episode_ids[0]));
