@@ -1,7 +1,7 @@
 class Api::ShowsController < ApplicationController 
     def index
         @shows = Show.with_attached_poster.all.includes(:videos, :genres, :episodes, :film)
-        @preview_videos = self.find_videos(@shows)
+        @preview_videos = self.find_videos(@shows) || [];
         @genres = Genre.all.includes(:shows_with_genre, :show_genres, :associated_genres)
         
         render :index
