@@ -1301,7 +1301,7 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this._isMounted = true;
-      window.addEventListener('scroll', this.handleScroll);
+      window.addEventListener("scroll", this.handleScroll);
     }
   }, {
     key: "handleLogout",
@@ -1312,7 +1312,7 @@ function (_React$Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this._isMounted = false;
-      window.removeEventListener('scroll', this.handleScroll);
+      window.removeEventListener("scroll", this.handleScroll);
     }
   }, {
     key: "handleScroll",
@@ -1345,8 +1345,8 @@ function (_React$Component) {
     value: function handleSearchClick() {
       var _this2 = this;
 
-      var root = document.getElementById('root');
-      root.addEventListener('click', function (e) {
+      var root = document.getElementById("root");
+      root.addEventListener("click", function (e) {
         if (_this2._isMounted && _this2.state.search === "" && e.target !== _this2.searchBar.current && e.target !== _this2.searchField.current) {
           if (_this2.state.searching !== false) {
             _this2.setState({
@@ -1355,8 +1355,8 @@ function (_React$Component) {
           }
         }
       });
-      document.addEventListener('keydown', function (e) {
-        if (e.keyCode === 13 || e.key === 'Enter') {
+      document.addEventListener("keydown", function (e) {
+        if (e.keyCode === 13 || e.key === "Enter") {
           e.preventDefault();
         }
       });
@@ -1382,6 +1382,8 @@ function (_React$Component) {
       var textInput = this.searchField.current;
 
       if (textInput.value === "" && location.pathname !== this.state.previous) {
+        debugger;
+        clearTimeout(this.searchTimeout);
         history.push(this.state.previous);
         this.props.startLoading();
         this.setState({
@@ -1402,7 +1404,7 @@ function (_React$Component) {
           });
 
           history.push({
-            pathname: '/search',
+            pathname: "/search",
             search: "q=".concat(_this3.state.search)
           });
         }, 500);
@@ -1414,20 +1416,20 @@ function (_React$Component) {
       var recentId = this.props.recentId;
       var pathname = this.props.location.pathname;
       var background = this.state.background;
-      var searchAnimation = 'search-default';
+      var searchAnimation = "search-default";
 
       if (this.state.searching === true || this.state.search.length > 0) {
-        searchAnimation = 'visible-search-bar';
+        searchAnimation = "visible-search-bar";
       } else if (this.state.searching === false) {
-        searchAnimation = 'hidden-search-bar';
+        searchAnimation = "hidden-search-bar";
       }
 
-      var xOpacity = this.state.search.length > 0 ? 'visible-x' : 'hidden-x';
+      var xOpacity = this.state.search.length > 0 ? "visible-x" : "hidden-x";
       var homeBold = pathname === "/browse" ? "current-nav" : "";
       var tvBold = pathname === "/browse/tvshows" ? "current-nav" : "";
       var movieBold = pathname === "/browse/movies" ? "current-nav" : "";
       var recentBold = pathname === "/genre/".concat(recentId) ? "current-nav" : "";
-      var mylistBold = pathname === '/browse/my-list' ? "current-nav" : "";
+      var mylistBold = pathname === "/browse/my-list" ? "current-nav" : "";
       var navAnimation = "";
 
       if (background === CLEAR) {
