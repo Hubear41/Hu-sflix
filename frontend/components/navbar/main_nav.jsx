@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const CLEAR = "CLEAR";
 const DARK = "DARK";
@@ -129,6 +129,11 @@ class MainNav extends React.Component {
     const { pathname } = this.props.location;
     const { background } = this.state;
     let searchAnimation = "search-default";
+
+    // redirects in case user customizes query string to empty
+    if (pathname === "/search" && this.state.search === "") {
+      return <Redirect to={this.state.previous} />;
+    }
 
     if (this.state.searching === true || this.state.search.length > 0) {
       searchAnimation = "visible-search-bar";

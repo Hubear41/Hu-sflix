@@ -1416,7 +1416,13 @@ function (_React$Component) {
       var recentId = this.props.recentId;
       var pathname = this.props.location.pathname;
       var background = this.state.background;
-      var searchAnimation = "search-default";
+      var searchAnimation = "search-default"; // redirects in case user customizes query string to empty
+
+      if (pathname === "/search" && this.state.search === "") {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Redirect"], {
+          to: this.state.previous
+        });
+      }
 
       if (this.state.searching === true || this.state.search.length > 0) {
         searchAnimation = "visible-search-bar";
