@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import * as DateTimeUTIL from "../../util/date_time_util";
+import MyListButton from "./mylist_button";
 
 class ShowPreviewPlayerSmall extends React.Component {
   constructor(props) {
@@ -9,10 +10,7 @@ class ShowPreviewPlayerSmall extends React.Component {
       height: 0,
       muted: true,
       paused: true,
-      focus: true,
-      myListState: this.props.listShowIds.includes(this.props.show.id)
-        ? "REMOVE FROM MY LIST"
-        : "ADD TO MY LIST"
+      focus: true
     };
 
     this.videoPlayer = React.createRef();
@@ -22,7 +20,6 @@ class ShowPreviewPlayerSmall extends React.Component {
     this.toggleMute = this.toggleMute.bind(this);
     this.playVideo = this.playVideo.bind(this);
     this.pauseVideo = this.pauseVideo.bind(this);
-    this.toggleMyList = this.toggleMyList.bind(this);
   }
 
   componentDidMount() {
@@ -108,48 +105,13 @@ class ShowPreviewPlayerSmall extends React.Component {
     if (this._isMounted) this.setState({ paused: true });
   }
 
-  toggleMyList() {
-    const { listShowIds, currentUserId, show } = this.props;
-    const { myListState } = this.state;
-
-    if (
-      listShowIds.includes(show.id) &&
-      myListState === "REMOVE FROM MY LIST"
-    ) {
-      if (this._isMounted) {
-        this.setState({ myListState: "REMOVING..." });
-
-        this.props.removeMyListVideo(currentUserId, show.id).then(() => {
-          if (this._isMounted) this.setState({ myListState: "ADD TO MY LIST" });
-        });
-      }
-    } else if (
-      !listShowIds.includes(show.id) &&
-      myListState === "ADD TO MY LIST"
-    ) {
-      if (this._isMounted) {
-        this.setState({ myListState: "ADDING..." });
-
-        this.props.addMyListVideo(currentUserId, show.id).then(() => {
-          if (this._isMounted)
-            this.setState({ myListState: "REMOVE FROM MY LIST" });
-        });
-      }
-    }
-  }
-
   render() {
-    const { show, preview, genres, listShowIds, myListState } = this.props;
+    const { show, preview, genres, listShowIds } = this.props;
     const genresToShow = [];
     const muteBtn = this.state.muted ? (
       <i className="fas fa-volume-mute button-symbol"></i>
     ) : (
       <i className="fas fa-volume-up button-symbol"></i>
-    );
-    const myListIcon = listShowIds.includes(show.id) ? (
-      <i className="fas fa-check button-symbol"></i>
-    ) : (
-      <i className="fas fa-plus button-symbol"></i>
     );
 
     if (show !== undefined && genres.length >= 1) {
@@ -237,15 +199,14 @@ class ShowPreviewPlayerSmall extends React.Component {
               </button>
               <div className="right-side-placeholders right-side-btn"></div>
               <div className="right-side-placeholders right-side-btn"></div>
-              <button
-                onClick={this.toggleMyList}
-                className="preview-mylist-btn right-side-btn preview-fade-in"
-              >
-                {myListIcon}
-                <i className="fas fa-circle preview-btn-bg"></i>
-                <i className="far fa-circle preview-btn-outline"></i>
-                {/* <span className='mylist-popup-desc preview-fade-in'>{myListState}</span> */}
-              </button>
+
+              <MyListButton
+                listShowIds={listShowIds}
+                currentUserId={currentUserId}
+                showId={show.id}
+                addMyListVideo={this.props.addMyListVideo}
+                removeMyListVideo={this.props.removeMyListVideo}
+              />
             </aside>
 
             <figcaption

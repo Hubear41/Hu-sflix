@@ -2277,6 +2277,91 @@ var mdp = function mdp(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/components/show_thumbnail/mylist_button.jsx":
+/*!**************************************************************!*\
+  !*** ./frontend/components/show_thumbnail/mylist_button.jsx ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+var REMOVING = "REMOVING";
+var ADDING = "ADDING";
+var IS_ON_LIST = "IS_ON_LIST";
+var NOT_ON_LIST = "NOT_ON_LIST";
+
+var MyListButton = function MyListButton(listShowIds, showId, currentUserId, addMyListVideo, removeMyListVideo) {
+  var _isMounted = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(false); // state of the mylist button
+
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(listShowIds.includes(showId) ? IS_ON_LIST : NOT_ON_LIST),
+      _useState2 = _slicedToArray(_useState, 2),
+      myListState = _useState2[0],
+      updateMyListState = _useState2[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    _isMounted.current = true;
+    return function () {
+      _isMounted.current = false;
+    };
+  }, []); // whenever listShowIds change, check if the current show is still on the list
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (myListState === NOT_ON_LIST && listShowIds.includes(showId)) {
+      updateMyListState(IS_ON_LIST);
+    } else if (myListState === IS_ON_LIST && !listShowIds.includes(showId)) {
+      updateMyListState(NOT_ON_LIST);
+    }
+  }, [listShowIds]);
+
+  var toggleMyList = function toggleMyList() {
+    if (myListState === IS_ON_LIST) {
+      if (_isMounted.current) {
+        updateMyListState(REMOVING);
+        removeMyListVideo(currentUserId, show.id).then(function () {
+          if (_isMounted.current) updateMyListState(NOT_ON_LIST);
+        });
+      }
+    } else if (myListState === NOT_ON_LIST) {
+      if (_isMounted.current) {
+        updateMyListState(ADDING);
+        addMyListVideo(currentUserId, show.id).then(function () {
+          if (_isMounted.current) updateMyListState(IS_ON_LIST);
+        });
+      }
+    }
+  };
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: toggleMyList,
+    className: "preview-mylist-btn right-side-btn preview-fade-in"
+  }, myListState === IS_ON_LIST ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-check button-symbol"
+  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-plus button-symbol"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-circle preview-btn-bg"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "far fa-circle preview-btn-outline"
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (MyListButton);
+
+/***/ }),
+
 /***/ "./frontend/components/show_thumbnail/show_thumbnail.jsx":
 /*!***************************************************************!*\
   !*** ./frontend/components/show_thumbnail/show_thumbnail.jsx ***!
@@ -2290,6 +2375,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/date_time_util */ "./frontend/util/date_time_util.js");
+/* harmony import */ var _mylist_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mylist_button */ "./frontend/components/show_thumbnail/mylist_button.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2312,6 +2398,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var ShowPreviewPlayerSmall =
 /*#__PURE__*/
 function (_React$Component) {
@@ -2327,8 +2414,7 @@ function (_React$Component) {
       height: 0,
       muted: true,
       paused: true,
-      focus: true,
-      myListState: _this.props.listShowIds.includes(_this.props.show.id) ? "REMOVE FROM MY LIST" : "ADD TO MY LIST"
+      focus: true
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.wrapper = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
@@ -2337,7 +2423,6 @@ function (_React$Component) {
     _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
     _this.playVideo = _this.playVideo.bind(_assertThisInitialized(_this));
     _this.pauseVideo = _this.pauseVideo.bind(_assertThisInitialized(_this));
-    _this.toggleMyList = _this.toggleMyList.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2438,59 +2523,18 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "toggleMyList",
-    value: function toggleMyList() {
-      var _this3 = this;
-
-      var _this$props = this.props,
-          listShowIds = _this$props.listShowIds,
-          currentUserId = _this$props.currentUserId,
-          show = _this$props.show;
-      var myListState = this.state.myListState;
-
-      if (listShowIds.includes(show.id) && myListState === "REMOVE FROM MY LIST") {
-        if (this._isMounted) {
-          this.setState({
-            myListState: "REMOVING..."
-          });
-          this.props.removeMyListVideo(currentUserId, show.id).then(function () {
-            if (_this3._isMounted) _this3.setState({
-              myListState: "ADD TO MY LIST"
-            });
-          });
-        }
-      } else if (!listShowIds.includes(show.id) && myListState === "ADD TO MY LIST") {
-        if (this._isMounted) {
-          this.setState({
-            myListState: "ADDING..."
-          });
-          this.props.addMyListVideo(currentUserId, show.id).then(function () {
-            if (_this3._isMounted) _this3.setState({
-              myListState: "REMOVE FROM MY LIST"
-            });
-          });
-        }
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this$props2 = this.props,
-          show = _this$props2.show,
-          preview = _this$props2.preview,
-          genres = _this$props2.genres,
-          listShowIds = _this$props2.listShowIds,
-          myListState = _this$props2.myListState;
+      var _this$props = this.props,
+          show = _this$props.show,
+          preview = _this$props.preview,
+          genres = _this$props.genres,
+          listShowIds = _this$props.listShowIds;
       var genresToShow = [];
       var muteBtn = this.state.muted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-volume-mute button-symbol"
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-volume-up button-symbol"
-      });
-      var myListIcon = listShowIds.includes(show.id) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-check button-symbol"
-      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-plus button-symbol"
       });
 
       if (show !== undefined && genres.length >= 1) {
@@ -2560,14 +2604,13 @@ function (_React$Component) {
         className: "right-side-placeholders right-side-btn"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "right-side-placeholders right-side-btn"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.toggleMyList,
-        className: "preview-mylist-btn right-side-btn preview-fade-in"
-      }, myListIcon, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-circle preview-btn-bg"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "far fa-circle preview-btn-outline"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_mylist_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        listShowIds: listShowIds,
+        currentUserId: currentUserId,
+        showId: show.id,
+        addMyListVideo: this.props.addMyListVideo,
+        removeMyListVideo: this.props.removeMyListVideo
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
         className: "preview-video-info-desc preview-fade-in",
         onClick: this.launchWatch
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -48111,7 +48154,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
