@@ -2302,7 +2302,13 @@ var ADDING = "ADDING";
 var IS_ON_LIST = "IS_ON_LIST";
 var NOT_ON_LIST = "NOT_ON_LIST";
 
-var MyListButton = function MyListButton(listShowIds, showId, currentUserId, addMyListVideo, removeMyListVideo) {
+var MyListButton = function MyListButton(_ref) {
+  var listShowIds = _ref.listShowIds,
+      showId = _ref.showId,
+      currentUserId = _ref.currentUserId,
+      addMyListVideo = _ref.addMyListVideo,
+      removeMyListVideo = _ref.removeMyListVideo;
+
   var _isMounted = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(false); // state of the mylist button
 
 
@@ -2330,14 +2336,14 @@ var MyListButton = function MyListButton(listShowIds, showId, currentUserId, add
     if (myListState === IS_ON_LIST) {
       if (_isMounted.current) {
         updateMyListState(REMOVING);
-        removeMyListVideo(currentUserId, show.id).then(function () {
+        removeMyListVideo(currentUserId, showId).then(function () {
           if (_isMounted.current) updateMyListState(NOT_ON_LIST);
         });
       }
     } else if (myListState === NOT_ON_LIST) {
       if (_isMounted.current) {
         updateMyListState(ADDING);
-        addMyListVideo(currentUserId, show.id).then(function () {
+        addMyListVideo(currentUserId, showId).then(function () {
           if (_isMounted.current) updateMyListState(IS_ON_LIST);
         });
       }
@@ -2399,17 +2405,17 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var ShowPreviewPlayerSmall =
+var ShowThumbnail =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(ShowPreviewPlayerSmall, _React$Component);
+  _inherits(ShowThumbnail, _React$Component);
 
-  function ShowPreviewPlayerSmall(props) {
+  function ShowThumbnail(props) {
     var _this;
 
-    _classCallCheck(this, ShowPreviewPlayerSmall);
+    _classCallCheck(this, ShowThumbnail);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowPreviewPlayerSmall).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowThumbnail).call(this, props));
     _this.state = {
       height: 0,
       muted: true,
@@ -2426,7 +2432,7 @@ function (_React$Component) {
     return _this;
   }
 
-  _createClass(ShowPreviewPlayerSmall, [{
+  _createClass(ShowThumbnail, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this._isMounted = true;
@@ -2564,7 +2570,7 @@ function (_React$Component) {
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        id: "   how-peek-preview-wrapper",
+        id: "show-peek-preview-wrapper",
         className: "show-row-item-".concat(show.id),
         ref: this.wrapper,
         onMouseEnter: this.playVideo,
@@ -2606,7 +2612,7 @@ function (_React$Component) {
         className: "right-side-placeholders right-side-btn"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_mylist_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
         listShowIds: listShowIds,
-        currentUserId: currentUserId,
+        currentUserId: this.props.currentUserId,
         showId: show.id,
         addMyListVideo: this.props.addMyListVideo,
         removeMyListVideo: this.props.removeMyListVideo
@@ -2637,10 +2643,10 @@ function (_React$Component) {
     }
   }]);
 
-  return ShowPreviewPlayerSmall;
+  return ShowThumbnail;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(ShowPreviewPlayerSmall));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(ShowThumbnail));
 
 /***/ }),
 

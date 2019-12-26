@@ -5,14 +5,15 @@ const ADDING = "ADDING";
 const IS_ON_LIST = "IS_ON_LIST";
 const NOT_ON_LIST = "NOT_ON_LIST";
 
-const MyListButton = (
+const MyListButton = ({
   listShowIds,
   showId,
   currentUserId,
   addMyListVideo,
   removeMyListVideo
-) => {
+}) => {
   const _isMounted = useRef(false);
+
   // state of the mylist button
   const [myListState, updateMyListState] = useState(
     listShowIds.includes(showId) ? IS_ON_LIST : NOT_ON_LIST
@@ -40,7 +41,7 @@ const MyListButton = (
       if (_isMounted.current) {
         updateMyListState(REMOVING);
 
-        removeMyListVideo(currentUserId, show.id).then(() => {
+        removeMyListVideo(currentUserId, showId).then(() => {
           if (_isMounted.current) updateMyListState(NOT_ON_LIST);
         });
       }
@@ -48,7 +49,7 @@ const MyListButton = (
       if (_isMounted.current) {
         updateMyListState(ADDING);
 
-        addMyListVideo(currentUserId, show.id).then(() => {
+        addMyListVideo(currentUserId, showId).then(() => {
           if (_isMounted.current) updateMyListState(IS_ON_LIST);
         });
       }

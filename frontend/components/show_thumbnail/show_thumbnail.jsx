@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import * as DateTimeUTIL from "../../util/date_time_util";
 import MyListButton from "./mylist_button";
 
-class ShowPreviewPlayerSmall extends React.Component {
+class ShowThumbnail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -152,7 +152,7 @@ class ShowPreviewPlayerSmall extends React.Component {
     return (
       <>
         <section
-          id="   how-peek-preview-wrapper"
+          id="show-peek-preview-wrapper"
           className={`show-row-item-${show.id}`}
           ref={this.wrapper}
           onMouseEnter={this.playVideo}
@@ -202,7 +202,7 @@ class ShowPreviewPlayerSmall extends React.Component {
 
               <MyListButton
                 listShowIds={listShowIds}
-                currentUserId={currentUserId}
+                currentUserId={this.props.currentUserId}
                 showId={show.id}
                 addMyListVideo={this.props.addMyListVideo}
                 removeMyListVideo={this.props.removeMyListVideo}
@@ -245,4 +245,4 @@ class ShowPreviewPlayerSmall extends React.Component {
   }
 }
 
-export default withRouter(ShowPreviewPlayerSmall);
+export default withRouter(ShowThumbnail);

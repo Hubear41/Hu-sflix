@@ -1,5 +1,5 @@
 import React from "react";
-import ShowPreviewPlayer from "../show_thumbnail/show_thumbnail_container";
+import ShowThumbnail from "../show_thumbnail/show_thumbnail_container";
 import ShowDetail from "./show_detail_container";
 
 class ShowRow extends React.Component {
@@ -37,7 +37,7 @@ class ShowRow extends React.Component {
     });
 
     return (
-      <ShowPreviewPlayer
+      <ShowThumbnail
         key={`${show.id}${rowNum}`}
         show={show}
         preview={previewVideo}

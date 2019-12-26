@@ -4,7 +4,7 @@ import {
   addMyListVideo,
   removeMyListVideo
 } from "../../actions/my_list_actions";
-import PreviewPlayerSmall from "./show_thumbnail";
+import ShowThumbnail from "./show_thumbnail";
 
 const msp = ({ entities, session }) => {
   const currentUserId = session.id;
@@ -24,4 +24,4 @@ const mdp = dispatch => ({
     dispatch(removeMyListVideo(userId, showId))
 });
 
-export default connect(msp, mdp)(PreviewPlayerSmall);
+export default connect(msp, mdp)(ShowThumbnail);
