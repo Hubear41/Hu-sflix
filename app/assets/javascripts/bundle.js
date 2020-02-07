@@ -651,17 +651,17 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var BigPreview =
+var BannerVideo =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(BigPreview, _React$Component);
+  _inherits(BannerVideo, _React$Component);
 
-  function BigPreview(props) {
+  function BannerVideo(props) {
     var _this;
 
-    _classCallCheck(this, BigPreview);
+    _classCallCheck(this, BannerVideo);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(BigPreview).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(BannerVideo).call(this, props));
     _this.state = {
       started: false,
       muted: true,
@@ -684,7 +684,7 @@ function (_React$Component) {
     return _this;
   }
 
-  _createClass(BigPreview, [{
+  _createClass(BannerVideo, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
@@ -694,7 +694,7 @@ function (_React$Component) {
       this.currentRequest = this.props.requestVideo(previewId).then(function () {
         return _this2.currentRequest = null;
       });
-      window.addEventListener('scroll', this.handleScroll);
+      window.addEventListener("scroll", this.handleScroll);
     }
   }, {
     key: "componentDidUpdate",
@@ -827,24 +827,24 @@ function (_React$Component) {
           mylistIds = _this$props.mylistIds,
           currentUserId = _this$props.currentUserId;
 
-      if (mylistIds.includes(show.id) && this.state.mylistState === 'My List') {
+      if (mylistIds.includes(show.id) && this.state.mylistState === "My List") {
         if (this._isMounted) this.setState({
-          mylistState: 'Removing...'
+          mylistState: "Removing..."
         });
         this.currentRequest = this.props.removeMyListVideo(currentUserId, show.id).then(function () {
           _this7.currentRequest = null;
           if (_this7._isMounted) _this7.setState({
-            mylistState: 'My List'
+            mylistState: "My List"
           });
         });
-      } else if (!mylistIds.includes(show.id) && this.state.mylistState === 'My List') {
+      } else if (!mylistIds.includes(show.id) && this.state.mylistState === "My List") {
         if (this._isMounted) this.setState({
-          mylistState: 'Adding...'
+          mylistState: "Adding..."
         });
         this.currentRequest = this.props.addMyListVideo(currentUserId, show.id).then(function () {
           _this7.currentRequest = null;
           if (_this7._isMounted) _this7.setState({
-            mylistState: 'My List'
+            mylistState: "My List"
           });
         });
       }
@@ -899,7 +899,7 @@ function (_React$Component) {
     value: function launchWatch() {
       var show = this.props.show;
 
-      if (show.type === 'Movie') {
+      if (show.type === "Movie") {
         this.props.history.push({
           pathname: "/watch/".concat(show.id),
           search: "trackId=".concat(show.film_id)
@@ -935,18 +935,18 @@ function (_React$Component) {
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-plus"
       });
-      var imageAnimation = '';
-      var blackAnimation = '';
+      var imageAnimation = "";
+      var blackAnimation = "";
 
       if (started && imageOpacity === 0) {
-        imageAnimation = 'fade-out';
-        blackAnimation = 'fade-out-black';
+        imageAnimation = "fade-out";
+        blackAnimation = "fade-out-black";
       } else if (started && imageOpacity === 1) {
-        imageAnimation = 'fade-in';
-        blackAnimation = 'fade-in-black';
+        imageAnimation = "fade-in";
+        blackAnimation = "fade-in-black";
       } else if (ended) {
-        imageAnimation = 'fade-in';
-        blackAnimation = 'fade-in-black';
+        imageAnimation = "fade-in";
+        blackAnimation = "fade-in-black";
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
@@ -1018,10 +1018,10 @@ function (_React$Component) {
     }
   }]);
 
-  return BigPreview;
+  return BannerVideo;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(BigPreview));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(BannerVideo));
 
 /***/ }),
 
@@ -48160,7 +48160,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
