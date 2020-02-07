@@ -151,7 +151,7 @@ class ShowThumbnail extends React.Component {
 
     return (
       <>
-        <section
+        <li
           className="show-thumbnail"
           ref={this.wrapper}
           onMouseEnter={this.playVideo}
@@ -238,7 +238,7 @@ class ShowThumbnail extends React.Component {
               <i className="fas fa-chevron-down"></i>
             </button>
           </figure>
-        </section>
+        </li>
       </>
     );
   }

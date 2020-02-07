@@ -11,8 +11,8 @@ $moveRight: ($tileWidth * ($growFactor - 1));
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  //   padding-left: 50px;
-  margin-bottom: 30px;
+  padding-left: ($moveRight / 2);
+  //   margin-bottom: 30px;
   overflow: visible;
   box-sizing: border-box;
   width: calc(100%);
@@ -23,7 +23,7 @@ $moveRight: ($tileWidth * ($growFactor - 1));
     text-transform: capitalize;
     font-weight: 500;
     font-size: 24px;
-    margin: 30px 0;
+    // margin: 30px 0;
     letter-spacing: 1px;
   }
 
@@ -31,7 +31,7 @@ $moveRight: ($tileWidth * ($growFactor - 1));
     font-size: 0;
     transition: $duration transform;
     white-space: nowrap;
-    margin: ($tileHeight / 2) 0;
+    margin: ($tileHeight / 5) 0;
     padding-bottom: 10px;
 
     .show-thumbnail {
