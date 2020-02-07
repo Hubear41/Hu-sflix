@@ -152,8 +152,7 @@ class ShowThumbnail extends React.Component {
     return (
       <>
         <section
-          id="show-peek-preview-wrapper"
-          className={`show-row-item-${show.id}`}
+          className="show-thumbnail"
           ref={this.wrapper}
           onMouseEnter={this.playVideo}
           onMouseLeave={this.pauseVideo}

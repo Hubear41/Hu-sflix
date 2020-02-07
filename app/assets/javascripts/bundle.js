@@ -2570,8 +2570,7 @@ function (_React$Component) {
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        id: "show-peek-preview-wrapper",
-        className: "show-row-item-".concat(show.id),
+        className: "show-thumbnail",
         ref: this.wrapper,
         onMouseEnter: this.playVideo,
         onMouseLeave: this.pauseVideo
@@ -3618,14 +3617,9 @@ function (_React$Component) {
       var pageIndicators = rowWidth > 0 ? this.createPageIndicators(numPages) : null;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "row-".concat(rowNum, "-wrapper show-rows-wrapper")
-      }, rowHeader, numPages > 1 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "slider-page-indicator"
-      }, pageIndicators) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+      }, rowHeader, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "row-".concat(rowNum, " show-row")
-      }, showList), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "next-page-button",
-        onClick: this.moveToSliderPage(currentPage + 1)
-      }));
+      }, showList));
     }
   }]);
 
@@ -48160,7 +48154,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
