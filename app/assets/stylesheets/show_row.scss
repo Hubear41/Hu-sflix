@@ -11,11 +11,10 @@ $moveRight: ($tileWidth * ($growFactor - 1));
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  padding-left: ($moveRight / 2);
-  //   margin-bottom: 30px;
   overflow: visible;
   box-sizing: border-box;
-  width: calc(100%);
+  padding: 0 4%;
+  width: 100%;
 
   h2 {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
@@ -23,7 +22,6 @@ $moveRight: ($tileWidth * ($growFactor - 1));
     text-transform: capitalize;
     font-weight: 500;
     font-size: 24px;
-    // margin: 30px 0;
     letter-spacing: 1px;
   }
 
@@ -31,8 +29,9 @@ $moveRight: ($tileWidth * ($growFactor - 1));
     font-size: 0;
     transition: $duration transform;
     white-space: nowrap;
-    margin: ($tileHeight / 5) 0;
+    margin: ($tileHeight / 8) 0;
     padding-bottom: 10px;
+    width: fit-content;
 
     .show-thumbnail {
       position: relative;
@@ -48,46 +47,57 @@ $moveRight: ($tileWidth * ($growFactor - 1));
   }
 }
 
-/* animation */
+/* row and thumbnail animation */
 
 .show-row:hover {
   transform: translate3d($moveLeft, 0, 0);
 }
 
-.show-row:hover .show-thumbnail {
-  opacity: 0.3;
-
-  &:hover {
-    transform: scale($growFactor);
-    opacity: 1;
-  }
+.show-row:hover .show-thumbnail:hover {
+  transform: scale($growFactor);
 }
 
 .show-thumbnail:hover ~ .show-thumbnail {
   transform: translate3d($moveRight, 0, 0);
 }
 
-/* .slider-page-indicator {
-    position: absolute;
-    right: 40px;
-    top: 40px;
-    display: flex;
+/* Mixins */
+
+@mixin thumbnail-width($breakPoint, $margins: 4%) {
+  width: calc(100% - $margins * 2) / calcNumTiles($breakPoint);
 }
 
-.page-indicator {
-    height: 1px;
-    width: 10px;
-    background-color: rgba(255, 255, 255, 0.3);
-    margin: 1px;
+@mixin thumbnail-height($breakPoint, $margins: 4%) {
+  height: calc((100% - $magins * 2) / calcNumTiles($breakPoint) / (16 / 9));
 }
 
-.selected-page {
-    background-color: white;
+@mixin moveLeft($breakPoint, $margins: 0.04) {
+  transform: translate3d(
+    calc(
+      (100% - $margins * 2) / calcNumTiles($breakPoint) * - ($growFactor - 1) /
+        2
+    ),
+    0,
+    0
+  );
 }
 
-.next-page-button {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-} */
+@mixin calcMoveRight($breakPoint, $margins: 0.04) {
+  transform: calc(
+    (100% - $margins * 2) / calcNumTiles($breakPoint) * ($growFactor - 1),
+    0,
+    0
+  );
+}
+
+/* Helper Functions */
+
+// calculates width based off of breakpoint widths
+@function calcNumTiles($breakPoint) {
+  $numOfTiles: 2;
+  @if $breakPoint > 500px {
+    $numOfTiles: (($breakPoint - 500px) / 300) + 2;
+  }
+
+  @return $numOfTiles;
+}
