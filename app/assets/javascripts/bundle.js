@@ -2518,8 +2518,6 @@ function (_React$Component) {
       }
 
       var videoEl = this.videoPlayer.current;
-      var wrapperEl = this.wrapper.current; // wrapperEl.classList.add("out");
-
       videoEl.pause();
       this.props.endPreview();
       clearTimeout(this.videoTimeout);

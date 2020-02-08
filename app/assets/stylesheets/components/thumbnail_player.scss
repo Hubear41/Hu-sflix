@@ -1,3 +1,11 @@
+// @function calcFontSize($screenWidth) {
+//   $fontSize: 4.5px;
+
+//   $range: (($screenWidth - 200) % 300) / 300;
+
+//   @return $fontSize + $range;
+// } // font size should be calculated in JS
+
 .show-thumbnail {
   font-family: "Roboto", sans-serif;
 
@@ -10,6 +18,7 @@
       position: absolute;
       height: 100%;
       width: 100%;
+      // z-index: 10;
       object-fit: fill;
       transition: opacity 0.1s, height 0.1s, width 0.1s;
       transition-delay: 0.1s;
@@ -22,6 +31,21 @@
       opacity: 1;
       background-color: black;
       transition: opacity 0.1s, height 0.1s, width 0.1s;
+    }
+
+    &::after {
+      content: "";
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 5;
+      background: linear-gradient(
+        to bottom,
+        rgba(black, 0) 50%,
+        rgba(black, 0.8)
+      );
     }
   }
 
@@ -134,7 +158,7 @@
     .toggle-dropdown {
       width: 100%;
       height: 100%;
-      color: #9b9b9b;
+      color: rgba(white, 0.8);
       background: none;
       outline: none;
       border: none;

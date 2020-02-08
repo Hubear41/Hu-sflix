@@ -94,9 +94,6 @@ class ShowThumbnail extends React.Component {
     }
 
     const videoEl = this.videoPlayer.current;
-    const wrapperEl = this.wrapper.current;
-    // wrapperEl.classList.add("out");
-
     videoEl.pause();
     this.props.endPreview();
 
