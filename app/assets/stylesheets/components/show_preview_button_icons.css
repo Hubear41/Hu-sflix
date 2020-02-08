@@ -1,53 +1,51 @@
 .play-pause-btn-icon {
-    position: relative;
+  position: relative;
 }
 
 .play-btn-triangle {
-    position: absolute;
-    z-index: 22;
-    transform-origin: center;
-    font-size: 9px;
-    color: red;
-    left: 6.9px;
-    top: 9.4px;
+  position: absolute;
+  z-index: 22;
+  transform-origin: center;
+  font-size: 6px;
+  color: red;
 }
 
 .play-btn-bg {
-    transform-origin: center;
-    font-size: 25px;
-    opacity: 0.5;
+  transform-origin: center;
+  font-size: 20px;
+  opacity: 0.5;
 }
 
 .play-btn-outline {
-    position: absolute;
-    z-index: 18;
-    transform-origin: center;
-    color: white;
-    font-size: 25px;
-    opacity: 0.6;
+  position: absolute;
+  z-index: 18;
+  transform-origin: center;
+  color: white;
+  font-size: 20px;
+  opacity: 0.6;
 }
 
 .button-symbol {
-    position: absolute;
-    z-index: 25;
-    font-size: 6px;
-    transform-origin: center;
-    color: #9b9b9b;
+  position: absolute;
+  z-index: 25;
+  font-size: 6px;
+  transform-origin: center;
+  color: #9b9b9b;
 }
 
 .preview-btn-bg {
-    position: absolute;
-    z-index: 15;
-    transform-origin: center;
-    font-size: 14px;
-    opacity: 0.5;
+  position: absolute;
+  z-index: 15;
+  transform-origin: center;
+  font-size: 14px;
+  opacity: 0.5;
 }
 
 .preview-btn-outline {
-    position: absolute;
-    z-index: 20;
-    transform-origin: center;
-    font-size: 14px;
-    color: white;
-    opacity: 0.6;
+  position: absolute;
+  z-index: 20;
+  transform-origin: center;
+  font-size: 14px;
+  color: white;
+  opacity: 0.6;
 }

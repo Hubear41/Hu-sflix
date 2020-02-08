@@ -2518,8 +2518,8 @@ function (_React$Component) {
       }
 
       var videoEl = this.videoPlayer.current;
-      var wrapperEl = this.wrapper.current;
-      wrapperEl.classList.add("out");
+      var wrapperEl = this.wrapper.current; // wrapperEl.classList.add("out");
+
       videoEl.pause();
       this.props.endPreview();
       clearTimeout(this.videoTimeout);
@@ -2574,32 +2574,29 @@ function (_React$Component) {
         ref: this.wrapper,
         onMouseEnter: this.playVideo,
         onMouseLeave: this.pauseVideo
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "thumbnail-visual",
+        onMouseLeave: this.pauseVideo
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "show-title-card",
+        className: "thumbnail-poster",
         src: show ? show.posterUrl : window.tempBgURL,
         alt: show.title,
         onClick: this.launchWatch,
         onMouseEnter: this.playVideo
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "show-peek-preview-player preview-fade-in",
-        onMouseLeave: this.pauseVideo
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "preview-video-player preview-fade-in"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "preview-clickable-area",
-        onClick: this.launchWatch
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-        id: "show-".concat(show.id, " preview-video"),
+        className: "thumbnail-player",
         ref: this.videoPlayer,
         onClick: this.launchWatch,
         muted: "muted"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         src: preview ? preview.videoUrl : "",
         type: "video/mp4"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
-        className: "preview-player-right-side-btns preview-fade-in"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "thumbnail-player-desc thumbnail-grid"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
+        className: "thumbnail-right-nav thumbnail-side"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "preview-mute-btn right-side-btn preview-fade-in",
+        className: "preview-mute-btn right-side-btn",
         onClick: this.toggleMute
       }, muteBtn, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-circle preview-btn-bg"
@@ -2615,30 +2612,28 @@ function (_React$Component) {
         showId: show.id,
         addMyListVideo: this.props.addMyListVideo,
         removeMyListVideo: this.props.removeMyListVideo
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
-        className: "preview-video-info-desc preview-fade-in",
-        onClick: this.launchWatch
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "preview-play-btn preview-fade-in"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "thumbnail-play-icon thumbnail-play"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-play play-btn-triangle"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-circle play-btn-bg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "far fa-circle play-btn-outline"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: "preview-show-title preview-fade-in"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
+        className: "thumbnail-desc preview-info",
+        onClick: this.launchWatch
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+        className: "preview-title"
       }, show.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
-        className: "preview-details preview-fade-in"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "show-maturity-rating"
-      }, show.maturity_rating), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](show.runtime))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
-        className: "preview-genres preview-fade-in"
-      }, genresToShow)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "toggle-show-detail-btn"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-chevron-down"
-      })))));
+        className: "preview-details"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "preview-maturity-rating"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, show.maturity_rating)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "preview-runtime"
+      }, _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](show.runtime))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "preview-genres"
+      }, genresToShow)))));
     }
   }]);
 
@@ -48203,7 +48198,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

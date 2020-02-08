@@ -95,7 +95,7 @@ class ShowThumbnail extends React.Component {
 
     const videoEl = this.videoPlayer.current;
     const wrapperEl = this.wrapper.current;
-    wrapperEl.classList.add("out");
+    // wrapperEl.classList.add("out");
 
     videoEl.pause();
     this.props.endPreview();
@@ -157,39 +157,28 @@ class ShowThumbnail extends React.Component {
           onMouseEnter={this.playVideo}
           onMouseLeave={this.pauseVideo}
         >
-          <img
-            className="show-title-card"
-            src={show ? show.posterUrl : window.tempBgURL}
-            alt={show.title}
-            onClick={this.launchWatch}
-            onMouseEnter={this.playVideo}
-          ></img>
+          <figure className="thumbnail-visual" onMouseLeave={this.pauseVideo}>
+            <img
+              className="thumbnail-poster"
+              src={show ? show.posterUrl : window.tempBgURL}
+              alt={show.title}
+              onClick={this.launchWatch}
+              onMouseEnter={this.playVideo}
+            ></img>
+            <video
+              className="thumbnail-player"
+              ref={this.videoPlayer}
+              onClick={this.launchWatch}
+              muted="muted"
+            >
+              <source src={preview ? preview.videoUrl : ""} type="video/mp4" />
+            </video>
+          </figure>
 
-          <figure
-            className="show-peek-preview-player preview-fade-in"
-            onMouseLeave={this.pauseVideo}
-          >
-            <figure className="preview-video-player preview-fade-in">
-              <figure
-                className="preview-clickable-area"
-                onClick={this.launchWatch}
-              ></figure>
-              <video
-                id={`show-${show.id} preview-video`}
-                ref={this.videoPlayer}
-                onClick={this.launchWatch}
-                muted="muted"
-              >
-                <source
-                  src={preview ? preview.videoUrl : ""}
-                  type="video/mp4"
-                />
-              </video>
-            </figure>
-
-            <aside className="preview-player-right-side-btns preview-fade-in">
+          <div className="thumbnail-player-desc thumbnail-grid">
+            <aside className="thumbnail-right-nav thumbnail-side">
               <button
-                className="preview-mute-btn right-side-btn preview-fade-in"
+                className="preview-mute-btn right-side-btn"
                 onClick={this.toggleMute}
               >
                 {muteBtn}
@@ -208,36 +197,34 @@ class ShowThumbnail extends React.Component {
               />
             </aside>
 
+            <button className="thumbnail-play-icon thumbnail-play">
+              <i className="fas fa-play play-btn-triangle"></i>
+              <i className="fas fa-circle play-btn-bg"></i>
+              <i className="far fa-circle play-btn-outline"></i>
+            </button>
+
             <figcaption
-              className="preview-video-info-desc preview-fade-in"
+              className="thumbnail-desc preview-info"
               onClick={this.launchWatch}
             >
-              <button className="preview-play-btn preview-fade-in">
-                <i className="fas fa-play play-btn-triangle"></i>
-                <i className="fas fa-circle play-btn-bg"></i>
-                <i className="far fa-circle play-btn-outline"></i>
-              </button>
+              <h5 className="preview-title">{show.title}</h5>
 
-              <h5 className="preview-show-title preview-fade-in">
-                {show.title}
-              </h5>
-
-              <article className="preview-details preview-fade-in">
-                <span className="show-maturity-rating">
-                  {show.maturity_rating}
+              <article className="preview-details">
+                <h3 className="preview-maturity-rating">
+                  <span>{show.maturity_rating}</span>
+                </h3>
+                <span className="preview-runtime">
+                  {DateTimeUTIL.secondsToHoursMinutes(show.runtime)}
                 </span>
-                <span>{DateTimeUTIL.secondsToHoursMinutes(show.runtime)}</span>
               </article>
 
-              <article className="preview-genres preview-fade-in">
-                {genresToShow}
-              </article>
+              <article className="preview-genres">{genresToShow}</article>
             </figcaption>
 
-            <button className="toggle-show-detail-btn">
+            {/* <button className="toggle-show-detail-btn">
               <i className="fas fa-chevron-down"></i>
-            </button>
-          </figure>
+            </button> */}
+          </div>
         </li>
       </>
     );
