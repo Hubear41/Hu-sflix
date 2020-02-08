@@ -3593,6 +3593,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       var _this$props = this.props,
           shows = _this$props.shows,
           rowNum = _this$props.rowNum,
@@ -3604,17 +3606,19 @@ function (_React$Component) {
           currentPage = _this$state.currentPage,
           rowWidth = _this$state.rowWidth;
       var showList = [];
-      var rowHeader = galleryType === "WITH_BANNER" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, genreName) : null;
-      var numShowsPerRow = Math.round(rowWidth / 300);
-      var numPages = Math.ceil(shows.length / numShowsPerRow);
-      var startingIdx = numShowsPerRow * currentPage;
+      var rowHeader = galleryType === "WITH_BANNER" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, genreName) : null; // const numShowsPerRow = Math.round(rowWidth / 300);
+      // const numPages = Math.ceil(shows.length / numShowsPerRow);
+      // const startingIdx = numShowsPerRow * currentPage;
+      // for (let idx = startingIdx; showList.length <= numShowsPerRow; idx++) {
+      //   const show = shows[idx];
+      //   showList.push(this.createShowRowItem(show, rowNum, videos, genres));
+      // }
+      // const pageIndicators =
+      //   rowWidth > 0 ? this.createPageIndicators(numPages) : null;
 
-      for (var idx = startingIdx; showList.length <= numShowsPerRow; idx++) {
-        var show = shows[idx];
-        showList.push(this.createShowRowItem(show, rowNum, videos, genres));
-      }
-
-      var pageIndicators = rowWidth > 0 ? this.createPageIndicators(numPages) : null;
+      shows.forEach(function (show) {
+        showList.push(_this3.createShowRowItem(show, rowNum, videos, genres));
+      });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "row-".concat(rowNum, "-wrapper show-rows-wrapper")
       }, rowHeader, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -3626,7 +3630,52 @@ function (_React$Component) {
   return ShowRow;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (ShowRow);
+/* harmony default export */ __webpack_exports__["default"] = (ShowRow); // class ShowRow extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.createShowRowItem = this.createShowRowItem.bind(this);
+//     this.playTimeout;
+//   }
+//   createShowRowItem(show) {
+//     if (!show) {
+//       return null;
+//     }
+//     const { rowNum, videos, genres } = this.props;
+//     const genreList = [];
+//     const previewVideo =
+//       show.show_type === "FEATURE"
+//         ? videos[show.movie_id]
+//         : videos[show.episode_ids[0]];
+//     show.genre_ids.forEach(id => {
+//       genreList.push(genres[id]);
+//     });
+//     return (
+//       <ShowPreviewPlayer
+//         key={`${show.id}${rowNum}`}
+//         show={show}
+//         preview={previewVideo}
+//         genres={genreList}
+//         Timeout={this.playTimeout}
+//       />
+//     );
+//   }
+//   render() {
+//     const { shows, rowNum, genreName, galleryType } = this.props;
+//     const showList = [];
+//     const rowHeader = galleryType !== "SEARCH" ? <h2>{genreName}</h2> : null;
+//     shows.forEach(show => {
+//       showList.push(this.createShowRowItem(show));
+//     });
+//     return (
+//       <li className={`row-${rowNum}-wrapper show-rows-wrapper`}>
+//         {rowHeader}
+//         <figure className={`row-${rowNum} show-row`}>{showList}</figure>
+//         {/* <ShowDetail  /> */}
+//       </li>
+//     );
+//   }
+// }
+// export default ShowRow;
 
 /***/ }),
 

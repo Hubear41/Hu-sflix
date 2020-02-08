@@ -18,16 +18,20 @@ $growFactor: 1.5;
 
 // calculates the width of thumbnails based on the current breakpoint
 @mixin thumbnail-width($breakPoint, $padding: 4vw) {
+  $numThumbs: calcNumTiles($breakPoint);
+
   @include calc(
     width,
-    "(100vw - (#{$padding} * 2)) / #{calcNumTiles($breakPoint)}"
+    "(100vw - (#{$padding} * 2) - ((#{$numThumbs} - 1) * 10px)) / #{$numThumbs}"
   );
 }
 
 @mixin thumbnail-height($breakPoint, $padding: 4vw) {
+  $numThumbs: calcNumTiles($breakPoint);
+
   @include calc(
     height,
-    "(100vw - (#{$padding} * 2)) / #{calcNumTiles($breakPoint)} / (16 / 9)"
+    "(100vw - (#{$padding} * 2) - ((#{$numThumbs} - 1) * 10px)) / #{$numThumbs} / (16 / 9)"
   );
 }
 
@@ -90,7 +94,6 @@ $growFactor: 1.5;
     font-size: 0;
     transition: $duration transform;
     white-space: nowrap;
-    padding: 0 4%;
     padding-bottom: 10px;
     width: fit-content;
 
@@ -153,8 +156,8 @@ $growFactor: 1.5;
   }
 }
 
-@media only screen and (max-width: 1400px) {
-  .show-rows {
+@media only screen and (min-width: 1400px) {
+  .show-rows-wrapper {
     padding: 0 60px;
   }
 
