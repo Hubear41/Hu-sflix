@@ -2627,13 +2627,17 @@ function (_React$Component) {
         className: "preview-title"
       }, show.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "preview-details"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
         className: "preview-maturity-rating"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, show.maturity_rating)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "preview-runtime"
       }, _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](show.runtime))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "preview-genres"
-      }, genresToShow)))));
+      }, genresToShow)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "toggle-dropdown thumbnail-footer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-chevron-down"
+      })))));
     }
   }]);
 

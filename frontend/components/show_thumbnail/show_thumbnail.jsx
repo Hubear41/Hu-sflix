@@ -210,9 +210,9 @@ class ShowThumbnail extends React.Component {
               <h5 className="preview-title">{show.title}</h5>
 
               <article className="preview-details">
-                <h3 className="preview-maturity-rating">
+                <h6 className="preview-maturity-rating">
                   <span>{show.maturity_rating}</span>
-                </h3>
+                </h6>
                 <span className="preview-runtime">
                   {DateTimeUTIL.secondsToHoursMinutes(show.runtime)}
                 </span>
@@ -221,9 +221,9 @@ class ShowThumbnail extends React.Component {
               <article className="preview-genres">{genresToShow}</article>
             </figcaption>
 
-            {/* <button className="toggle-show-detail-btn">
+            <button className="toggle-dropdown thumbnail-footer">
               <i className="fas fa-chevron-down"></i>
-            </button> */}
+            </button>
           </div>
         </li>
       </>
