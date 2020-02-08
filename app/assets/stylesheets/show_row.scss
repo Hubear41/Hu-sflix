@@ -1,5 +1,6 @@
 $duration: 450ms;
 $growFactor: 1.5;
+$defaultPadding: 5vw;
 
 /* Mixins */
 
@@ -17,7 +18,7 @@ $growFactor: 1.5;
 }
 
 // calculates the width of thumbnails based on the current breakpoint
-@mixin thumbnail-width($breakPoint, $padding: 4vw) {
+@mixin thumbnail-width($breakPoint, $padding: $defaultPadding) {
   $numThumbs: calcNumTiles($breakPoint);
 
   @include calc(
@@ -26,7 +27,7 @@ $growFactor: 1.5;
   );
 }
 
-@mixin thumbnail-height($breakPoint, $padding: 4vw) {
+@mixin thumbnail-height($breakPoint, $padding: $defaultPadding) {
   $numThumbs: calcNumTiles($breakPoint);
 
   @include calc(
@@ -35,13 +36,13 @@ $growFactor: 1.5;
   );
 }
 
-@mixin moveLeft($breakPoint, $padding: 4vw) {
+@mixin moveLeft($breakPoint, $padding: $defaultPadding) {
   @include translateX(
     "(((100vw - (#{$padding} * 2)) / #{calcNumTiles($breakPoint)}) * (#{$growFactor} - 1)) / 2 * -1"
   );
 }
 
-@mixin moveRight($breakPoint, $padding: 4vw) {
+@mixin moveRight($breakPoint, $padding: $defaultPadding) {
   @include translateX(
     "((100vw - #{$padding} * 2) / #{calcNumTiles($breakPoint)}) * (#{$growFactor} - 1)"
   );
@@ -78,7 +79,7 @@ $growFactor: 1.5;
   position: relative;
   overflow: visible;
   box-sizing: border-box;
-  padding: 0 4%;
+  padding: 0 $defaultPadding;
   width: 100%;
 
   h2 {
@@ -95,6 +96,7 @@ $growFactor: 1.5;
     transition: $duration transform;
     white-space: nowrap;
     padding-bottom: 10px;
+    margin: 2% 0;
     width: fit-content;
 
     .show-thumbnail {
