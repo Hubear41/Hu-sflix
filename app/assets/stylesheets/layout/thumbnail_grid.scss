@@ -17,7 +17,7 @@
 .thumbnail-grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
+  grid-template-rows: repeat(11, 1fr);
   grid-template-areas:
     ".    .    .    .    .    .    .    .    .   ."
     ".    .    .    .    .    .    .    .    .   ."
@@ -28,5 +28,6 @@
     "desc desc desc desc desc desc desc .    sd   sd"
     "desc desc desc desc desc desc desc .    sd   sd"
     "desc desc desc desc desc desc desc .    sd   sd"
+    "ft   ft   ft   ft   ft   ft   ft   ft   ft  ft"
     "ft   ft   ft   ft   ft   ft   ft   ft   ft  ft";
 }

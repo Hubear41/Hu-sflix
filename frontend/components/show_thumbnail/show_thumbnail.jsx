@@ -9,7 +9,7 @@ class ShowThumbnail extends React.Component {
       muted: true,
       paused: true,
       focus: true,
-      fontSize: 5
+      fontSize: 4
     };
 
     this.videoPlayer = React.createRef();
@@ -26,6 +26,7 @@ class ShowThumbnail extends React.Component {
     this._isMounted = true;
 
     window.addEventListener("resize", this.handleWindowResize);
+    this.setState({ fontSize: this._calculateFontSize(window.innerWidth) });
   }
 
   componentWillUnmount() {
@@ -39,14 +40,18 @@ class ShowThumbnail extends React.Component {
   handleWindowResize(e) {
     const windowSize = e.target.innerWidth;
 
-    if (windowSize <= 200) {
-      this.setState({ fontSize: 4.5 });
-    } else if (windowSize >= 1400) {
-      this.setState({ fontSize: 5.5 });
-    } else {
-      const newSize = 4.5 + ((windowSize - 200) % 300) / 300;
+    this.setState({ fontSize: this._calculateFontSize(windowSize) });
+  }
 
-      this.setState({ fontSize: newSize });
+  _calculateFontSize(windowSize) {
+    if (windowSize <= 200) {
+      return 3.5;
+    } else if (windowSize >= 1400) {
+      return 4.5;
+    } else {
+      const newSize = 3.5 + ((windowSize - 200) % 300) / 300;
+
+      return newSize;
     }
   }
 

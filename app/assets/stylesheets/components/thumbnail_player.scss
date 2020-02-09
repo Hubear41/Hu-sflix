@@ -1,5 +1,6 @@
 .show-thumbnail {
   font-family: "Roboto", sans-serif;
+  color: white;
 
   .thumbnail-visual {
     position: relative;
@@ -73,7 +74,7 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        font-size: 1.1em;
+        font-size: 1.4em;
       }
 
       /* get rid of this later */
@@ -93,7 +94,7 @@
       background: none;
       outline: none;
       cursor: pointer;
-      font-size: 0.8em;
+      font-size: 1em;
     }
 
     .preview-info {
@@ -116,35 +117,25 @@
         display: flex;
         align-items: center;
         font-weight: 300;
-        color: rgba(255, 255, 255, 0.8);
 
         .preview-maturity-rating {
-          border: 0.1px solid rgba(255, 255, 255, 0.8);
+          border: 1px solid rgba(255, 255, 255, 0.3);
           background: none;
-          padding: 0.2em 0.6em;
+          padding: 1px 0.6em;
           box-sizing: border-box;
           margin-right: 1em;
-
-          span {
-            font-size: 1.6em;
-            line-height: 1.4em;
-          }
         }
-        .preview-runtime {
-          font-size: 1.6em;
-          line-height: 1.4em;
+
+        span {
+          font-size: 1.7em;
         }
       }
 
       .preview-genres {
         display: flex;
         align-items: center;
-        font-size: 1.9em;
+        font-size: 1.7em;
         font-weight: 300;
-
-        .genre-title {
-          color: white;
-        }
 
         .genre-bullet {
           color: grey;
@@ -164,11 +155,11 @@
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      padding-bottom: 0.5em;
+      padding: 0;
       opacity: 0; // remove after adding dropdown functionality
 
       .fa-chevron-down {
-        font-size: 1.5em;
+        // font-size: 1.5em;
       }
     }
   }

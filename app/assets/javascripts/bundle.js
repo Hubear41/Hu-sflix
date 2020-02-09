@@ -2418,7 +2418,7 @@ function (_React$Component) {
       muted: true,
       paused: true,
       focus: true,
-      fontSize: 5
+      fontSize: 4
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.wrapper = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
@@ -2436,6 +2436,9 @@ function (_React$Component) {
     value: function componentDidMount() {
       this._isMounted = true;
       window.addEventListener("resize", this.handleWindowResize);
+      this.setState({
+        fontSize: this._calculateFontSize(window.innerWidth)
+      });
     }
   }, {
     key: "componentWillUnmount",
@@ -2449,20 +2452,20 @@ function (_React$Component) {
     key: "handleWindowResize",
     value: function handleWindowResize(e) {
       var windowSize = e.target.innerWidth;
-
+      this.setState({
+        fontSize: this._calculateFontSize(windowSize)
+      });
+    }
+  }, {
+    key: "_calculateFontSize",
+    value: function _calculateFontSize(windowSize) {
       if (windowSize <= 200) {
-        this.setState({
-          fontSize: 4.5
-        });
+        return 3.5;
       } else if (windowSize >= 1400) {
-        this.setState({
-          fontSize: 5.5
-        });
+        return 4.5;
       } else {
-        var newSize = 4.5 + (windowSize - 200) % 300 / 300;
-        this.setState({
-          fontSize: newSize
-        });
+        var newSize = 3.5 + (windowSize - 200) % 300 / 300;
+        return newSize;
       }
     }
   }, {
@@ -48266,7 +48269,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
