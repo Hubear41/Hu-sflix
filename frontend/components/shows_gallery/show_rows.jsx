@@ -119,14 +119,14 @@ class ShowRow extends React.Component {
     });
 
     return (
-      <li className={`row-${rowNum}-wrapper show-rows-wrapper`}>
+      <li id={`row-${rowNum}`} className="show-rows-wrapper">
         {rowHeader}
 
         {/* {numPages > 1 ? (
           <ul className="slider-page-indicator">{pageIndicators}</ul>
         ) : null} */}
 
-        <ul className={`row-${rowNum} show-row`}>{showList}</ul>
+        <ul className="show-row">{showList}</ul>
         {/* <div
           className="next-page-button"
           onClick={this.moveToSliderPage(currentPage + 1)}

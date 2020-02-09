@@ -83,13 +83,13 @@ const ThumbnailPlayerDesc = props => {
         />
       </aside>
 
-      <button className="thumbnail-play-icon thumbnail-play">
-        <i className="fas fa-play play-btn-triangle"></i>
-        <i className="fas fa-circle play-btn-bg"></i>
-        <i className="far fa-circle play-btn-outline"></i>
-      </button>
-
       <figcaption className="thumbnail-desc preview-info">
+        <button className="thumbnail-play-icon">
+          <i className="fas fa-play play-btn-triangle"></i>
+          <i className="fas fa-circle play-btn-bg"></i>
+          <i className="far fa-circle play-btn-outline"></i>
+        </button>
+
         <h5 className="preview-title">{show.title}</h5>
 
         <article className="preview-details">

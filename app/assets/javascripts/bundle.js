@@ -2734,17 +2734,17 @@ var ThumbnailPlayerDesc = function ThumbnailPlayerDesc(props) {
     showId: show.id,
     addMyListVideo: addMyListVideo,
     removeMyListVideo: removeMyListVideo
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "thumbnail-play-icon thumbnail-play"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
+    className: "thumbnail-desc preview-info"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "thumbnail-play-icon"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-play play-btn-triangle"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-circle play-btn-bg"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "far fa-circle play-btn-outline"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
-    className: "thumbnail-desc preview-info"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
     className: "preview-title"
   }, show.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
     className: "preview-details"
@@ -3686,9 +3686,10 @@ function (_React$Component) {
         showList.push(_this3.createShowRowItem(show, rowNum, videos, genres));
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "row-".concat(rowNum, "-wrapper show-rows-wrapper")
+        id: "row-".concat(rowNum),
+        className: "show-rows-wrapper"
       }, rowHeader, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "row-".concat(rowNum, " show-row")
+        className: "show-row"
       }, showList));
     }
   }]);

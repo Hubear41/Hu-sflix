@@ -1,7 +1,6 @@
 /* Variables */
-
 $duration: 450ms;
-$growFactor: 2;
+$growFactor: 2.2;
 $defaultPadding: 5vw;
 $minBreakPoint: 200px;
 
@@ -19,7 +18,7 @@ $minBreakPoint: 200px;
   transform: translateX(calc(#{$expression}));
 }
 
-// calculates the width of thumbnails based on the current breakpoint
+// calculates the width of thumbnails based on the current breakpoint and the number of 10px margins
 @mixin thumbnail-width($breakPoint, $padding: $defaultPadding) {
   $numThumbs: calcNumTiles($breakPoint);
 
@@ -29,6 +28,7 @@ $minBreakPoint: 200px;
   );
 }
 
+// calculates the height of thumbnails based off the width and a 16:9 ratio
 @mixin thumbnail-height($breakPoint, $padding: $defaultPadding) {
   $numThumbs: calcNumTiles($breakPoint);
 
@@ -37,17 +37,46 @@ $minBreakPoint: 200px;
     "(100vw - (#{$padding} * 2) - ((#{$numThumbs} - 1) * 10px)) / #{$numThumbs} / (16 / 9)"
   );
 }
-
+// calculate how much to translate row to the left based off of the number of tiles and growthfactor
 @mixin moveLeft($breakPoint, $padding: $defaultPadding) {
   @include translateX(
     "(((100vw - (#{$padding} * 2)) / #{calcNumTiles($breakPoint)}) * (#{$growFactor} - 1)) / 2 * -1"
   );
 }
 
+// calculate how much to translate row to the right based off of the number of tiles and growthfactor
 @mixin moveRight($breakPoint, $padding: $defaultPadding) {
   @include translateX(
     "((100vw - #{$padding} * 2) / #{calcNumTiles($breakPoint)}) * (#{$growFactor} - 1)"
   );
+}
+
+// positions rows so that their margins are overlapping and seem closer together
+// creates this for rows 2 through 10. The max can be changed.
+@mixin overlap($max: 10) {
+  @for $i from 2 through $max {
+    #row-#{$i} {
+      top: -#{($i - 1) * 3}vw;
+    }
+  }
+}
+
+// create mediaquery for show rows with a given break point
+@mixin createMediaQuery($breakpoint) {
+  @media only screen and (min-width: $breakpoint) {
+    .show-thumbnail {
+      @include thumbnail-width($breakpoint);
+      @include thumbnail-height($breakpoint);
+    }
+
+    .show-row:hover {
+      @include moveLeft($breakpoint);
+    }
+
+    .show-thumbnail:hover ~ .show-thumbnail {
+      @include moveRight($breakpoint);
+    }
+  }
 }
 
 /* Helper Functions */

@@ -1,106 +1,56 @@
 @import "../base/show_row_mixin.scss";
 
-.show-rows-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  overflow: visible;
-  box-sizing: border-box;
-  width: 100%;
-  padding: 0 $defaultPadding;
-  margin: 1.5vw 0;
+.show-gallery-index {
+  @include overlap();
 
-  h2 {
-    text-transform: capitalize;
-    font-weight: 500;
-    font-family: "Roboto", sans-serif;
-    color: #e5e5e5;
-    font-size: 1.4vw;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 0.5em;
-  }
+  .show-rows-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: visible;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 $defaultPadding;
+    margin: 3vw 0;
+    z-index: 1;
 
-  .show-row {
-    font-size: 0;
-    transition: $duration transform;
-    white-space: nowrap;
-    padding-bottom: 10px;
-    width: fit-content;
+    h2 {
+      text-transform: capitalize;
+      font-weight: 500;
+      font-family: "Roboto", sans-serif;
+      color: #e5e5e5;
+      font-size: 1.4vw;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 0.5em;
+    }
 
-    .show-thumbnail {
-      position: relative;
-      display: inline-block;
-      transition: $duration all;
-      transform-origin: center left;
-      margin-right: 10px;
-      font-size: 20px;
-      cursor: pointer;
+    .show-row {
+      font-size: 0;
+      transition: $duration transform;
+      white-space: nowrap;
+      padding-bottom: 10px;
+      width: fit-content;
+
+      .show-thumbnail {
+        position: relative;
+        display: inline-block;
+        transition: $duration all;
+        transform-origin: center left;
+        margin-right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+      }
     }
   }
 }
 
 /* Media Queries */
+$breakpoints: 200px, 500px, 800px, 1100px;
 
-@media only screen and (min-width: 200px) {
-  .show-thumbnail {
-    @include thumbnail-width(200px);
-    @include thumbnail-height(200px);
-  }
-
-  .show-row:hover {
-    @include moveLeft(200px);
-  }
-
-  .show-thumbnail:hover ~ .show-thumbnail {
-    @include moveRight(200px);
-  }
-}
-
-@media only screen and (min-width: 500px) {
-  .show-thumbnail {
-    @include thumbnail-width(500px);
-    @include thumbnail-height(500px);
-  }
-
-  .show-row:hover {
-    @include moveLeft(500px);
-  }
-
-  .show-thumbnail:hover ~ .show-thumbnail {
-    @include moveRight(500px);
-  }
-}
-
-@media only screen and (min-width: 800px) {
-  .show-thumbnail {
-    @include thumbnail-width(800px);
-    @include thumbnail-height(800px);
-  }
-
-  .show-row:hover {
-    @include moveLeft(800px);
-  }
-
-  .show-thumbnail:hover ~ .show-thumbnail {
-    @include moveRight(800px);
-  }
-}
-
-@media only screen and (min-width: 1100px) {
-  .show-thumbnail {
-    @include thumbnail-width(1100px);
-    @include thumbnail-height(1100px);
-  }
-
-  .show-row:hover {
-    @include moveLeft(1100px);
-  }
-
-  .show-thumbnail:hover ~ .show-thumbnail {
-    @include moveRight(1100px);
-  }
+@each $breakpoint in $breakpoints {
+  @include createMediaQuery($breakpoint);
 }
 
 @media only screen and (min-width: 1400px) {
@@ -123,6 +73,10 @@
 }
 
 /* row and thumbnail animation */
+
+.show-rows-wrapper:hover {
+  z-index: 10;
+}
 
 .show-row:hover .show-thumbnail:hover {
   transform: scale($growFactor);
