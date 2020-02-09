@@ -3,9 +3,9 @@
 $duration: 450ms;
 $growFactor: 1.5;
 $defaultPadding: 5vw;
+$minBreakPoint: 200px;
 
 /* Mixins */
-
 /* CSS3 calc() function to perform calculations */
 @mixin calc($property, $expression) {
   #{$property}: -webkit-calc(#{$expression});
@@ -55,8 +55,8 @@ $defaultPadding: 5vw;
 // calculates width based off of breakpoint widths
 @function calcNumTiles($breakPoint) {
   $numOfTiles: 2;
-  @if $breakPoint > 500px {
-    $numOfTiles: (($breakPoint - 500px) / 300) + 2;
+  @if $breakPoint > $minBreakPoint {
+    $numOfTiles: (($breakPoint - $minBreakPoint) / 300) + 2;
   }
 
   @return strip-unit($numOfTiles);

@@ -41,6 +41,21 @@
 
 /* Media Queries */
 
+@media only screen and (min-width: 200px) {
+  .show-thumbnail {
+    @include thumbnail-width(200px);
+    @include thumbnail-height(200px);
+  }
+
+  .show-row:hover {
+    @include moveLeft(200px);
+  }
+
+  .show-thumbnail:hover ~ .show-thumbnail {
+    @include moveRight(200px);
+  }
+}
+
 @media only screen and (min-width: 500px) {
   .show-thumbnail {
     @include thumbnail-width(500px);

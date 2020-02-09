@@ -1,11 +1,3 @@
-// @function calcFontSize($screenWidth) {
-//   $fontSize: 4.5px;
-
-//   $range: (($screenWidth - 200) % 300) / 300;
-
-//   @return $fontSize + $range;
-// } // font size should be calculated in JS
-
 .show-thumbnail {
   font-family: "Roboto", sans-serif;
 
@@ -217,6 +209,7 @@
   }
 }
 
+// mouse over based animations should probably be done in JS
 // .preview-info, .thumbnail-play-icon, .thumbnail-right-nav {
 //   transition: opacity 0.4s ease-out;
 // }
