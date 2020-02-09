@@ -2380,8 +2380,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util/date_time_util */ "./frontend/util/date_time_util.js");
-/* harmony import */ var _mylist_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mylist_button */ "./frontend/components/show_thumbnail/mylist_button.jsx");
+/* harmony import */ var _thumbnail_player_desc__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./thumbnail_player_desc */ "./frontend/components/show_thumbnail/thumbnail_player_desc.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2404,7 +2403,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
 var ShowThumbnail =
 /*#__PURE__*/
 function (_React$Component) {
@@ -2417,10 +2415,10 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ShowThumbnail).call(this, props));
     _this.state = {
-      height: 0,
       muted: true,
       paused: true,
-      focus: true
+      focus: true,
+      fontSize: 5
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.wrapper = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
@@ -2429,6 +2427,7 @@ function (_React$Component) {
     _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
     _this.playVideo = _this.playVideo.bind(_assertThisInitialized(_this));
     _this.pauseVideo = _this.pauseVideo.bind(_assertThisInitialized(_this));
+    _this.handleWindowResize = _this.handleWindowResize.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2436,10 +2435,7 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this._isMounted = true;
-      var height = 160;
-      this.setState({
-        height: height
-      });
+      window.addEventListener("resize", this.handleWindowResize);
     }
   }, {
     key: "componentWillUnmount",
@@ -2447,6 +2443,27 @@ function (_React$Component) {
       this._isMounted = false;
       clearTimeout(this.videoTimeout);
       clearTimeout(this.timeout);
+      window.removeEventListener("resize", this.handleWindowResize);
+    }
+  }, {
+    key: "handleWindowResize",
+    value: function handleWindowResize(e) {
+      var windowSize = e.target.innerWidth;
+
+      if (windowSize <= 200) {
+        this.setState({
+          fontSize: 4.5
+        });
+      } else if (windowSize >= 1400) {
+        this.setState({
+          fontSize: 5.5
+        });
+      } else {
+        var newSize = 4.5 + (windowSize - 200) % 300 / 300;
+        this.setState({
+          fontSize: newSize
+        });
+      }
     }
   }, {
     key: "launchWatch",
@@ -2471,6 +2488,7 @@ function (_React$Component) {
   }, {
     key: "toggleMute",
     value: function toggleMute(e) {
+      e.stopPropagation();
       var videoEl = this.videoPlayer.current;
 
       if (videoEl.muted) {
@@ -2534,47 +2552,13 @@ function (_React$Component) {
           preview = _this$props.preview,
           genres = _this$props.genres,
           listShowIds = _this$props.listShowIds;
-      var genresToShow = [];
-      var muteBtn = this.state.muted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-volume-mute button-symbol"
-      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-volume-up button-symbol"
-      });
-
-      if (show !== undefined && genres.length >= 1) {
-        genres.forEach(function (genre, idx) {
-          if (genre === undefined) {
-            return;
-          }
-
-          if (genre.name !== "TV Show" && genre.name !== "Movie" && genre.name !== "Recently Added" && genresToShow.length < 3) {
-            if (genresToShow.length === 2) {
-              genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-                className: "genre-title",
-                key: genre.name + genre.id
-              }, genre.name));
-            } else {
-              genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-                className: "genre-title",
-                key: genre.name + genre.id
-              }, genre.name));
-              genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
-                className: "genre-bullet",
-                key: "bullet " + idx
-              }, " ", "\u2022", " "));
-            }
-          }
-        });
-      }
-
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "show-thumbnail",
         ref: this.wrapper,
         onMouseEnter: this.playVideo,
         onMouseLeave: this.pauseVideo
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "thumbnail-visual",
-        onMouseLeave: this.pauseVideo
+        className: "thumbnail-visual"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         className: "thumbnail-poster",
         src: show ? show.posterUrl : window.tempBgURL,
@@ -2590,52 +2574,21 @@ function (_React$Component) {
         src: preview ? preview.videoUrl : "",
         type: "video/mp4"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "thumbnail-player-desc thumbnail-grid"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
-        className: "thumbnail-right-nav thumbnail-side"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "preview-mute-btn right-side-btn",
-        onClick: this.toggleMute
-      }, muteBtn, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-circle preview-btn-bg"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "far fa-circle preview-btn-outline"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "right-side-placeholders right-side-btn"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "right-side-placeholders right-side-btn"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_mylist_button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        className: "thumbnail-player-desc thumbnail-grid",
+        onClick: this.launchWatch,
+        style: {
+          fontSize: "".concat(this.state.fontSize, "px")
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_thumbnail_player_desc__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        muted: this.state.muted,
+        toggleMute: this.toggleMute,
         listShowIds: listShowIds,
         currentUserId: this.props.currentUserId,
-        showId: show.id,
+        show: show,
+        genres: genres,
         addMyListVideo: this.props.addMyListVideo,
         removeMyListVideo: this.props.removeMyListVideo
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "thumbnail-play-icon thumbnail-play"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-play play-btn-triangle"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-circle play-btn-bg"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "far fa-circle play-btn-outline"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
-        className: "thumbnail-desc preview-info",
-        onClick: this.launchWatch
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: "preview-title"
-      }, show.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
-        className: "preview-details"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
-        className: "preview-maturity-rating"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, show.maturity_rating)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "preview-runtime"
-      }, _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](show.runtime))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
-        className: "preview-genres"
-      }, genresToShow)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "toggle-dropdown thumbnail-footer"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-chevron-down"
-      })))));
+      }))));
     }
   }]);
 
@@ -2693,6 +2646,119 @@ var mdp = function mdp(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_show_thumbnail__WEBPACK_IMPORTED_MODULE_3__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/show_thumbnail/thumbnail_player_desc.jsx":
+/*!**********************************************************************!*\
+  !*** ./frontend/components/show_thumbnail/thumbnail_player_desc.jsx ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util_date_time_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/date_time_util */ "./frontend/util/date_time_util.js");
+/* harmony import */ var _mylist_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mylist_button */ "./frontend/components/show_thumbnail/mylist_button.jsx");
+
+
+
+
+var ThumbnailPlayerDesc = function ThumbnailPlayerDesc(props) {
+  var show = props.show,
+      genres = props.genres,
+      currentUserId = props.currentUserId,
+      listShowIds = props.listShowIds,
+      muted = props.muted,
+      toggleMute = props.toggleMute,
+      addMyListVideo = props.addMyListVideo,
+      removeMyListVideo = props.removeMyListVideo;
+  var muteBtn = muted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-volume-mute button-symbol"
+  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-volume-up button-symbol"
+  }); // find and format the genre names to be displayed
+
+  var genresToShow = [];
+
+  if (show !== undefined && genres.length >= 1) {
+    genres.forEach(function (genre, idx) {
+      if (genre === undefined) {
+        return;
+      } // ignore of the genre tags TV Show, Movie, Recently Added or
+      // if there are more than 3 genres already
+
+
+      if (genre.name !== "TV Show" && genre.name !== "Movie" && genre.name !== "Recently Added" && genresToShow.length < 3) {
+        // append a "*" after each genre if they aren't the last one
+        if (genresToShow.length === 2) {
+          genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "genre-title",
+            key: genre.name + genre.id
+          }, genre.name));
+        } else {
+          genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            className: "genre-title",
+            key: genre.name + genre.id
+          }, genre.name));
+          genresToShow.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+            className: "genre-bullet",
+            key: "bullet " + idx
+          }, " ", "\u2022", " "));
+        }
+      }
+    });
+  }
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
+    className: "thumbnail-right-nav thumbnail-side"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "preview-mute-btn right-side-btn",
+    onClick: toggleMute
+  }, muteBtn, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-circle preview-btn-bg"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "far fa-circle preview-btn-outline"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "right-side-placeholders right-side-btn"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "right-side-placeholders right-side-btn"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_mylist_button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    listShowIds: listShowIds,
+    currentUserId: currentUserId,
+    showId: show.id,
+    addMyListVideo: addMyListVideo,
+    removeMyListVideo: removeMyListVideo
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "thumbnail-play-icon thumbnail-play"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-play play-btn-triangle"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-circle play-btn-bg"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "far fa-circle play-btn-outline"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
+    className: "thumbnail-desc preview-info"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+    className: "preview-title"
+  }, show.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+    className: "preview-details"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
+    className: "preview-maturity-rating"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, show.maturity_rating)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "preview-runtime"
+  }, _util_date_time_util__WEBPACK_IMPORTED_MODULE_1__["secondsToHoursMinutes"](show.runtime))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+    className: "preview-genres"
+  }, genresToShow)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "toggle-dropdown thumbnail-footer"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-chevron-down"
+  })));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ThumbnailPlayerDesc);
 
 /***/ }),
 

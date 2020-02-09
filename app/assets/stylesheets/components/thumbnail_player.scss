@@ -16,9 +16,9 @@
 
     .thumbnail-poster {
       position: absolute;
+      z-index: 100;
       height: 100%;
       width: 100%;
-      // z-index: 10;
       object-fit: fill;
       transition: opacity 0.1s, height 0.1s, width 0.1s;
       transition-delay: 0.1s;
@@ -51,21 +51,26 @@
 
   .thumbnail-player-desc {
     position: absolute;
+    z-index: 10;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     font-size: 5px;
+    opacity: 0;
+    transition: opacity 0.4s;
     cursor: pointer;
 
     .thumbnail-right-nav {
+      position: absolute;
+      right: 0;
+      z-index: 50;
+      height: 100%;
+      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      opacity: 1;
-      transition: opactiy 0.4s;
-      transition-timing-function: ease-in;
 
       .right-side-btn {
         background: none;
@@ -75,11 +80,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transform-origin: center;
         cursor: pointer;
-        width: auto;
-        font-size: 1.2em;
+        font-size: 1.1em;
       }
+
+      /* get rid of this later */
+      .right-side-placeholders {
+        height: 22px;
+      } /* get rid of this later */
     }
 
     .thumbnail-play-icon {
@@ -93,7 +101,7 @@
       background: none;
       outline: none;
       cursor: pointer;
-      font-size: 1em;
+      font-size: 0.8em;
     }
 
     .preview-info {
@@ -103,9 +111,7 @@
       height: 100%;
       width: 100%;
       padding-left: 7%;
-      transition: opactiy 0.4s;
-      transition-timing-function: ease-in;
-      pointer-events: none;
+      font-size: 0.9em;
       cursor: pointer;
 
       .preview-title {
@@ -141,7 +147,7 @@
       .preview-genres {
         display: flex;
         align-items: center;
-        font-size: 2em;
+        font-size: 1.9em;
         font-weight: 300;
 
         .genre-title {
@@ -167,6 +173,7 @@
       align-items: center;
       cursor: pointer;
       padding-bottom: 0.5em;
+      opacity: 0; // remove after adding dropdown functionality
 
       .fa-chevron-down {
         font-size: 1.5em;
@@ -175,91 +182,60 @@
   }
 }
 
+/* Hover/Animation Effects */
+
 .show-thumbnail:hover {
   .thumbnail-poster {
     opacity: 0;
-    transition: opacity 0.5s linear 1.5s, height 0.15s ease-in 0.6s,
-      width 0.2s ease-in 0.6s;
+    z-index: 0;
+    transition: opacity 0.5s, z-index 0.5s;
+    transition-delay: 1.5s;
+  }
+
+  .thumbnail-player,
+  .thumbnail-player-desc {
+    opacity: 1;
+    transition: opacity 1s;
+    transition-delay: 1s;
   }
 }
-
-.show-thumbnail:hover .preview-genres {
-  opacity: 1;
-  z-index: 1000;
-  transition: opacity 0.2s;
-  transition-delay: 2s;
-  transition-timing-function: ease-in;
-}
-
-// .show-thumbnail:hover .preview-fade-in {
-//   opacity: 1;
-//   z-index: 400;
-//   transition: opactiy 2s ease-in 1.5s, z-index 0.5s ease-in 1.5s;
-// }
-
-.show-thumbnail:hover .right-side-btn {
-  opacity: 1;
-  transition: opactiy 0.4s ease-in 3s;
-  transition-delay: 3s;
-}
-
-// .preview-info {
-//   opacity: 0;
-// }
-
-.show-thumbnail:hover .preview-info {
-  opacity: 1;
-  transition: opacity 0.2s;
-  transition-delay: 1s;
-  transition-timing-function: ease-in;
-}
-
-/* get rid of this later */
-.right-side-placeholders {
-  height: 22px;
-} /* get rid of this later */
 
 .right-side-btn:hover {
   transform: scale(1.2);
   transition: transform 0.3s;
+
+  .button-symbol {
+    color: white;
+  }
+
+  .preview-btn-bg {
+    opacity: 0.8;
+  }
+
+  .preview-btn-outline {
+    opacity: 1;
+  }
 }
 
-.right-side-btn:hover .button-symbol {
-  color: white;
-}
+// .preview-info, .thumbnail-play-icon, .thumbnail-right-nav {
+//   transition: opacity 0.4s ease-out;
+// }
 
-.right-side-btn:hover .preview-btn-outline {
-  opacity: 1;
-}
+// .preview-genres {
+//   transition: opacity 0.4s ease-out;
+// }
 
-.mylist-popup-desc {
-  position: absolute;
-  width: 30px;
-  height: 20px;
-  top: 10vh;
-  left: -15px;
-  z-index: 1000;
-  font-size: 8px;
-  text-transform: uppercase;
-  background-color: white;
-  color: black;
-}
-
-.preview-play-pause-icon {
-  position: relative;
-}
-
-.show-thumbnail:hover .thumbnail-player {
-  opacity: 1;
-  transition: opacity 1s;
-  transition-delay: 1s;
-}
-
-// .show-thumbnail:hover .toggle-dropdown {
-//   animation: dropdown;
-//   animation-duration: 0.5s;
-//   animation-delay: 2.3s;
-//   animation-fill-mode: forwards;
+// .mylist-popup-desc {
+//   position: absolute;
+//   width: 30px;
+//   height: 20px;
+//   top: 10vh;
+//   left: -15px;
+//   z-index: 1000;
+//   font-size: 8px;
+//   text-transform: uppercase;
+//   background-color: white;
+//   color: black;
 // }
 
 @keyframes dropdown {

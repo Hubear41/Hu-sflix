@@ -1,16 +1,15 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import * as DateTimeUTIL from "../../util/date_time_util";
-import MyListButton from "./mylist_button";
+import ThumbnailPlayerDesc from "./thumbnail_player_desc";
 
 class ShowThumbnail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      height: 0,
       muted: true,
       paused: true,
-      focus: true
+      focus: true,
+      fontSize: 5
     };
 
     this.videoPlayer = React.createRef();
@@ -20,13 +19,13 @@ class ShowThumbnail extends React.Component {
     this.toggleMute = this.toggleMute.bind(this);
     this.playVideo = this.playVideo.bind(this);
     this.pauseVideo = this.pauseVideo.bind(this);
+    this.handleWindowResize = this.handleWindowResize.bind(this);
   }
 
   componentDidMount() {
     this._isMounted = true;
 
-    const height = 160;
-    this.setState({ height });
+    window.addEventListener("resize", this.handleWindowResize);
   }
 
   componentWillUnmount() {
@@ -34,6 +33,21 @@ class ShowThumbnail extends React.Component {
 
     clearTimeout(this.videoTimeout);
     clearTimeout(this.timeout);
+    window.removeEventListener("resize", this.handleWindowResize);
+  }
+
+  handleWindowResize(e) {
+    const windowSize = e.target.innerWidth;
+
+    if (windowSize <= 200) {
+      this.setState({ fontSize: 4.5 });
+    } else if (windowSize >= 1400) {
+      this.setState({ fontSize: 5.5 });
+    } else {
+      const newSize = 4.5 + ((windowSize - 200) % 300) / 300;
+
+      this.setState({ fontSize: newSize });
+    }
   }
 
   launchWatch() {
@@ -57,6 +71,7 @@ class ShowThumbnail extends React.Component {
   }
 
   toggleMute(e) {
+    e.stopPropagation();
     const videoEl = this.videoPlayer.current;
 
     if (videoEl.muted) {
@@ -104,47 +119,6 @@ class ShowThumbnail extends React.Component {
 
   render() {
     const { show, preview, genres, listShowIds } = this.props;
-    const genresToShow = [];
-    const muteBtn = this.state.muted ? (
-      <i className="fas fa-volume-mute button-symbol"></i>
-    ) : (
-      <i className="fas fa-volume-up button-symbol"></i>
-    );
-
-    if (show !== undefined && genres.length >= 1) {
-      genres.forEach((genre, idx) => {
-        if (genre === undefined) {
-          return;
-        }
-
-        if (
-          genre.name !== "TV Show" &&
-          genre.name !== "Movie" &&
-          genre.name !== "Recently Added" &&
-          genresToShow.length < 3
-        ) {
-          if (genresToShow.length === 2) {
-            genresToShow.push(
-              <span className="genre-title" key={genre.name + genre.id}>
-                {genre.name}
-              </span>
-            );
-          } else {
-            genresToShow.push(
-              <span className="genre-title" key={genre.name + genre.id}>
-                {genre.name}
-              </span>
-            );
-            genresToShow.push(
-              <strong className="genre-bullet" key={"bullet " + idx}>
-                {" "}
-                {"\u2022"}{" "}
-              </strong>
-            );
-          }
-        }
-      });
-    }
 
     return (
       <>
@@ -154,7 +128,7 @@ class ShowThumbnail extends React.Component {
           onMouseEnter={this.playVideo}
           onMouseLeave={this.pauseVideo}
         >
-          <figure className="thumbnail-visual" onMouseLeave={this.pauseVideo}>
+          <figure className="thumbnail-visual">
             <img
               className="thumbnail-poster"
               src={show ? show.posterUrl : window.tempBgURL}
@@ -162,6 +136,7 @@ class ShowThumbnail extends React.Component {
               onClick={this.launchWatch}
               onMouseEnter={this.playVideo}
             ></img>
+
             <video
               className="thumbnail-player"
               ref={this.videoPlayer}
@@ -172,55 +147,21 @@ class ShowThumbnail extends React.Component {
             </video>
           </figure>
 
-          <div className="thumbnail-player-desc thumbnail-grid">
-            <aside className="thumbnail-right-nav thumbnail-side">
-              <button
-                className="preview-mute-btn right-side-btn"
-                onClick={this.toggleMute}
-              >
-                {muteBtn}
-                <i className="fas fa-circle preview-btn-bg"></i>
-                <i className="far fa-circle preview-btn-outline"></i>
-              </button>
-              <div className="right-side-placeholders right-side-btn"></div>
-              <div className="right-side-placeholders right-side-btn"></div>
-
-              <MyListButton
-                listShowIds={listShowIds}
-                currentUserId={this.props.currentUserId}
-                showId={show.id}
-                addMyListVideo={this.props.addMyListVideo}
-                removeMyListVideo={this.props.removeMyListVideo}
-              />
-            </aside>
-
-            <button className="thumbnail-play-icon thumbnail-play">
-              <i className="fas fa-play play-btn-triangle"></i>
-              <i className="fas fa-circle play-btn-bg"></i>
-              <i className="far fa-circle play-btn-outline"></i>
-            </button>
-
-            <figcaption
-              className="thumbnail-desc preview-info"
-              onClick={this.launchWatch}
-            >
-              <h5 className="preview-title">{show.title}</h5>
-
-              <article className="preview-details">
-                <h6 className="preview-maturity-rating">
-                  <span>{show.maturity_rating}</span>
-                </h6>
-                <span className="preview-runtime">
-                  {DateTimeUTIL.secondsToHoursMinutes(show.runtime)}
-                </span>
-              </article>
-
-              <article className="preview-genres">{genresToShow}</article>
-            </figcaption>
-
-            <button className="toggle-dropdown thumbnail-footer">
-              <i className="fas fa-chevron-down"></i>
-            </button>
+          <div
+            className="thumbnail-player-desc thumbnail-grid"
+            onClick={this.launchWatch}
+            style={{ fontSize: `${this.state.fontSize}px` }}
+          >
+            <ThumbnailPlayerDesc
+              muted={this.state.muted}
+              toggleMute={this.toggleMute}
+              listShowIds={listShowIds}
+              currentUserId={this.props.currentUserId}
+              show={show}
+              genres={genres}
+              addMyListVideo={this.props.addMyListVideo}
+              removeMyListVideo={this.props.removeMyListVideo}
+            />
           </div>
         </li>
       </>
