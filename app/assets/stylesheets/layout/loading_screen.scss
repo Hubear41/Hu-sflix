@@ -1,6 +1,7 @@
 @import "../base/show_row_mixin.scss";
 
 $breakpoints: 200px, 500px, 800px, 1100px, 1400px;
+
 @each $breakpoint in $breakpoints {
   @media only screen and (min-width: $breakpoint) {
     .loading-thumb {
@@ -38,8 +39,6 @@ $breakpoints: 200px, 500px, 800px, 1100px, 1400px;
 }
 
 .loading-thumb {
-  //   width: 18vw;
-  //   height: 12vw;
   margin-right: 10px;
 }
 
