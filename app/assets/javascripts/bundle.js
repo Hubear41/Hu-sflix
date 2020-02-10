@@ -2416,6 +2416,8 @@ function (_React$Component) {
     _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
     _this.playVideo = _this.playVideo.bind(_assertThisInitialized(_this));
     _this.pauseVideo = _this.pauseVideo.bind(_assertThisInitialized(_this));
+    _this.handleMouseEnter = _this.handleMouseEnter.bind(_assertThisInitialized(_this));
+    _this.handleMouseLeave = _this.handleMouseLeave.bind(_assertThisInitialized(_this));
     _this.handleWindowResize = _this.handleWindowResize.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -2496,6 +2498,62 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "handleMouseEnter",
+    value: function handleMouseEnter(e) {
+      this.playVideo();
+
+      this._adjustRowAnimation();
+    }
+  }, {
+    key: "handleMouseLeave",
+    value: function handleMouseLeave(e) {
+      var rowRef = this.props.rowRef;
+      this.pauseVideo();
+      rowRef.current.style.removeProperty("transform");
+    }
+  }, {
+    key: "_adjustRowAnimation",
+    value: function _adjustRowAnimation() {
+      var _this$props = this.props,
+          rowRef = _this$props.rowRef,
+          thumbnailNum = _this$props.thumbnailNum;
+
+      var _calcNumOfTiles = function _calcNumOfTiles(width) {
+        if (width < 500) {
+          return 2;
+        } else if (width < 800) {
+          return 3;
+        } else if (width < 1100) {
+          return 4;
+        } else if (width < 1400) {
+          return 5;
+        } else {
+          return 6;
+        }
+      };
+
+      var numOfTiles = _calcNumOfTiles(window.innerWidth);
+
+      var rightMostTile = function rightMostTile() {
+        rowRef.current.style.transform = "translateX(0)";
+      };
+
+      var leftMostTile = function leftMostTile() {
+        var padding = window.innerWidth >= 1400 ? 60 : 0.05 * window.innerWidth;
+        var moveLeftDist = -(window.innerWidth - padding * 2) / numOfTiles;
+        debugger;
+        rowRef.current.style.transform = "translateX(".concat(moveLeftDist, "px)");
+      };
+
+      if (thumbnailNum % numOfTiles === 0) {
+        console.log("rightMost");
+        return rightMostTile();
+      } else if (thumbnailNum % numOfTiles === numOfTiles - 1) {
+        console.log("leftMost");
+        return leftMostTile();
+      }
+    }
+  }, {
     key: "playVideo",
     value: function playVideo() {
       var _this2 = this;
@@ -2539,16 +2597,16 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          show = _this$props.show,
-          preview = _this$props.preview,
-          genres = _this$props.genres,
-          listShowIds = _this$props.listShowIds;
+      var _this$props2 = this.props,
+          show = _this$props2.show,
+          preview = _this$props2.preview,
+          genres = _this$props2.genres,
+          listShowIds = _this$props2.listShowIds;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "show-thumbnail",
         ref: this.wrapper,
-        onMouseEnter: this.playVideo,
-        onMouseLeave: this.pauseVideo
+        onMouseEnter: this.handleMouseEnter,
+        onMouseLeave: this.handleMouseLeave
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "thumbnail-visual"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -3562,6 +3620,7 @@ function (_React$Component) {
       currentPage: 0,
       rowWidth: window.innerWidth
     };
+    _this.rowRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.moveToSliderPage = _this.moveToSliderPage.bind(_assertThisInitialized(_this));
     _this.handleResize = _this.handleResize.bind(_assertThisInitialized(_this));
     return _this;
@@ -3581,7 +3640,7 @@ function (_React$Component) {
     }
   }, {
     key: "createShowRowItem",
-    value: function createShowRowItem(show, rowNum, videos, genres) {
+    value: function createShowRowItem(show, rowNum, videos, genres, idx) {
       if (!show) {
         return null;
       }
@@ -3593,9 +3652,11 @@ function (_React$Component) {
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_show_thumbnail_show_thumbnail_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         key: "".concat(show.id).concat(rowNum),
+        thumbnailNum: idx,
         show: show,
         preview: previewVideo,
-        genres: genreList
+        genres: genreList,
+        rowRef: this.rowRef
       });
     }
   }, {
@@ -3670,14 +3731,15 @@ function (_React$Component) {
       // const pageIndicators =
       //   rowWidth > 0 ? this.createPageIndicators(numPages) : null;
 
-      shows.forEach(function (show) {
-        showList.push(_this3.createShowRowItem(show, rowNum, videos, genres));
+      shows.forEach(function (show, idx) {
+        showList.push(_this3.createShowRowItem(show, rowNum, videos, genres, idx));
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         id: "row-".concat(rowNum),
         className: "show-rows-wrapper"
       }, rowHeader, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "show-row"
+        className: "show-row",
+        ref: this.rowRef
       }, showList));
     }
   }]);
@@ -3685,52 +3747,7 @@ function (_React$Component) {
   return ShowRow;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (ShowRow); // class ShowRow extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.createShowRowItem = this.createShowRowItem.bind(this);
-//     this.playTimeout;
-//   }
-//   createShowRowItem(show) {
-//     if (!show) {
-//       return null;
-//     }
-//     const { rowNum, videos, genres } = this.props;
-//     const genreList = [];
-//     const previewVideo =
-//       show.show_type === "FEATURE"
-//         ? videos[show.movie_id]
-//         : videos[show.episode_ids[0]];
-//     show.genre_ids.forEach(id => {
-//       genreList.push(genres[id]);
-//     });
-//     return (
-//       <ShowPreviewPlayer
-//         key={`${show.id}${rowNum}`}
-//         show={show}
-//         preview={previewVideo}
-//         genres={genreList}
-//         Timeout={this.playTimeout}
-//       />
-//     );
-//   }
-//   render() {
-//     const { shows, rowNum, genreName, galleryType } = this.props;
-//     const showList = [];
-//     const rowHeader = galleryType !== "SEARCH" ? <h2>{genreName}</h2> : null;
-//     shows.forEach(show => {
-//       showList.push(this.createShowRowItem(show));
-//     });
-//     return (
-//       <li className={`row-${rowNum}-wrapper show-rows-wrapper`}>
-//         {rowHeader}
-//         <figure className={`row-${rowNum} show-row`}>{showList}</figure>
-//         {/* <ShowDetail  /> */}
-//       </li>
-//     );
-//   }
-// }
-// export default ShowRow;
+/* harmony default export */ __webpack_exports__["default"] = (ShowRow);
 
 /***/ }),
 
