@@ -1,7 +1,7 @@
 import React from "react";
 import ShowRows from "./show_rows";
 import Footer from "../footer/footer";
-import BigPreviewContainer from "../banner_video/banner_video_container";
+import BannerVideo from "../banner_video/banner_video_container";
 
 class ShowGallery extends React.Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class ShowGallery extends React.Component {
         .then(() => {
           setTimeout(() => {
             this.props.stopLoading();
-          }, 500);
+          }, 1000);
         })
         .fail(() => {
           this.props.stopLoading();
@@ -242,7 +242,10 @@ class ShowGallery extends React.Component {
     return (
       <section className="show-gallery-index-wrapper">
         {galleryType === "WITH_BANNER" && previewShow ? (
-          <BigPreviewContainer show={previewShow} />
+          <BannerVideo
+            show={previewShow}
+            // stopLoading={this.props.stopLoading}
+          />
         ) : null}
 
         <section className="gallery-index-wrapper" style={galleryStyle}>

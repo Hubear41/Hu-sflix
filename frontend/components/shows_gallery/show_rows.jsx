@@ -10,6 +10,7 @@ class ShowRow extends React.Component {
       rowWidth: window.innerWidth
     };
 
+    this.rowRef = React.createRef();
     this.moveToSliderPage = this.moveToSliderPage.bind(this);
     this.handleResize = this.handleResize.bind(this);
   }
@@ -24,7 +25,7 @@ class ShowRow extends React.Component {
     window.removeEventListener("resize", this.handleResize);
   }
 
-  createShowRowItem(show, rowNum, videos, genres) {
+  createShowRowItem(show, rowNum, videos, genres, idx) {
     if (!show) {
       return null;
     }
@@ -39,9 +40,11 @@ class ShowRow extends React.Component {
     return (
       <ShowThumbnail
         key={`${show.id}${rowNum}`}
+        thumbnailNum={idx}
         show={show}
         preview={previewVideo}
         genres={genreList}
+        rowRef={this.rowRef}
       />
     );
   }
@@ -114,8 +117,8 @@ class ShowRow extends React.Component {
     // const pageIndicators =
     //   rowWidth > 0 ? this.createPageIndicators(numPages) : null;
 
-    shows.forEach(show => {
-      showList.push(this.createShowRowItem(show, rowNum, videos, genres));
+    shows.forEach((show, idx) => {
+      showList.push(this.createShowRowItem(show, rowNum, videos, genres, idx));
     });
 
     return (
@@ -126,7 +129,9 @@ class ShowRow extends React.Component {
           <ul className="slider-page-indicator">{pageIndicators}</ul>
         ) : null} */}
 
-        <ul className="show-row">{showList}</ul>
+        <ul className="show-row" ref={this.rowRef}>
+          {showList}
+        </ul>
         {/* <div
           className="next-page-button"
           onClick={this.moveToSliderPage(currentPage + 1)}
@@ -138,59 +143,3 @@ class ShowRow extends React.Component {
 }
 
 export default ShowRow;
-
-// class ShowRow extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.createShowRowItem = this.createShowRowItem.bind(this);
-//     this.playTimeout;
-//   }
-
-//   createShowRowItem(show) {
-//     if (!show) {
-//       return null;
-//     }
-
-//     const { rowNum, videos, genres } = this.props;
-//     const genreList = [];
-//     const previewVideo =
-//       show.show_type === "FEATURE"
-//         ? videos[show.movie_id]
-//         : videos[show.episode_ids[0]];
-
-//     show.genre_ids.forEach(id => {
-//       genreList.push(genres[id]);
-//     });
-//     return (
-//       <ShowPreviewPlayer
-//         key={`${show.id}${rowNum}`}
-//         show={show}
-//         preview={previewVideo}
-//         genres={genreList}
-//         Timeout={this.playTimeout}
-//       />
-//     );
-//   }
-
-//   render() {
-//     const { shows, rowNum, genreName, galleryType } = this.props;
-//     const showList = [];
-
-//     const rowHeader = galleryType !== "SEARCH" ? <h2>{genreName}</h2> : null;
-
-//     shows.forEach(show => {
-//       showList.push(this.createShowRowItem(show));
-//     });
-
-//     return (
-//       <li className={`row-${rowNum}-wrapper show-rows-wrapper`}>
-//         {rowHeader}
-
-//         <figure className={`row-${rowNum} show-row`}>{showList}</figure>
-//         {/* <ShowDetail  /> */}
-//       </li>
-//     );
-//   }
-// }
-
-// export default ShowRow;

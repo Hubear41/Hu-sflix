@@ -98,6 +98,7 @@ class BannerVideo extends React.Component {
   }
 
   videoReady() {
+    // this.props.stopLoading();
     this.timeout = setTimeout(() => this.revealVideo(), 2000);
   }
 

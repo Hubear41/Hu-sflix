@@ -19,6 +19,8 @@ class ShowThumbnail extends React.Component {
     this.toggleMute = this.toggleMute.bind(this);
     this.playVideo = this.playVideo.bind(this);
     this.pauseVideo = this.pauseVideo.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleWindowResize = this.handleWindowResize.bind(this);
   }
 
@@ -88,6 +90,60 @@ class ShowThumbnail extends React.Component {
     }
   }
 
+  handleMouseEnter(e) {
+    this.playVideo();
+
+    this._adjustRowAnimation();
+  }
+
+  handleMouseLeave(e) {
+    const { rowRef } = this.props;
+
+    this.pauseVideo();
+    rowRef.current.style.removeProperty("transform");
+  }
+
+  _adjustRowAnimation() {
+    const { rowRef, thumbnailNum } = this.props;
+
+    const _calcNumOfTiles = width => {
+      if (width < 500) {
+        return 2;
+      } else if (width < 800) {
+        return 3;
+      } else if (width < 1100) {
+        return 4;
+      } else if (width < 1400) {
+        return 5;
+      } else {
+        return 6;
+      }
+    };
+
+    const numOfTiles = _calcNumOfTiles(window.innerWidth);
+
+    const rightMostTile = () => {
+      rowRef.current.style.transform = "translateX(0)";
+    };
+
+    const leftMostTile = () => {
+      const padding = window.innerWidth >= 1400 ? 60 : 0.05 * window.innerWidth;
+
+      const moveLeftDist = -(window.innerWidth - padding * 2) / numOfTiles;
+
+      debugger;
+      rowRef.current.style.transform = `translateX(${moveLeftDist}px)`;
+    };
+
+    if (thumbnailNum % numOfTiles === 0) {
+      console.log("rightMost");
+      return rightMostTile();
+    } else if (thumbnailNum % numOfTiles === numOfTiles - 1) {
+      console.log("leftMost");
+      return leftMostTile();
+    }
+  }
+
   playVideo() {
     if (this.videoPlayer.current === null || this.state.paused === false) {
       return;
@@ -130,8 +186,8 @@ class ShowThumbnail extends React.Component {
         <li
           className="show-thumbnail"
           ref={this.wrapper}
-          onMouseEnter={this.playVideo}
-          onMouseLeave={this.pauseVideo}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
         >
           <figure className="thumbnail-visual">
             <img
