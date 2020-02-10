@@ -234,24 +234,18 @@ class BannerVideo extends React.Component {
     }
 
     return (
-      <figure className="big-video-preview-wrapper" ref={this.entirePreview}>
-        <figure className="big-preview-filter"></figure>
-        <section className="big-video-poster">
+      <div className="banner-video-container" ref={this.entirePreview}>
+        <figure className="banner-presentation-container">
           <img
             src={show && show.posterUrl ? show.posterUrl : window.tempBgURL}
-            className={`preview-poster ${imageAnimation}`}
+            className={`banner-poster ${imageAnimation}`}
             ref={this.poster}
           ></img>
-          <figure className={`poster-black-bg ${blackAnimation}`}></figure>
-        </section>
 
-        <section className="video-el-wrapper">
-          <figure className="big-preview-filter"></figure>
-          <figure className="big-video-bg"></figure>
           <video
             controls={true}
             muted
-            className="big-video"
+            className="banner-video"
             ref={this.videoPlayer}
             onCanPlayThrough={this.videoReady}
             onEnded={this.videoEnded}
@@ -260,14 +254,14 @@ class BannerVideo extends React.Component {
               <source src={video.videoUrl} type="video/mp4" />
             ) : null}
           </video>
-        </section>
+        </figure>
 
-        <article className="big-preview-left-controls">
-          <article className="big-preview-show-title">
+        <article className="banner-description-container">
+          <article className="banner-show-title">
             <h3>
               <strong>Hu'sflix</strong> Original
             </h3>
-            <article className="title-wrapper">
+            <article className="title-container">
               <h1>{show.title}</h1>
             </article>
           </article>
@@ -281,18 +275,15 @@ class BannerVideo extends React.Component {
             </button>
           </div>
 
-          <p className={`big-preview-show-tagline ${imageAnimation}`}>
-            {show.tagline}
-          </p>
+          <p className={`banner-tagline ${imageAnimation}`}>{show.tagline}</p>
         </article>
 
-        <figure className="big-preview-right-content">
-          <article className="preview-maturity-wrapper">
-            <figure className="maturity-bg"></figure>
-            <h6>{show.maturity_rating}</h6>
-          </article>
+        <figure className="banner-right-button">
+          <span className="maturity-rating">
+            <span>{show.maturity_rating}</span>
+          </span>
           <button
-            className="big-preview-video-controls"
+            className="banner-replay-mute-btn"
             style={iconStyle}
             onClick={buttonFunc}
           >
@@ -303,7 +294,7 @@ class BannerVideo extends React.Component {
             </div>
           </button>
         </figure>
-      </figure>
+      </div>
     );
   }
 }

@@ -102,31 +102,35 @@ class ShowRow extends React.Component {
     const rowHeader =
       galleryType === "WITH_BANNER" ? <h2>{genreName}</h2> : null;
 
-    const numShowsPerRow = Math.round(rowWidth / 300);
-    const numPages = Math.ceil(shows.length / numShowsPerRow);
+    // const numShowsPerRow = Math.round(rowWidth / 300);
+    // const numPages = Math.ceil(shows.length / numShowsPerRow);
 
-    const startingIdx = numShowsPerRow * currentPage;
-    for (let idx = startingIdx; showList.length <= numShowsPerRow; idx++) {
-      const show = shows[idx];
+    // const startingIdx = numShowsPerRow * currentPage;
+    // for (let idx = startingIdx; showList.length <= numShowsPerRow; idx++) {
+    //   const show = shows[idx];
+    //   showList.push(this.createShowRowItem(show, rowNum, videos, genres));
+    // }
+
+    // const pageIndicators =
+    //   rowWidth > 0 ? this.createPageIndicators(numPages) : null;
+
+    shows.forEach(show => {
       showList.push(this.createShowRowItem(show, rowNum, videos, genres));
-    }
-
-    const pageIndicators =
-      rowWidth > 0 ? this.createPageIndicators(numPages) : null;
+    });
 
     return (
-      <li className={`row-${rowNum}-wrapper show-rows-wrapper`}>
+      <li id={`row-${rowNum}`} className="show-rows-wrapper">
         {rowHeader}
 
-        {numPages > 1 ? (
+        {/* {numPages > 1 ? (
           <ul className="slider-page-indicator">{pageIndicators}</ul>
-        ) : null}
+        ) : null} */}
 
-        <figure className={`row-${rowNum} show-row`}>{showList}</figure>
-        <div
+        <ul className="show-row">{showList}</ul>
+        {/* <div
           className="next-page-button"
           onClick={this.moveToSliderPage(currentPage + 1)}
-        ></div>
+        ></div> */}
         {/* <ShowDetail  /> */}
       </li>
     );
@@ -134,3 +138,59 @@ class ShowRow extends React.Component {
 }
 
 export default ShowRow;
+
+// class ShowRow extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.createShowRowItem = this.createShowRowItem.bind(this);
+//     this.playTimeout;
+//   }
+
+//   createShowRowItem(show) {
+//     if (!show) {
+//       return null;
+//     }
+
+//     const { rowNum, videos, genres } = this.props;
+//     const genreList = [];
+//     const previewVideo =
+//       show.show_type === "FEATURE"
+//         ? videos[show.movie_id]
+//         : videos[show.episode_ids[0]];
+
+//     show.genre_ids.forEach(id => {
+//       genreList.push(genres[id]);
+//     });
+//     return (
+//       <ShowPreviewPlayer
+//         key={`${show.id}${rowNum}`}
+//         show={show}
+//         preview={previewVideo}
+//         genres={genreList}
+//         Timeout={this.playTimeout}
+//       />
+//     );
+//   }
+
+//   render() {
+//     const { shows, rowNum, genreName, galleryType } = this.props;
+//     const showList = [];
+
+//     const rowHeader = galleryType !== "SEARCH" ? <h2>{genreName}</h2> : null;
+
+//     shows.forEach(show => {
+//       showList.push(this.createShowRowItem(show));
+//     });
+
+//     return (
+//       <li className={`row-${rowNum}-wrapper show-rows-wrapper`}>
+//         {rowHeader}
+
+//         <figure className={`row-${rowNum} show-row`}>{showList}</figure>
+//         {/* <ShowDetail  /> */}
+//       </li>
+//     );
+//   }
+// }
+
+// export default ShowRow;

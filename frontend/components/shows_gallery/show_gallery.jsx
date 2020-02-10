@@ -235,8 +235,7 @@ class ShowGallery extends React.Component {
       showRowsList = showRowsList.concat(otherRows);
     }
 
-    const galleryStyle =
-      galleryType === "WITH_BANNER" ? { top: "75vmin" } : { top: "12vh" };
+    const galleryStyle = galleryType === "WITH_BANNER" ? null : { top: "12vh" };
     const marginStyle =
       galleryType === "MY_LIST" ? { paddingTop: "5vh" } : null;
 
@@ -258,8 +257,6 @@ class ShowGallery extends React.Component {
           >
             {showRowsList}
           </ul>
-
-          {/* <figure className="index-bg"></figure> */}
 
           <footer className="gallery-footer">
             <Footer />

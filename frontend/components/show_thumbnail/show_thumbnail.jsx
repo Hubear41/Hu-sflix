@@ -1,16 +1,15 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import * as DateTimeUTIL from "../../util/date_time_util";
-import MyListButton from "./mylist_button";
+import ThumbnailPlayerDesc from "./thumbnail_player_desc";
 
 class ShowThumbnail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      height: 0,
       muted: true,
       paused: true,
-      focus: true
+      focus: true,
+      fontSize: 4
     };
 
     this.videoPlayer = React.createRef();
@@ -20,13 +19,14 @@ class ShowThumbnail extends React.Component {
     this.toggleMute = this.toggleMute.bind(this);
     this.playVideo = this.playVideo.bind(this);
     this.pauseVideo = this.pauseVideo.bind(this);
+    this.handleWindowResize = this.handleWindowResize.bind(this);
   }
 
   componentDidMount() {
     this._isMounted = true;
 
-    const height = 160;
-    this.setState({ height });
+    window.addEventListener("resize", this.handleWindowResize);
+    this.setState({ fontSize: this._calculateFontSize(window.innerWidth) });
   }
 
   componentWillUnmount() {
@@ -34,6 +34,25 @@ class ShowThumbnail extends React.Component {
 
     clearTimeout(this.videoTimeout);
     clearTimeout(this.timeout);
+    window.removeEventListener("resize", this.handleWindowResize);
+  }
+
+  handleWindowResize(e) {
+    const windowSize = e.target.innerWidth;
+
+    this.setState({ fontSize: this._calculateFontSize(windowSize) });
+  }
+
+  _calculateFontSize(windowSize) {
+    if (windowSize <= 200) {
+      return 3.5;
+    } else if (windowSize >= 1400) {
+      return 4.5;
+    } else {
+      const newSize = 3.5 + ((windowSize - 200) % 300) / 300;
+
+      return newSize;
+    }
   }
 
   launchWatch() {
@@ -57,6 +76,7 @@ class ShowThumbnail extends React.Component {
   }
 
   toggleMute(e) {
+    e.stopPropagation();
     const videoEl = this.videoPlayer.current;
 
     if (videoEl.muted) {
@@ -94,9 +114,6 @@ class ShowThumbnail extends React.Component {
     }
 
     const videoEl = this.videoPlayer.current;
-    const wrapperEl = this.wrapper.current;
-    wrapperEl.classList.add("out");
-
     videoEl.pause();
     this.props.endPreview();
 
@@ -107,139 +124,51 @@ class ShowThumbnail extends React.Component {
 
   render() {
     const { show, preview, genres, listShowIds } = this.props;
-    const genresToShow = [];
-    const muteBtn = this.state.muted ? (
-      <i className="fas fa-volume-mute button-symbol"></i>
-    ) : (
-      <i className="fas fa-volume-up button-symbol"></i>
-    );
-
-    if (show !== undefined && genres.length >= 1) {
-      genres.forEach((genre, idx) => {
-        if (genre === undefined) {
-          return;
-        }
-
-        if (
-          genre.name !== "TV Show" &&
-          genre.name !== "Movie" &&
-          genre.name !== "Recently Added" &&
-          genresToShow.length < 3
-        ) {
-          if (genresToShow.length === 2) {
-            genresToShow.push(
-              <span className="genre-title" key={genre.name + genre.id}>
-                {genre.name}
-              </span>
-            );
-          } else {
-            genresToShow.push(
-              <span className="genre-title" key={genre.name + genre.id}>
-                {genre.name}
-              </span>
-            );
-            genresToShow.push(
-              <strong className="genre-bullet" key={"bullet " + idx}>
-                {" "}
-                {"\u2022"}{" "}
-              </strong>
-            );
-          }
-        }
-      });
-    }
 
     return (
       <>
-        <section
-          id="show-peek-preview-wrapper"
-          className={`show-row-item-${show.id}`}
+        <li
+          className="show-thumbnail"
           ref={this.wrapper}
           onMouseEnter={this.playVideo}
           onMouseLeave={this.pauseVideo}
         >
-          <img
-            className="show-title-card"
-            src={show ? show.posterUrl : window.tempBgURL}
-            alt={show.title}
-            onClick={this.launchWatch}
-            onMouseEnter={this.playVideo}
-          ></img>
-
-          <figure
-            className="show-peek-preview-player preview-fade-in"
-            onMouseLeave={this.pauseVideo}
-          >
-            <figure className="preview-video-player preview-fade-in">
-              <figure
-                className="preview-clickable-area"
-                onClick={this.launchWatch}
-              ></figure>
-              <video
-                id={`show-${show.id} preview-video`}
-                ref={this.videoPlayer}
-                onClick={this.launchWatch}
-                muted="muted"
-              >
-                <source
-                  src={preview ? preview.videoUrl : ""}
-                  type="video/mp4"
-                />
-              </video>
-            </figure>
-
-            <aside className="preview-player-right-side-btns preview-fade-in">
-              <button
-                className="preview-mute-btn right-side-btn preview-fade-in"
-                onClick={this.toggleMute}
-              >
-                {muteBtn}
-                <i className="fas fa-circle preview-btn-bg"></i>
-                <i className="far fa-circle preview-btn-outline"></i>
-              </button>
-              <div className="right-side-placeholders right-side-btn"></div>
-              <div className="right-side-placeholders right-side-btn"></div>
-
-              <MyListButton
-                listShowIds={listShowIds}
-                currentUserId={this.props.currentUserId}
-                showId={show.id}
-                addMyListVideo={this.props.addMyListVideo}
-                removeMyListVideo={this.props.removeMyListVideo}
-              />
-            </aside>
-
-            <figcaption
-              className="preview-video-info-desc preview-fade-in"
+          <figure className="thumbnail-visual">
+            <img
+              className="thumbnail-poster"
+              src={show ? show.posterUrl : window.tempBgURL}
+              alt={show.title}
               onClick={this.launchWatch}
+              onMouseEnter={this.playVideo}
+            ></img>
+
+            <video
+              className="thumbnail-player"
+              ref={this.videoPlayer}
+              onClick={this.launchWatch}
+              muted="muted"
             >
-              <button className="preview-play-btn preview-fade-in">
-                <i className="fas fa-play play-btn-triangle"></i>
-                <i className="fas fa-circle play-btn-bg"></i>
-                <i className="far fa-circle play-btn-outline"></i>
-              </button>
-
-              <h5 className="preview-show-title preview-fade-in">
-                {show.title}
-              </h5>
-
-              <article className="preview-details preview-fade-in">
-                <span className="show-maturity-rating">
-                  {show.maturity_rating}
-                </span>
-                <span>{DateTimeUTIL.secondsToHoursMinutes(show.runtime)}</span>
-              </article>
-
-              <article className="preview-genres preview-fade-in">
-                {genresToShow}
-              </article>
-            </figcaption>
-
-            <button className="toggle-show-detail-btn">
-              <i className="fas fa-chevron-down"></i>
-            </button>
+              <source src={preview ? preview.videoUrl : ""} type="video/mp4" />
+            </video>
           </figure>
-        </section>
+
+          <div
+            className="thumbnail-player-desc thumbnail-grid"
+            onClick={this.launchWatch}
+            style={{ fontSize: `${this.state.fontSize}px` }}
+          >
+            <ThumbnailPlayerDesc
+              muted={this.state.muted}
+              toggleMute={this.toggleMute}
+              listShowIds={listShowIds}
+              currentUserId={this.props.currentUserId}
+              show={show}
+              genres={genres}
+              addMyListVideo={this.props.addMyListVideo}
+              removeMyListVideo={this.props.removeMyListVideo}
+            />
+          </div>
+        </li>
       </>
     );
   }
