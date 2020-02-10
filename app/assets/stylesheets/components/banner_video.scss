@@ -1,6 +1,8 @@
 .banner-video-container {
   background-color: #212020;
   position: relative;
+  font-family: "Roboto", sans-serif;
+  // font-size: 14px;
 
   .banner-presentation-container {
     display: flex;
@@ -27,13 +29,12 @@
     bottom: 35%;
     right: 0;
     z-index: 100;
-    font-size: 14px;
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
+    font-size: 1.2em;
 
     .maturity-rating {
-      font-family: "Roboto", sans-serif;
       padding: 0.5vw 3.5vw 0.5vw 0.8vw;
       background: rgba(white, 0.1);
       border-left: 3px solid #dcdcdc;
@@ -111,7 +112,6 @@
     z-index: 90;
     display: flex;
     flex-direction: column;
-    font-family: "Roboto", sans-serif;
 
     .banner-show-title {
       font-size: 2vw;
@@ -156,7 +156,7 @@
         margin-right: 1em;
 
         color: white;
-        font-size: 0.8em;
+        font-size: 1.2em;
         font-weight: 700;
 
         i {
@@ -176,10 +176,53 @@
       margin-top: 2em;
       width: 40vw;
 
-      font-size: 0.9em;
+      font-size: 1.2em;
       font-weight: 300;
       line-height: 1.5em;
     }
+  }
+
+  /* Vignettes */
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 60;
+  }
+
+  &::before {
+    top: 0;
+    left: 0;
+
+    height: 100%;
+    width: 60vw;
+
+    background: linear-gradient(to right, rgba(#141414, 0.8), rgba(#141414, 0));
+  }
+
+  &::after {
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 30%;
+
+    background: linear-gradient(to top, rgba(#141414, 1), rgba(#141414, 0));
+  }
+}
+
+/* Media Queries */
+
+@media only screen and (min-width: 800px) {
+  .banner-video-container {
+    font-size: 1vw;
+  }
+}
+
+@media only screen and (min-width: 1100px) {
+  .banner-video-container {
+    font-size: 13px;
   }
 }
 

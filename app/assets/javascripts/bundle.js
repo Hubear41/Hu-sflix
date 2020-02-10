@@ -3391,9 +3391,7 @@ function (_React$Component) {
         showRowsList = showRowsList.concat(otherRows);
       }
 
-      var galleryStyle = galleryType === "WITH_BANNER" ? {
-        top: "75vmin"
-      } : {
+      var galleryStyle = galleryType === "WITH_BANNER" ? null : {
         top: "12vh"
       };
       var marginStyle = galleryType === "MY_LIST" ? {
