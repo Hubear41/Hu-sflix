@@ -256,12 +256,12 @@ class BannerVideo extends React.Component {
           </video>
         </figure>
 
-        {/* <article className="big-preview-left-controls">
-          <article className="big-preview-show-title">
+        <article className="banner-description-container">
+          <article className="banner-show-title">
             <h3>
               <strong>Hu'sflix</strong> Original
             </h3>
-            <article className="title-wrapper">
+            <article className="title-container">
               <h1>{show.title}</h1>
             </article>
           </article>
@@ -275,10 +275,8 @@ class BannerVideo extends React.Component {
             </button>
           </div>
 
-          <p className={`big-preview-show-tagline ${imageAnimation}`}>
-            {show.tagline}
-          </p>
-        </article> */}
+          <p className={`banner-tagline ${imageAnimation}`}>{show.tagline}</p>
+        </article>
 
         <figure className="banner-right-button">
           <span className="maturity-rating">

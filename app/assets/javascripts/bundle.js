@@ -968,7 +968,25 @@ function (_React$Component) {
       }, video && video.videoUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         src: video.videoUrl,
         type: "video/mp4"
-      }) : null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+      }) : null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "banner-description-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "banner-show-title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Hu'sflix"), " Original"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+        className: "title-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, show.title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "big-preview-play-mylist-btns"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "big-preview-play",
+        onClick: this.launchWatch
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-play"
+      }), " Play"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "big-preview-myList",
+        onClick: this.toggleMyList
+      }, myListIcon, " ", mylistState)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "banner-tagline ".concat(imageAnimation)
+      }, show.tagline)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "banner-right-button"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "maturity-rating"
