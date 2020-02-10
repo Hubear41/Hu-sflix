@@ -949,61 +949,31 @@ function (_React$Component) {
         blackAnimation = "fade-in-black";
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "big-video-preview-wrapper",
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "banner-video-container",
         ref: this.entirePreview
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "big-preview-filter"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "big-video-poster"
+        className: "banner-presentation-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: show && show.posterUrl ? show.posterUrl : window.tempBgURL,
-        className: "preview-poster ".concat(imageAnimation),
+        className: "banner-poster ".concat(imageAnimation),
         ref: this.poster
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "poster-black-bg ".concat(blackAnimation)
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "video-el-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "big-preview-filter"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "big-video-bg"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         controls: true,
         muted: true,
-        className: "big-video",
+        className: "banner-video",
         ref: this.videoPlayer,
         onCanPlayThrough: this.videoReady,
         onEnded: this.videoEnded
       }, video && video.videoUrl ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
         src: video.videoUrl,
         type: "video/mp4"
-      }) : null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
-        className: "big-preview-left-controls"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
-        className: "big-preview-show-title"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Hu'sflix"), " Original"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
-        className: "title-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, show.title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "big-preview-play-mylist-btns"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "big-preview-play",
-        onClick: this.launchWatch
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-play"
-      }), " Play"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "big-preview-myList",
-        onClick: this.toggleMyList
-      }, myListIcon, " ", mylistState)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "big-preview-show-tagline ".concat(imageAnimation)
-      }, show.tagline)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "big-preview-right-content"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
-        className: "preview-maturity-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "maturity-bg"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show.maturity_rating)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "big-preview-video-controls",
+      }) : null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
+        className: "banner-right-button"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "maturity-rating"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, show.maturity_rating)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "banner-replay-mute-btn",
         style: iconStyle,
         onClick: buttonFunc
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -48270,7 +48240,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
