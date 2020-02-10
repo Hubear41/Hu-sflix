@@ -2,14 +2,13 @@
   background-color: #212020;
   position: relative;
   font-family: "Roboto", sans-serif;
-  // font-size: 14px;
 
   .banner-presentation-container {
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    width: 100vw;
+    width: 100%;
 
     .banner-poster {
       width: 100%;

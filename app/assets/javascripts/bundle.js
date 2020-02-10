@@ -768,6 +768,7 @@ function (_React$Component) {
     value: function videoReady() {
       var _this4 = this;
 
+      // this.props.stopLoading();
       this.timeout = setTimeout(function () {
         return _this4.revealVideo();
       }, 2000);
@@ -3229,7 +3230,7 @@ function (_React$Component) {
         this.props.requestAllShows(genreId).then(function () {
           setTimeout(function () {
             _this2.props.stopLoading();
-          }, 500);
+          }, 1000);
         }).fail(function () {
           _this2.props.stopLoading();
         });
@@ -3400,7 +3401,8 @@ function (_React$Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "show-gallery-index-wrapper"
       }, galleryType === "WITH_BANNER" && previewShow ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_banner_video_banner_video_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        show: previewShow
+        show: previewShow // stopLoading={this.props.stopLoading}
+
       }) : null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "gallery-index-wrapper",
         style: galleryStyle
@@ -3488,7 +3490,7 @@ var msp = function msp(_ref) {
     loading: loading,
     currentUserId: currentUserId,
     mylistShowIds: mylistShowIds,
-    galleryType: 'WITH_BANNER'
+    galleryType: "WITH_BANNER"
   };
 };
 
@@ -3920,7 +3922,7 @@ function (_React$Component) {
       this.props.fetchShow(showId);
       this.interval = setInterval(this._tick, 1000); //updates the timer each half second
 
-      document.addEventListener('keydown', function (e) {
+      document.addEventListener("keydown", function (e) {
         return _this2.determineKeyPress(e);
       });
     }
@@ -3930,7 +3932,7 @@ function (_React$Component) {
       var _this3 = this;
 
       this._isMounted = false;
-      document.removeEventListener('keydown', function (e) {
+      document.removeEventListener("keydown", function (e) {
         return _this3.determineKeyPress(e);
       });
       clearInterval(this.interval);
@@ -3982,7 +3984,7 @@ function (_React$Component) {
             // right arrow
             this.jumpForward();
             this.setState({
-              currentKey: 'jumpForward'
+              currentKey: "jumpForward"
             });
             break;
 
@@ -3990,7 +3992,7 @@ function (_React$Component) {
             // left arrow
             this.jumpBack();
             this.setState({
-              currentKey: 'jumpBack'
+              currentKey: "jumpBack"
             });
             break;
 
@@ -3998,7 +4000,7 @@ function (_React$Component) {
             // m key
             this.toggleMute();
             this.setState({
-              currentKey: 'mute/unmute'
+              currentKey: "mute/unmute"
             });
             break;
 
@@ -4039,7 +4041,7 @@ function (_React$Component) {
           paused = _this$state.paused,
           started = _this$state.started,
           away = _this$state.away; // play() returns a promise obj
-      // the state is only changed if play works 
+      // the state is only changed if play works
       // prevents the play button from changing until it can play
 
       if (paused && videoEl) {
@@ -4071,8 +4073,8 @@ function (_React$Component) {
           volume = _this$state2.volume,
           prevVolume = _this$state2.prevVolume;
       var videoEl = this.videoPlayer.current;
-      var currVolume = volume === 0 ? 0.1 : volume; // if audio has been muted, this resets the audio level back to it's 
-      // previous amount. 
+      var currVolume = volume === 0 ? 0.1 : volume; // if audio has been muted, this resets the audio level back to it's
+      // previous amount.
       // otherwise, this saves the current volume and set volume to 0
       // volume is set to 0 incase the user tries to change the volume manually
 
@@ -4165,7 +4167,7 @@ function (_React$Component) {
       this.setState({
         currentPlayerTime: videoEl.currentTime
       });
-    } // the wrapper for the entire player runs requestFullscreen so that the 
+    } // the wrapper for the entire player runs requestFullscreen so that the
     // controls are fullscreened alongside the video player
 
   }, {
@@ -4210,7 +4212,7 @@ function (_React$Component) {
         fullscreen: false
       });
     } // this method is run whenever the mouse moves anywhere over the video player
-    // on the first move, the controls will appear and it will set a timer to 
+    // on the first move, the controls will appear and it will set a timer to
     // hide the controls in 3 seconds if the mouse hasn't moved afterwards.
     // if it is still moving before the timer ends, the timer is reset
 
@@ -4373,7 +4375,7 @@ function (_React$Component) {
         videoEl.pause();
       }
 
-      this.props.history.push('/browse');
+      this.props.history.push("/browse");
     }
   }, {
     key: "removeFromMyList",
@@ -4401,7 +4403,7 @@ function (_React$Component) {
       var _this$props2 = this.props,
           video = _this$props2.video,
           show = _this$props2.show;
-      var awayAnimation = '';
+      var awayAnimation = "";
       var runtime = video ? video.runtime : 0;
       var playPauseBtn = null,
           remainingTime = null,
@@ -4438,11 +4440,11 @@ function (_React$Component) {
         };
 
         if (started && away === true) {
-          awayAnimation = 'reveal-away';
+          awayAnimation = "reveal-away";
         } else if (started && away === false) {
-          awayAnimation = 'hide-away';
+          awayAnimation = "hide-away";
         } else {
-          awayAnimation = 'hidden-away';
+          awayAnimation = "hidden-away";
         }
 
         audioIcon = this.findAudioIcon();
@@ -4452,7 +4454,7 @@ function (_React$Component) {
       var keypressComponent = null;
 
       if (keypressIcon !== null) {
-        if (currentKey === 'jumpForward') {
+        if (currentKey === "jumpForward") {
           keypressComponent = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
             className: "keypress-visual right-align",
             onAnimationEnd: function onAnimationEnd() {
@@ -4463,7 +4465,7 @@ function (_React$Component) {
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-circle"
           }), keypressIcon, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "10"));
-        } else if (currentKey === 'jumpBack') {
+        } else if (currentKey === "jumpBack") {
           keypressComponent = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
             className: "keypress-visual left-align",
             onAnimationEnd: function onAnimationEnd() {
@@ -4519,7 +4521,7 @@ function (_React$Component) {
         controls: false,
         muted: "muted"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-        src: video ? video.videoUrl : '',
+        src: video ? video.videoUrl : "",
         type: "video/mp4"
       }), "Browser does not support the video tag")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all-player-controls"
@@ -4542,9 +4544,9 @@ function (_React$Component) {
         onMouseOver: function onMouseOver() {
           if (away) _this6.showControls();
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You're watching"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, show ? show.title : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "You're watching"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, show ? show.title : ""), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
         className: "away-screen-other-details"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.year : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.maturity_rating : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, video ? _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](runtime) : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, show ? show.tagline : '')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.year : ""), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, show ? show.maturity_rating : ""), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, video ? _util_date_time_util__WEBPACK_IMPORTED_MODULE_2__["secondsToHoursMinutes"](runtime) : "")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, show ? show.tagline : "")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "away-screen-paused"
       }, "Paused"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "full-control-area",
