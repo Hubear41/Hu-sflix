@@ -630,6 +630,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _buttons_banner_mute_replay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../buttons/banner_mute_replay */ "./frontend/components/buttons/banner_mute_replay.jsx");
+/* harmony import */ var _buttons_banner_play__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../buttons/banner_play */ "./frontend/components/buttons/banner_play.jsx");
+/* harmony import */ var _buttons_banner_mylist__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../buttons/banner_mylist */ "./frontend/components/buttons/banner_mylist.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -651,6 +654,9 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
+
 var BannerVideo =
 /*#__PURE__*/
 function (_React$Component) {
@@ -666,8 +672,7 @@ function (_React$Component) {
       started: false,
       muted: true,
       imageOpacity: 1,
-      ended: false,
-      mylistState: "My List"
+      ended: false
     };
     _this.videoPlayer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.poster = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
@@ -679,7 +684,6 @@ function (_React$Component) {
     _this.pauseVideo = _this.pauseVideo.bind(_assertThisInitialized(_this));
     _this.launchWatch = _this.launchWatch.bind(_assertThisInitialized(_this));
     _this.toggleMute = _this.toggleMute.bind(_assertThisInitialized(_this));
-    _this.toggleMyList = _this.toggleMyList.bind(_assertThisInitialized(_this));
     _this.handleScroll = _this.handleScroll.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -687,13 +691,9 @@ function (_React$Component) {
   _createClass(BannerVideo, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
-
       this._isMounted = true;
       var previewId = this.props.previewId;
-      this.currentRequest = this.props.requestVideo(previewId).then(function () {
-        return _this2.currentRequest = null;
-      });
+      this.props.requestVideo(previewId);
       window.addEventListener("scroll", this.handleScroll);
     }
   }, {
@@ -713,12 +713,11 @@ function (_React$Component) {
     value: function componentWillUnmount() {
       this._isMounted = false;
       clearTimeout(this.timeout);
-      if (this.currentRequest !== null) this.currentRequest.abort();
     }
   }, {
     key: "handleScroll",
     value: function handleScroll() {
-      var _this3 = this;
+      var _this2 = this;
 
       var isPreviewing = this.props.isPreviewing;
       var ended = this.state.ended;
@@ -734,10 +733,9 @@ function (_React$Component) {
 
         if (!ended && scrollHeight > bigPreview.scrollHeight / 4) {
           this.timeout = setTimeout(function () {
-            _this3.pauseVideo();
+            _this2.pauseVideo();
           }, 1500);
         } else if (!ended && scrollHeight <= bigPreview.scrollHeight / 4) {
-          // debugger
           clearTimeout(this.timeout);
 
           if (this.videoPlayer.current.paused) {
@@ -766,11 +764,11 @@ function (_React$Component) {
   }, {
     key: "videoReady",
     value: function videoReady() {
-      var _this4 = this;
+      var _this3 = this;
 
       // this.props.stopLoading();
       this.timeout = setTimeout(function () {
-        return _this4.revealVideo();
+        return _this3.revealVideo();
       }, 2000);
     }
   }, {
@@ -787,7 +785,7 @@ function (_React$Component) {
   }, {
     key: "playVideo",
     value: function playVideo() {
-      var _this5 = this;
+      var _this4 = this;
 
       var videoEl = this.videoPlayer.current;
       var bigPreview = this.entirePreview.current;
@@ -795,7 +793,7 @@ function (_React$Component) {
       if (window.pageYOffset < bigPreview.scrollHeight / 3 && videoEl.paused) {
         this.timeout = setTimeout(function () {
           videoEl.play().then(function () {
-            if (_this5._isMounted) _this5.setState({
+            if (_this4._isMounted) _this4.setState({
               imageOpacity: 0
             });
           });
@@ -805,75 +803,17 @@ function (_React$Component) {
   }, {
     key: "pauseVideo",
     value: function pauseVideo() {
-      var _this6 = this;
+      var _this5 = this;
 
       var videoEl = this.videoPlayer.current;
 
       if (!videoEl.paused) {
         this.timeout = setTimeout(function () {
           videoEl.pause();
-          if (_this6._isMounted) _this6.setState({
+          if (_this5._isMounted) _this5.setState({
             imageOpacity: 1
           });
         }, 1000);
-      }
-    }
-  }, {
-    key: "toggleMyList",
-    value: function toggleMyList() {
-      var _this7 = this;
-
-      var _this$props = this.props,
-          show = _this$props.show,
-          mylistIds = _this$props.mylistIds,
-          currentUserId = _this$props.currentUserId;
-
-      if (mylistIds.includes(show.id) && this.state.mylistState === "My List") {
-        if (this._isMounted) this.setState({
-          mylistState: "Removing..."
-        });
-        this.currentRequest = this.props.removeMyListVideo(currentUserId, show.id).then(function () {
-          _this7.currentRequest = null;
-          if (_this7._isMounted) _this7.setState({
-            mylistState: "My List"
-          });
-        });
-      } else if (!mylistIds.includes(show.id) && this.state.mylistState === "My List") {
-        if (this._isMounted) this.setState({
-          mylistState: "Adding..."
-        });
-        this.currentRequest = this.props.addMyListVideo(currentUserId, show.id).then(function () {
-          _this7.currentRequest = null;
-          if (_this7._isMounted) _this7.setState({
-            mylistState: "My List"
-          });
-        });
-      }
-    }
-  }, {
-    key: "videoControllerIcon",
-    value: function videoControllerIcon() {
-      var _this$state = this.state,
-          muted = _this$state.muted,
-          started = _this$state.started,
-          ended = _this$state.ended;
-
-      if (!started) {
-        return null;
-      }
-
-      if (ended) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-redo"
-        });
-      } else if (!muted) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-volume-up"
-        });
-      } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "fas fa-volume-mute"
-        });
       }
     }
   }, {
@@ -915,27 +855,17 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props2 = this.props,
-          show = _this$props2.show,
-          video = _this$props2.video,
-          mylistIds = _this$props2.mylistIds;
-      var _this$state2 = this.state,
-          imageOpacity = _this$state2.imageOpacity,
-          started = _this$state2.started,
-          ended = _this$state2.ended,
-          mylistState = _this$state2.mylistState;
-      var buttonIcon = this.videoPlayer.current ? this.videoControllerIcon() : null;
+      var _this$props = this.props,
+          show = _this$props.show,
+          video = _this$props.video,
+          mylistIds = _this$props.mylistIds,
+          currentUserId = _this$props.currentUserId;
+      var _this$state = this.state,
+          imageOpacity = _this$state.imageOpacity,
+          started = _this$state.started,
+          ended = _this$state.ended,
+          muted = _this$state.muted;
       var buttonFunc = this.videoPlayer.current ? this.videoFunction() : null;
-      var iconStyle = started ? {
-        opacity: 1
-      } : {
-        opacity: 0
-      };
-      var myListIcon = mylistIds.includes(show.id) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-check"
-      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-plus"
-      });
       var imageAnimation = "";
       var blackAnimation = "";
 
@@ -977,33 +907,27 @@ function (_React$Component) {
         className: "title-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, show.title))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "big-preview-play-mylist-btns"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "big-preview-play",
-        onClick: this.launchWatch
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-play"
-      }), " Play"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "big-preview-myList",
-        onClick: this.toggleMyList
-      }, myListIcon, " ", mylistState)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_buttons_banner_play__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        launchWatch: this.launchWatch
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_buttons_banner_mylist__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        showId: show.id,
+        currentUserId: currentUserId,
+        mylistIds: mylistIds,
+        removeMyListVideo: this.props.removeMyListVideo,
+        addMyListVideo: this.props.addMyListVideo
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "banner-tagline ".concat(imageAnimation)
       }, show.tagline)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
         className: "banner-right-button"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "maturity-rating"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, show.maturity_rating)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "banner-replay-mute-btn",
-        style: iconStyle,
-        onClick: buttonFunc
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "preview-icon"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "preview-current-icon"
-      }, buttonIcon), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-circle preview-circle"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "far fa-circle preview-outline"
-      })))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, show.maturity_rating)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_buttons_banner_mute_replay__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        buttonFunc: buttonFunc,
+        started: started,
+        ended: ended,
+        muted: muted,
+        paused: this.videoPlayer.current ? this.videoPlayer.current.paused : true
+      })));
     }
   }]);
 
@@ -1066,6 +990,337 @@ var mdp = function mdp(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_banner_video__WEBPACK_IMPORTED_MODULE_3__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/buttons/banner_mute_replay.jsx":
+/*!************************************************************!*\
+  !*** ./frontend/components/buttons/banner_mute_replay.jsx ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var BannerMuteReplay = function BannerMuteReplay(_ref) {
+  var buttonFunc = _ref.buttonFunc,
+      paused = _ref.paused,
+      started = _ref.started,
+      muted = _ref.muted,
+      ended = _ref.ended;
+
+  var getButtonIcon = function getButtonIcon() {
+    if (!started) {
+      return null;
+    }
+
+    if (ended) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-redo"
+      });
+    } else if (!muted) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-volume-up"
+      });
+    } else {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-volume-mute"
+      });
+    }
+  };
+
+  var iconStyle = started && !paused || ended ? {
+    opacity: 1
+  } : {
+    opacity: 0
+  };
+  var buttonIcon = getButtonIcon();
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "banner-replay-mute-btn",
+    style: iconStyle,
+    onClick: buttonFunc
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "preview-icon"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "preview-current-icon"
+  }, buttonIcon), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-circle preview-circle"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "far fa-circle preview-outline"
+  })));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (BannerMuteReplay);
+
+/***/ }),
+
+/***/ "./frontend/components/buttons/banner_mylist.jsx":
+/*!*******************************************************!*\
+  !*** ./frontend/components/buttons/banner_mylist.jsx ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+var MY_LIST = "My List";
+var REMOVING = "Removing...";
+var ADDING = "Adding...";
+
+var BannerMylist = function BannerMylist(_ref) {
+  var showId = _ref.showId,
+      currentUserId = _ref.currentUserId,
+      mylistIds = _ref.mylistIds,
+      removeMyListVideo = _ref.removeMyListVideo,
+      addMyListVideo = _ref.addMyListVideo;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])("My List"),
+      _useState2 = _slicedToArray(_useState, 2),
+      buttonText = _useState2[0],
+      updateButtonText = _useState2[1];
+
+  var _isMounted = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(false);
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    _isMounted.current = true;
+    return function () {
+      _isMounted.current = false;
+    };
+  }, []);
+
+  var toggleMyList = function toggleMyList() {
+    // button clicks don't do anything while Adding or Removing
+    if (buttonText === MY_LIST) {
+      if (mylistIds.includes(showId)) {
+        // display "Removing..." while making request
+        if (_isMounted.current) updateButtonText(REMOVING);
+        removeMyListVideo(currentUserId, showId).then(function () {
+          // after removing the video, return button to display "My List"
+          if (_isMounted.current) updateButtonText(MY_LIST);
+        });
+      } else {
+        // display "Adding..." while making request
+        if (_isMounted.current) updateButtonText(ADDING);
+        addMyListVideo(currentUserId, showId).then(function () {
+          // after adding the video, return button to display "My List"
+          if (_isMounted.current) updateButtonText(MY_LIST);
+        });
+      }
+    }
+  };
+
+  var myListIcon = mylistIds.includes(showId) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-check"
+  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-plus"
+  });
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "banner-button",
+    onClick: toggleMyList
+  }, myListIcon, " ", buttonText);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (BannerMylist);
+
+/***/ }),
+
+/***/ "./frontend/components/buttons/banner_play.jsx":
+/*!*****************************************************!*\
+  !*** ./frontend/components/buttons/banner_play.jsx ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var BannerPlay = function BannerPlay(_ref) {
+  var launchWatch = _ref.launchWatch;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "banner-button",
+    onClick: launchWatch
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-play"
+  }), " Play");
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (BannerPlay);
+
+/***/ }),
+
+/***/ "./frontend/components/buttons/thumbnail_mute.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/buttons/thumbnail_mute.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var ThumbnailMute = function ThumbnailMute(_ref) {
+  var muted = _ref.muted,
+      toggleMute = _ref.toggleMute;
+  var muteBtn = muted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-volume-mute button-symbol"
+  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-volume-up button-symbol"
+  });
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "preview-mute-btn right-side-btn",
+    onClick: toggleMute
+  }, muteBtn, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-circle preview-btn-bg"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "far fa-circle preview-btn-outline"
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ThumbnailMute);
+
+/***/ }),
+
+/***/ "./frontend/components/buttons/thumbnail_mylist.jsx":
+/*!**********************************************************!*\
+  !*** ./frontend/components/buttons/thumbnail_mylist.jsx ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+var REMOVING = "REMOVING";
+var ADDING = "ADDING";
+var IS_ON_LIST = "IS_ON_LIST";
+var NOT_ON_LIST = "NOT_ON_LIST";
+
+var MyListButton = function MyListButton(_ref) {
+  var listShowIds = _ref.listShowIds,
+      showId = _ref.showId,
+      currentUserId = _ref.currentUserId,
+      addMyListVideo = _ref.addMyListVideo,
+      removeMyListVideo = _ref.removeMyListVideo;
+
+  var _isMounted = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(false); // state of the mylist button
+
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(listShowIds.includes(showId) ? IS_ON_LIST : NOT_ON_LIST),
+      _useState2 = _slicedToArray(_useState, 2),
+      myListState = _useState2[0],
+      updateMyListState = _useState2[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    _isMounted.current = true;
+    return function () {
+      _isMounted.current = false;
+    };
+  }, []); // whenever listShowIds change, check if the current show is still on the list
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (myListState === NOT_ON_LIST && listShowIds.includes(showId)) {
+      updateMyListState(IS_ON_LIST);
+    } else if (myListState === IS_ON_LIST && !listShowIds.includes(showId)) {
+      updateMyListState(NOT_ON_LIST);
+    }
+  }, [listShowIds]);
+
+  var toggleMyList = function toggleMyList(e) {
+    e.stopPropagation();
+
+    if (myListState === IS_ON_LIST) {
+      if (_isMounted.current) {
+        updateMyListState(REMOVING);
+        removeMyListVideo(currentUserId, showId).then(function () {
+          if (_isMounted.current) updateMyListState(NOT_ON_LIST);
+        });
+      }
+    } else if (myListState === NOT_ON_LIST) {
+      if (_isMounted.current) {
+        updateMyListState(ADDING);
+        addMyListVideo(currentUserId, showId).then(function () {
+          if (_isMounted.current) updateMyListState(IS_ON_LIST);
+        });
+      }
+    }
+  };
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: toggleMyList,
+    className: "preview-mylist-btn right-side-btn preview-fade-in"
+  }, myListState === IS_ON_LIST ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-check button-symbol"
+  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-plus button-symbol"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-circle preview-btn-bg"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "far fa-circle preview-btn-outline"
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (MyListButton);
+
+/***/ }),
+
+/***/ "./frontend/components/buttons/thumbnail_play.jsx":
+/*!********************************************************!*\
+  !*** ./frontend/components/buttons/thumbnail_play.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var ThumbnailPlay = function ThumbnailPlay(_ref) {
+  var color = _ref.color;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "thumbnail-play-icon ".concat(color)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-play play-btn-triangle"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-circle play-btn-bg"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "far fa-circle play-btn-outline"
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ThumbnailPlay);
 
 /***/ }),
 
@@ -1371,7 +1626,6 @@ function (_React$Component) {
       var textInput = this.searchField.current;
 
       if (textInput.value === "" && location.pathname !== this.state.previous) {
-        debugger;
         clearTimeout(this.searchTimeout);
         history.push(this.state.previous);
         this.props.startLoading();
@@ -2266,97 +2520,6 @@ var mdp = function mdp(dispatch) {
 
 /***/ }),
 
-/***/ "./frontend/components/show_thumbnail/mylist_button.jsx":
-/*!**************************************************************!*\
-  !*** ./frontend/components/show_thumbnail/mylist_button.jsx ***!
-  \**************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
-var REMOVING = "REMOVING";
-var ADDING = "ADDING";
-var IS_ON_LIST = "IS_ON_LIST";
-var NOT_ON_LIST = "NOT_ON_LIST";
-
-var MyListButton = function MyListButton(_ref) {
-  var listShowIds = _ref.listShowIds,
-      showId = _ref.showId,
-      currentUserId = _ref.currentUserId,
-      addMyListVideo = _ref.addMyListVideo,
-      removeMyListVideo = _ref.removeMyListVideo;
-
-  var _isMounted = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(false); // state of the mylist button
-
-
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(listShowIds.includes(showId) ? IS_ON_LIST : NOT_ON_LIST),
-      _useState2 = _slicedToArray(_useState, 2),
-      myListState = _useState2[0],
-      updateMyListState = _useState2[1];
-
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    _isMounted.current = true;
-    return function () {
-      _isMounted.current = false;
-    };
-  }, []); // whenever listShowIds change, check if the current show is still on the list
-
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (myListState === NOT_ON_LIST && listShowIds.includes(showId)) {
-      updateMyListState(IS_ON_LIST);
-    } else if (myListState === IS_ON_LIST && !listShowIds.includes(showId)) {
-      updateMyListState(NOT_ON_LIST);
-    }
-  }, [listShowIds]);
-
-  var toggleMyList = function toggleMyList() {
-    if (myListState === IS_ON_LIST) {
-      if (_isMounted.current) {
-        updateMyListState(REMOVING);
-        removeMyListVideo(currentUserId, showId).then(function () {
-          if (_isMounted.current) updateMyListState(NOT_ON_LIST);
-        });
-      }
-    } else if (myListState === NOT_ON_LIST) {
-      if (_isMounted.current) {
-        updateMyListState(ADDING);
-        addMyListVideo(currentUserId, showId).then(function () {
-          if (_isMounted.current) updateMyListState(IS_ON_LIST);
-        });
-      }
-    }
-  };
-
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: toggleMyList,
-    className: "preview-mylist-btn right-side-btn preview-fade-in"
-  }, myListState === IS_ON_LIST ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-check button-symbol"
-  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-plus button-symbol"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-circle preview-btn-bg"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "far fa-circle preview-btn-outline"
-  }));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (MyListButton);
-
-/***/ }),
-
 /***/ "./frontend/components/show_thumbnail/show_thumbnail.jsx":
 /*!***************************************************************!*\
   !*** ./frontend/components/show_thumbnail/show_thumbnail.jsx ***!
@@ -2541,7 +2704,6 @@ function (_React$Component) {
       var leftMostTile = function leftMostTile() {
         var padding = window.innerWidth >= 1400 ? 60 : 0.05 * window.innerWidth;
         var moveLeftDist = -(window.innerWidth - padding * 2) / numOfTiles;
-        debugger;
         rowRef.current.style.transform = "translateX(".concat(moveLeftDist, "px)");
       };
 
@@ -2711,10 +2873,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util_date_time_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util/date_time_util */ "./frontend/util/date_time_util.js");
-/* harmony import */ var _mylist_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mylist_button */ "./frontend/components/show_thumbnail/mylist_button.jsx");
+/* harmony import */ var _buttons_thumbnail_mylist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../buttons/thumbnail_mylist */ "./frontend/components/buttons/thumbnail_mylist.jsx");
+/* harmony import */ var _buttons_thumbnail_play__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../buttons/thumbnail_play */ "./frontend/components/buttons/thumbnail_play.jsx");
+/* harmony import */ var _buttons_thumbnail_mute__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../buttons/thumbnail_mute */ "./frontend/components/buttons/thumbnail_mute.jsx");
 
 
 
+
+
+var RED = "red";
+var WHITE = "white";
 
 var ThumbnailPlayerDesc = function ThumbnailPlayerDesc(props) {
   var show = props.show,
@@ -2724,12 +2892,7 @@ var ThumbnailPlayerDesc = function ThumbnailPlayerDesc(props) {
       muted = props.muted,
       toggleMute = props.toggleMute,
       addMyListVideo = props.addMyListVideo,
-      removeMyListVideo = props.removeMyListVideo;
-  var muteBtn = muted ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-volume-mute button-symbol"
-  }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-volume-up button-symbol"
-  }); // find and format the genre names to be displayed
+      removeMyListVideo = props.removeMyListVideo; // find and format the genre names to be displayed
 
   var genresToShow = [];
 
@@ -2764,18 +2927,14 @@ var ThumbnailPlayerDesc = function ThumbnailPlayerDesc(props) {
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
     className: "thumbnail-right-nav thumbnail-side"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "preview-mute-btn right-side-btn",
-    onClick: toggleMute
-  }, muteBtn, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-circle preview-btn-bg"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "far fa-circle preview-btn-outline"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_buttons_thumbnail_mute__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    muted: muted,
+    toggleMute: toggleMute
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "right-side-placeholders right-side-btn"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "right-side-placeholders right-side-btn"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_mylist_button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_buttons_thumbnail_mylist__WEBPACK_IMPORTED_MODULE_2__["default"], {
     listShowIds: listShowIds,
     currentUserId: currentUserId,
     showId: show.id,
@@ -2783,15 +2942,9 @@ var ThumbnailPlayerDesc = function ThumbnailPlayerDesc(props) {
     removeMyListVideo: removeMyListVideo
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figcaption", {
     className: "thumbnail-desc preview-info"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "thumbnail-play-icon"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-play play-btn-triangle"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-circle play-btn-bg"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "far fa-circle play-btn-outline"
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_buttons_thumbnail_play__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    color: RED
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
     className: "preview-title"
   }, show.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("article", {
     className: "preview-details"
@@ -3336,7 +3489,7 @@ function (_React$Component) {
           genres = _this$props3.genres,
           mylistShowIds = _this$props3.mylistShowIds;
       var showsPerRow = {};
-      var mainGenres = [];
+      var mainGenres = []; // setup mylist row to be the same size as mylistids
 
       if (mylistShowIds.length > 0) {
         showsPerRow["My List"] = Array.from({
@@ -3364,6 +3517,10 @@ function (_React$Component) {
             showsPerRow[genre.name].push(show);
           }
         });
+      }); // remove any null values left in the My List row
+
+      showsPerRow["My List"] = showsPerRow["My List"].filter(function (el) {
+        return el !== null;
       });
       return showsPerRow;
     }

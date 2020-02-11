@@ -96,7 +96,6 @@ class MainNav extends React.Component {
     const textInput = this.searchField.current;
 
     if (textInput.value === "" && location.pathname !== this.state.previous) {
-      debugger;
       clearTimeout(this.searchTimeout);
 
       history.push(this.state.previous);

@@ -1,0 +1,33 @@
+.thumbnail-play-icon {
+  position: relative;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  .play-btn-triangle {
+    position: absolute;
+    z-index: 22;
+    transform-origin: center;
+    font-size: 1.8em;
+    color: red;
+  }
+
+  .fas.play-btn-triangle {
+    line-height: unset;
+  }
+
+  .play-btn-bg {
+    font-size: 5em;
+    opacity: 0.5;
+  }
+
+  .play-btn-outline {
+    position: absolute;
+    z-index: 18;
+    color: white;
+    font-size: 5em;
+    opacity: 0.6;
+  }
+}

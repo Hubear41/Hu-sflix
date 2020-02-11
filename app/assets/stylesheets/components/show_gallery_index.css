@@ -49,8 +49,6 @@
   width: 100%;
   height: auto;
   overflow-x: hidden;
-  padding-bottom: 5vh;
-  margin-bottom: 10vh;
 }
 
 .show-gallery-index::-webkit-scrollbar {

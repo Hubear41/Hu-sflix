@@ -1,6 +1,6 @@
-@media only screen and (min-width: 800px) {
+@media only screen and (max-width: 1099px) {
   .main-nav-bar-wrapper {
-    font-size: 1vw;
+    font-size: 1.1vw;
   }
 }
 
@@ -111,8 +111,8 @@
 }
 
 .search-bar-form {
-  padding: 0px 5px;
-  margin-right: 20px;
+  font-family: "Roboto", sans-serif;
+  padding: 0px 20px;
   position: relative;
   display: flex;
   justify-content: flex-end;
@@ -128,9 +128,11 @@
 
 .search-icon {
   position: absolute;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  padding: 8px;
   font-size: 14pt;
-  top: 8px;
-  left: 8px;
 }
 
 .search-icon:active {
@@ -149,10 +151,7 @@
 }
 
 .search-x {
-  outline: none;
-  border: none;
-  background: none;
-  font-size: 14pt;
+  font-size: 1.6em;
   width: 10%;
   color: white;
   font-stretch: expanded;
@@ -198,6 +197,7 @@
   position: absolute;
   top: -12px;
   right: 20px; /* move this to the left later*/
+  /* z-index: 20; */
 }
 
 .nav-dropdown-profiles {
