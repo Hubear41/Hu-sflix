@@ -131,7 +131,6 @@ class ShowThumbnail extends React.Component {
 
       const moveLeftDist = -(window.innerWidth - padding * 2) / numOfTiles;
 
-      debugger;
       rowRef.current.style.transform = `translateX(${moveLeftDist}px)`;
     };
 

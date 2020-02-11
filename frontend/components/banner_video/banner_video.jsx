@@ -75,7 +75,6 @@ class BannerVideo extends React.Component {
           this.pauseVideo();
         }, 1500);
       } else if (!ended && scrollHeight <= bigPreview.scrollHeight / 4) {
-        // debugger
         clearTimeout(this.timeout);
 
         if (this.videoPlayer.current.paused) {

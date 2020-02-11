@@ -737,7 +737,6 @@ function (_React$Component) {
             _this3.pauseVideo();
           }, 1500);
         } else if (!ended && scrollHeight <= bigPreview.scrollHeight / 4) {
-          // debugger
           clearTimeout(this.timeout);
 
           if (this.videoPlayer.current.paused) {
@@ -1371,7 +1370,6 @@ function (_React$Component) {
       var textInput = this.searchField.current;
 
       if (textInput.value === "" && location.pathname !== this.state.previous) {
-        debugger;
         clearTimeout(this.searchTimeout);
         history.push(this.state.previous);
         this.props.startLoading();
@@ -2541,7 +2539,6 @@ function (_React$Component) {
       var leftMostTile = function leftMostTile() {
         var padding = window.innerWidth >= 1400 ? 60 : 0.05 * window.innerWidth;
         var moveLeftDist = -(window.innerWidth - padding * 2) / numOfTiles;
-        debugger;
         rowRef.current.style.transform = "translateX(".concat(moveLeftDist, "px)");
       };
 
