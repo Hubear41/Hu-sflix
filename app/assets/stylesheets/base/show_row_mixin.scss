@@ -54,7 +54,7 @@ $minBreakPoint: 200px;
 // positions rows so that their margins are overlapping and seem closer together
 // creates this for rows 2 through 10. The max can be changed.
 @mixin overlap($max: 10) {
-  @for $i from 2 through $max {
+  @for $i from 1 through $max {
     #row-#{$i} {
       top: -#{($i - 1) * 3}vw;
     }

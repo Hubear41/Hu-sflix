@@ -3489,7 +3489,7 @@ function (_React$Component) {
           genres = _this$props3.genres,
           mylistShowIds = _this$props3.mylistShowIds;
       var showsPerRow = {};
-      var mainGenres = [];
+      var mainGenres = []; // setup mylist row to be the same size as mylistids
 
       if (mylistShowIds.length > 0) {
         showsPerRow["My List"] = Array.from({
@@ -3517,6 +3517,10 @@ function (_React$Component) {
             showsPerRow[genre.name].push(show);
           }
         });
+      }); // remove any null values left in the My List row
+
+      showsPerRow["My List"] = showsPerRow["My List"].filter(function (el) {
+        return el !== null;
       });
       return showsPerRow;
     }

@@ -103,6 +103,7 @@ class ShowGallery extends React.Component {
     const showsPerRow = {};
     let mainGenres = [];
 
+    // setup mylist row to be the same size as mylistids
     if (mylistShowIds.length > 0) {
       showsPerRow["My List"] = Array.from(
         { length: mylistShowIds.length },
@@ -135,6 +136,9 @@ class ShowGallery extends React.Component {
         }
       });
     });
+
+    // remove any null values left in the My List row
+    showsPerRow["My List"] = showsPerRow["My List"].filter(el => el !== null);
 
     return showsPerRow;
   }
