@@ -45,62 +45,6 @@
 
     .banner-replay-mute-btn {
       margin-right: 1em;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-
-      cursor: pointer;
-
-      .preview-icon {
-        position: relative;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .preview-current-icon {
-          position: absolute;
-          z-index: 120;
-
-          color: white;
-          font-size: 0.9em;
-
-          opacity: 0.5;
-          transition: opacity 0.2s;
-        }
-
-        .preview-circle {
-          opacity: 0.2;
-          color: black;
-          font-size: 2em;
-        }
-
-        .preview-outline {
-          position: absolute;
-          z-index: 125;
-
-          color: white;
-          font-size: 2em;
-
-          opacity: 0.5;
-          transition: opacity 0.3s;
-        }
-      }
-
-      &:hover {
-        .preview-current-icon {
-          transform: scale(1.2);
-          transition: transform 0.2s, opacity 0.1s;
-        }
-
-        .preview-current-icon,
-        .preview-outline {
-          opacity: 0.9;
-          transition: 0.2s;
-        }
-      }
     }
   }
 
@@ -144,31 +88,8 @@
     .big-preview-play-mylist-btns {
       display: flex;
 
-      button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        min-width: 100px;
-        padding: 0.7em 2.3em;
-        border-radius: 5px;
-        background-color: rgba(51, 51, 51, 0.6);
+      .banner-button {
         margin-right: 1em;
-
-        color: white;
-        font-size: 1.1vw;
-        font-weight: 700;
-
-        i {
-          margin-right: 0.8em;
-        }
-
-        &:hover {
-          color: black;
-          background: white;
-          transform: scale(1.05);
-          transform-origin: center;
-        }
       }
     }
 
@@ -191,6 +112,7 @@
     z-index: 60;
   }
 
+  // left side vignette
   &::before {
     top: 0;
     left: 0;
@@ -201,6 +123,7 @@
     background: linear-gradient(to right, rgba(#141414, 0.8), rgba(#141414, 0));
   }
 
+  // bottom vignette
   &::after {
     bottom: 0;
     left: 0;

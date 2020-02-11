@@ -1,6 +1,11 @@
 import React from "react";
 import * as DateTimeUTIL from "../../util/date_time_util";
-import MyListButton from "./mylist_button";
+import MyListButton from "../buttons/thumbnail_mylist";
+import PlayButton from "../buttons/thumbnail_play";
+import MuteButton from "../buttons/thumbnail_mute";
+
+const RED = "red";
+const WHITE = "white";
 
 const ThumbnailPlayerDesc = props => {
   const {
@@ -13,12 +18,6 @@ const ThumbnailPlayerDesc = props => {
     addMyListVideo,
     removeMyListVideo
   } = props;
-
-  const muteBtn = muted ? (
-    <i className="fas fa-volume-mute button-symbol"></i>
-  ) : (
-    <i className="fas fa-volume-up button-symbol"></i>
-  );
 
   // find and format the genre names to be displayed
   const genresToShow = [];
@@ -63,14 +62,8 @@ const ThumbnailPlayerDesc = props => {
   return (
     <>
       <aside className="thumbnail-right-nav thumbnail-side">
-        <button
-          className="preview-mute-btn right-side-btn"
-          onClick={toggleMute}
-        >
-          {muteBtn}
-          <i className="fas fa-circle preview-btn-bg"></i>
-          <i className="far fa-circle preview-btn-outline"></i>
-        </button>
+        <MuteButton muted={muted} toggleMute={toggleMute} />
+
         <div className="right-side-placeholders right-side-btn"></div>
         <div className="right-side-placeholders right-side-btn"></div>
 
@@ -84,11 +77,7 @@ const ThumbnailPlayerDesc = props => {
       </aside>
 
       <figcaption className="thumbnail-desc preview-info">
-        <button className="thumbnail-play-icon">
-          <i className="fas fa-play play-btn-triangle"></i>
-          <i className="fas fa-circle play-btn-bg"></i>
-          <i className="far fa-circle play-btn-outline"></i>
-        </button>
+        <PlayButton color={RED} />
 
         <h5 className="preview-title">{show.title}</h5>
 

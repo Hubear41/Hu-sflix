@@ -1,5 +1,8 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import MuteReplayBtn from "../buttons/banner_mute_replay";
+import PlayButton from "../buttons/banner_play";
+import MyListButton from "../buttons/banner_mylist";
 
 class BannerVideo extends React.Component {
   constructor(props) {
@@ -8,8 +11,7 @@ class BannerVideo extends React.Component {
       started: false,
       muted: true,
       imageOpacity: 1,
-      ended: false,
-      mylistState: "My List"
+      ended: false
     };
     this.videoPlayer = React.createRef();
     this.poster = React.createRef();
@@ -22,7 +24,6 @@ class BannerVideo extends React.Component {
     this.pauseVideo = this.pauseVideo.bind(this);
     this.launchWatch = this.launchWatch.bind(this);
     this.toggleMute = this.toggleMute.bind(this);
-    this.toggleMyList = this.toggleMyList.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
   }
 
@@ -30,9 +31,7 @@ class BannerVideo extends React.Component {
     this._isMounted = true;
     const { previewId } = this.props;
 
-    this.currentRequest = this.props
-      .requestVideo(previewId)
-      .then(() => (this.currentRequest = null));
+    this.props.requestVideo(previewId);
 
     window.addEventListener("scroll", this.handleScroll);
   }
@@ -52,7 +51,6 @@ class BannerVideo extends React.Component {
     this._isMounted = false;
 
     clearTimeout(this.timeout);
-    if (this.currentRequest !== null) this.currentRequest.abort();
   }
 
   handleScroll() {
@@ -133,48 +131,6 @@ class BannerVideo extends React.Component {
     }
   }
 
-  toggleMyList() {
-    const { show, mylistIds, currentUserId } = this.props;
-
-    if (mylistIds.includes(show.id) && this.state.mylistState === "My List") {
-      if (this._isMounted) this.setState({ mylistState: "Removing..." });
-
-      this.currentRequest = this.props
-        .removeMyListVideo(currentUserId, show.id)
-        .then(() => {
-          this.currentRequest = null;
-          if (this._isMounted) this.setState({ mylistState: "My List" });
-        });
-    } else if (
-      !mylistIds.includes(show.id) &&
-      this.state.mylistState === "My List"
-    ) {
-      if (this._isMounted) this.setState({ mylistState: "Adding..." });
-
-      this.currentRequest = this.props
-        .addMyListVideo(currentUserId, show.id)
-        .then(() => {
-          this.currentRequest = null;
-          if (this._isMounted) this.setState({ mylistState: "My List" });
-        });
-    }
-  }
-
-  videoControllerIcon() {
-    const { muted, started, ended } = this.state;
-    if (!started) {
-      return null;
-    }
-
-    if (ended) {
-      return <i className="fas fa-redo"></i>;
-    } else if (!muted) {
-      return <i className="fas fa-volume-up"></i>;
-    } else {
-      return <i className="fas fa-volume-mute"></i>;
-    }
-  }
-
   videoFunction() {
     const { ended } = this.state;
 
@@ -206,22 +162,10 @@ class BannerVideo extends React.Component {
   }
 
   render() {
-    const { show, video, mylistIds } = this.props;
-    const { imageOpacity, started, ended, mylistState } = this.state;
+    const { show, video, mylistIds, currentUserId } = this.props;
+    const { imageOpacity, started, ended, muted } = this.state;
 
-    const buttonIcon = this.videoPlayer.current
-      ? this.videoControllerIcon()
-      : null;
     const buttonFunc = this.videoPlayer.current ? this.videoFunction() : null;
-    const iconStyle =
-      started && !this.videoPlayer.current.paused
-        ? { opacity: 1 }
-        : { opacity: 0 };
-    const myListIcon = mylistIds.includes(show.id) ? (
-      <i className="fas fa-check"></i>
-    ) : (
-      <i className="fas fa-plus"></i>
-    );
 
     let imageAnimation = "";
     let blackAnimation = "";
@@ -270,12 +214,15 @@ class BannerVideo extends React.Component {
           </article>
 
           <div className="big-preview-play-mylist-btns">
-            <button className="big-preview-play" onClick={this.launchWatch}>
-              <i className="fas fa-play"></i> Play
-            </button>
-            <button className="big-preview-myList" onClick={this.toggleMyList}>
-              {myListIcon} {mylistState}
-            </button>
+            <PlayButton launchWatch={this.launchWatch} />
+
+            <MyListButton
+              showId={show.id}
+              currentUserId={currentUserId}
+              mylistIds={mylistIds}
+              removeMyListVideo={this.props.removeMyListVideo}
+              addMyListVideo={this.props.addMyListVideo}
+            />
           </div>
 
           <p className={`banner-tagline ${imageAnimation}`}>{show.tagline}</p>
@@ -285,17 +232,15 @@ class BannerVideo extends React.Component {
           <span className="maturity-rating">
             <span>{show.maturity_rating}</span>
           </span>
-          <button
-            className="banner-replay-mute-btn"
-            style={iconStyle}
-            onClick={buttonFunc}
-          >
-            <div className="preview-icon">
-              <div className="preview-current-icon">{buttonIcon}</div>
-              <i className="fas fa-circle preview-circle"></i>
-              <i className="far fa-circle preview-outline"></i>
-            </div>
-          </button>
+          <MuteReplayBtn
+            buttonFunc={buttonFunc}
+            started={started}
+            ended={ended}
+            muted={muted}
+            paused={
+              this.videoPlayer.current ? this.videoPlayer.current.paused : true
+            }
+          />
         </figure>
       </div>
     );
