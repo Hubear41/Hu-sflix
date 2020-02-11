@@ -35,7 +35,7 @@
 
     .maturity-rating {
       padding: 0.5vw 3.5vw 0.5vw 0.8vw;
-      background: rgba(white, 0.1);
+      background: rgba(51, 51, 51, 0.6);
       border-left: 3px solid #dcdcdc;
 
       display: flex;
@@ -149,13 +149,13 @@
         align-items: center;
 
         min-width: 100px;
-        padding: 2.1% 2vmax;
+        padding: 0.7em 2.3em;
         border-radius: 5px;
-        background-color: rgba(70, 70, 70, 0.4);
+        background-color: rgba(51, 51, 51, 0.6);
         margin-right: 1em;
 
         color: white;
-        font-size: 1.2em;
+        font-size: 1.1vw;
         font-weight: 700;
 
         i {
@@ -213,9 +213,9 @@
 
 /* Media Queries */
 
-@media only screen and (min-width: 800px) {
+@media only screen and (max-width: 1099px) {
   .banner-video-container {
-    font-size: 1vw;
+    font-size: 1.1vw;
   }
 }
 

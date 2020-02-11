@@ -926,7 +926,7 @@ function (_React$Component) {
           mylistState = _this$state2.mylistState;
       var buttonIcon = this.videoPlayer.current ? this.videoControllerIcon() : null;
       var buttonFunc = this.videoPlayer.current ? this.videoFunction() : null;
-      var iconStyle = started ? {
+      var iconStyle = started && !this.videoPlayer.current.paused ? {
         opacity: 1
       } : {
         opacity: 0

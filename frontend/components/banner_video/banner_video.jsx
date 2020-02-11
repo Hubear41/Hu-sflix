@@ -214,7 +214,10 @@ class BannerVideo extends React.Component {
       ? this.videoControllerIcon()
       : null;
     const buttonFunc = this.videoPlayer.current ? this.videoFunction() : null;
-    const iconStyle = started ? { opacity: 1 } : { opacity: 0 };
+    const iconStyle =
+      started && !this.videoPlayer.current.paused
+        ? { opacity: 1 }
+        : { opacity: 0 };
     const myListIcon = mylistIds.includes(show.id) ? (
       <i className="fas fa-check"></i>
     ) : (
