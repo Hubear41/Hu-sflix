@@ -241,7 +241,9 @@ class ShowGallery extends React.Component {
 
     const galleryStyle = galleryType === "WITH_BANNER" ? null : { top: "12vh" };
     const marginStyle =
-      galleryType === "MY_LIST" ? { paddingTop: "5vh" } : null;
+      galleryType === "MY_LIST" || galleryType === "SEARCH"
+        ? { padding: "5vh 0" }
+        : null;
 
     return (
       <section className="show-gallery-index-wrapper">
