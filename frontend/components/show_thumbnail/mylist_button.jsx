@@ -36,7 +36,9 @@ const MyListButton = ({
     }
   }, [listShowIds]);
 
-  const toggleMyList = () => {
+  const toggleMyList = e => {
+    e.stopPropagation();
+
     if (myListState === IS_ON_LIST) {
       if (_isMounted.current) {
         updateMyListState(REMOVING);

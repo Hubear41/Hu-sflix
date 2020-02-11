@@ -2319,7 +2319,9 @@ var MyListButton = function MyListButton(_ref) {
     }
   }, [listShowIds]);
 
-  var toggleMyList = function toggleMyList() {
+  var toggleMyList = function toggleMyList(e) {
+    e.stopPropagation();
+
     if (myListState === IS_ON_LIST) {
       if (_isMounted.current) {
         updateMyListState(REMOVING);
