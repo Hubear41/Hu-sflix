@@ -67,7 +67,8 @@ class ShowRow extends React.Component {
   }
 
   handleRightClick() {
-    const { currentPage, shows } = this.state;
+    const { currentPage } = this.state;
+    const { shows } = this.props;
 
     if (
       currentPage <= ThumbnailUtil.getPageCount(shows.length, window.innerWidth)

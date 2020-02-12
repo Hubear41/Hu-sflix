@@ -2721,9 +2721,8 @@ function (_React$Component) {
   }, {
     key: "handleRightClick",
     value: function handleRightClick() {
-      var _this$state = this.state,
-          currentPage = _this$state.currentPage,
-          shows = _this$state.shows;
+      var currentPage = this.state.currentPage;
+      var shows = this.props.shows;
 
       if (currentPage <= _util_thumbnail_util__WEBPACK_IMPORTED_MODULE_3__["getPageCount"](shows.length, window.innerWidth)) {
         this.setState({
