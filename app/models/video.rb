@@ -24,7 +24,7 @@ class Video < ApplicationRecord
         foreign_key: :preview_id,
         class_name: "Show"
 
-    has_one_attached :cover_image
+    has_one_attached :cover_imaeg
     has_one_attached :video_file
 
     def <=>(other_episode)

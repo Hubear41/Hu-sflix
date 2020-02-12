@@ -18,7 +18,7 @@ json.genres do
 end
 
 json.videos do 
-    if @preview_videos.count <= 0
+    if @preview_videos.nil?
         {}
     else
         @preview_videos.each do |video| 

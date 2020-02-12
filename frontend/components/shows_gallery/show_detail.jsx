@@ -21,7 +21,7 @@ class ShowDetail extends React.Component {
 
         videoEl.pause();
 
-        if (show.show_type === 'Movie') {
+        if (show.type === 'Movie') {
             this.props.history.push(`/watch/${show.id}/${show.movie_id}`)
         } else {
             this.props.history.push(`/watch/${show.id}/${show.episode_ids[0]}`)
