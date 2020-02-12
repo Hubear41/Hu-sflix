@@ -49,8 +49,8 @@ class MainNav extends React.Component {
 
   handleClick(e) {
     const { location } = this.props;
-
-    if (!e.target.hash.includes(location.pathname)) {
+    debugger;
+    if (!e.currentTarget.hash.includes(location.pathname)) {
       this.props.startLoading();
       this.setState({
         search: "",
@@ -96,7 +96,6 @@ class MainNav extends React.Component {
     const textInput = this.searchField.current;
 
     if (textInput.value === "" && location.pathname !== this.state.previous) {
-      debugger;
       clearTimeout(this.searchTimeout);
 
       history.push(this.state.previous);
@@ -173,6 +172,7 @@ class MainNav extends React.Component {
                 <img
                   src={window.logoURL}
                   alt="Hu'sflix Logo"
+                  href="#/browse"
                   className="husflix-logo"
                 />
               </Link>

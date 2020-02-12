@@ -1,0 +1,138 @@
+/* Variables */
+$duration: 450ms;
+$growFactor: 1.8;
+$defaultPadding: 5vw;
+$minBreakPoint: 200px;
+
+/* Mixins */
+/* CSS3 calc() function to perform calculations */
+@mixin calc($property, $expression) {
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+
+// CSS3 translateX with -ms version
+@mixin translateX($expression) {
+  -ms-transform: translateX(calc(#{$expression}));
+  transform: translateX(calc(#{$expression}));
+}
+
+// calculates the width of thumbnails based on the current breakpoint and the number of 10px margins
+// subtract 15px for the scrollbar on rightside
+@mixin thumbnail-width($breakPoint, $padding: $defaultPadding) {
+  $numThumbs: calcNumTiles($breakPoint);
+
+  @include calc(
+    width,
+    "((((100vw - 15px) - (#{$padding} * 2)) / #{$numThumbs}) - 10px)"
+  );
+}
+
+// calculates the height of thumbnails based off the width and a 16:9 ratio
+@mixin thumbnail-height($breakPoint, $padding: $defaultPadding) {
+  $numThumbs: calcNumTiles($breakPoint);
+
+  @include calc(
+    height,
+    "((((100vw - 15px) - (#{$padding} * 2)) / #{$numThumbs}) - 10px) / (16 / 9)"
+  );
+}
+// calculate how much to translate row to the left based off of the number of tiles and growthfactor
+@mixin moveLeft($breakPoint, $padding: $defaultPadding) {
+  @include translateX(
+    "((((100vw - 15px) - (#{$padding} * 2)) / #{calcNumTiles($breakPoint)}) * (#{$growFactor} - 1)) / 2 * -1"
+  );
+}
+
+// calculate how much to translate row to the right based off of the number of tiles and growthfactor
+@mixin moveRight($breakPoint, $padding: $defaultPadding) {
+  @include translateX(
+    "(((100vw - 15px) - #{$padding} * 2) / #{calcNumTiles($breakPoint)}) * (#{$growFactor} - 1)"
+  );
+}
+
+// positions rows so that their margins are overlapping and seem closer together
+// creates this for rows 2 through 10. The max can be changed.
+@mixin overlap($max: 10) {
+  @for $i from 1 through $max {
+    #row-#{$i} {
+      top: -#{($i - 1) * 3}vw;
+    }
+  }
+}
+
+// create mediaquery for show rows with a given break point
+@mixin createMediaQuery($breakpoint) {
+  @media only screen and (min-width: $breakpoint) {
+    $padding: $defaultPadding;
+    @if $breakpoint == 1400px {
+      $padding: 60px;
+    }
+
+    .show-rows-wrapper {
+      padding: 0 $padding;
+    }
+
+    .slider-control {
+      &.left {
+        left: #{-$padding};
+        width: $padding;
+      }
+
+      &.right {
+        right: #{-$padding};
+        @include calc("width", "#{$padding} + 10px");
+      }
+    }
+
+    .row-slider {
+      @include createSliderClasses($breakpoint, $padding);
+    }
+
+    .show-thumbnail {
+      @include thumbnail-width($breakpoint, $padding);
+      @include thumbnail-height($breakpoint, $padding);
+    }
+
+    .show-row:hover {
+      @include moveLeft($breakpoint, $padding);
+    }
+
+    .show-thumbnail:hover ~ .show-thumbnail {
+      @include moveRight($breakpoint, $padding);
+    }
+  }
+}
+
+@mixin createSliderClasses($breakpoint, $padding) {
+  @for $i from 1 through 10 {
+    &.page-#{$i} {
+      transform: translateX(calc(-100% * (#{$i} - 1)));
+    }
+  }
+}
+
+/* Helper Functions */
+
+// calculates width based off of breakpoint widths
+@function calcNumTiles($breakPoint) {
+  $numOfTiles: 2;
+  @if $breakPoint > $minBreakPoint {
+    $numOfTiles: (($breakPoint - $minBreakPoint) / 300) + 2;
+  }
+
+  @return strip-unit($numOfTiles);
+}
+
+// Remove the unit of a length
+// @param {Number} $number - Number to remove unit from
+// @return {Number} - Unitless number
+// From https://css-tricks.com/snippets/sass/strip-unit-function/
+@function strip-unit($number) {
+  @if type-of($number) == "number" and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}

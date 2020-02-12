@@ -1,0 +1,33 @@
+.right-side-btn {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  .button-symbol {
+    position: absolute;
+    z-index: 25;
+    font-size: 1.4em;
+    color: #9b9b9b;
+  }
+
+  .fas.button-symbol {
+    line-height: unset;
+  }
+
+  .preview-btn-bg {
+    font-size: 3em;
+    opacity: 0.5;
+  }
+
+  .preview-btn-outline {
+    position: absolute;
+    z-index: 20;
+    font-size: 3em;
+    color: white;
+    opacity: 0.6;
+  }
+}

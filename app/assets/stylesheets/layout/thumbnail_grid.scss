@@ -1,0 +1,29 @@
+.thumbnail-desc {
+  grid-area: desc;
+}
+
+.thumbnail-side {
+  grid-area: sd;
+}
+
+.thumbnail-footer {
+  grid-area: ft;
+}
+
+.thumbnail-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  grid-template-areas:
+    ".    .    .    .    .    .    .    .    .   ."
+    ".    .    .    .    .    .    .    .    .   ."
+    ".    .    .    .    .    .    .    .    .   ."
+    ".    .    .    .    .    .    .    .    .   ."
+    "desc desc desc desc desc desc desc .    sd   sd"
+    "desc desc desc desc desc desc desc .    sd   sd"
+    "desc desc desc desc desc desc desc .    sd   sd"
+    "desc desc desc desc desc desc desc .    sd   sd"
+    "desc desc desc desc desc desc desc .    sd   sd"
+    "ft   ft   ft   ft   ft   ft   ft   ft   ft  ft"
+    "ft   ft   ft   ft   ft   ft   ft   ft   ft  ft";
+}

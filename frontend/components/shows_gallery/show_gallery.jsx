@@ -1,7 +1,8 @@
 import React from "react";
-import ShowRows from "./show_rows";
+import ShowRows from "../show_row/show_rows";
 import Footer from "../footer/footer";
-import BigPreviewContainer from "../banner_video/banner_video_container";
+import BannerVideo from "../banner_video/banner_video_container";
+import { getThumbnailCount } from "../../util/thumbnail_util";
 
 class ShowGallery extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class ShowGallery extends React.Component {
         .then(() => {
           setTimeout(() => {
             this.props.stopLoading();
-          }, 500);
+          }, 1000);
         })
         .fail(() => {
           this.props.stopLoading();
@@ -103,6 +104,7 @@ class ShowGallery extends React.Component {
     const showsPerRow = {};
     let mainGenres = [];
 
+    // setup mylist row to be the same size as mylistids
     if (mylistShowIds.length > 0) {
       showsPerRow["My List"] = Array.from(
         { length: mylistShowIds.length },
@@ -136,6 +138,9 @@ class ShowGallery extends React.Component {
       });
     });
 
+    // remove any null values left in the My List row
+    showsPerRow["My List"] = showsPerRow["My List"].filter(el => el !== null);
+
     return showsPerRow;
   }
 
@@ -149,7 +154,7 @@ class ShowGallery extends React.Component {
       const currShow = shows[idx1];
       currRow.push(currShow);
 
-      if (currRow.length >= 6) {
+      if (currRow.length >= getThumbnailCount(window.innerWidth)) {
         showsPerRow[numRows] = currRow;
         currRow = [];
         numRows++;
@@ -235,15 +240,19 @@ class ShowGallery extends React.Component {
       showRowsList = showRowsList.concat(otherRows);
     }
 
-    const galleryStyle =
-      galleryType === "WITH_BANNER" ? { top: "75vmin" } : { top: "12vh" };
+    const galleryStyle = galleryType === "WITH_BANNER" ? null : { top: "12vh" };
     const marginStyle =
-      galleryType === "MY_LIST" ? { paddingTop: "5vh" } : null;
+      galleryType === "MY_LIST" || galleryType === "SEARCH"
+        ? { padding: "5vh 0" }
+        : null;
 
     return (
       <section className="show-gallery-index-wrapper">
         {galleryType === "WITH_BANNER" && previewShow ? (
-          <BigPreviewContainer show={previewShow} />
+          <BannerVideo
+            show={previewShow}
+            // stopLoading={this.props.stopLoading}
+          />
         ) : null}
 
         <section className="gallery-index-wrapper" style={galleryStyle}>
@@ -258,8 +267,6 @@ class ShowGallery extends React.Component {
           >
             {showRowsList}
           </ul>
-
-          {/* <figure className="index-bg"></figure> */}
 
           <footer className="gallery-footer">
             <Footer />
