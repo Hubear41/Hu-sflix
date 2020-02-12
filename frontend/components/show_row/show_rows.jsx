@@ -1,8 +1,7 @@
 import React from "react";
 import ShowThumbnail from "../show_thumbnail/show_thumbnail_container";
 import RowSlider from "./row_slider";
-import SliderControls from "./slider_controls";
-import PageIndicators from "./page_indicators";
+import * as ThumbnailUtil from "../../util/thumbnail_util";
 import ShowDetail from "../shows_gallery/show_detail_container";
 
 class ShowRow extends React.Component {
@@ -53,26 +52,6 @@ class ShowRow extends React.Component {
     );
   }
 
-  getPageCount() {
-    const { shows } = this.props;
-
-    return Math.ceil(shows.length / this._calcRowThumbnailCount());
-  }
-
-  _calcRowThumbnailCount() {
-    if (window.innerWidth < 500) {
-      return 2;
-    } else if (window.innerWidth < 800) {
-      return 3;
-    } else if (window.innerWidth < 1100) {
-      return 4;
-    } else if (window.innerHeight < 1400) {
-      return 5;
-    } else {
-      return 6;
-    }
-  }
-
   handleResize() {
     if (this._isMounted && this.state.rowWidth !== window.innerWidth) {
       this.setState({ rowWidth: window.innerWidth });
@@ -88,9 +67,11 @@ class ShowRow extends React.Component {
   }
 
   handleRightClick() {
-    const { currentPage } = this.state;
+    const { currentPage, shows } = this.state;
 
-    if (currentPage <= this.getPageCount()) {
+    if (
+      currentPage <= ThumbnailUtil.getPageCount(shows.length, window.innerWidth)
+    ) {
       this.setState({ currentPage: currentPage + 1 });
     }
   }
@@ -114,28 +95,45 @@ class ShowRow extends React.Component {
       showList.push(this.createShowRowItem(show, rowNum, videos, genres, idx));
     });
 
-    return (
-      <li id={`row-${rowNum}`} className="show-rows-wrapper">
-        {rowHeader}
+    if (galleryType !== "WITH_BANNER") {
+      return (
+        <li id={`row-${rowNum}`} className="show-rows-wrapper">
+          {rowHeader}
 
-        <div className="row-slider-wrapper">
-          <RowSlider
-            currentPage={currentPage}
-            pageCount={this.getPageCount()}
-            leftClick={this.handleLeftClick}
-            rightClick={this.handleRightClick}
-          />
+          <ul className="show-row" ref={this.rowRef}>
+            {showList}
+          </ul>
 
-          <div className={`row-slider page-${currentPage}`}>
-            <ul className="show-row" ref={this.rowRef}>
-              {showList}
-            </ul>
+          {/* <ShowDetail  /> */}
+        </li>
+      );
+    } else {
+      return (
+        <li id={`row-${rowNum}`} className="show-rows-wrapper">
+          {rowHeader}
+
+          <div className="row-slider-wrapper">
+            <RowSlider
+              currentPage={currentPage}
+              pageCount={ThumbnailUtil.getPageCount(
+                shows.length,
+                window.innerWidth
+              )}
+              leftClick={this.handleLeftClick}
+              rightClick={this.handleRightClick}
+            />
+
+            <div className={`row-slider page-${currentPage}`}>
+              <ul className="show-row" ref={this.rowRef}>
+                {showList}
+              </ul>
+            </div>
           </div>
-        </div>
 
-        {/* <ShowDetail  /> */}
-      </li>
-    );
+          {/* <ShowDetail  /> */}
+        </li>
+      );
+    }
   }
 }
 

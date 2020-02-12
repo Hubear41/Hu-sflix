@@ -2617,9 +2617,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _show_thumbnail_show_thumbnail_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../show_thumbnail/show_thumbnail_container */ "./frontend/components/show_thumbnail/show_thumbnail_container.js");
 /* harmony import */ var _row_slider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./row_slider */ "./frontend/components/show_row/row_slider.jsx");
-/* harmony import */ var _slider_controls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./slider_controls */ "./frontend/components/show_row/slider_controls.jsx");
-/* harmony import */ var _page_indicators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./page_indicators */ "./frontend/components/show_row/page_indicators.jsx");
-/* harmony import */ var _shows_gallery_show_detail_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shows_gallery/show_detail_container */ "./frontend/components/shows_gallery/show_detail_container.js");
+/* harmony import */ var _util_thumbnail_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/thumbnail_util */ "./frontend/util/thumbnail_util.js");
+/* harmony import */ var _shows_gallery_show_detail_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shows_gallery/show_detail_container */ "./frontend/components/shows_gallery/show_detail_container.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2637,7 +2636,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 
 
 
@@ -2701,27 +2699,6 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "getPageCount",
-    value: function getPageCount() {
-      var shows = this.props.shows;
-      return Math.ceil(shows.length / this._calcRowThumbnailCount());
-    }
-  }, {
-    key: "_calcRowThumbnailCount",
-    value: function _calcRowThumbnailCount() {
-      if (window.innerWidth < 500) {
-        return 2;
-      } else if (window.innerWidth < 800) {
-        return 3;
-      } else if (window.innerWidth < 1100) {
-        return 4;
-      } else if (window.innerHeight < 1400) {
-        return 5;
-      } else {
-        return 6;
-      }
-    }
-  }, {
     key: "handleResize",
     value: function handleResize() {
       if (this._isMounted && this.state.rowWidth !== window.innerWidth) {
@@ -2744,9 +2721,11 @@ function (_React$Component) {
   }, {
     key: "handleRightClick",
     value: function handleRightClick() {
-      var currentPage = this.state.currentPage;
+      var _this$state = this.state,
+          currentPage = _this$state.currentPage,
+          shows = _this$state.shows;
 
-      if (currentPage <= this.getPageCount()) {
+      if (currentPage <= _util_thumbnail_util__WEBPACK_IMPORTED_MODULE_3__["getPageCount"](shows.length, window.innerWidth)) {
         this.setState({
           currentPage: currentPage + 1
         });
@@ -2770,22 +2749,33 @@ function (_React$Component) {
       shows.forEach(function (show, idx) {
         showList.push(_this2.createShowRowItem(show, rowNum, videos, genres, idx));
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        id: "row-".concat(rowNum),
-        className: "show-rows-wrapper"
-      }, rowHeader, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row-slider-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_row_slider__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        currentPage: currentPage,
-        pageCount: this.getPageCount(),
-        leftClick: this.handleLeftClick,
-        rightClick: this.handleRightClick
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row-slider page-".concat(currentPage)
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "show-row",
-        ref: this.rowRef
-      }, showList))));
+
+      if (galleryType !== "WITH_BANNER") {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          id: "row-".concat(rowNum),
+          className: "show-rows-wrapper"
+        }, rowHeader, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          className: "show-row",
+          ref: this.rowRef
+        }, showList));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          id: "row-".concat(rowNum),
+          className: "show-rows-wrapper"
+        }, rowHeader, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row-slider-wrapper"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_row_slider__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          currentPage: currentPage,
+          pageCount: _util_thumbnail_util__WEBPACK_IMPORTED_MODULE_3__["getPageCount"](shows.length, window.innerWidth),
+          leftClick: this.handleLeftClick,
+          rightClick: this.handleRightClick
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "row-slider page-".concat(currentPage)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          className: "show-row",
+          ref: this.rowRef
+        }, showList))));
+      }
     }
   }]);
 
@@ -2858,6 +2848,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _thumbnail_player_desc__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./thumbnail_player_desc */ "./frontend/components/show_thumbnail/thumbnail_player_desc.jsx");
+/* harmony import */ var _util_thumbnail_util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util/thumbnail_util */ "./frontend/util/thumbnail_util.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2875,6 +2866,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -2916,7 +2908,7 @@ function (_React$Component) {
       this._isMounted = true;
       window.addEventListener("resize", this.handleWindowResize);
       this.setState({
-        fontSize: this._calculateFontSize(window.innerWidth)
+        fontSize: _util_thumbnail_util__WEBPACK_IMPORTED_MODULE_3__["getFontSize"](window.innerWidth)
       });
     }
   }, {
@@ -2932,20 +2924,8 @@ function (_React$Component) {
     value: function handleWindowResize(e) {
       var windowSize = e.target.innerWidth;
       this.setState({
-        fontSize: this._calculateFontSize(windowSize)
+        fontSize: _util_thumbnail_util__WEBPACK_IMPORTED_MODULE_3__["getFontSize"](windowSize)
       });
-    }
-  }, {
-    key: "_calculateFontSize",
-    value: function _calculateFontSize(windowSize) {
-      if (windowSize <= 200) {
-        return 3.5;
-      } else if (windowSize >= 1400) {
-        return 4.5;
-      } else {
-        var newSize = 3.5 + (windowSize - 200) % 300 / 300;
-        return newSize;
-      }
     }
   }, {
     key: "launchWatch",
@@ -3005,23 +2985,7 @@ function (_React$Component) {
       var _this$props = this.props,
           rowRef = _this$props.rowRef,
           thumbnailNum = _this$props.thumbnailNum;
-
-      var _calcNumOfTiles = function _calcNumOfTiles(width) {
-        if (width < 500) {
-          return 2;
-        } else if (width < 800) {
-          return 3;
-        } else if (width < 1100) {
-          return 4;
-        } else if (width < 1400) {
-          return 5;
-        } else {
-          return 6;
-        }
-      };
-
-      var numOfTiles = _calcNumOfTiles(window.innerWidth);
-
+      var numOfTiles = _util_thumbnail_util__WEBPACK_IMPORTED_MODULE_3__["getThumbnailCount"](window.innerWidth);
       var growFactor = 1.8;
 
       var rightMostTile = function rightMostTile() {
@@ -3035,10 +2999,8 @@ function (_React$Component) {
       };
 
       if (thumbnailNum % numOfTiles === 0) {
-        console.log("rightMost");
         return rightMostTile();
       } else if (thumbnailNum % numOfTiles === numOfTiles - 1) {
-        console.log("leftMost");
         return leftMostTile();
       }
     }
@@ -3705,6 +3667,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _show_row_show_rows__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../show_row/show_rows */ "./frontend/components/show_row/show_rows.jsx");
 /* harmony import */ var _footer_footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../footer/footer */ "./frontend/components/footer/footer.jsx");
 /* harmony import */ var _banner_video_banner_video_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../banner_video/banner_video_container */ "./frontend/components/banner_video/banner_video_container.js");
+/* harmony import */ var _util_thumbnail_util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util/thumbnail_util */ "./frontend/util/thumbnail_util.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3722,6 +3685,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -3863,7 +3827,7 @@ function (_React$Component) {
         var currShow = shows[idx1];
         currRow.push(currShow);
 
-        if (currRow.length >= 6) {
+        if (currRow.length >= Object(_util_thumbnail_util__WEBPACK_IMPORTED_MODULE_4__["getThumbnailCount"])(window.innerWidth)) {
           showsPerRow[numRows] = currRow;
           currRow = [];
           numRows++;
@@ -5711,6 +5675,47 @@ var fetchMyListShows = function fetchMyListShows() {
     method: 'GET',
     url: 'api/my_list/shows'
   });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/thumbnail_util.js":
+/*!*****************************************!*\
+  !*** ./frontend/util/thumbnail_util.js ***!
+  \*****************************************/
+/*! exports provided: getPageCount, getThumbnailCount, getFontSize */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPageCount", function() { return getPageCount; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getThumbnailCount", function() { return getThumbnailCount; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFontSize", function() { return getFontSize; });
+var getPageCount = function getPageCount(showCount, windowSize) {
+  return Math.ceil(showCount / getThumbnailCount(windowSize));
+};
+var getThumbnailCount = function getThumbnailCount(windowSize) {
+  if (windowSize < 500) {
+    return 2;
+  } else if (windowSize < 800) {
+    return 3;
+  } else if (windowSize < 1100) {
+    return 4;
+  } else if (windowSize < 1400) {
+    return 5;
+  } else {
+    return 6;
+  }
+};
+var getFontSize = function getFontSize(windowSize) {
+  if (windowSize <= 200) {
+    return 3.5;
+  } else if (windowSize >= 1400) {
+    return 4.5;
+  } else {
+    var newSize = 3.5 + (windowSize - 200) % 300 / 300;
+    return newSize;
+  }
 };
 
 /***/ }),

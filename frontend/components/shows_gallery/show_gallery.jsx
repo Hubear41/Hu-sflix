@@ -2,6 +2,7 @@ import React from "react";
 import ShowRows from "../show_row/show_rows";
 import Footer from "../footer/footer";
 import BannerVideo from "../banner_video/banner_video_container";
+import { getThumbnailCount } from "../../util/thumbnail_util";
 
 class ShowGallery extends React.Component {
   constructor(props) {
@@ -153,7 +154,7 @@ class ShowGallery extends React.Component {
       const currShow = shows[idx1];
       currRow.push(currShow);
 
-      if (currRow.length >= 6) {
+      if (currRow.length >= getThumbnailCount(window.innerWidth)) {
         showsPerRow[numRows] = currRow;
         currRow = [];
         numRows++;
