@@ -1,5 +1,7 @@
 import React from "react";
 import ShowThumbnail from "../show_thumbnail/show_thumbnail_container";
+import RowSlider from "./row_slider";
+import SliderControls from "./slider_controls";
 import PageIndicators from "./page_indicators";
 import ShowDetail from "../shows_gallery/show_detail_container";
 
@@ -13,6 +15,8 @@ class ShowRow extends React.Component {
 
     this.rowRef = React.createRef();
     this.handleResize = this.handleResize.bind(this);
+    this.handleLeftClick = this.handleLeftClick.bind(this);
+    this.handleRightClick = this.handleRightClick.bind(this);
   }
 
   componentDidMount() {
@@ -49,6 +53,12 @@ class ShowRow extends React.Component {
     );
   }
 
+  getPageCount() {
+    const { shows } = this.props;
+
+    return Math.ceil(shows.length / this._calcRowThumbnailCount());
+  }
+
   _calcRowThumbnailCount() {
     if (window.innerWidth < 500) {
       return 2;
@@ -69,6 +79,22 @@ class ShowRow extends React.Component {
     }
   }
 
+  handleLeftClick() {
+    const { currentPage } = this.state;
+
+    if (currentPage > 1) {
+      this.setState({ currentPage: currentPage - 1 });
+    }
+  }
+
+  handleRightClick() {
+    const { currentPage } = this.state;
+
+    if (currentPage <= this.getPageCount()) {
+      this.setState({ currentPage: currentPage + 1 });
+    }
+  }
+
   render() {
     const {
       shows,
@@ -84,8 +110,6 @@ class ShowRow extends React.Component {
     const rowHeader =
       galleryType === "WITH_BANNER" ? <h2>{genreName}</h2> : null;
 
-    const pageCount = Math.ceil(shows.length / this._calcRowThumbnailCount());
-
     shows.forEach((show, idx) => {
       showList.push(this.createShowRowItem(show, rowNum, videos, genres, idx));
     });
@@ -94,15 +118,21 @@ class ShowRow extends React.Component {
       <li id={`row-${rowNum}`} className="show-rows-wrapper">
         {rowHeader}
 
-        <PageIndicators currentPage={currentPage} pageCount={pageCount} />
+        <div className="row-slider-wrapper">
+          <RowSlider
+            currentPage={currentPage}
+            pageCount={this.getPageCount()}
+            leftClick={this.handleLeftClick}
+            rightClick={this.handleRightClick}
+          />
 
-        <ul className="show-row" ref={this.rowRef}>
-          {showList}
-        </ul>
-        {/* <div
-          className="next-page-button"
-          onClick={this.moveToSliderPage(currentPage + 1)}
-        ></div> */}
+          <div className={`row-slider page-${currentPage}`}>
+            <ul className="show-row" ref={this.rowRef}>
+              {showList}
+            </ul>
+          </div>
+        </div>
+
         {/* <ShowDetail  /> */}
       </li>
     );

@@ -2567,6 +2567,43 @@ var PageIndicator = function PageIndicator(_ref) {
 
 /***/ }),
 
+/***/ "./frontend/components/show_row/row_slider.jsx":
+/*!*****************************************************!*\
+  !*** ./frontend/components/show_row/row_slider.jsx ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _slider_controls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./slider_controls */ "./frontend/components/show_row/slider_controls.jsx");
+/* harmony import */ var _page_indicators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./page_indicators */ "./frontend/components/show_row/page_indicators.jsx");
+
+
+
+
+var RowSlider = function RowSlider(_ref) {
+  var currentPage = _ref.currentPage,
+      pageCount = _ref.pageCount,
+      leftClick = _ref.leftClick,
+      rightClick = _ref.rightClick;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_page_indicators__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    currentPage: currentPage,
+    pageCount: pageCount
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_slider_controls__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    currentPage: currentPage,
+    pageCount: pageCount,
+    leftClick: leftClick,
+    rightClick: rightClick
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (RowSlider);
+
+/***/ }),
+
 /***/ "./frontend/components/show_row/show_rows.jsx":
 /*!****************************************************!*\
   !*** ./frontend/components/show_row/show_rows.jsx ***!
@@ -2579,8 +2616,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _show_thumbnail_show_thumbnail_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../show_thumbnail/show_thumbnail_container */ "./frontend/components/show_thumbnail/show_thumbnail_container.js");
-/* harmony import */ var _page_indicators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./page_indicators */ "./frontend/components/show_row/page_indicators.jsx");
-/* harmony import */ var _shows_gallery_show_detail_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shows_gallery/show_detail_container */ "./frontend/components/shows_gallery/show_detail_container.js");
+/* harmony import */ var _row_slider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./row_slider */ "./frontend/components/show_row/row_slider.jsx");
+/* harmony import */ var _slider_controls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./slider_controls */ "./frontend/components/show_row/slider_controls.jsx");
+/* harmony import */ var _page_indicators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./page_indicators */ "./frontend/components/show_row/page_indicators.jsx");
+/* harmony import */ var _shows_gallery_show_detail_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shows_gallery/show_detail_container */ "./frontend/components/shows_gallery/show_detail_container.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2604,6 +2643,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
 var ShowRow =
 /*#__PURE__*/
 function (_React$Component) {
@@ -2621,6 +2662,8 @@ function (_React$Component) {
     };
     _this.rowRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.handleResize = _this.handleResize.bind(_assertThisInitialized(_this));
+    _this.handleLeftClick = _this.handleLeftClick.bind(_assertThisInitialized(_this));
+    _this.handleRightClick = _this.handleRightClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -2658,6 +2701,12 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "getPageCount",
+    value: function getPageCount() {
+      var shows = this.props.shows;
+      return Math.ceil(shows.length / this._calcRowThumbnailCount());
+    }
+  }, {
     key: "_calcRowThumbnailCount",
     value: function _calcRowThumbnailCount() {
       if (window.innerWidth < 500) {
@@ -2682,6 +2731,28 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "handleLeftClick",
+    value: function handleLeftClick() {
+      var currentPage = this.state.currentPage;
+
+      if (currentPage > 1) {
+        this.setState({
+          currentPage: currentPage - 1
+        });
+      }
+    }
+  }, {
+    key: "handleRightClick",
+    value: function handleRightClick() {
+      var currentPage = this.state.currentPage;
+
+      if (currentPage <= this.getPageCount()) {
+        this.setState({
+          currentPage: currentPage + 1
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -2696,20 +2767,25 @@ function (_React$Component) {
       var currentPage = this.state.currentPage;
       var showList = [];
       var rowHeader = galleryType === "WITH_BANNER" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, genreName) : null;
-      var pageCount = Math.ceil(shows.length / this._calcRowThumbnailCount());
       shows.forEach(function (show, idx) {
         showList.push(_this2.createShowRowItem(show, rowNum, videos, genres, idx));
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         id: "row-".concat(rowNum),
         className: "show-rows-wrapper"
-      }, rowHeader, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_page_indicators__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, rowHeader, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row-slider-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_row_slider__WEBPACK_IMPORTED_MODULE_2__["default"], {
         currentPage: currentPage,
-        pageCount: pageCount
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        pageCount: this.getPageCount(),
+        leftClick: this.handleLeftClick,
+        rightClick: this.handleRightClick
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row-slider page-".concat(currentPage)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "show-row",
         ref: this.rowRef
-      }, showList));
+      }, showList))));
     }
   }]);
 
@@ -2717,6 +2793,55 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["default"] = (ShowRow);
+
+/***/ }),
+
+/***/ "./frontend/components/show_row/slider_controls.jsx":
+/*!**********************************************************!*\
+  !*** ./frontend/components/show_row/slider_controls.jsx ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var SliderControls = function SliderControls(_ref) {
+  var currentPage = _ref.currentPage,
+      pageCount = _ref.pageCount,
+      leftClick = _ref.leftClick,
+      rightClick = _ref.rightClick;
+
+  if (pageCount <= 1) {
+    return null;
+  }
+
+  var leftControl = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "slider-control left",
+    onClick: leftClick
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-chevron-left"
+  }));
+  var rightControl = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "slider-control right",
+    onClick: rightClick
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+    className: "fas fa-chevron-right"
+  }));
+
+  if (currentPage === 1) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, rightControl);
+  } else if (currentPage === pageCount) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, leftControl);
+  } else {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, leftControl, rightControl);
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (SliderControls);
 
 /***/ }),
 

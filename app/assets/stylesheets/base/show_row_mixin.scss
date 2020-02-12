@@ -19,12 +19,13 @@ $minBreakPoint: 200px;
 }
 
 // calculates the width of thumbnails based on the current breakpoint and the number of 10px margins
+// subtract 15px for the scrollbar on rightside
 @mixin thumbnail-width($breakPoint, $padding: $defaultPadding) {
   $numThumbs: calcNumTiles($breakPoint);
 
   @include calc(
     width,
-    "(100vw - (#{$padding} * 2) - ((#{$numThumbs} - 1) * 10px)) / #{$numThumbs}"
+    "((((100vw - 15px) - (#{$padding} * 2)) / #{$numThumbs}) - 10px)"
   );
 }
 
@@ -34,20 +35,20 @@ $minBreakPoint: 200px;
 
   @include calc(
     height,
-    "(100vw - (#{$padding} * 2) - ((#{$numThumbs} - 1) * 10px)) / #{$numThumbs} / (16 / 9)"
+    "((((100vw - 15px) - (#{$padding} * 2)) / #{$numThumbs}) - 10px) / (16 / 9)"
   );
 }
 // calculate how much to translate row to the left based off of the number of tiles and growthfactor
 @mixin moveLeft($breakPoint, $padding: $defaultPadding) {
   @include translateX(
-    "(((100vw - (#{$padding} * 2)) / #{calcNumTiles($breakPoint)}) * (#{$growFactor} - 1)) / 2 * -1"
+    "((((100vw - 15px) - (#{$padding} * 2)) / #{calcNumTiles($breakPoint)}) * (#{$growFactor} - 1)) / 2 * -1"
   );
 }
 
 // calculate how much to translate row to the right based off of the number of tiles and growthfactor
 @mixin moveRight($breakPoint, $padding: $defaultPadding) {
   @include translateX(
-    "((100vw - #{$padding} * 2) / #{calcNumTiles($breakPoint)}) * (#{$growFactor} - 1)"
+    "(((100vw - 15px) - #{$padding} * 2) / #{calcNumTiles($breakPoint)}) * (#{$growFactor} - 1)"
   );
 }
 
@@ -64,17 +65,50 @@ $minBreakPoint: 200px;
 // create mediaquery for show rows with a given break point
 @mixin createMediaQuery($breakpoint) {
   @media only screen and (min-width: $breakpoint) {
+    $padding: $defaultPadding;
+    @if $breakpoint == 1400px {
+      $padding: 60px;
+    }
+
+    .show-rows-wrapper {
+      padding: 0 $padding;
+    }
+
+    .slider-control {
+      &.left {
+        left: #{-$padding};
+        width: $padding;
+      }
+
+      &.right {
+        right: #{-$padding};
+        @include calc("width", "#{$padding} + 10px");
+      }
+    }
+
+    .row-slider {
+      @include createSliderClasses($breakpoint, $padding);
+    }
+
     .show-thumbnail {
-      @include thumbnail-width($breakpoint);
-      @include thumbnail-height($breakpoint);
+      @include thumbnail-width($breakpoint, $padding);
+      @include thumbnail-height($breakpoint, $padding);
     }
 
     .show-row:hover {
-      @include moveLeft($breakpoint);
+      @include moveLeft($breakpoint, $padding);
     }
 
     .show-thumbnail:hover ~ .show-thumbnail {
-      @include moveRight($breakpoint);
+      @include moveRight($breakpoint, $padding);
+    }
+  }
+}
+
+@mixin createSliderClasses($breakpoint, $padding) {
+  @for $i from 1 through 10 {
+    &.page-#{$i} {
+      transform: translateX(calc(-100% * (#{$i} - 1)));
     }
   }
 }
