@@ -1,0 +1,220 @@
+.show-thumbnail {
+  font-family: "Roboto", sans-serif;
+  color: white;
+
+  .thumbnail-visual {
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    .thumbnail-poster {
+      position: absolute;
+      z-index: 100;
+      height: 100%;
+      width: 100%;
+      object-fit: fill;
+      transition: opacity 0.1s, height 0.1s, width 0.1s;
+      transition-delay: 0.1s;
+      transition-timing-function: ease-in;
+    }
+
+    .thumbnail-player {
+      height: 100%;
+      width: 100%;
+      opacity: 1;
+      background-color: black;
+      transition: opacity 0.1s, height 0.1s, width 0.1s;
+    }
+
+    &::after {
+      content: "";
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 5;
+      background: linear-gradient(
+        to bottom,
+        rgba(black, 0) 50%,
+        rgba(black, 0.8)
+      );
+    }
+  }
+
+  .thumbnail-player-desc {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 5px;
+    opacity: 0;
+    transition: opacity 0.4s;
+    cursor: pointer;
+
+    .thumbnail-right-nav {
+      position: absolute;
+      right: 0;
+      z-index: 50;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      .right-side-btn {
+        font-size: 1em;
+      }
+
+      /* get rid of this later */
+      .right-side-placeholders {
+        height: 22px;
+      } /* get rid of this later */
+    }
+
+    .preview-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      height: 100%;
+      width: 100%;
+      padding-left: 7%;
+      font-size: 0.9em;
+      cursor: pointer;
+
+      .thumbnail-play-icon {
+        font-size: 0.9em;
+        margin-top: 1em;
+      }
+
+      .preview-title {
+        font-weight: bold;
+        font-size: 2.3em;
+        letter-spacing: 0.03em;
+        text-shadow: 1px 1px 2px black;
+        white-space: normal;
+      }
+
+      .preview-details {
+        display: flex;
+        align-items: center;
+        font-weight: 300;
+
+        .preview-maturity-rating {
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          background: none;
+          padding: 1px 0.6em;
+          box-sizing: border-box;
+          margin-right: 1em;
+        }
+
+        span {
+          font-size: 1.5em;
+        }
+      }
+
+      .preview-genres {
+        display: flex;
+        align-items: center;
+        font-size: 1.8em;
+        font-weight: 300;
+
+        .genre-bullet {
+          color: grey;
+          margin: 0 0.5em;
+        }
+      }
+    }
+
+    .toggle-dropdown {
+      width: 100%;
+      height: 100%;
+      color: rgba(white, 0.8);
+      background: none;
+      outline: none;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      padding: 0;
+      opacity: 0; // remove after adding dropdown functionality
+
+      .fa-chevron-down {
+        // font-size: 1.5em;
+      }
+    }
+  }
+}
+
+/* Hover/Animation Effects */
+
+.show-thumbnail:hover {
+  .thumbnail-poster {
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.5s, z-index 0.5s;
+    transition-delay: 1.5s;
+  }
+
+  .thumbnail-player,
+  .thumbnail-player-desc {
+    opacity: 1;
+    transition: opacity 1s;
+    transition-delay: 1s;
+  }
+}
+
+.right-side-btn:hover {
+  transform: scale(1.2);
+  transition: transform 0.3s;
+
+  .button-symbol {
+    color: white;
+  }
+
+  .preview-btn-bg {
+    opacity: 0.8;
+  }
+
+  .preview-btn-outline {
+    opacity: 1;
+  }
+}
+
+// mouse over based animations should probably be done in JS
+// .preview-info, .thumbnail-play-icon, .thumbnail-right-nav {
+//   transition: opacity 0.4s ease-out;
+// }
+
+// .preview-genres {
+//   transition: opacity 0.4s ease-out;
+// }
+
+// .mylist-popup-desc {
+//   position: absolute;
+//   width: 30px;
+//   height: 20px;
+//   top: 10vh;
+//   left: -15px;
+//   z-index: 1000;
+//   font-size: 8px;
+//   text-transform: uppercase;
+//   background-color: white;
+//   color: black;
+// }
+
+@keyframes dropdown {
+  0% {
+    padding: 3vh 0;
+    opacity: 0;
+  }
+  100% {
+    padding: 0.5vh 0;
+    opacity: 1;
+    animation-timing-function: ease-in;
+  }
+}

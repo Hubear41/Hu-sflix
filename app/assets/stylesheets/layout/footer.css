@@ -1,0 +1,23 @@
+.husflix-footer {
+  background-color: #141414;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px 0 0 0;
+  height: 50px;
+}
+
+.husflix-footer * {
+  margin: 5px 10px;
+  color: white;
+}
+
+.website-symbol,
+.linkedin-symbol,
+.github-symbol,
+.angel-symbol {
+  max-height: 35px;
+  max-width: 35px;
+  transform: scale(2);
+}

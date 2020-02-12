@@ -1,0 +1,27 @@
+.show-rows-wrapper {
+  .page-indicator-list {
+    margin-top: -24px;
+    padding: 0;
+    position: absolute;
+    right: 4%;
+    top: 0;
+    list-style-type: none;
+    display: none;
+
+    .page-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 2px;
+      margin-left: 1px;
+      background: #4d4d4d;
+
+      &.selected {
+        background: #aaa;
+      }
+    }
+  }
+
+  &:hover .page-indicator-list {
+    display: block;
+  }
+}

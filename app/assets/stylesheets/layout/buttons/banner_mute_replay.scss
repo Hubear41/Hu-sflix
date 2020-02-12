@@ -1,0 +1,57 @@
+.banner-replay-mute-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  cursor: pointer;
+
+  .preview-icon {
+    position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .preview-current-icon {
+      position: absolute;
+      z-index: 120;
+
+      color: white;
+      font-size: 0.9em;
+
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    .preview-circle {
+      opacity: 0.2;
+      color: black;
+      font-size: 2em;
+    }
+
+    .preview-outline {
+      position: absolute;
+      z-index: 125;
+
+      color: white;
+      font-size: 2em;
+
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+  }
+
+  &:hover {
+    .preview-current-icon {
+      transform: scale(1.2);
+      transition: transform 0.2s, opacity 0.1s;
+    }
+
+    .preview-current-icon,
+    .preview-outline {
+      opacity: 0.9;
+      transition: 0.2s;
+    }
+  }
+}

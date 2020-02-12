@@ -1,0 +1,78 @@
+@import "../base/show_row_mixin.scss";
+
+.show-gallery-index {
+  @include overlap();
+
+  .show-rows-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: visible;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 3vw 0;
+    z-index: 1;
+    transition-delay: 0.2s;
+
+    h2 {
+      text-transform: capitalize;
+      font-weight: 500;
+      font-family: "Roboto", sans-serif;
+      color: #e5e5e5;
+      font-size: 1.4vw;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 0.5em;
+    }
+
+    .show-row {
+      font-size: 0;
+      transition: $duration transform;
+      transition-delay: 0.2s;
+      white-space: nowrap;
+      width: fit-content;
+
+      &.right {
+        margin-left: 10px;
+      }
+
+      &.left {
+        margin-right: 10px;
+      }
+
+      .show-thumbnail {
+        position: relative;
+        display: inline-block;
+        transform-origin: center left;
+        margin-right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        transition: $duration all;
+        transition-delay: 0.2s;
+      }
+    }
+  }
+}
+
+/* Media Queries */
+$breakpoints: 200px, 500px, 800px, 1100px, 1400px;
+
+@each $breakpoint in $breakpoints {
+  @include createMediaQuery($breakpoint);
+}
+
+/* row and thumbnail animation */
+
+.show-rows-wrapper:hover {
+  z-index: 10;
+}
+
+.show-row:hover .show-thumbnail:hover {
+  transform: scale($growFactor);
+  // transition-delay: 0;
+}
+
+// .show-thumbnail:hover ~ .show-thumbnail {
+//   transition-delay: 0;
+// }
