@@ -11,9 +11,9 @@
     overflow: visible;
     box-sizing: border-box;
     width: 100%;
-    padding: 0 $defaultPadding;
     margin: 3vw 0;
     z-index: 1;
+    transition-delay: 0.2s;
 
     h2 {
       text-transform: capitalize;
@@ -29,47 +29,37 @@
     .show-row {
       font-size: 0;
       transition: $duration transform;
+      transition-delay: 0.2s;
       white-space: nowrap;
-      padding-bottom: 10px;
       width: fit-content;
+
+      &.right {
+        margin-left: 10px;
+      }
+
+      &.left {
+        margin-right: 10px;
+      }
 
       .show-thumbnail {
         position: relative;
         display: inline-block;
-        transition: $duration all;
         transform-origin: center left;
         margin-right: 10px;
         font-size: 20px;
         cursor: pointer;
+        transition: $duration all;
+        transition-delay: 0.2s;
       }
     }
   }
 }
 
 /* Media Queries */
-$breakpoints: 200px, 500px, 800px, 1100px;
+$breakpoints: 200px, 500px, 800px, 1100px, 1400px;
 
 @each $breakpoint in $breakpoints {
   @include createMediaQuery($breakpoint);
-}
-
-@media only screen and (min-width: 1400px) {
-  .show-rows-wrapper {
-    padding: 0 60px;
-  }
-
-  .show-thumbnail {
-    @include thumbnail-width(1400px, 60px);
-    @include thumbnail-height(1400px, 60px);
-  }
-
-  .show-row:hover {
-    @include moveLeft(1400px, 60px);
-  }
-
-  .show-thumbnail:hover ~ .show-thumbnail {
-    @include moveRight(1400px, 60px);
-  }
 }
 
 /* row and thumbnail animation */
@@ -80,4 +70,9 @@ $breakpoints: 200px, 500px, 800px, 1100px;
 
 .show-row:hover .show-thumbnail:hover {
   transform: scale($growFactor);
+  // transition-delay: 0;
 }
+
+// .show-thumbnail:hover ~ .show-thumbnail {
+//   transition-delay: 0;
+// }

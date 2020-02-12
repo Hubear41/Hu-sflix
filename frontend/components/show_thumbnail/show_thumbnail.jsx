@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import ThumbnailPlayerDesc from "./thumbnail_player_desc";
+import * as ThumbnailUtil from "../../util/thumbnail_util";
 
 class ShowThumbnail extends React.Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class ShowThumbnail extends React.Component {
     this._isMounted = true;
 
     window.addEventListener("resize", this.handleWindowResize);
-    this.setState({ fontSize: this._calculateFontSize(window.innerWidth) });
+    this.setState({ fontSize: ThumbnailUtil.getFontSize(window.innerWidth) });
   }
 
   componentWillUnmount() {
@@ -42,19 +43,7 @@ class ShowThumbnail extends React.Component {
   handleWindowResize(e) {
     const windowSize = e.target.innerWidth;
 
-    this.setState({ fontSize: this._calculateFontSize(windowSize) });
-  }
-
-  _calculateFontSize(windowSize) {
-    if (windowSize <= 200) {
-      return 3.5;
-    } else if (windowSize >= 1400) {
-      return 4.5;
-    } else {
-      const newSize = 3.5 + ((windowSize - 200) % 300) / 300;
-
-      return newSize;
-    }
+    this.setState({ fontSize: ThumbnailUtil.getFontSize(windowSize) });
   }
 
   launchWatch() {
@@ -106,21 +95,8 @@ class ShowThumbnail extends React.Component {
   _adjustRowAnimation() {
     const { rowRef, thumbnailNum } = this.props;
 
-    const _calcNumOfTiles = width => {
-      if (width < 500) {
-        return 2;
-      } else if (width < 800) {
-        return 3;
-      } else if (width < 1100) {
-        return 4;
-      } else if (width < 1400) {
-        return 5;
-      } else {
-        return 6;
-      }
-    };
-
-    const numOfTiles = _calcNumOfTiles(window.innerWidth);
+    const numOfTiles = ThumbnailUtil.getThumbnailCount(window.innerWidth);
+    const growFactor = 1.8;
 
     const rightMostTile = () => {
       rowRef.current.style.transform = "translateX(0)";
@@ -129,16 +105,15 @@ class ShowThumbnail extends React.Component {
     const leftMostTile = () => {
       const padding = window.innerWidth >= 1400 ? 60 : 0.05 * window.innerWidth;
 
-      const moveLeftDist = -(window.innerWidth - padding * 2) / numOfTiles;
+      const moveLeftDist =
+        (-(window.innerWidth - padding * 2) / numOfTiles) * (growFactor - 1);
 
       rowRef.current.style.transform = `translateX(${moveLeftDist}px)`;
     };
 
     if (thumbnailNum % numOfTiles === 0) {
-      console.log("rightMost");
       return rightMostTile();
     } else if (thumbnailNum % numOfTiles === numOfTiles - 1) {
-      console.log("leftMost");
       return leftMostTile();
     }
   }
