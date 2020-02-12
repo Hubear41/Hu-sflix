@@ -1,5 +1,5 @@
 import React from "react";
-import ShowRows from "./show_rows";
+import ShowRows from "../show_row/show_rows";
 import Footer from "../footer/footer";
 import BannerVideo from "../banner_video/banner_video_container";
 

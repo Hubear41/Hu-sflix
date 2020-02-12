@@ -121,6 +121,7 @@ class ShowThumbnail extends React.Component {
     };
 
     const numOfTiles = _calcNumOfTiles(window.innerWidth);
+    const growFactor = 1.8;
 
     const rightMostTile = () => {
       rowRef.current.style.transform = "translateX(0)";
@@ -129,7 +130,8 @@ class ShowThumbnail extends React.Component {
     const leftMostTile = () => {
       const padding = window.innerWidth >= 1400 ? 60 : 0.05 * window.innerWidth;
 
-      const moveLeftDist = -(window.innerWidth - padding * 2) / numOfTiles;
+      const moveLeftDist =
+        (-(window.innerWidth - padding * 2) / numOfTiles) * (growFactor - 1);
 
       rowRef.current.style.transform = `translateX(${moveLeftDist}px)`;
     };
