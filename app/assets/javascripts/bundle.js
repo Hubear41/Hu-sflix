@@ -1575,8 +1575,9 @@ function (_React$Component) {
     key: "handleClick",
     value: function handleClick(e) {
       var location = this.props.location;
+      debugger;
 
-      if (!e.target.hash.includes(location.pathname)) {
+      if (!e.currentTarget.hash.includes(location.pathname)) {
         this.props.startLoading();
         this.setState({
           search: "",
@@ -1704,6 +1705,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: window.logoURL,
         alt: "Hu'sflix Logo",
+        href: "#/browse",
         className: "husflix-logo"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
         className: "nav-btns-wrapper"
