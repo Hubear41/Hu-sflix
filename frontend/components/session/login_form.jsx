@@ -68,10 +68,10 @@ class LoginForm extends React.Component {
 
     const emailError = errors.includes("email")
       ? "Please enter a valid email."
-      : "";
+      : null;
     const passwordError = errors.includes("password")
       ? "Your password must contain at least 6 characters."
-      : "";
+      : null;
     const logininError = errors.includes("login") ? (
       <p className="login-error">
         Sorry, we can't find an account with this email address. Please try
@@ -136,7 +136,10 @@ class LoginForm extends React.Component {
                     value={this.state.password}
                   />
                 </label>
-                <span className={`${passwordDescClass} password-move`}>
+                <span
+                  className={`${passwordDescClass} password-move`}
+                  onClick={e => document.getElementById("password").focus()}
+                >
                   Password
                 </span>
                 <p className="password-error">{passwordError}</p>

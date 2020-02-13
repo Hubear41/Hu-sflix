@@ -2134,8 +2134,8 @@ function (_React$Component) {
         hiddenClass = "hidden-show-hide";
       }
 
-      var emailError = errors.includes("email") ? "Please enter a valid email." : "";
-      var passwordError = errors.includes("password") ? "Your password must contain at least 6 characters." : "";
+      var emailError = errors.includes("email") ? "Please enter a valid email." : null;
+      var passwordError = errors.includes("password") ? "Your password must contain at least 6 characters." : null;
       var logininError = errors.includes("login") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "login-error"
       }, "Sorry, we can't find an account with this email address. Please try again or", " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
@@ -2191,7 +2191,10 @@ function (_React$Component) {
         onChange: this.handleChange("password"),
         value: this.state.password
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "".concat(passwordDescClass, " password-move")
+        className: "".concat(passwordDescClass, " password-move"),
+        onClick: function onClick(e) {
+          return document.getElementById("password").focus();
+        }
       }, "Password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "password-error"
       }, passwordError), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
