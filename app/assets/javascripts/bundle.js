@@ -1896,7 +1896,7 @@ function (_React$Component) {
       var _this2 = this;
 
       this.props.logout().then(function () {
-        return _this2.props.history.push('/');
+        return _this2.props.history.push("/");
       });
     }
   }, {
@@ -1904,20 +1904,22 @@ function (_React$Component) {
     value: function render() {
       var currentUser = this.props.currentUser;
       var location = this.props.history.location;
-      var navClass = location.pathname === '/' ? "right-header-wrapper" : 'left-header-wrapper'; // changes button style based on whether or not you're on the /signup page
+      var navClass = location.pathname === "/" ? "right-header-wrapper" : "left-header-wrapper"; // changes button style based on whether or not you're on the /signup page
 
       var SigninBtnClass, headerClass, hasBorder, alreadyHaveAccountMsg;
 
-      if (location.pathname === '/signup') {
-        SigninBtnClass = 'login-btn-white';
-        headerClass = 'header-nav centered';
-        hasBorder = 'signup-border';
+      if (location.pathname === "/signup") {
+        SigninBtnClass = "login-btn-white";
+        headerClass = "header-nav centered";
+        hasBorder = "signup-border";
         alreadyHaveAccountMsg = null;
       } else {
-        SigninBtnClass = 'login-btn';
-        headerClass = 'header-nav';
-        hasBorder = '';
-        alreadyHaveAccountMsg = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Already have an account?");
+        SigninBtnClass = "login-btn";
+        headerClass = "header-nav";
+        hasBorder = "";
+        alreadyHaveAccountMsg = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "additional"
+        }, "Already have an account?");
       }
 
       if (currentUser) {
@@ -1961,7 +1963,6 @@ function (_React$Component) {
   return Navbar;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-;
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(Navbar));
 
 /***/ }),

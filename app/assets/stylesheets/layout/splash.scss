@@ -1,3 +1,15 @@
+@media (max-width: 950px) {
+  .splash-wrapper {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 799px) {
+  .splash-wrapper {
+    font-size: 0.7em;
+  }
+}
+
 .splash-wrapper {
   width: 100%;
   height: calc(100vh - 70px);
@@ -21,6 +33,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding: 0 5em;
 
     & > * {
       margin-bottom: 60px;

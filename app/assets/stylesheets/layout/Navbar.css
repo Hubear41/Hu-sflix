@@ -1,94 +1,100 @@
 .main-content {
-    position: relative;
+  position: relative;
 }
 
 .right-header-wrapper {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  z-index: 100;
 }
 
 .left-header-wrapper {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    position: absolute;
-    width: 100%;
-    z-index: 100;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
 }
 
 .signup-border {
-    padding-bottom: 32px;
-    border-bottom: 1px solid lightgray;
+  padding-bottom: 32px;
+  border-bottom: 1px solid lightgray;
 }
 
 .header-nav {
-    display: flex;
-    width: 55%;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 40px;    
+  display: flex;
+  width: 55%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 40px;
 }
 
 .centered {
-    width: 100%;
+  width: 100%;
 }
 
 .logo-btn {
-    text-decoration: none;
-    color:  #e32112;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-size: 45px;
-    margin-top: 10px;
-    text-transform: uppercase;
-    position: relative;
+  text-decoration: none;
+  color: #e32112;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 45px;
+  margin-top: 10px;
+  text-transform: uppercase;
+  position: relative;
 }
 
 .login-btn {
-    padding: 8px 18px;
-    border-radius: 3px;
-    margin-top: 18px;
-    font-weight: lighter;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    text-decoration: none;
-    color: white;
-    background-color: #e32112;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  padding: 8px 18px;
+  border-radius: 3px;
+  margin-top: 18px;
+  font-weight: lighter;
+  font-family: "Roboto", sans-serif;
+  text-decoration: none;
+  color: white;
+  background-color: #e32112;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-btn-white {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-size: 19px;
-    color: black;
-    text-decoration: none;
-    padding-top: 33px;
-    position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 19px;
+  color: black;
+  text-decoration: none;
+  padding-top: 33px;
+  position: relative;
 }
 
 .husflix-logo {
-    max-height: 45px;
-    max-width: 170px;
-    position: absolute;
-    left: 30px;
+  max-height: 45px;
+  max-width: 170px;
+  position: absolute;
+  left: 30px;
 }
 
 .signin-btn {
-    display: flex;
-    font-family: Arial, Helvetica, sans-serif;
-    margin-right: 20px;
+  display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-right: 20px;
 }
 
-.signin-btn span {
-    padding-top: 27px;
-    margin-right: 10px;
-    font-size: 15px;
+.signin-btn .additional {
+  padding-top: 27px;
+  margin-right: 10px;
+  font-size: 1em;
+}
+
+@media (max-width: 950px) {
+  .signin-btn .additional {
+    display: none;
+  }
 }
