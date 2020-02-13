@@ -536,7 +536,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_background_background__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
     className: "main-content"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["AuthRoute"], {
     exact: true,
@@ -2344,8 +2344,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SignupForm).call(this, props));
     _this.state = {
-      email: '',
-      password: ''
+      email: "",
+      password: ""
     };
     _this.handleGuestSubmit = _this.handleGuestSubmit.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -2373,7 +2373,7 @@ function (_React$Component) {
 
       e.preventDefault();
       this.props.createUser(this.state).then(function () {
-        return _this3.props.history.push('/browse');
+        return _this3.props.history.push("/browse");
       }).then(function () {
         return _this3.props.startLoading();
       });
@@ -2386,11 +2386,11 @@ function (_React$Component) {
 
       e.preventDefault();
       var guest = {
-        email: 'guest@guest.com',
-        password: 'go_password_go'
+        email: "guest@guest.com",
+        password: "go_password_go"
       };
       this.props.loginUser(guest).then(function () {
-        return _this4.props.history.push('/browse');
+        return _this4.props.history.push("/browse");
       });
     }
   }, {
@@ -2399,38 +2399,36 @@ function (_React$Component) {
       var errors = this.props.errors; // if the input field is just an empty string, display 'Email' or 'Password'
       // if there are characters, put the input description to the topleft
 
-      var emailDescClass = this.state.email !== '' ? 'floating-signup-description-small' : 'floating-signup-description-big';
-      var passwordDescClass = this.state.password !== '' ? 'floating-signup-description-small' : 'floating-signup-description-big'; // users controller will send back either 'email', 'password', or 'signup' error types
+      var emailDescClass = this.state.email !== "" ? "floating-signup-description-small" : "floating-signup-description-big";
+      var passwordDescClass = this.state.password !== "" ? "floating-signup-description-small" : "floating-signup-description-big"; // users controller will send back either 'email', 'password', or 'signup' error types
       // will respond with a message based on the error.
 
       var emailError = null;
 
-      if (errors.includes('email')) {
+      if (errors.includes("email")) {
         emailError = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "signup-email-error"
         }, "Please enter a valid email.");
-      } else if (errors.includes('signup')) {
+      } else if (errors.includes("signup")) {
         emailError = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "signup-email-error"
         }, "Email is taken.");
       }
 
-      var passwordError = errors.includes('password') ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      var passwordError = errors.includes("password") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "signup-password-error"
       }, "Your password must contain at least 6 characters.") : null;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "signup-form-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "signup-form-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleGuestSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit",
-        value: "Guest Login",
+        className: "signup-form-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleGuestSubmit,
+        type: "button",
         className: "signup-guest-login-btn"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+      }, "Guest Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "signup-texts"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Sign up to start your free account"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, 'Just two more steps and you\'re done!\n'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "We hate paperwork, too.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Create Your Account.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Sign up to start your free account"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Just two more steps and you're done! We hate paperwork, too."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Create Your Account.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "signup-form",
         onSubmit: this.handleSubmit
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
@@ -2440,9 +2438,9 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         id: "email",
-        onChange: this.handleChange('email'),
+        onChange: this.handleChange("email"),
         value: this.state.email,
-        className: emailError ? 'email-signup error-red' : "email-signup"
+        className: emailError ? "email-signup error-red" : "email-signup"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: emailDescClass
       }, "Email"), emailError), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -2450,9 +2448,9 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "password",
         id: "password",
-        onChange: this.handleChange('password'),
+        onChange: this.handleChange("password"),
         value: this.state.password,
-        className: passwordError ? "password-signup error-red" : 'password-signup'
+        className: passwordError ? "password-signup error-red" : "password-signup"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: passwordDescClass
       }, "Password"), passwordError)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {

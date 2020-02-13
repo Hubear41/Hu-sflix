@@ -20,7 +20,6 @@ import MainNavBar from "./navbar/main_nav_container";
 const App = () => {
   return (
     <>
-      <Background />
       <main className="main-content">
         <Switch>
           <AuthRoute
