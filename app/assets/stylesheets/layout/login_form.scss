@@ -40,6 +40,10 @@
         }
       }
 
+      .email-login.error-orange {
+        border-bottom: 2px solid #c86b04;
+      }
+
       .email-login {
         height: 30px;
         padding: 16px 20px 5px 20px;
@@ -129,6 +133,7 @@
   left: 20px;
   top: 19px;
   font-size: 16px;
+  cursor: text;
 }
 
 .floating-login-description-small {

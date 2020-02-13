@@ -2193,7 +2193,10 @@ function (_React$Component) {
         onChange: this.handleChange("password"),
         value: this.state.password
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "".concat(passwordDescClass, " password-move")
+        className: "".concat(passwordDescClass, " password-move"),
+        onClick: function onClick(e) {
+          return document.getElementById("password").focus();
+        }
       }, "Password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "password-error"
       }, passwordError), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {

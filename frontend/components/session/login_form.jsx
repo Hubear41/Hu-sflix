@@ -101,12 +101,9 @@ class LoginForm extends React.Component {
             className="background-image"
           />
           <section className="login-container">
-            {/* <section className="login-form-body"> */}
-
             <form className="login-form" onSubmit={this.handleSubmit}>
               <h3 className="login-header">{formName}</h3>
 
-              {/* <div className="login-inputs"> */}
               {logininError}
               <label htmlFor="email">
                 <input
@@ -139,7 +136,10 @@ class LoginForm extends React.Component {
                     value={this.state.password}
                   />
                 </label>
-                <span className={`${passwordDescClass} password-move`}>
+                <span
+                  className={`${passwordDescClass} password-move`}
+                  onClick={e => document.getElementById("password").focus()}
+                >
                   Password
                 </span>
                 <p className="password-error">{passwordError}</p>
@@ -152,7 +152,6 @@ class LoginForm extends React.Component {
                   {togglePasswordBtn}
                 </button>
               </div>
-              {/* </div> */}
 
               <input
                 className="login-form-btn"
@@ -176,8 +175,6 @@ class LoginForm extends React.Component {
               .
             </span>
           </section>
-          {/* <figure className="black-bg"></figure> */}
-          {/* </section> */}
         </section>
         <Footer />
       </>
