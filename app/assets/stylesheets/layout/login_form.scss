@@ -1,0 +1,223 @@
+.splash-wrapper {
+  .login-container {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 440px;
+    min-height: 550px;
+    margin: 0px auto;
+    padding: 3.5em 3.7em 2em;
+    box-sizing: border-box;
+
+    background: rgba(black, 0.6);
+    border-radius: 8px;
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 320px;
+      flex-grow: 1;
+
+      .login-header {
+        font-size: 1.8em;
+        margin-bottom: 28px;
+      }
+
+      label {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        height: 75px;
+        width: 100%;
+        margin: 5px 0;
+
+        p {
+          margin-bottom: 5px;
+        }
+      }
+
+      .email-login {
+        height: 30px;
+        padding: 16px 20px 5px 20px;
+        border-radius: 5px;
+        color: #fff;
+        background-color: #333333;
+        border: none;
+        font-size: 16px;
+      }
+
+      .password-wrapper {
+        position: relative;
+
+        .password-login {
+          max-height: 30px;
+          padding: 16px 0 5px 0;
+          color: #fff;
+          background-color: #333333;
+          border-radius: 5px;
+          margin-bottom: 9px;
+          cursor: text;
+
+          input {
+            background-color: #333333;
+            border: none;
+            font-size: 16px;
+            margin: 0 20px 5px 20px;
+            color: white;
+            width: 70%;
+          }
+
+          &:focus-within {
+            // background-color: #454545;
+            outline: none;
+          }
+        }
+
+        .toggle-show-hide {
+          position: absolute;
+          right: 12px;
+          top: 16px;
+          padding: 5px;
+          background-color: #333333;
+          color: #767676;
+          border: none;
+          font-size: 13px;
+          outline: none;
+          cursor: pointer;
+        }
+
+        .hidden-show-hide {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.password-login:focus-within + .floating-login-description-big {
+  transition-timing-function: ease-out;
+  transition: font 0.1s;
+  transition: top 0.2s;
+  font-size: 10px;
+  top: 8px;
+}
+
+.password-login:focus-within
+  + .floating-login-description-big
+  + .toggle-show-hide {
+  background-color: #454545;
+}
+
+.password-login:focus-within
+  + .floating-login-description-small
+  + .toggle-show-hide {
+  background-color: #454545;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.floating-login-description-big {
+  position: absolute;
+  z-index: 10;
+  color: #767676;
+  left: 20px;
+  top: 19px;
+  font-size: 16px;
+}
+
+.floating-login-description-small {
+  position: absolute;
+  z-index: 10;
+  color: #767676;
+  left: 20px;
+  top: 8px;
+  font-size: 10px;
+}
+
+.email-login:focus + .floating-login-description-big {
+  transition-timing-function: ease-out;
+  transition: font 0.1s;
+  transition: top 0.2s;
+  font-size: 10px;
+  top: 10px;
+}
+
+.login-form input:focus {
+  background-color: #454545;
+  outline: none;
+}
+
+.login-form input[type="submit"] {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  text-decoration: none;
+  border-radius: 5px;
+  padding: 17px 130px;
+  color: white;
+  background-color: #e32112;
+  border: none;
+}
+
+.error-orange {
+  border-bottom: 2px solid #c86b04;
+}
+
+.password-error,
+.email-error {
+  position: absolute;
+  color: #c86b04;
+  font-size: 14px;
+}
+
+.new-to-netflix-signup {
+  flex-grow: 0;
+  margin-top: 105px;
+  color: #767676;
+}
+
+.signup-link {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+.login-error {
+  background-color: #e87c03;
+  padding: 10px 20px;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: lighter;
+  color: white;
+  margin-bottom: 15px;
+  margin-top: 10px;
+}
+
+.create-new-account-link {
+  text-decoration: underline;
+  color: white;
+}
+
+.login-guest-btn {
+  width: 100%;
+  background-color: #0071eb;
+  border: none;
+  border-radius: 5px;
+  padding: 18px 14px;
+  font-size: 18px;
+  text-align: center;
+  color: #fff;
+  font-family: Arial, Arial, Helvetica, sans-serif;
+  outline: none;
+  margin: 5px 0;
+}
+
+.login-form-btn {
+  cursor: pointer;
+  margin: 24px 0 12px;
+}

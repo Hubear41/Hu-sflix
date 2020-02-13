@@ -580,11 +580,7 @@ var App = function App() {
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["ProtectedRoute"], {
     path: "/watch/:showId",
     component: _watch_show_watch_container__WEBPACK_IMPORTED_MODULE_13__["default"]
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_16__["AuthRoute"], {
-    exact: true,
-    path: "/",
-    component: _footer_footer__WEBPACK_IMPORTED_MODULE_14__["default"]
-  }));
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -2085,8 +2081,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(LoginForm).call(this, props));
     _this.state = {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       showing: false
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
@@ -2123,7 +2119,7 @@ function (_React$Component) {
         password: password
       };
       this.props.loginUser(user).then(function () {
-        return _this3.props.history.push('/browse');
+        return _this3.props.history.push("/browse");
       }).then(function () {
         return _this3.props.startLoading();
       });
@@ -2135,11 +2131,11 @@ function (_React$Component) {
 
       e.preventDefault();
       var guest = {
-        email: 'guest@guest.com',
-        password: 'go_password_go'
+        email: "guest@guest.com",
+        password: "go_password_go"
       };
       this.props.loginUser(guest).then(function () {
-        return _this4.props.history.push('/browse');
+        return _this4.props.history.push("/browse");
       });
     }
   }, {
@@ -2156,97 +2152,96 @@ function (_React$Component) {
       var _this$props = this.props,
           formType = _this$props.formType,
           errors = _this$props.errors;
-      var formName = formType === 'Sign Up' ? 'Sign Up' : 'Sign In';
-      var emailDescClass = this.state.email !== '' ? 'floating-login-description-small' : 'floating-login-description-big';
+      var formName = formType === "Sign Up" ? "Sign Up" : "Sign In";
+      var emailDescClass = this.state.email !== "" ? "floating-login-description-small" : "floating-login-description-big";
       var passwordDescClass, hiddenClass;
 
-      if (this.state.password !== '') {
-        passwordDescClass = 'floating-login-description-small';
-        hiddenClass = '';
+      if (this.state.password !== "") {
+        passwordDescClass = "floating-login-description-small";
+        hiddenClass = "";
       } else {
-        passwordDescClass = 'floating-login-description-big';
-        hiddenClass = 'hidden-show-hide';
+        passwordDescClass = "floating-login-description-big";
+        hiddenClass = "hidden-show-hide";
       }
 
-      var emailError = errors.includes('email') ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "email-error"
-      }, "Please enter a valid email.") : null;
-      var passwordError = errors.includes('password') ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "password-error"
-      }, "Your password must contain at least 6 characters.") : null;
-      var logininError = errors.includes('login') ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      var emailError = errors.includes("email") ? "Please enter a valid email." : "";
+      var passwordError = errors.includes("password") ? "Your password must contain at least 6 characters." : "";
+      var logininError = errors.includes("login") ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "login-error"
-      }, "Sorry, we can't find an account with this email address. Please try again or ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+      }, "Sorry, we can't find an account with this email address. Please try again or", " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/signup",
         className: "create-new-account-link"
       }, "create a new account"), ".") : null;
       var togglePasswordBtn, passwordIptType;
 
       if (this.state.showing) {
-        togglePasswordBtn = 'HIDE';
-        passwordIptType = 'text';
+        togglePasswordBtn = "HIDE";
+        passwordIptType = "text";
       } else {
-        togglePasswordBtn = 'SHOW';
-        passwordIptType = 'password';
+        togglePasswordBtn = "SHOW";
+        passwordIptType = "password";
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "push-footer-down"
+        className: "splash-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: window.splashBg,
-        alt: "",
-        className: "welcome-image login-bg"
+        alt: "Husflix Background",
+        className: "background-image"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "login-form-wrapper"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "login-form-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, formName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "login-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "login-form",
         onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "login-inputs"
-      }, logininError, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: "login-header"
+      }, formName), logininError, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "email"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         id: "email",
-        onChange: this.handleChange('email'),
+        onChange: this.handleChange("email"),
         value: this.state.email,
-        className: emailError ? 'email-login error-orange' : "email-login"
+        className: emailError ? "email-login error-orange" : "email-login"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: emailDescClass
-      }, "Email"), emailError), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "email-error"
+      }, emailError)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "password-wrapper"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "password",
-        className: passwordError ? "password-login error-orange" : 'password-login'
+        className: passwordError ? "password-login error-orange" : "password-login",
+        onClick: function onClick(e) {
+          return document.getElementById("password").focus();
+        }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: passwordIptType,
         id: "password",
-        onChange: this.handleChange('password'),
+        onChange: this.handleChange("password"),
         value: this.state.password
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "".concat(passwordDescClass, " password-move")
-      }, "Password"), passwordError, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "password-error"
+      }, passwordError), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
         className: "".concat(hiddenClass, " toggle-show-hide"),
         onClick: this.togglePassword
-      }, togglePasswordBtn))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, togglePasswordBtn)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "login-form-btn",
         type: "submit",
         value: formName
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        onSubmit: this.handleGuestSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit",
-        value: "Guest Login",
-        className: "login-guest-btn"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        onClick: this.handleGuestSubmit,
+        className: "login-guest-btn login-form-btn"
+      }, "Guest Login")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "new-to-netflix-signup"
-      }, "New to Hu'sflix? ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+      }, "New to Hu'sflix?", " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/signup",
         className: "signup-link"
-      }, "Sign up now"), ".")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("figure", {
-        className: "black-bg"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_footer_footer__WEBPACK_IMPORTED_MODULE_1__["default"], null)));
+      }, "Sign up now"), "."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_footer_footer__WEBPACK_IMPORTED_MODULE_1__["default"], null));
     }
   }]);
 
@@ -4085,26 +4080,24 @@ var mdp = function mdp(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _footer_footer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../footer/footer */ "./frontend/components/footer/footer.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 
 
 
 var Splash = function Splash(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "splash-image-wrapper"
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "splash-wrapper"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: window.splashBg,
-    className: "welcome-image"
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "splash-wrapper"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "splash-content-wrapper"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+    className: "background-image"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: "splash-content"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "See what's next."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Watch Anywhere. Cancel Anytime."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "See what's next."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Watch Anywhere. Cancel Anytime."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
     to: "/signup",
     className: "splash-signup-btn"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Sign Up Today!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, ">"))))));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Sign Up Today!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, ">")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_footer_footer__WEBPACK_IMPORTED_MODULE_1__["default"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Splash);

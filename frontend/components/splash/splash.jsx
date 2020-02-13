@@ -1,24 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import Footer from "../footer/footer";
+import { Link } from "react-router-dom";
 
 const Splash = props => (
-    <div className='splash-image-wrapper'>
-        <img src={window.splashBg} className="welcome-image"/>
-        <div className="splash-wrapper">
+  <>
+    <div className="splash-wrapper">
+      <img src={window.splashBg} className="background-image" />
 
-            <div className="splash-content-wrapper">
-                <section className="splash-content">
-                    <h2>See what's next.</h2>
-                    <span>Watch Anywhere. Cancel Anytime.</span>
+      <section className="splash-content">
+        <h2>See what's next.</h2>
+        <span>Watch Anywhere. Cancel Anytime.</span>
 
-                    <Link to="/signup" className="splash-signup-btn">
-                        <h3>Sign Up Today!</h3>
-                        <span>&gt;</span>
-                    </Link>
-                </section>
-            </div>
-        </div>
+        <Link to="/signup" className="splash-signup-btn">
+          <h3>Sign Up Today!</h3>
+          <span>&gt;</span>
+        </Link>
+      </section>
     </div>
+    <Footer />
+  </>
 );
 
 export default Splash;
