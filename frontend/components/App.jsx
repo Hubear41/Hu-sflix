@@ -3,7 +3,6 @@ import SignUp from "./session/signup_form_container";
 import Login from "./session/login_form_container";
 import Navbar from "./navbar/navbar_container";
 import Splash from "./splash/splash";
-import Background from "./background/background";
 import LoadingScreen from "./loading/loading_screen";
 import ShowIndexGallery from "./shows_gallery/show_gallery_container";
 import GenreGallery from "./shows_gallery/genre_gallery_container";
