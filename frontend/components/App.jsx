@@ -11,7 +11,6 @@ import MyListGallery from "./shows_gallery/mylist_gallery_container";
 import TVGallery from "./shows_gallery/tv_shows_gallery_container";
 import MoviesGallery from "./shows_gallery/movies_gallery_container";
 import Watch from "./watch/show_watch_container";
-import Footer from "./footer/footer";
 import { Route, Switch } from "react-router-dom";
 import { AuthRoute, ProtectedRoute } from "../util/route_util";
 import MainNavBar from "./navbar/main_nav_container";
@@ -52,7 +51,6 @@ const App = () => {
 
         <ProtectedRoute path="/watch/:showId" component={Watch} />
       </main>
-      {/* <AuthRoute exact path="/" component={Footer} /> */}
     </>
   );
 };
