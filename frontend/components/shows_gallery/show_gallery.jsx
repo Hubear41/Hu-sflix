@@ -139,7 +139,9 @@ class ShowGallery extends React.Component {
     });
 
     // remove any null values left in the My List row
-    showsPerRow["My List"] = showsPerRow["My List"].filter(el => el !== null);
+    if (showsPerRow["My List"]) {
+      showsPerRow["My List"] = showsPerRow["My List"].filter(el => el !== null);
+    }
 
     return showsPerRow;
   }

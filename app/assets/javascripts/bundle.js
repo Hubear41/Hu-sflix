@@ -3777,9 +3777,12 @@ function (_React$Component) {
         });
       }); // remove any null values left in the My List row
 
-      showsPerRow["My List"] = showsPerRow["My List"].filter(function (el) {
-        return el !== null;
-      });
+      if (showsPerRow["My List"]) {
+        showsPerRow["My List"] = showsPerRow["My List"].filter(function (el) {
+          return el !== null;
+        });
+      }
+
       return showsPerRow;
     }
   }, {
