@@ -4373,6 +4373,7 @@ function (_React$Component) {
   }, {
     key: "handleVolumeChange",
     value: function handleVolumeChange(e) {
+      this.showControls();
       var videoEl = this.videoPlayer.current;
       videoEl.volume = e.target.value;
 

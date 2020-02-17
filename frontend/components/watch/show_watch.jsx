@@ -185,6 +185,8 @@ class Watch extends React.Component {
   // as well as changing volume, this method also makes sure to adjust the mute
   // variable as well.
   handleVolumeChange(e) {
+    this.showControls();
+
     const videoEl = this.videoPlayer.current;
     videoEl.volume = e.target.value;
 

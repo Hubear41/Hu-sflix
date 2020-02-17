@@ -95,6 +95,7 @@
   height: 100vh;
   width: 100vw;
   z-index: 30;
+  cursor: pointer;
 }
 
 .watch-maturity-details {
@@ -308,7 +309,7 @@
 
 .audio-levels-popup {
   position: absolute;
-  top: -19.5vh;
+  top: -17.5vh;
   left: 21vw;
   height: 20vh;
   width: 25px;
@@ -319,16 +320,23 @@
   border-radius: 5px;
   opacity: 0;
   transition: opacity 0.2s;
+  pointer-events: none;
 }
 
-.audio-btn:hover + .audio-levels-popup {
+.audio-button-wrapper {
+  height: 100%;
+}
+
+.audio-button-wrapper:hover .audio-levels-popup {
   opacity: 1;
   transition: opacity 0.2s;
+  pointer-events: all;
 }
 
 .audio-levels-popup:hover {
   opacity: 1;
   transition: opacity 0.2s;
+  pointer-events: all;
 }
 
 .audio-levels-popup input[type="range"] {
@@ -342,7 +350,7 @@
   width: 18vh;
 }
 
-.volume-value-bar {
+/* .volume-value-bar {
   position: absolute;
   bottom: 0.9vh;
   left: 1vw;
@@ -352,7 +360,7 @@
   border-radius: 5px;
   z-index: 35;
   cursor: pointer;
-}
+} */
 
 .back-10-btn,
 .forward-10-btn {
