@@ -102,11 +102,9 @@
   position: relative;
   top: 5vh;
   left: 3vw;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: "Roboto", sans-serif;
   display: flex;
   padding: 5px;
-  width: 100px;
 }
 
 .red-line {
@@ -124,9 +122,9 @@
   position: absolute;
   opacity: 0;
   left: 15px;
-  font-size: 12px;
+  font-size: 0.8em;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 300;
   height: 100%;
   animation: maturity-animation;
   animation-duration: 8s;
@@ -143,6 +141,7 @@
   z-index: 1;
   opacity: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  font-size: 1em;
 }
 
 .away-screen-content {
@@ -161,25 +160,24 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .away-screen-details span {
   opacity: 0.6;
-  font-size: 3vh;
+  font-size: 1.4vw;
   font-weight: 300;
 }
 
 .away-screen-details h2 {
-  font-size: 8.5vh;
+  font-size: 3.8vw;
   font-weight: 300;
   font-weight: bold;
 }
 
 .away-screen-details p {
-  font-size: 2.8vh;
-  line-height: 3.5vh;
+  font-size: 1vw;
+  line-height: 1.4vw;
   font-weight: 300;
   opacity: 0.6;
 }
@@ -187,7 +185,7 @@
 .away-screen-other-details {
   display: flex;
   justify-content: space-between;
-  font-size: 3.5vh;
+  font-size: 1.5vw;
   font-weight: 300;
   width: 40%;
 }
@@ -196,9 +194,8 @@
   position: absolute;
   right: 10vw;
   bottom: 10vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 3vh;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.2vw;
   font-weight: 300;
   opacity: 0.7;
 }
@@ -236,6 +233,7 @@
   bottom: 2%;
   left: 0.5%;
   z-index: 2147483648;
+  font-size: 0.8em;
 }
 
 .Player-Controls button {
@@ -415,8 +413,7 @@
 
 .keypress-visual span {
   color: rgba(255, 255, 255, 0.6);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 8px;
   position: absolute;
   z-index: 55;

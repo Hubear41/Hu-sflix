@@ -185,7 +185,7 @@ class Watch extends React.Component {
   // as well as changing volume, this method also makes sure to adjust the mute
   // variable as well.
   handleVolumeChange(e) {
-    this.showControls();
+    this.showControls(); // keeps controls visible during drag event
 
     const videoEl = this.videoPlayer.current;
     videoEl.volume = e.target.value;
@@ -202,6 +202,8 @@ class Watch extends React.Component {
   }
 
   handleTimeChange(e) {
+    this.showControls(); // keeps controls visible during drag event
+
     const videoEl = this.videoPlayer.current;
     videoEl.currentTime = e.target.value;
     this.setState({ currentPlayerTime: videoEl.currentTime });

@@ -4373,7 +4373,8 @@ function (_React$Component) {
   }, {
     key: "handleVolumeChange",
     value: function handleVolumeChange(e) {
-      this.showControls();
+      this.showControls(); // keeps controls visible during drag event
+
       var videoEl = this.videoPlayer.current;
       videoEl.volume = e.target.value;
 
@@ -4399,6 +4400,8 @@ function (_React$Component) {
   }, {
     key: "handleTimeChange",
     value: function handleTimeChange(e) {
+      this.showControls(); // keeps controls visible during drag event
+
       var videoEl = this.videoPlayer.current;
       videoEl.currentTime = e.target.value;
       this.setState({
