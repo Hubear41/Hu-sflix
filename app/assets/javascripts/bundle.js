@@ -2518,10 +2518,12 @@ var PageIndicator = function PageIndicator(_ref) {
   Object(lodash__WEBPACK_IMPORTED_MODULE_1__["times"])(pageCount, function (idx) {
     if (idx + 1 === currentPage) {
       pageIndicators.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: idx + 1,
         className: "page-indicator selected"
       }));
     } else {
       pageIndicators.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: idx + 1,
         className: "page-indicator"
       }));
     }

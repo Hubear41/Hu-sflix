@@ -9,9 +9,11 @@ const PageIndicator = ({ currentPage, pageCount }) => {
   const pageIndicators = [];
   times(pageCount, idx => {
     if (idx + 1 === currentPage) {
-      pageIndicators.push(<li className="page-indicator selected"></li>);
+      pageIndicators.push(
+        <li key={idx + 1} className="page-indicator selected"></li>
+      );
     } else {
-      pageIndicators.push(<li className="page-indicator"></li>);
+      pageIndicators.push(<li key={idx + 1} className="page-indicator"></li>);
     }
   });
 
