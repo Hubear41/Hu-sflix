@@ -93,7 +93,7 @@ class ShowThumbnail extends React.Component {
   }
 
   _adjustRowAnimation() {
-    const { rowRef, thumbnailNum } = this.props;
+    const { rowRef, thumbnailNum, offset } = this.props;
 
     const numOfTiles = ThumbnailUtil.getThumbnailCount(window.innerWidth);
     const growFactor = 1.8;
@@ -111,9 +111,9 @@ class ShowThumbnail extends React.Component {
       rowRef.current.style.transform = `translateX(${moveLeftDist}px)`;
     };
 
-    if (thumbnailNum % numOfTiles === 0) {
+    if (thumbnailNum % numOfTiles === offset) {
       return rightMostTile();
-    } else if (thumbnailNum % numOfTiles === numOfTiles - 1) {
+    } else if ((thumbnailNum - offset) % numOfTiles === numOfTiles - 1) {
       return leftMostTile();
     }
   }

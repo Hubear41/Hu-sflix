@@ -109,6 +109,16 @@ $minBreakPoint: 200px;
   @for $i from 1 through 10 {
     &.page-#{$i} {
       transform: translateX(calc(-100% * (#{$i} - 1)));
+
+      @for $j from 1 through 6 {
+        $numThumbs: calcNumTiles($breakpoint);
+
+        &.offset-#{$j} {
+          transform: translateX(
+            calc(-100% * (#{$i} - 2) - #{$j} * (100% / #{$numThumbs}))
+          );
+        }
+      }
     }
   }
 }
